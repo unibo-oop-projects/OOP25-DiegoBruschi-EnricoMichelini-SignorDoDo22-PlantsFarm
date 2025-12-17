@@ -1,20 +1,29 @@
 package it.unibo.plantsfarm.controller;
 
 import it.unibo.plantsfarm.model.Plant;
+import it.unibo.plantsfarm.model.GameState;
 import java.util.List;
 
 /**
- * Orchestrates the initialization of all game data.
+ * Manage the initialization of all game data.
  */
 public class GameLoader {
 
     /**
      * Initializes the game by calling specific loaders.
      *
-     * @return A list containing all loaded plants.
+     * @return The initial GameState.
      */
-    public final List<Plant> initializeGame() {
+    public final GameState initializeGame() {
+        //Load Plants
         final PlantLoader plantLoader = new PlantLoader();
-        return plantLoader.loadPlants();
+        final List<Plant> plants = plantLoader.loadPlants();
+
+        //Load Player State
+
+        //Load Map
+
+        // Return the complete state
+        return new GameState(plants);
     }
 }
