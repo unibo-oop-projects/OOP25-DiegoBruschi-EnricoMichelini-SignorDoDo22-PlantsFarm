@@ -2,26 +2,41 @@ package it.unibo.plantsfarm.model;
 
 import it.unibo.plantsfarm.model.plant.Plant;
 import java.util.List;
-import java.util.Collections;
 
 /**
- * Represents the current state of the game, including plants, players, and map.
+ * Represents the current state of the game.
  */
-public class GameState {
+public final class GameState {
 
-    private final List<Plant> plants;
+    private final Encyclopedia encyclopedia;
 
     /**
-     * @param plants The list of loaded plants.
+     * Constructs a new GameState initialized with a list of plants.
+     *
+     * @param plants The list of plants to load into the internal encyclopedia.
      */
     public GameState(final List<Plant> plants) {
-        this.plants = List.copyOf(plants);
+        this.encyclopedia = new Encyclopedia();
+        for (final Plant p : plants) {
+            this.encyclopedia.addPlant(p);
+        }
     }
 
     /**
-     * @return An unmodifiable list of plants.
+     * Returns the list of plants contained in encyclopedia.
+     *
+     * @return The list of plants.
      */
-    public List<Plant> getPlants() {
-        return Collections.unmodifiableList(plants);
+    public List<Plant> getAllPlants() {
+        return encyclopedia.getPlants();
+    }
+
+    /**
+     * Returns the list of edible plants contained in encyclopedia.
+     *
+     * @return The list of edible plants.
+     */
+    public List<Plant> getAllUnlockedEdiblePlants() {
+        return encyclopedia.getUnlockedEdiblePlants();
     }
 }

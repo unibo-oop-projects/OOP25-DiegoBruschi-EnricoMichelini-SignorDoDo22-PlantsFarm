@@ -15,15 +15,10 @@ public class GameLoader {
      * @return The initial GameState.
      */
     public final GameState initializeGame() {
-        //Load Plants
         final PlantLoader plantLoader = new PlantLoader();
         final List<Plant> plants = plantLoader.loadPlants();
 
-        //Load Player State
-
-        //Load Map
-
-        // Return the complete state
+        //return new GameState(plants, player, map .....);
         return new GameState(plants);
     }
 }

@@ -24,6 +24,6 @@ public final class Main {
         final GameLoader gameLoader = new GameLoader();
         final GameState gameState = gameLoader.initializeGame();
 
-        LOGGER.info("Game initialized with " + gameState.getPlants().size() + " plants.");
+        LOGGER.info("Game initialized with " + gameState.getAllPlants().size() + " plants.");
     }
 }
