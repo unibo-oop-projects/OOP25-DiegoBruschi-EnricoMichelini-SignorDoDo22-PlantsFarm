@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.model;
 
+import it.unibo.plantsfarm.model.plant.Plant;
 import java.util.List;
 import java.util.Collections;
 

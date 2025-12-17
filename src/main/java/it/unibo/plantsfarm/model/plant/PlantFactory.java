@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.model;
+package it.unibo.plantsfarm.model.plant;
 
 /**
  * A factory class to create plants using standard presets.

@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.model;
+package it.unibo.plantsfarm.model.plant;
 
 /**
  * Represents a generic plant in the game.

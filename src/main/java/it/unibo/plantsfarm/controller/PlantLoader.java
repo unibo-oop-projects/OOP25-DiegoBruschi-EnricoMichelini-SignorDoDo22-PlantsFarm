@@ -1,7 +1,7 @@
 package it.unibo.plantsfarm.controller;
 
-import it.unibo.plantsfarm.model.Plant;
-import it.unibo.plantsfarm.model.PlantFactory;
+import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantFactory;
 import java.util.ArrayList;
 import java.util.List;
 
