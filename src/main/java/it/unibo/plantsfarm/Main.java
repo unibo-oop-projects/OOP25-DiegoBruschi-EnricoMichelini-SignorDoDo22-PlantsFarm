@@ -15,6 +15,5 @@ public final class Main {
      * @param args Command line arguments.
      */
     public static void main(final String[] args) {
-        System.out.println("Game: PlantsFarm");
     }
 }

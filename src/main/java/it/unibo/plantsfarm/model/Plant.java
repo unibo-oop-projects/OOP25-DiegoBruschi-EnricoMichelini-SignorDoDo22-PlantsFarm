@@ -1,5 +1,8 @@
 package it.unibo.plantsfarm.model;
 
+/**
+ * Represents a generic plant in the game.
+ */
 public class Plant {
 
     private final boolean isEdible;
@@ -11,6 +14,13 @@ public class Plant {
     private boolean isPlanted;
     private boolean isDiscovered;
 
+    /**
+     * Creates a new Plant.
+     *
+     * @param isEdible       The plant is edible or not.
+     * @param maxGrowthStage The maximum growth stage of the plant.
+     * @param rarity         The rarity of the plant.
+     */
     public Plant(final boolean isEdible, final int maxGrowthStage, final String rarity) {
         this.isEdible = isEdible;
         this.rarity = rarity;
@@ -21,14 +31,20 @@ public class Plant {
         this.isDiscovered = false;
     }
 
-    public void plant() {
+    /**
+     * Plants the seed if it hasn't been planted.
+     */
+    public final void plant() {
         if (!isPlanted) {
             isPlanted = true;
             needsWater = true;
         }
     }
 
-    public void water() {
+    /**
+     * Waters the plant, upgrade its growth stage if possible.
+     */
+    public final void water() {
         if (isPlanted && needsWater) {
             needsWater = false;
             if (growthStage < maxGrowthStage) {
@@ -37,45 +53,93 @@ public class Plant {
         }
     }
 
-    public boolean isMature() {
+    /**
+     * Checks if the plant has reached its maximum growth.
+     *
+     * @return true if mature, false otherwise.
+     */
+    public final boolean isMature() {
         return growthStage >= maxGrowthStage;
     }
 
-    public void unlock() {
+    /**
+     * Unlocks the plant in the encyclopedia for tests.
+     */
+    public final void unlock() {
         this.isDiscovered = true;
     }
 
-    public int getGrowthStage() { 
+    /**
+     * Returns the current growth stage.
+     *
+     * @return the growth stage.
+     */
+    public final int getGrowthStage() { 
         return growthStage; 
     }
 
-    public boolean isEdible() { 
+    /**
+     * Returns true or false if the plant is edible or not.
+     *
+     * @return true if edible.
+     */
+    public final boolean isEdible() { 
         return isEdible; 
     }
 
-    public boolean needsWater() { 
+    /**
+     * Checks if the plant needs water.
+     *
+     * @return true if the plant needs water.
+     */
+    public final boolean needsWater() { 
         return needsWater; 
     }
 
-    public boolean isPlanted() { 
+    /**
+     * Checks if the plant is planted.
+     *
+     * @return true if planted.
+     */
+    public final boolean isPlanted() { 
         return isPlanted; 
     }
 
-    public boolean isDiscovered() { 
+    /**
+     * Checks if the plant has been discovered in the encyclopedia.
+     *
+     * @return true if discovered.
+     */
+    public final boolean isDiscovered() { 
         return isDiscovered; 
     }
 
-    public String getRarity() { 
+    /**
+     * Gets the rarity of the plant.
+     *
+     * @return the rarity string.
+     */
+    public final String getRarity() { 
         return rarity; 
     }
 
-    public int getMaxGrowthStage() { 
+    /**
+     * Gets the maximum growth stage.
+     *
+     * @return the max growth stage.
+     */
+    public final int getMaxGrowthStage() { 
         return maxGrowthStage; 
     }
 
+    /**
+     * Returns a string representation of the plant.
+     *
+     * @return a description of the plant state.
+     */
     @Override
     public String toString() {
-        return "Plant: '''Pianta'''" 
+        return "Plant: Pianta" 
             + ", growthStage=" + growthStage 
             + ", isEdible=" + isEdible
             + ", rarity=" + rarity;
