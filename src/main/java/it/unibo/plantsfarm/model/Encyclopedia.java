@@ -9,7 +9,7 @@ import java.util.List;
  * Represents the encyclopedia containing information about all plants in the game.
  * It shows only unlocked plants by the player.
  */
-public class Encyclopedia {
+public final class Encyclopedia {
 
     private final List<Plant> plants;
 
@@ -22,7 +22,8 @@ public class Encyclopedia {
 
     /**
      * Gets all plants in the encyclopedia.
-     * * @return unmodifiable list of plants
+     *
+     * @return unmodifiable list of plants
      */
     public List<Plant> getPlants() {
         return Collections.unmodifiableList(plants);
@@ -30,7 +31,8 @@ public class Encyclopedia {
 
     /**
      * Adds a plant to the encyclopedia if it's not already present.
-     * * @param plant The plant to add.
+     *
+     * @param plant The plant to add.
      */
     public void addPlant(final Plant plant) {
         if (!plants.contains(plant)) {
@@ -40,7 +42,8 @@ public class Encyclopedia {
 
     /**
      * Returns the total number of plants in the encyclopedia.
-     * * @return The number of plants.
+     *
+     * @return The number of plants.
      */
     public int numberPlants() {
         return plants.size();
@@ -57,7 +60,8 @@ public class Encyclopedia {
 
     /**
      * Filters and returns only edible plants that have been discovered.
-     * * @return A list of unlocked edible plants.
+     *
+     * @return A list of unlocked edible plants.
      */
     public List<Plant> getUnlockedEdiblePlants() {
         final List<Plant> unlockedEdiblePlantsList = new ArrayList<>();
@@ -71,7 +75,8 @@ public class Encyclopedia {
 
     /**
      * Counts the number of discovered edible plants.
-     * * @return The number of discovered edible plants.
+     *
+     * @return The number of discovered edible plants.
      */
     public int getNumberUnlockedEdiblePlants() {
         int total = 0;
