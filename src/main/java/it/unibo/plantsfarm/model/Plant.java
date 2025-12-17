@@ -5,6 +5,7 @@ package it.unibo.plantsfarm.model;
  */
 public class Plant {
 
+    private final String name; // Nuovo campo
     private final boolean isEdible;
     private final String rarity;
     private final int maxGrowthStage;
@@ -17,11 +18,13 @@ public class Plant {
     /**
      * Creates a new Plant.
      *
-     * @param isEdible       The plant is edible or not.
+     * @param name           The name of the plant.
+     * @param isEdible       Whether the plant is edible.
      * @param maxGrowthStage The maximum growth stage of the plant.
      * @param rarity         The rarity of the plant.
      */
-    public Plant(final boolean isEdible, final int maxGrowthStage, final String rarity) {
+    public Plant(final String name, final boolean isEdible, final int maxGrowthStage, final String rarity) {
+        this.name = name;
         this.isEdible = isEdible;
         this.rarity = rarity;
         this.growthStage = 0;
@@ -74,8 +77,8 @@ public class Plant {
      *
      * @return the growth stage.
      */
-    public final int getGrowthStage() { 
-        return growthStage; 
+    public final int getGrowthStage() {
+        return growthStage;
     }
 
     /**
@@ -83,8 +86,8 @@ public class Plant {
      *
      * @return true if edible.
      */
-    public final boolean isEdible() { 
-        return isEdible; 
+    public final boolean isEdible() {
+        return isEdible;
     }
 
     /**
@@ -92,8 +95,8 @@ public class Plant {
      *
      * @return true if the plant needs water.
      */
-    public final boolean needsWater() { 
-        return needsWater; 
+    public final boolean needsWater() {
+        return needsWater;
     }
 
     /**
@@ -101,8 +104,8 @@ public class Plant {
      *
      * @return true if planted.
      */
-    public final boolean isPlanted() { 
-        return isPlanted; 
+    public final boolean isPlanted() {
+        return isPlanted;
     }
 
     /**
@@ -110,8 +113,8 @@ public class Plant {
      *
      * @return true if discovered.
      */
-    public final boolean isDiscovered() { 
-        return isDiscovered; 
+    public final boolean isDiscovered() {
+        return isDiscovered;
     }
 
     /**
@@ -119,8 +122,8 @@ public class Plant {
      *
      * @return the rarity string.
      */
-    public final String getRarity() { 
-        return rarity; 
+    public final String getRarity() {
+        return rarity;
     }
 
     /**
@@ -128,8 +131,17 @@ public class Plant {
      *
      * @return the max growth stage.
      */
-    public final int getMaxGrowthStage() { 
-        return maxGrowthStage; 
+    public final int getMaxGrowthStage() {
+        return maxGrowthStage;
+    }
+
+    /**
+     * Gets the name of the plant.
+     *
+     * @return the name.
+     */
+    public final String getName() {
+        return name;
     }
 
     /**
@@ -139,8 +151,9 @@ public class Plant {
      */
     @Override
     public String toString() {
-        return "Plant: Pianta" 
-            + ", growthStage=" + growthStage 
+        return "Plant: Pianta"
+            + ", name=" + name
+            + ", growthStage=" + growthStage
             + ", isEdible=" + isEdible
             + ", rarity=" + rarity;
     }
