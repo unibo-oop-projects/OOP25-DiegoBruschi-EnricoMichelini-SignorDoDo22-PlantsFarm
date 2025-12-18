@@ -1,34 +1,29 @@
 package it.unibo.plantsfarm.model.plant;
 
+import it.unibo.plantsfarm.model.plant.PlantType.Rarity;
+
 /**
- * Represents a generic plant in the game.
+ * Represents a plant in the game.
+ * Holds the dynamic state and pick static info from PlantType.
  */
 public class Plant {
+    //Static info
+    private final PlantType type;
 
-    private final String name;
-    private final boolean isEdible;
-    private final String rarity;
-    private final int maxGrowthStage;
-
+    //Dynamic info
     private int growthStage;
     private boolean needsWater;
     private boolean isPlanted;
     private boolean isDiscovered;
 
     /**
-     * Creates a new Plant.
+     * Creates a new Plant based on a specific type.
      *
-     * @param name           The name of the plant.
-     * @param isEdible       Whether the plant is edible.
-     * @param maxGrowthStage The maximum growth stage of the plant.
-     * @param rarity         The rarity of the plant.
+     * @param type The type of plant.
      */
-    public Plant(final String name, final boolean isEdible, final int maxGrowthStage, final String rarity) {
-        this.name = name;
-        this.isEdible = isEdible;
-        this.rarity = rarity;
+    public Plant(final PlantType type) {
+        this.type = type;
         this.growthStage = 0;
-        this.maxGrowthStage = maxGrowthStage;
         this.needsWater = false;
         this.isPlanted = false;
         this.isDiscovered = false;
@@ -50,26 +45,35 @@ public class Plant {
     public final void water() {
         if (isPlanted && needsWater) {
             needsWater = false;
-            if (growthStage < maxGrowthStage) {
+            if (growthStage < type.getMaxGrowthStage()) {
                 growthStage++;
             }
         }
     }
 
     /**
-     * Checks if the plant has reached its maximum growth.
+     * Checks if the plant has reached its max growth.
      *
      * @return true if mature, false otherwise.
      */
     public final boolean isMature() {
-        return growthStage >= maxGrowthStage;
+        return growthStage >= type.getMaxGrowthStage();
     }
 
     /**
-     * Unlocks the plant in the encyclopedia for tests.
+     * Unlocks the plant in the encyclopedia.
      */
     public final void unlock() {
         this.isDiscovered = true;
+    }
+
+    /**
+     * Returns the type of this plant.
+     *
+     * @return The PlantType enum.
+     */
+    public final PlantType getType() {
+        return type;
     }
 
     /**
@@ -82,12 +86,12 @@ public class Plant {
     }
 
     /**
-     * Returns true or false if the plant is edible or not.
+     * Returns true if the plant is edible.
      *
-     * @return true if edible.
+     * @return true if edible, false otherwise.
      */
     public final boolean isEdible() {
-        return isEdible;
+        return type.isEdible();
     }
 
     /**
@@ -102,7 +106,7 @@ public class Plant {
     /**
      * Checks if the plant is planted.
      *
-     * @return true if planted.
+     * @return true if planted, false otherwise.
      */
     public final boolean isPlanted() {
         return isPlanted;
@@ -111,7 +115,7 @@ public class Plant {
     /**
      * Checks if the plant has been discovered in the encyclopedia.
      *
-     * @return true if discovered.
+     * @return true if discovered, false otherwise.
      */
     public final boolean isDiscovered() {
         return isDiscovered;
@@ -120,19 +124,19 @@ public class Plant {
     /**
      * Gets the rarity of the plant.
      *
-     * @return the rarity string.
+     * @return the rarity Enum.
      */
-    public final String getRarity() {
-        return rarity;
+    public final Rarity getRarity() {
+        return type.getRarity();
     }
 
     /**
-     * Gets the maximum growth stage.
+     * Gets the max growth stage.
      *
      * @return the max growth stage.
      */
     public final int getMaxGrowthStage() {
-        return maxGrowthStage;
+        return type.getMaxGrowthStage();
     }
 
     /**
@@ -141,20 +145,19 @@ public class Plant {
      * @return the name.
      */
     public final String getName() {
-        return name;
+        return type.getName();
     }
 
     /**
      * Returns a string representation of the plant.
      *
-     * @return a description of the plant state.
+     * @return a description of the plant.
      */
     @Override
     public String toString() {
-        return "Plant: Pianta"
-            + ", name=" + name
-            + ", growthStage=" + growthStage
-            + ", isEdible=" + isEdible
-            + ", rarity=" + rarity;
+        return "Plant: " + type.getName()
+             + ", growthStage=" + growthStage
+             + ", needsWater=" + needsWater
+             + ", rarity=" + type.getRarity();
     }
 }
