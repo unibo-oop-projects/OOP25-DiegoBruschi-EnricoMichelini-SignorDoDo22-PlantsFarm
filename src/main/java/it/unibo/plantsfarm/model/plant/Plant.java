@@ -5,7 +5,7 @@ package it.unibo.plantsfarm.model.plant;
  */
 public class Plant {
 
-    private final String name; // Nuovo campo
+    private final String name;
     private final boolean isEdible;
     private final String rarity;
     private final int maxGrowthStage;
