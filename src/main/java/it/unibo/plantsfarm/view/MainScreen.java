@@ -3,6 +3,7 @@ package it.unibo.plantsfarm.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
@@ -12,26 +13,49 @@ import javax.swing.WindowConstants;
 public final class MainScreen {
 
     private static final String TITLE = "PlantsFarm";
+    private final MenuPanel menuPanel;
+    private JFrame frame;
+
+    /**
+     * Initializes the main screen components.
+     */
+    public MainScreen() {
+        this.menuPanel = new MenuPanel();
+    }
 
     /**
      * Creates and displays the main screen window.
      */
     public void createMainScreen() {
-        final JFrame frame = new JFrame(TITLE);
+        this.frame = new JFrame(TITLE);
 
-        frame.setLayout(new BorderLayout());
+        this.frame.setLayout(new BorderLayout());
+        this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        final int width = screenSize.width;
-        final int height = screenSize.height;
+        this.frame.setSize(screenSize.width, screenSize.height);
+        this.frame.setLocationRelativeTo(null);
+        this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(width, height);
-        frame.setLocationRelativeTo(null);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.frame.add(this.menuPanel, BorderLayout.EAST);
+        this.frame.setVisible(true);
+    }
 
-        final MenuPanel menuPanel = new MenuPanel();
-        frame.add(menuPanel, BorderLayout.EAST);
+    /**
+     * Allows the controller to attach an action to the Exit button.
+     *
+     * @param listener The action to perform.
+     */
+    public void attachExitListener(final ActionListener listener) {
+        this.menuPanel.addExitListener(listener);
+    }
 
-        frame.setVisible(true);
+    /**
+     * Closes the main window.
+     */
+    public void close() {
+        if (this.frame != null) {
+            this.frame.dispose();
+        }
     }
 }

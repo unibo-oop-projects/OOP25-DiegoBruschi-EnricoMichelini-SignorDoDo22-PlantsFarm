@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.view;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -9,27 +10,66 @@ import javax.swing.JPanel;
  */
 public final class MenuPanel extends JPanel {
 
+    private static final long serialVersionUID = 1L;
     private static final int ROWS = 4;
     private static final int COLS = 1;
     private static final int GAP = 10;
 
+    private final JButton shop;
+    private final JButton storage;
+    private final JButton encyclopedia;
+    private final JButton exit;
+
     /**
-     * initializes the menu panel with Shop, Storage, Encyclopedia, and Exit buttons.
+     * Initializes the menu panel using the ButtonFactory.
      */
     public MenuPanel() {
-
         super(new GridLayout(ROWS, COLS, 0, GAP));
 
-        final JButton shop = new JButton("SHOP");
-        final JButton storage = new JButton("STORAGE");
-        final JButton encyclopedia = new JButton("ENCYCLOPEDIA");
-        final JButton exit = new JButton("EXIT");
+        this.shop = ButtonFactory.createMenuButton("SHOP");
+        this.storage = ButtonFactory.createMenuButton("STORAGE");
+        this.encyclopedia = ButtonFactory.createMenuButton("ENCYCLOPEDIA");
+        this.exit = ButtonFactory.createMenuButton("EXIT");
 
-        this.add(shop);
-        this.add(storage);
-        this.add(encyclopedia);
-        this.add(exit);
+        this.add(this.shop);
+        this.add(this.storage);
+        this.add(this.encyclopedia);
+        this.add(this.exit);
+    }
 
-        exit.addActionListener(e -> System.exit(0));
+    /**
+     * Attaches a listener to the Shop button.
+     * 
+     * @param listener The action to perform.
+     */
+    public void addShopListener(final ActionListener listener) {
+        this.shop.addActionListener(listener);
+    }
+
+    /**
+     * Attaches a listener to the Storage button.
+     * 
+     * @param listener The action to perform.
+     */
+    public void addStorageListener(final ActionListener listener) {
+        this.storage.addActionListener(listener);
+    }
+
+    /**
+     * Attaches a listener to the Encyclopedia button.
+     * 
+     * @param listener The action to perform.
+     */
+    public void addEncyclopediaListener(final ActionListener listener) {
+        this.encyclopedia.addActionListener(listener);
+    }
+
+    /**
+     * Attaches a listener to the Exit button.
+     * 
+     * @param listener The action to perform.
+     */
+    public void addExitListener(final ActionListener listener) {
+        this.exit.addActionListener(listener);
     }
 }
