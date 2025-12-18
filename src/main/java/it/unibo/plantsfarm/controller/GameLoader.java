@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.controller;
 
 import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.view.MainScreen;
 import it.unibo.plantsfarm.model.GameState;
 import java.util.List;
 
@@ -15,10 +16,18 @@ public class GameLoader {
      * @return The initial GameState.
      */
     public final GameState initializeGame() {
+
+        //MODEL
         final PlantLoader plantLoader = new PlantLoader();
         final List<Plant> plants = plantLoader.loadPlants();
 
-        //return new GameState(plants, player, map .....);
-        return new GameState(plants);
+        //final GameState gameState = new GameState(plants, player, map...)
+        final GameState gameState = new GameState(plants);
+
+        //VIEW
+        final MainScreen screenLoader = new MainScreen();
+        screenLoader.createMainScreen();
+
+        return gameState;
     }
 }
