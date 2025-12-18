@@ -38,6 +38,14 @@ public enum PlantType {
     private final int maxGrowthStage;
     private final Rarity rarity;
 
+    /**
+     * Constructor for PlantType.
+     *
+     * @param name The display name of the plant.
+     * @param isEdible True if the plant is edible, false otherwise.
+     * @param maxGrowthStage The maximum growth stage of the plant.
+     * @param rarity The rarity level of the plant.
+     */
     PlantType(final String name, final boolean isEdible, final int maxGrowthStage, final Rarity rarity) {
         this.name = name;
         this.isEdible = isEdible;
@@ -45,22 +53,45 @@ public enum PlantType {
         this.rarity = rarity;
     }
 
+    /**
+     * Gets the name of the plant.
+     *
+     * @return The name string.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Checks if the plant is edible.
+     *
+     * @return True if edible, false otherwise.
+     */
     public boolean isEdible() {
         return isEdible;
     }
 
+    /**
+     * Gets the max growth stage of the plant.
+     *
+     * @return The max growth stage.
+     */
     public int getMaxGrowthStage() {
         return maxGrowthStage;
     }
 
+    /**
+     * Gets the rarity of the plant.
+     *
+     * @return The Rarity value.
+     */
     public Rarity getRarity() {
         return rarity;
     }
 
+    /**
+     * Defines the rarity levels for plants.
+     */
     public enum Rarity {
         COMMON,
         RARE,
