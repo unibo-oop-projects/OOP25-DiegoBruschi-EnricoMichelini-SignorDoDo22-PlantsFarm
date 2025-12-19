@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.view;
+package it.unibo.plantsfarm.view.utility;
 
 import java.awt.Font;
 import javax.swing.JButton;

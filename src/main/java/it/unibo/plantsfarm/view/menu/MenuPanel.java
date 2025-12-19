@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import it.unibo.plantsfarm.view.ButtonFactory;
+import it.unibo.plantsfarm.view.utility.ButtonFactory;
 
 /**
  * Represents the menù panel of the game.
