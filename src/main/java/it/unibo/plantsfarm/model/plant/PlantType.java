@@ -41,10 +41,10 @@ public enum PlantType {
     /**
      * Constructor for PlantType.
      *
-     * @param name The display name of the plant.
-     * @param isEdible True if the plant is edible, false otherwise.
-     * @param maxGrowthStage The maximum growth stage of the plant.
-     * @param rarity The rarity level of the plant.
+     * @param name              The display name of the plant.
+     * @param isEdible          True if the plant is edible, false otherwise.
+     * @param maxGrowthStage    The maximum growth stage of the plant.
+     * @param rarity            The rarity level of the plant.
      */
     PlantType(final String name, final boolean isEdible, final int maxGrowthStage, final Rarity rarity) {
         this.name = name;

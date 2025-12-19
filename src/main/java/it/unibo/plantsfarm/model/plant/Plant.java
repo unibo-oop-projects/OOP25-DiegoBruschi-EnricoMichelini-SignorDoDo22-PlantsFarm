@@ -7,6 +7,7 @@ import it.unibo.plantsfarm.model.plant.PlantType.Rarity;
  * Holds the dynamic state and pick static info from PlantType.
  */
 public class Plant {
+
     //Static info
     private final PlantType type;
 
@@ -97,7 +98,7 @@ public class Plant {
     /**
      * Checks if the plant needs water.
      *
-     * @return true if the plant needs water.
+     * @return true if the plant needs water, false otherwise.
      */
     public final boolean needsWater() {
         return needsWater;
@@ -156,8 +157,8 @@ public class Plant {
     @Override
     public String toString() {
         return "Plant: " + type.getName()
-             + ", growthStage=" + growthStage
-             + ", needsWater=" + needsWater
-             + ", rarity=" + type.getRarity();
+             + ", growthStage: " + growthStage
+             + ", needsWater: " + needsWater
+             + ", rarity: " + type.getRarity();
     }
 }
