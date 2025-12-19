@@ -28,6 +28,6 @@ public final class EncyclopediaController {
      */
     public void start() {
         LOGGER.info("Opening Encyclopedia Window. " + this.gameState);
-        this.view.show();
+        this.view.show(this.gameState.getAllPlants());
     }
 }
