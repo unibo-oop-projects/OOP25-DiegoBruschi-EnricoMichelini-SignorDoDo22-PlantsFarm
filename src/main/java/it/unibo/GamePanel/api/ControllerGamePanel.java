@@ -1,7 +1,7 @@
 package it.unibo.GamePanel.api;
 
 public class ControllerGamePanel {
-    enum UserInput {
-        LEFT, RIGHT, DOWN, UP;
+    public enum UserInput {
+        LEFT, RIGHT, DOWN, UP, FERMO;
     }
 }
