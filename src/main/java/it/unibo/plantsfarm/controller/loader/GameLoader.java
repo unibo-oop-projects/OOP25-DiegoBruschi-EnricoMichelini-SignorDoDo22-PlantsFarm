@@ -1,6 +1,7 @@
-package it.unibo.plantsfarm.controller;
+package it.unibo.plantsfarm.controller.loader;
 
 import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.controller.MainScreenController;
 import it.unibo.plantsfarm.model.GameState;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.controller;
+package it.unibo.plantsfarm.controller.loader;
 
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
