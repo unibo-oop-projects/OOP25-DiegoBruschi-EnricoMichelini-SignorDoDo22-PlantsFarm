@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import it.unibo.plantsfarm.view.menu.MenuPanel;
+
 /**
  * Manages the main screen window.
  */
@@ -48,6 +50,15 @@ public final class MainScreen {
      */
     public void attachExitListener(final ActionListener listener) {
         this.menuPanel.addExitListener(listener);
+    }
+
+    /**
+     * Allows the controller to attach an action to the Encyclopedia button.
+     *
+     * @param listener The action to perform.
+     */
+    public void attachEncyclopediaListener(final ActionListener listener) {
+        this.menuPanel.addEncyclopediaListener(listener);
     }
 
     /**

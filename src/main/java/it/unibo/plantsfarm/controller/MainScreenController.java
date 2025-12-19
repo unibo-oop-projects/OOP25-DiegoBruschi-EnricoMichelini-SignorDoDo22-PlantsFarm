@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.controller;
 
+import it.unibo.plantsfarm.controller.menu.EncyclopediaController;
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.view.MainScreen;
 import java.util.logging.Logger;
@@ -33,5 +34,11 @@ public final class MainScreenController {
             LOGGER.info("Closing game with " + this.gameState.getAllPlants().size() + " plants active.");
             this.view.close(); 
         });
+
+        this.view.attachEncyclopediaListener(e -> {
+            final EncyclopediaController encyclopediaController = new EncyclopediaController(this.gameState);
+            encyclopediaController.start();
+        });
+
     }
 }

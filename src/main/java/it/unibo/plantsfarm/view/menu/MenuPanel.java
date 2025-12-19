@@ -1,9 +1,11 @@
-package it.unibo.plantsfarm.view;
+package it.unibo.plantsfarm.view.menu;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import it.unibo.plantsfarm.view.ButtonFactory;
 
 /**
  * Represents the menù panel of the game.
