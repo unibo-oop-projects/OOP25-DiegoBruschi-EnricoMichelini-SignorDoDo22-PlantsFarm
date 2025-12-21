@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import it.unibo.plantsfarm.view.utility.ButtonFactory;
+import it.unibo.plantsfarm.view.utility.Texture;
 
 /**
  * Represents the menù panel of the game.
@@ -28,10 +29,10 @@ public final class MenuPanel extends JPanel {
     public MenuPanel() {
         super(new GridLayout(ROWS, COLS, 0, GAP));
 
-        this.shop = ButtonFactory.createMenuButton("SHOP");
-        this.storage = ButtonFactory.createMenuButton("STORAGE");
-        this.encyclopedia = ButtonFactory.createMenuButton("ENCYCLOPEDIA");
-        this.exit = ButtonFactory.createMenuButton("EXIT");
+        this.shop = ButtonFactory.createMenuButton(Texture.SHOP_ICON);
+        this.storage = ButtonFactory.createMenuButton(Texture.STORAGE_ICON);
+        this.encyclopedia = ButtonFactory.createMenuButton(Texture.ENCYCLOPEDIA_ICON);
+        this.exit = ButtonFactory.createMenuButton(Texture.SETTINGS_ICON);
 
         this.add(this.shop);
         this.add(this.storage);

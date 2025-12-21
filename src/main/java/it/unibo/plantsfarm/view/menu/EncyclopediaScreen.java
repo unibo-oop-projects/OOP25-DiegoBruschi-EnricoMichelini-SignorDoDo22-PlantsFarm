@@ -2,6 +2,7 @@ package it.unibo.plantsfarm.view.menu;
 
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.view.utility.ButtonFactory;
+import it.unibo.plantsfarm.view.utility.Texture;
 import it.unibo.plantsfarm.view.utility.WindowFactory;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -9,6 +10,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -75,8 +77,8 @@ public final class EncyclopediaScreen {
         this.gridPanel.removeAll();
 
         for (final Plant plant : plants) {
-            final JButton button = ButtonFactory.createMenuButton(plant.getName());
-
+            final ImageIcon icon = Texture.getPlantIcon(plant.getName());
+            final JButton button = ButtonFactory.createMenuButton(icon);
             button.addActionListener(e -> updateDetails(plant));
 
             this.gridPanel.add(button);
