@@ -27,7 +27,7 @@ public class Plant {
         this.growthStage = 0;
         this.needsWater = false;
         this.isPlanted = false;
-        this.isDiscovered = false;
+        this.isDiscovered = true;
     }
 
     /**

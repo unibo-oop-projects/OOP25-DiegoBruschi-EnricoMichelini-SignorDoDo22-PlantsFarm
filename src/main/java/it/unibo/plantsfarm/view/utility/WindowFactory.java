@@ -23,6 +23,9 @@ public final class WindowFactory {
      */
     public static JDialog createMenuWindow(final String title) {
         final JDialog dialog = new JDialog((JFrame) null, title, true);
+
+        dialog.setResizable(false);
+
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         final int width = (int) (screenSize.width / SCREEN_RATIO);
         final int height = (int) (screenSize.height / SCREEN_RATIO);

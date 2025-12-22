@@ -2,6 +2,7 @@ package it.unibo.plantsfarm.view.menu;
 
 import it.unibo.plantsfarm.view.utility.ButtonFactory;
 import it.unibo.plantsfarm.view.utility.Texture;
+import it.unibo.plantsfarm.view.utility.TextureUtils;
 import it.unibo.plantsfarm.view.utility.WindowFactory;
 
 import java.awt.BorderLayout;
@@ -113,7 +114,7 @@ public final class EncyclopediaScreen {
 
     /**
      * Updates rarity badge.
-     * 
+     *
      * @param rarity the name of the rarity.
      */
     public void setRarity(final String rarity) {
@@ -143,12 +144,15 @@ public final class EncyclopediaScreen {
 
     /**
      * Shows the screen.
-     * 
+     *
      * @param names names list.
+     * @param unlocked unlock status list.
      * @param listener controller listener.
      * @param stageCommand the stage command.
      */
-    public void show(final List<String> names, final ActionListener listener, final String stageCommand) {
+    public void show(final List<String> names, final List<Boolean> unlocked,
+        final ActionListener listener, final String stageCommand) {
+
         this.buttonPanel.removeAll();
         this.stageButton.setActionCommand(stageCommand);
         for (final ActionListener oldActionListener : this.stageButton.getActionListeners()) {
@@ -156,18 +160,29 @@ public final class EncyclopediaScreen {
         }
         this.stageButton.addActionListener(listener);
 
-        for (final String name : names) {
-            final JButton b = ButtonFactory.createMenuButton(Texture.getPlantIcon(name));
-            b.setActionCommand(name);
-            b.addActionListener(listener);
-            this.buttonPanel.add(b);
+        for (int currentIndex = 0; currentIndex < names.size(); currentIndex++) {
+            final String name = names.get(currentIndex);
+            ImageIcon icon = Texture.getPlantIcon(name);
+
+            if (!unlocked.get(currentIndex)) {
+                icon = TextureUtils.createLockedIcon(icon);
+            }
+
+            final JButton button = ButtonFactory.createMenuButton(icon);
+
+            if (unlocked.get(currentIndex)) {
+                button.setActionCommand(name);
+                button.addActionListener(listener);
+            }
+
+            this.buttonPanel.add(button);
         }
         this.encyclpediaScreen.setVisible(true);
     }
 
     /**
      * Updates image and returns true if successful.
-     * 
+     *
      * @param name plant name.
      * @param stage stage index.
      * @return true if icon was found, false otherwise.
@@ -183,7 +198,7 @@ public final class EncyclopediaScreen {
 
     /**
      * Updates details.
-     * 
+     *
      * @param name plant name.
      * @param description plant description.
      */

@@ -22,7 +22,7 @@ public final class EncyclopediaController implements ActionListener {
 
     /**
      * Creates the controller.
-     * 
+     *
      * @param gameState The current state of the game.
      */
     public EncyclopediaController(final GameState gameState) {
@@ -35,10 +35,14 @@ public final class EncyclopediaController implements ActionListener {
      */
     public void start() {
         final List<String> names = new ArrayList<>();
+        final List<Boolean> unlockedStatus = new ArrayList<>();
+
         for (final Plant plant : this.gameState.getAllPlants()) {
             names.add(plant.getName());
+            unlockedStatus.add(plant.isDiscovered());
         }
-        this.encyclopediaScreen.show(names, this, NEXT_STAGE_COMMAND);
+
+        this.encyclopediaScreen.show(names, unlockedStatus, this, NEXT_STAGE_COMMAND);
     }
 
     @Override
