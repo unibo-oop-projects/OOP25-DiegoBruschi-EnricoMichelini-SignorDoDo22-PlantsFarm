@@ -23,7 +23,7 @@ public enum PlantType {
     MANGO("Mango", true, 6, Rarity.EPIC),
     AVOCADO("Avocado", true, 6, Rarity.EPIC),
     DRAGONFRUIT("Dragonfruit", true, 6, Rarity.EPIC),
-    BUDDHAHAND("Buddha's Hand", true, 7, Rarity.EPIC),
+    BUDDHAHAND("Buddha's Hand", true, 7, Rarity.LEGENDARY),
 
     //ORNAMENTAL PLANTS
     BEGONIA("Begonia", false, 4, Rarity.COMMON),
@@ -31,7 +31,7 @@ public enum PlantType {
     HIBISCUS("Hibiscus", false, 4, Rarity.RARE),
     STRELITZIA("Strelitzia", false, 4, Rarity.RARE),
     ORCHID("Orchid", false, 3, Rarity.EPIC),
-    NEPENTHES("Nepenthes", false, 4, Rarity.EPIC);
+    NEPENTHES("Nepenthes", false, 4, Rarity.LEGENDARY);
 
     private final String name;
     private final boolean isEdible;
@@ -95,6 +95,7 @@ public enum PlantType {
     public enum Rarity {
         COMMON,
         RARE,
-        EPIC
+        EPIC,
+        LEGENDARY
     }
 }

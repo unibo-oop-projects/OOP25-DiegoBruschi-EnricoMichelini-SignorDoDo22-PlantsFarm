@@ -1,13 +1,13 @@
 package it.unibo.plantsfarm.view;
 
+import it.unibo.plantsfarm.view.menu.MenuPanel;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
-
-import it.unibo.plantsfarm.view.menu.MenuPanel;
 
 /**
  * Manages the main screen window.

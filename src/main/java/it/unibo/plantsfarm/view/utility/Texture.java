@@ -20,6 +20,10 @@ public final class Texture {
     public static final double PLANT_ICON_RATIO = 0.05;
     public static final int PLANT_ICON_SIZE = calculateSize(PLANT_ICON_RATIO);
 
+    public static final String STAGE_PATH = "plantsStage/";
+    public static final double STAGE_ICON_RATIO = 0.20;
+    public static final int STAGE_ICON_SIZE = calculateSize(STAGE_ICON_RATIO);
+
     public static final ImageIcon ENCYCLOPEDIA_ICON = loadMenuIcon("Encyclopedia.png");
     public static final ImageIcon SHOP_ICON = loadMenuIcon("Shop.png");
     public static final ImageIcon STORAGE_ICON = loadMenuIcon("Storage.png");
@@ -38,6 +42,18 @@ public final class Texture {
     public static ImageIcon getPlantIcon(final String plantName) {
         final String fullPath = PLANT_PATH + plantName + ".png";
         return loadAndScale(fullPath, PLANT_ICON_SIZE, PLANT_ICON_SIZE);
+    }
+
+    /**
+     * Gets a plant stage icon dynamically.
+     *
+     * @param plantName The name of the plant.
+     * @param stage The stage number.
+     * @return The ImageIcon.
+     */
+    public static ImageIcon getPlantStageIcon(final String plantName, final int stage) {
+        final String fullPath = STAGE_PATH + plantName + "Stage/" + plantName + stage + ".png";
+        return loadAndScale(fullPath, STAGE_ICON_SIZE, STAGE_ICON_SIZE);
     }
 
     /**
