@@ -8,10 +8,10 @@ import it.unibo.plantsfarm.model.plant.PlantType.Rarity;
  */
 public class Plant {
 
-    //Static info
+    // Static info
     private final PlantType type;
 
-    //Dynamic info
+    // Dynamic info
     private int growthStage;
     private boolean needsWater;
     private boolean isPlanted;
@@ -66,6 +66,30 @@ public class Plant {
      */
     public final void unlock() {
         this.isDiscovered = true;
+    }
+
+    /**
+     * Gets the selling value of a single unit of this plant.
+     *
+     * @return the value in coins, or 0 if ornamental.
+     */
+    public final int getSellValue() {
+        if (!type.isEdible()) {
+            return 0;
+        }
+        return type.getHarvestInfo().getSellPrice();
+    }
+
+    /**
+     * Calculates the amount of items obtained from harvesting this plant.
+     *
+     * @return a random number between min and max yield, or 0 if ornamental.
+     */
+    public final int harvest() {
+        if (!type.isEdible()) {
+            return 0;
+        }
+        return type.getHarvestInfo().generateYield();
     }
 
     /**
@@ -157,8 +181,8 @@ public class Plant {
     @Override
     public String toString() {
         return "Plant: " + type.getName()
-             + ", growthStage: " + growthStage
-             + ", needsWater: " + needsWater
-             + ", rarity: " + type.getRarity();
+             + ", Stage: " + growthStage + "/" + type.getMaxGrowthStage()
+             + ", Rarity: " + type.getRarity()
+             + ", Value: " + getSellValue();
     }
 }

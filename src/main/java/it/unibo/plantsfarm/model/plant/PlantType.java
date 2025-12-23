@@ -2,55 +2,56 @@ package it.unibo.plantsfarm.model.plant;
 
 /**
  * Represents the type of a plant with game statistics.
+ * Uses HarvestInfo to distinguish between edible plants and ornamental ones.
  */
 public enum PlantType {
 
     //EDIBLE PLANTS
-    CARROT("Carrot", true, 3, Rarity.COMMON),
-    ONION("Onion", true, 3, Rarity.COMMON),
-    RADISH("Radish", true, 2, Rarity.COMMON),
-    ZUCCHINI("Zucchini", true, 3, Rarity.COMMON),
-    TOMATO("Tomato", true, 4, Rarity.COMMON),
-    POTATO("Potato", true, 4, Rarity.COMMON),
-    PEPPER("Pepper", true, 4, Rarity.COMMON),
-    CORN("Corn", true, 5, Rarity.COMMON),
-    EGGPLANT("Eggplant", true, 4, Rarity.RARE),
-    APPLE("Apple", true, 4, Rarity.RARE),
-    FIG("Fig", true, 4, Rarity.RARE),
-    PUMPKIN("Pumpkin", true, 5, Rarity.RARE),
-    CHERRY("Cherry", true, 5, Rarity.RARE),
-    WATERMELON("Watermelon", true, 5, Rarity.RARE),
-    MANGO("Mango", true, 6, Rarity.EPIC),
-    AVOCADO("Avocado", true, 6, Rarity.EPIC),
-    DRAGONFRUIT("Dragonfruit", true, 6, Rarity.EPIC),
-    BUDDHAHAND("Buddha's Hand", true, 7, Rarity.LEGENDARY),
+    CARROT("Carrot", 3, Rarity.COMMON, new HarvestInfo(10, 2, 3)),
+    ONION("Onion", 3, Rarity.COMMON, new HarvestInfo(12, 2, 3)),
+    RADISH("Radish", 3, Rarity.COMMON, new HarvestInfo(8, 4, 5)),
+    ZUCCHINI("Zucchini", 4, Rarity.COMMON, new HarvestInfo(15, 1, 3)),
+    TOMATO("Tomato", 5, Rarity.COMMON, new HarvestInfo(7, 3, 7)),
+    POTATO("Potato", 3, Rarity.COMMON, new HarvestInfo(15, 2, 3)),
+    PEPPER("Pepper", 5, Rarity.COMMON, new HarvestInfo(15, 2, 4)),
+    CORN("Corn", 5, Rarity.COMMON, new HarvestInfo(20, 1, 3)),
+    EGGPLANT("Eggplant", 4, Rarity.RARE, new HarvestInfo(30, 1, 3)),
+    APPLE("Apple", 5, Rarity.RARE, new HarvestInfo(15, 5, 10)),
+    FIG("Fig", 6, Rarity.RARE, new HarvestInfo(15, 3, 12)),
+    PUMPKIN("Pumpkin", 6, Rarity.RARE, new HarvestInfo(35, 1, 3)),
+    CHERRY("Cherry", 5, Rarity.RARE, new HarvestInfo(5, 10, 25)),
+    WATERMELON("Watermelon", 5, Rarity.RARE, new HarvestInfo(15, 6, 12)),
+    MANGO("Mango", 5, Rarity.EPIC, new HarvestInfo(50, 5, 8)),
+    AVOCADO("Avocado", 5, Rarity.EPIC, new HarvestInfo(75, 3, 7)),
+    DRAGONFRUIT("Dragonfruit", 4, Rarity.EPIC, new HarvestInfo(100, 2, 4)),
+    BUDDHAHAND("Buddha's Hand", 7, Rarity.LEGENDARY, new HarvestInfo(100, 3, 6)),
 
     //ORNAMENTAL PLANTS
-    BEGONIA("Begonia", false, 4, Rarity.COMMON),
-    MONSTERA("Monstera", false, 4, Rarity.RARE),
-    HIBISCUS("Hibiscus", false, 4, Rarity.RARE),
-    STRELITZIA("Strelitzia", false, 4, Rarity.RARE),
-    ORCHID("Orchid", false, 3, Rarity.EPIC),
-    NEPENTHES("Nepenthes", false, 4, Rarity.LEGENDARY);
+    BEGONIA("Begonia", 5, Rarity.COMMON, null),
+    MONSTERA("Monstera", 4, Rarity.RARE, null),
+    HIBISCUS("Hibiscus", 4, Rarity.RARE, null),
+    STRELITZIA("Strelitzia", 5, Rarity.RARE, null),
+    ORCHID("Orchid", 3, Rarity.EPIC, null),
+    NEPENTHES("Nepenthes", 4, Rarity.LEGENDARY, null);
 
     private final String name;
-    private final boolean isEdible;
     private final int maxGrowthStage;
     private final Rarity rarity;
+    private final HarvestInfo harvestInfo;
 
     /**
      * Constructor for PlantType.
      *
-     * @param name              The display name of the plant.
-     * @param isEdible          True if the plant is edible, false otherwise.
-     * @param maxGrowthStage    The maximum growth stage of the plant.
-     * @param rarity            The rarity level of the plant.
+     * @param name            The display name.
+     * @param maxGrowthStage  The maximum growth stage.
+     * @param rarity          The rarity level.
+     * @param harvestInfo     Economic info, Null for ornamentals.
      */
-    PlantType(final String name, final boolean isEdible, final int maxGrowthStage, final Rarity rarity) {
+    PlantType(final String name, final int maxGrowthStage, final Rarity rarity, final HarvestInfo harvestInfo) {
         this.name = name;
-        this.isEdible = isEdible;
         this.maxGrowthStage = maxGrowthStage;
         this.rarity = rarity;
+        this.harvestInfo = harvestInfo;
     }
 
     /**
@@ -60,15 +61,6 @@ public enum PlantType {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * Checks if the plant is edible.
-     *
-     * @return True if edible, false otherwise.
-     */
-    public boolean isEdible() {
-        return isEdible;
     }
 
     /**
@@ -87,6 +79,24 @@ public enum PlantType {
      */
     public Rarity getRarity() {
         return rarity;
+    }
+
+    /**
+     * Checks if the plant is edible.
+     *
+     * @return True if it has harvest info, false otherwise.
+     */
+    public boolean isEdible() {
+        return harvestInfo != null;
+    }
+
+    /**
+     * Gets the harvest info object.
+     *
+     * @return The HarvestInfo object, or null if ornamental.
+     */
+    public HarvestInfo getHarvestInfo() {
+        return harvestInfo;
     }
 
     /**
