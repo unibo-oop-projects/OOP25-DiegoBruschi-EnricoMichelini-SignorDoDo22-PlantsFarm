@@ -1,8 +1,10 @@
-package it.unibo.plantsfarm.model.plant;
+package it.unibo.plantsfarm.model.menu;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import it.unibo.plantsfarm.model.plant.Plant;
 
 /**
  * Represents the encyclopedia containing information about all plants in the game.
