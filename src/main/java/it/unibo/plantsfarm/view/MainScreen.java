@@ -38,6 +38,8 @@ public final class MainScreen {
         this.frame.setSize(screenSize.width, screenSize.height);
         this.frame.setLocationRelativeTo(null);
         this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.frame.setResizable(false);
+        this.frame.setUndecorated(true);
 
         this.frame.add(this.menuPanel, BorderLayout.EAST);
         this.frame.setVisible(true);
