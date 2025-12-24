@@ -62,6 +62,15 @@ public final class MainScreen {
     }
 
     /**
+     * Allows the controller to attach an action to the Storage button.
+     *
+     * @param listener The action to perform.
+     */
+    public void attachStorageListener(final ActionListener listener) {
+        this.menuPanel.addStorageListener(listener);
+    }
+
+    /**
      * Closes the main window.
      */
     public void close() {

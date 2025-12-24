@@ -21,7 +21,7 @@ public class Storage {
 
         for (final PlantType type : PlantType.values()) {
             if (type.isEdible()) {
-                items.put(type, 0);
+                items.put(type, 1);
             }
         }
     }

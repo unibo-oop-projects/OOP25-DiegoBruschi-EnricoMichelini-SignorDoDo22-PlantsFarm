@@ -71,10 +71,8 @@ public final class EncyclopediaController implements ActionListener {
     private void nextStage() {
         if (this.selectedPlant != null) {
             this.currentStageIndex++;
-            final boolean exists = this.encyclopediaScreen.updateStageImage(
-                this.selectedPlant.getName(),
-                this.currentStageIndex
-            );
+            final boolean exists = this.encyclopediaScreen.updateStageImage(this.selectedPlant.getName(), this.currentStageIndex);
+
             if (!exists) {
                 this.currentStageIndex = 1;
                 this.encyclopediaScreen.updateStageImage(this.selectedPlant.getName(), this.currentStageIndex);
