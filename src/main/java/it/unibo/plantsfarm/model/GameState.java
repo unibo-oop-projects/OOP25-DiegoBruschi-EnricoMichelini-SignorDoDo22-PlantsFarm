@@ -2,6 +2,7 @@ package it.unibo.plantsfarm.model;
 
 import it.unibo.plantsfarm.model.menu.Encyclopedia;
 import it.unibo.plantsfarm.model.menu.Storage;
+import it.unibo.plantsfarm.model.menu.Shop;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
@@ -15,6 +16,7 @@ public final class GameState {
 
     private final Encyclopedia encyclopedia;
     private final Storage storage;
+    private final Shop shop;
 
     /**
      * Constructs a new GameState initialized with a list of plants.
@@ -24,6 +26,7 @@ public final class GameState {
     public GameState(final List<Plant> plants) {
         this.encyclopedia = new Encyclopedia();
         this.storage = new Storage();
+        this.shop = new Shop(this);
         for (final Plant p : plants) {
             this.encyclopedia.addPlant(p);
         }
@@ -54,6 +57,15 @@ public final class GameState {
      */
     public Map<PlantType, Integer> getStorageContents() {
         return this.storage.getAllItems();
+    }
+
+    /**
+     * Returns the storage as a map.
+     *
+     * @return A map of plant types and their quantities.
+     */
+    public List<PlantType> getRequests() {
+        return this.shop.generateRequests();
     }
 
 }

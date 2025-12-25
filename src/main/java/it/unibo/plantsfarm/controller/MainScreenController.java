@@ -2,6 +2,7 @@ package it.unibo.plantsfarm.controller;
 
 import it.unibo.plantsfarm.controller.menu.EncyclopediaController;
 import it.unibo.plantsfarm.controller.menu.StorageController;
+import it.unibo.plantsfarm.controller.menu.ShopController;
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.view.MainScreen;
 
@@ -45,6 +46,11 @@ public final class MainScreenController {
         this.view.attachStorageListener(e -> {
             final StorageController storageController = new StorageController(this.gameState);
             storageController.showStorage();
+        });
+
+        this.view.attachShopListener(e -> {
+            final ShopController shopController = new ShopController(this.gameState);
+            shopController.start();
         });
     }
 }

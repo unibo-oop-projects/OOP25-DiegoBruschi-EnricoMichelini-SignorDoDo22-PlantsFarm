@@ -28,6 +28,10 @@ public final class Texture {
     public static final ImageIcon SHOP_ICON = loadMenuIcon("Shop.png");
     public static final ImageIcon STORAGE_ICON = loadMenuIcon("Storage.png");
     public static final ImageIcon SETTINGS_ICON = loadMenuIcon("Settings.png");
+    public static final ImageIcon GIFT_ICON = loadMenuIcon("Gift.png");
+    public static final ImageIcon RARE_GIFT_ICON = loadMenuIcon("RareGift.png");
+    public static final ImageIcon EPIC_GIFT_ICON = loadMenuIcon("EpicGift.png");
+    public static final ImageIcon LEGENDARY_GIFT_ICON = loadMenuIcon("LegendaryGift.png");
 
     private Texture() {
         // Utility class constructor

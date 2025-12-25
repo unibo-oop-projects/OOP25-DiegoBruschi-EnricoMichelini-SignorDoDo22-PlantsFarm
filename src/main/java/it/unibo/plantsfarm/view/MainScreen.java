@@ -73,6 +73,15 @@ public final class MainScreen {
     }
 
     /**
+     * Allows the controller to attach an action to the Shop button.
+     *
+     * @param listener The action to perform.
+     */
+    public void attachShopListener(final ActionListener listener) {
+        this.menuPanel.addShopListener(listener);
+    }
+
+    /**
      * Closes the main window.
      */
     public void close() {
