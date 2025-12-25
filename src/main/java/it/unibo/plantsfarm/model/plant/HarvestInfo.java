@@ -37,7 +37,7 @@ public class HarvestInfo {
      *
      * @return the number of items harvested.
      */
-    public int generateYield() {
+    public int generateHarvest() {
         if (minItem >= maxItem) {
             return minItem;
         }

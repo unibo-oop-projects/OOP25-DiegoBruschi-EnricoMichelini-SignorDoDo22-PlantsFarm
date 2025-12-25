@@ -89,7 +89,7 @@ public class Plant {
         if (!type.isEdible()) {
             return 0;
         }
-        return type.getHarvestInfo().generateYield();
+        return type.getHarvestInfo().generateHarvest();
     }
 
     /**
