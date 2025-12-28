@@ -37,13 +37,20 @@ public final class ShopController {
             this.view.addSellItem(type.getName(), price);
         }
 
-        this.view.setupSellButton(e -> performSellAction());
+        this.view.setSellButton(e -> performSellAction());
+        this.view.setBuyButtons(e -> buyItem());
     }
 
     /**
      * Manage the logic for selling the requested items.
      */
     private void performSellAction() {
+    }
+
+    /**
+     * Manage the logic for buying an item.
+     */
+    private void buyItem() {
     }
 
     /**
