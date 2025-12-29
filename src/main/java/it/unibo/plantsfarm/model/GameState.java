@@ -14,9 +14,12 @@ import java.util.Map;
  */
 public final class GameState {
 
+    private static final int INITIAL_COINS = 250;
+
     private final Encyclopedia encyclopedia;
     private final Storage storage;
     private final Shop shop;
+    private final Coin wallet;
 
     /**
      * Constructs a new GameState initialized with a list of plants.
@@ -27,6 +30,7 @@ public final class GameState {
         this.encyclopedia = new Encyclopedia();
         this.storage = new Storage();
         this.shop = new Shop(this);
+        this.wallet = new Coin(INITIAL_COINS);
         for (final Plant p : plants) {
             this.encyclopedia.addPlant(p);
         }
@@ -60,12 +64,20 @@ public final class GameState {
     }
 
     /**
-     * Returns the storage as a map.
+     * Returns the storage as a list.
      *
-     * @return A map of plant types and their quantities.
+     * @return A list of plant types and their quantities.
      */
     public List<PlantType> getRequests() {
         return this.shop.generateRequests();
     }
 
+    /**
+     * Returns the player's amount of coins.
+     *
+     * @return The current coin balance.
+     */
+    public int getWallet() {
+        return this.wallet.getValue();
+    }
 }

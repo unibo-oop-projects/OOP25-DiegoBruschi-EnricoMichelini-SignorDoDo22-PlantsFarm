@@ -1,12 +1,18 @@
 package it.unibo.plantsfarm.view;
 
 import it.unibo.plantsfarm.view.menu.MenuPanel;
+import it.unibo.plantsfarm.view.utility.Texture;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 /**
@@ -15,8 +21,12 @@ import javax.swing.WindowConstants;
 public final class MainScreen {
 
     private static final String TITLE = "PlantsFarm";
+    private static final String FONT_FAMILY = "SansSerif";
+    private static final int FONT_SIZE = 24;
+
     private final MenuPanel menuPanel;
     private JFrame frame;
+    private JLabel coinLabel;
 
     /**
      * Initializes the main screen components.
@@ -42,7 +52,34 @@ public final class MainScreen {
         this.frame.setUndecorated(true);
 
         this.frame.add(this.menuPanel, BorderLayout.EAST);
+
+        final JPanel gameContainer = new JPanel(new BorderLayout());
+        gameContainer.setOpaque(false);
+
+        final JPanel coinPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
+        coinPanel.setOpaque(false);
+
+        this.coinLabel = new JLabel(" 0");
+        this.coinLabel.setIcon(Texture.COIN_ICON);
+        this.coinLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, FONT_SIZE));
+        this.coinLabel.setForeground(Color.BLACK);
+
+        coinPanel.add(this.coinLabel);
+        gameContainer.add(coinPanel, BorderLayout.NORTH);
+
+        this.frame.add(gameContainer, BorderLayout.CENTER);
         this.frame.setVisible(true);
+    }
+
+    /**
+     * Updates the coin label text.
+     *
+     * @param amount The current amount of coins.
+     */
+    public void updateCoinLabel(final int amount) {
+        if (this.coinLabel != null) {
+            this.coinLabel.setText(" " + amount);
+        }
     }
 
     /**

@@ -10,6 +10,7 @@ import java.util.Map;
  */
 public class Storage {
 
+    private static final int TEST_ITEMS = 999;
     private final Map<PlantType, Integer> items;
 
     /**
@@ -21,7 +22,7 @@ public class Storage {
 
         for (final PlantType type : PlantType.values()) {
             if (type.isEdible()) {
-                items.put(type, 1);
+                items.put(type, TEST_ITEMS);
             }
         }
     }
@@ -32,7 +33,7 @@ public class Storage {
      * @param type   The plant type.
      * @param amount The amount to add.
      */
-    public void addProduct(final PlantType type, final int amount) {
+    public void addItem(final PlantType type, final int amount) {
         if (type == null || !type.isEdible() || amount <= 0) {
             return;
         }
