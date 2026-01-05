@@ -1,96 +1,102 @@
 package it.unibo.GamePanel;
+
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import java.util.Map;
-
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
+import it.unibo.Animation.AnimationAttacco;
+import it.unibo.Animation.SpriteLoader;
 import it.unibo.GamePanel.api.ControllerGamePanel;
 import it.unibo.GamePanel.api.ControllerGamePanel.UserInput;
-
 import static  it.unibo.GamePanel.api.ControllerGamePanel.UserInput.*;
 
-public class ViewGamePanel extends JPanel 
-{
-    /* 
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    private final int width = screenSize.width;
-    private final int height = screenSize.height;
-    */
+public class ViewGamePanel extends JPanel {
 
-    private final int OrginalTileSize = 16;
-    private final int scale = 3; 
-    private final int TileSize = OrginalTileSize * scale;
-    private final int MaxScreenCol = 16;
-    private final int MaxScreenRow = 12;
-    private final int WindthScreen = TileSize * MaxScreenCol;
-    private final int screenHeigh = TileSize * MaxScreenRow;
-    private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER =
-      Map.of(KeyEvent.VK_W, UP, KeyEvent.VK_A, LEFT, KeyEvent.VK_D, RIGHT, KeyEvent.VK_S, DOWN);
-    
- 
-    private double playerPosX;
-    private double playerPosY;
-    private ImplControllerGamePanel controller;
+public boolean azioneDisegna = false;
+public long azioneStartTime = 0;
+
+private static final long AZIONE_DURATION = 600_000_000L; 
+  public int orginalTileSize = 16;
+  public final int scale = 3; 
+  public int tileSize = orginalTileSize * scale;
+  public int maxScreenCol = 33;
+  public int maxScreenRow = 19;
+  private final int windthScreen = tileSize * maxScreenCol;
+  private final int heighScreen = tileSize * maxScreenRow;
+  private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER =
+    Map.of(KeyEvent.VK_W, UP, KeyEvent.VK_A, LEFT, KeyEvent.VK_D, RIGHT, KeyEvent.VK_S, DOWN, KeyEvent.VK_R, AZIONE);
+  private AnimationAttacco animation;
+  private double playerPosX = 100;
+  private double playerPosY = 100;
+  private ImplControllerGamePanel controller;
+  public Boolean azioneDisenga = false;
+  public SpriteLoader normale = new SpriteLoader("/Player/tile001.png");
 
     public ViewGamePanel(){
+      this.animation = new AnimationAttacco(120_000_000L);
       this.setBackground(Color.WHITE);
       this.setDoubleBuffered(true);
       this.setVisible(true);
+      this.setSize(700,700);
       this.setFocusable(true);
-      this.setPreferredSize(new Dimension(TileSize * MaxScreenCol, TileSize * MaxScreenRow));
-      this.setFocusable(true);
-      
+      this.setBackground(Color.BLACK);
       this.addKeyListener(new KeyAdapter() {
+        
         @Override
-        public void keyPressed(KeyEvent e) {
+        public void keyPressed(final KeyEvent e) {
           super.keyPressed(e);
-          if (KEY_MAPPER.containsKey(e.getKeyCode())){
-                    controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
-                }
+          if (KEY_MAPPER.containsKey(e.getKeyCode())) {
+            controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
+          }          
         }
 
         @Override
-        public void keyReleased(KeyEvent e) {
+        public void keyReleased(final KeyEvent e) {
         if (KEY_MAPPER.containsKey(e.getKeyCode())) {
             controller.takeInput(UserInput.FERMO);
         }
       }
+      
     });
   }
 
+  public void show(final double playerPosX, final double playerPosY) {
+    SwingUtilities.invokeLater(() -> {
+      this.playerPosX = playerPosX;
+      this.playerPosY = playerPosY;
+      repaint();
+    });
+  }
 
-
-    public void show(double playerPosX, double playerPosY){
-      SwingUtilities.invokeLater(()->{
-        this.playerPosX = playerPosX;
-        this.playerPosY = playerPosY;
-        repaint();
-      });
-    }
-
-    public void paintComponent(Graphics g){
-      
+  @Override
+  protected void paintComponent(Graphics g) {
       super.paintComponent(g);
       Graphics2D g2D = (Graphics2D) g;
-      g2D.setColor(Color.RED);
-      g2D.fillRect((int)playerPosX, (int)playerPosY, 64, 64);
-      
-    }
+      long now = System.nanoTime();
+      g2D.fillRect(100, 100, 45, 45);
+      if (azioneDisegna) {
+          if (now - azioneStartTime >= AZIONE_DURATION) {
+           
+            azioneDisegna = false;
+          } else {
+              g2D.drawImage(animation.getCurrentFrame(now),
+                  (int) playerPosX, (int) playerPosY, 64, 64, null);
+              return;
+          }
+      }
 
-    public void setController(ImplControllerGamePanel controller){
-        this.controller = controller;
-    }
-    
-    
+    g2D.drawImage(normale.getImage(), (int) playerPosX, (int) playerPosY, 64, 64, null); 
+  }
+
+
+  public void setController(final ImplControllerGamePanel controller){
+    this.controller = controller;
+  }
+
 }
     
 
