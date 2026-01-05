@@ -1,56 +1,56 @@
 package it.unibo.plantsfarm.controller;
 
 import it.unibo.plantsfarm.controller.menu.EncyclopediaController;
-import it.unibo.plantsfarm.controller.menu.StorageController;
 import it.unibo.plantsfarm.controller.menu.ShopController;
+import it.unibo.plantsfarm.controller.menu.StorageController;
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.view.MainScreen;
-
-import java.util.logging.Logger;
 
 /**
  * Controller responsible for managing the Main Screen interactions.
  */
 public final class MainScreenController {
 
-    private static final Logger LOGGER = Logger.getLogger(MainScreenController.class.getName());
-    private final GameState gameState;
     private final MainScreen view;
 
     /**
-     * Creates the controller.
+     * Creates the Main Screen Controller.
      *
-     * @param gameState The current state of the game.
+     * @param gameState The current game state.
      */
     public MainScreenController(final GameState gameState) {
-        this.gameState = gameState;
         this.view = new MainScreen();
-    }
-
-    /**
-     * Initializes the view, sets up listeners, and displays the screen.
-     */
-    public void start() {
         this.view.createMainScreen();
 
-        this.view.attachExitListener(e -> {
-            LOGGER.info("Closing game with " + this.gameState.getAllPlants().size() + " plants active.");
-            this.view.close(); 
-        });
+        setupListeners(gameState);
+        updateView(gameState);
+    }
 
-        this.view.attachEncyclopediaListener(e -> {
-            final EncyclopediaController encyclopediaController = new EncyclopediaController(this.gameState);
-            encyclopediaController.start();
-        });
+    private void setupListeners(final GameState gameState) {
 
-        this.view.attachStorageListener(e -> {
-            final StorageController storageController = new StorageController(this.gameState);
-            storageController.showStorage();
-        });
-
+        // Shop Button
         this.view.attachShopListener(e -> {
-            final ShopController shopController = new ShopController(this.gameState);
-            shopController.start();
+            new ShopController(gameState, () -> updateView(gameState)).start();
+            updateView(gameState);
         });
+
+        // Encyclopedia Button
+        this.view.attachEncyclopediaListener(e -> {
+            new EncyclopediaController().start(gameState);
+        });
+
+        // Storage Button
+        this.view.attachStorageListener(e -> {
+            new StorageController(gameState).start();
+        });
+
+        // Exit Button
+        this.view.attachExitListener(e -> {
+            this.view.close();
+        });
+    }
+
+    private void updateView(final GameState gameState) {
+        this.view.updateCoinLabel(gameState.getWallet());
     }
 }

@@ -1,8 +1,8 @@
 package it.unibo.plantsfarm.controller.loader;
 
-import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.controller.MainScreenController;
 import it.unibo.plantsfarm.model.GameState;
+import it.unibo.plantsfarm.model.plant.Plant;
 
 import java.util.List;
 
@@ -24,8 +24,7 @@ public class GameLoader {
         final GameState gameState = new GameState(plants);
 
         //CONTROLLER
-        final MainScreenController mainScreenController = new MainScreenController(gameState);
-        mainScreenController.start();
+        new MainScreenController(gameState);
 
         return gameState;
     }

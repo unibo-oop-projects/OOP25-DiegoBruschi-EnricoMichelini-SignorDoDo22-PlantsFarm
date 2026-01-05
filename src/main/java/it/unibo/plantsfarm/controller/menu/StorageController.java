@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Controller for the Storage feature.
  */
-public class StorageController {
+public final class StorageController {
 
     private final StorageScreen view;
 
@@ -46,7 +46,7 @@ public class StorageController {
     /**
      * Opens the storage window.
      */
-    public void showStorage() {
+    public void start() {
         this.view.show();
     }
 }

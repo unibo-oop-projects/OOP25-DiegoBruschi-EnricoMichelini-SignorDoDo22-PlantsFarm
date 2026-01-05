@@ -29,8 +29,9 @@ public final class GameState {
     public GameState(final List<Plant> plants) {
         this.encyclopedia = new Encyclopedia();
         this.storage = new Storage();
-        this.shop = new Shop(this);
+        this.shop = new Shop();
         this.wallet = new Coin(INITIAL_COINS);
+
         for (final Plant p : plants) {
             this.encyclopedia.addPlant(p);
         }
@@ -64,12 +65,21 @@ public final class GameState {
     }
 
     /**
-     * Returns the storage as a list.
+     * Returns the shop requests as a Map.
      *
-     * @return A list of plant types and their quantities.
+     * @return A map of plant types and their quantities.
      */
-    public List<PlantType> getRequests() {
-        return this.shop.generateRequests();
+    public Map<PlantType, Integer> getRequests() {
+        return this.shop.generateRequests(this);
+    }
+
+    /**
+     * Returns the shop instance.
+     *
+     * @return The shop model.
+     */
+    public Shop getShop() {
+        return this.shop;
     }
 
     /**
@@ -79,5 +89,45 @@ public final class GameState {
      */
     public int getWallet() {
         return this.wallet.getValue();
+    }
+
+    /**
+     * Adds coins to the wallet.
+     *
+     * @param amount The amount to add.
+     */
+    public void addCoins(final int amount) {
+        this.wallet.addAmount(amount);
+    }
+
+    /**
+     * Spends coins from the wallet if sufficient funds exist.
+     *
+     * @param amount The amount to spend.
+     * @return True if successful, false otherwise.
+     */
+    public boolean spendCoins(final int amount) {
+        return this.wallet.removeAmount(amount);
+    }
+
+    /**
+     * Adds harvested items to storage.
+     *
+     * @param type   The plant type.
+     * @param amount The quantity.
+     */
+    public void addHarvest(final PlantType type, final int amount) {
+        this.storage.addItem(type, amount);
+    }
+
+    /**
+     * Removes items from storage.
+     *
+     * @param type   The plant type.
+     * @param amount The quantity.
+     * @return True if successful.
+     */
+    public boolean removeHarvest(final PlantType type, final int amount) {
+        return this.storage.removeItem(type, amount);
     }
 }

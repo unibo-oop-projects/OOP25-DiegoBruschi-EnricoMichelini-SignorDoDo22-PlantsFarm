@@ -107,12 +107,14 @@ public final class ShopScreen {
     /**
      * Adds a selling option to the left panel.
      *
-     * @param plantName The name of the plant.
-     * @param price     The price.
+     * @param plantName The plant name.
+     * @param quantity  The quantity to sell.
+     * @param price     The total price.
      */
-    public void addSellItem(final String plantName, final int price) {
+    public void addSellItem(final String plantName, final int quantity, final int price) {
+
         final ImageIcon icon = Texture.getPlantIcon(plantName);
-        final String text = plantName + " (" + price + " G)";
+        final String text = plantName + " x" + quantity + " (" + price + " Coins)";
 
         final JLabel itemLabel = new JLabel(text, icon, SwingConstants.CENTER);
         itemLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -125,6 +127,16 @@ public final class ShopScreen {
         );
 
         this.plantRequests.add(itemLabel);
+    }
+
+    /**
+     * Clears the current request items to allow refresh.
+     */
+    public void resetRequestsPanel() {
+        this.plantRequests.setVisible(false);
+        this.plantRequests.removeAll();
+        this.plantRequests.setVisible(true);
+        this.screen.repaint();
     }
 
     /**
@@ -158,7 +170,11 @@ public final class ShopScreen {
         };
 
         for (int i = 0; i < 4; i++) {
-            final JButton buyButton = ButtonFactory.createButton("Buy (" + ((i + 1) * BUY_COST) + ")");
+            final int cost = (i + 1) * BUY_COST;
+            final JButton buyButton = ButtonFactory.createButton("Buy (" + cost + ")");
+
+            buyButton.putClientProperty("itemCost", cost);
+
             buyButton.setIcon(giftIcons[i]);
             buyButton.setVerticalTextPosition(SwingConstants.BOTTOM);
             buyButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -173,5 +189,12 @@ public final class ShopScreen {
      */
     public void show() {
         this.screen.setVisible(true);
+    }
+
+    /**
+     * Closes the dialog.
+     */
+    public void close() {
+        this.screen.dispose();
     }
 }

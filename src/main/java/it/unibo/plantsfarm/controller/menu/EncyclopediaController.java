@@ -12,51 +12,48 @@ import java.util.List;
 /**
  * Controller for the Encyclopedia feature.
  */
-public final class EncyclopediaController implements ActionListener {
+public final class EncyclopediaController {
 
     private static final String NEXT_STAGE_COMMAND = "NEXT_STAGE";
-    private final GameState gameState;
     private final EncyclopediaScreen encyclopediaScreen;
     private Plant selectedPlant;
     private int currentStageIndex;
 
     /**
      * Creates the controller.
-     *
-     * @param gameState The current state of the game.
      */
-    public EncyclopediaController(final GameState gameState) {
-        this.gameState = gameState;
+    public EncyclopediaController() {
         this.encyclopediaScreen = new EncyclopediaScreen();
     }
 
     /**
      * Starts the encyclopedia.
+     *
+     * @param gameState The current state of the game.
      */
-    public void start() {
+    public void start(final GameState gameState) {
         final List<String> names = new ArrayList<>();
         final List<Boolean> unlockedStatus = new ArrayList<>();
 
-        for (final Plant plant : this.gameState.getAllPlants()) {
+        for (final Plant plant : gameState.getAllPlants()) {
             names.add(plant.getName());
             unlockedStatus.add(plant.isDiscovered());
         }
 
-        this.encyclopediaScreen.show(names, unlockedStatus, this, NEXT_STAGE_COMMAND);
+        final ActionListener listener = (ActionEvent e) -> {
+            final String command = e.getActionCommand();
+            if (NEXT_STAGE_COMMAND.equals(command)) {
+                nextStage();
+            } else {
+                selection(command, gameState);
+            }
+        };
+
+        this.encyclopediaScreen.show(names, unlockedStatus, listener, NEXT_STAGE_COMMAND);
     }
 
-    @Override
-    public void actionPerformed(final ActionEvent e) {
-        final String command = e.getActionCommand();
-        if (NEXT_STAGE_COMMAND.equals(command)) {
-            nextStage();
-        } else {
-            selection(command);
-        }
-    }
-
-    private void selection(final String name) {
-        for (final Plant plant : this.gameState.getAllPlants()) {
+    private void selection(final String name, final GameState gameState) {
+        for (final Plant plant : gameState.getAllPlants()) {
             if (plant.getName().equals(name)) {
                 this.selectedPlant = plant;
                 this.currentStageIndex = 1;
