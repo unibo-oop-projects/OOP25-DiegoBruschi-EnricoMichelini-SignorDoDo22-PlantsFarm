@@ -9,8 +9,7 @@ public class ImplCamera implements Camera{
 
     @Override
     public void followPlayer() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'followPlayer'");
+        
     }
 
     @Override

@@ -1,7 +1,8 @@
 package it.unibo;
 
-import javax.swing.JFrame;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import it.unibo.GamePanel.ImplControllerGamePanel;
 
 import it.unibo.Model.EdiblePlant;
@@ -16,15 +17,18 @@ import it.unibo.Controller.MainScreenController;
 public class Main {
     
  public static void main(String[] args) {
-    
+   
     JFrame frame =  new JFrame();
+
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(700,700);
     frame.setVisible(true);
+
     ImplControllerGamePanel controll = new ImplControllerGamePanel();
     frame.add(controll.getView());
    controll.start();
-   int mediumValue = 4;
+
+    int mediumValue = 4;
 
         //EDIBLE PLANTS
         //COMMON
@@ -115,6 +119,6 @@ public class Main {
 
         //CONTROLLER SETUP
         new MainScreenController(screen, plants_encyclopedia, storage);
-    
-    }
+
+ }
 }
