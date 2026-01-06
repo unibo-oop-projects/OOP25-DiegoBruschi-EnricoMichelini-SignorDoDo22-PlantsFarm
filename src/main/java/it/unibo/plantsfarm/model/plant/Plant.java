@@ -15,7 +15,6 @@ public class Plant {
     private int growthStage;
     private boolean needsWater;
     private boolean isPlanted;
-    private boolean isDiscovered;
 
     /**
      * Creates a new Plant based on a specific type.
@@ -27,7 +26,6 @@ public class Plant {
         this.growthStage = 0;
         this.needsWater = false;
         this.isPlanted = false;
-        this.isDiscovered = true;
     }
 
     /**
@@ -59,13 +57,6 @@ public class Plant {
      */
     public final boolean isMature() {
         return growthStage >= type.getMaxGrowthStage();
-    }
-
-    /**
-     * Unlocks the plant in the encyclopedia.
-     */
-    public final void unlock() {
-        this.isDiscovered = true;
     }
 
     /**
@@ -138,12 +129,12 @@ public class Plant {
     }
 
     /**
-     * Checks if the plant has been discovered in the encyclopedia.
+     * Checks if the plant type has been discovered.
      *
      * @return true if discovered, false otherwise.
      */
     public final boolean isDiscovered() {
-        return isDiscovered;
+        return type.isDiscovered();
     }
 
     /**

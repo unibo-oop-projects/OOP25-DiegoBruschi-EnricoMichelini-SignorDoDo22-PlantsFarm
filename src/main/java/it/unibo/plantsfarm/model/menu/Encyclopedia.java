@@ -55,7 +55,7 @@ public final class Encyclopedia {
      */
     public void unlockAll() {
         for (final Plant plant : plants) {
-            plant.unlock();
+            plant.getType().unlock();
         }
     }
 

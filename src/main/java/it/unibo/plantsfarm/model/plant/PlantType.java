@@ -38,6 +38,7 @@ public enum PlantType {
     private final int maxGrowthStage;
     private final Rarity rarity;
     private final HarvestInfo harvestInfo;
+    private boolean isDiscovered;
 
     /**
      * Constructor for PlantType.
@@ -52,6 +53,7 @@ public enum PlantType {
         this.maxGrowthStage = maxGrowthStage;
         this.rarity = rarity;
         this.harvestInfo = harvestInfo;
+        this.isDiscovered = false;
     }
 
     /**
@@ -97,6 +99,22 @@ public enum PlantType {
      */
     public HarvestInfo getHarvestInfo() {
         return harvestInfo;
+    }
+
+    /**
+     * Unlocks this plant type in the encyclopedia.
+     */
+    public void unlock() {
+        this.isDiscovered = true;
+    }
+
+    /**
+     * Checks if this plant type has been discovered.
+     *
+     * @return true if discovered, false otherwise.
+     */
+    public boolean isDiscovered() {
+        return isDiscovered;
     }
 
     /**
