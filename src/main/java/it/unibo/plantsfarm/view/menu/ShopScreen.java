@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -181,6 +182,19 @@ public final class ShopScreen {
             buyButton.setIconTextGap(BUY_BTN_GAP);
             buyButton.addActionListener(listener);
             this.rightBoxPanel.add(buyButton);
+        }
+    }
+
+    /**
+     * Enables or disables all buy buttons.
+     *
+     * @param enabled True to enable, false to disable.
+     */
+    public void setBuyButtonsEnabled(final boolean enabled) {
+        for (final Component comp : this.rightBoxPanel.getComponents()) {
+            if (comp instanceof JButton) {
+                comp.setEnabled(enabled);
+            }
         }
     }
 

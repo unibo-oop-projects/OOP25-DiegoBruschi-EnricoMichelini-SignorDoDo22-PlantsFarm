@@ -5,6 +5,7 @@ import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
@@ -100,32 +101,37 @@ public final class Shop {
     }
 
     /**
-     * Tries to buy a random plant item (TEST).
-     * Checks if the player has enough coins.
+     * Tries to buy a mystery box to unlock a new plant.
      *
      * @param gameState The current state of the game.
      * @param cost      The cost of the item.
-     * @return True if the item was bought, false if not enough money.
+     * @return The unlocked PlantType, or null if transaction failed.
      */
-    public boolean buyItem(final GameState gameState, final int cost) {
+    public PlantType buyMysteryBox(final GameState gameState, final int cost) {
+        final List<PlantType> lockedPlants = Arrays.stream(PlantType.values())
+            .filter(p -> !p.isDiscovered())
+            .collect(Collectors.toList());
+
+        if (lockedPlants.isEmpty()) {
+            return null;
+        }
+
         if (!gameState.spendCoins(cost)) {
-            return false;
+            return null;
         }
 
-        List<Plant> availablePool = gameState.getAllUnlockedEdiblePlants();
+        final PlantType newUnlock = lockedPlants.get(random.nextInt(lockedPlants.size()));
+        newUnlock.unlock();
 
-        if (availablePool.isEmpty()) {
-            availablePool = gameState.getAllPlants().stream()
-                .filter(p -> p.getType().isEdible())
-                .collect(Collectors.toList());
-        }
+        return newUnlock;
+    }
 
-        if (!availablePool.isEmpty()) {
-            final Plant randomPlant = availablePool.get(random.nextInt(availablePool.size()));
-            gameState.addHarvest(randomPlant.getType(), 1);
-            return true;
-        }
-
-        return false;
+    /**
+     * Checks if all plants have been unlocked.
+     *
+     * @return True if there are no locked plants left.
+     */
+    public boolean areAllPlantsUnlocked() {
+        return Arrays.stream(PlantType.values()).allMatch(PlantType::isDiscovered);
     }
 }

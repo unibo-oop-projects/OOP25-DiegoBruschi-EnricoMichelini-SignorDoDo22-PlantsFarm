@@ -40,6 +40,12 @@ public final class ShopController {
     private void refreshRequests(final GameState gameState) {
         this.view.resetRequestsPanel();
 
+        if (gameState.getShop().areAllPlantsUnlocked()) {
+            this.view.setBuyButtonsEnabled(false);
+        } else {
+            this.view.setBuyButtonsEnabled(true);
+        }
+
         final Map<PlantType, Integer> requests = gameState.getShop().generateRequests(gameState);
 
         for (final Map.Entry<PlantType, Integer> entry : requests.entrySet()) {
@@ -83,16 +89,22 @@ public final class ShopController {
             }
         }
 
-        final boolean purchased = gameState.getShop().buyItem(gameState, cost);
+        final PlantType unlockedPlant = gameState.getShop().buyMysteryBox(gameState, cost);
 
-        if (purchased) {
-            showMessage("Purchased", "You bought a mystery box for " + cost + " coins!");
+        if (unlockedPlant != null) {
+            showMessage("New Discovery!", "You unlocked: " + unlockedPlant.getName() + "!");
 
             if (this.onTransactionListener != null) {
                 this.onTransactionListener.run();
             }
+            refreshRequests(gameState);
         } else {
-            showMessage("Insufficient Funds", "You need " + cost + " coins to buy this!");
+            if (gameState.getShop().areAllPlantsUnlocked()) {
+                showMessage("Shop Empty", "You have already unlocked all plants!");
+                refreshRequests(gameState);
+            } else {
+                showMessage("Insufficient Funds", "You need " + cost + " coins to buy this!");
+            }
         }
     }
 

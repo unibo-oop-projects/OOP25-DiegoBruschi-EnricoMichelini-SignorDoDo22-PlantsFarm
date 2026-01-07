@@ -17,6 +17,12 @@ public class PlantLoader {
      * @return A list of initialized plants.
      */
     public List<Plant> loadPlants() {
+
+        PlantType.CARROT.unlock();
+        PlantType.TOMATO.unlock();
+        PlantType.NEPENTHES.unlock();
+        PlantType.DRAGONFRUIT.unlock();
+
         final List<Plant> plants = new ArrayList<>();
         for (final PlantType type : PlantType.values()) {
             plants.add(new Plant(type));
