@@ -33,6 +33,7 @@ public final class MainScreen {
      */
     public MainScreen() {
         this.menuPanel = new MenuPanel();
+        //this.menuPanel.setFocusable(false);
     }
 
     /**

@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.model;
 
+import it.unibo.plantsfarm.model.menu.Coin;
 import it.unibo.plantsfarm.model.menu.Encyclopedia;
 import it.unibo.plantsfarm.model.menu.Storage;
 import it.unibo.plantsfarm.model.menu.Shop;
