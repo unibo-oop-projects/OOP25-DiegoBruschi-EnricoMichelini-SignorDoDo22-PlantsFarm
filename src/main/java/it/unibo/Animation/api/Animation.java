@@ -9,4 +9,6 @@ public interface Animation {
      * @return 
      */
     public BufferedImage getCurrentFrame(long now);
+
+    public void start(final long nowNs);
 }

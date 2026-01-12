@@ -1,8 +1,8 @@
 package it.unibo.GamePanel;
 
-import static it.unibo.GamePanel.api.ControllerGamePanel.UserInput.AZIONE;
-
 import java.util.concurrent.LinkedBlockingQueue;
+import it.unibo.Animation.AnimationAttacco;
+import it.unibo.Animation.ImplAnimationController;
 import it.unibo.GamePanel.api.ControllerGamePanel.UserInput;
 import it.unibo.Player.BasePlayer;
 
@@ -11,33 +11,34 @@ public class ImplControllerGamePanel extends Thread {
     private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
     private BasePlayer player;
-
+    public ImplAnimationController controllerAnimation;
+    public AnimationAttacco animazione = new AnimationAttacco(120_000_000L); 
+    
     public ImplControllerGamePanel() {
+
         this.player = new BasePlayer();
         this.view = new ViewGamePanel();
         this.view.setController(this);
-        
+        setControllerAnimation();
+        this.controllerAnimation.setPlayer(player);
     }
 
     @Override
     public void run() {
         long lastTime = System.currentTimeMillis();
+        
         while (true) {
             long now = System.currentTimeMillis();
             long delta = now - lastTime;
             lastTime = now;
             UserInput input = queue.poll();
+            
             if (input != null) {
+                
                 player.setDirection(input);
+                controllerAnimation.takeInput(input);
             }
 
-            if( input == AZIONE ){
-                setAnimazione();
-                view.azioneDisegna = true;
-                
-                System.out.print("qua controller \n");
-            }
-            
             view.show(player.getPosx(), player.getPosy());
             
             try {
@@ -45,7 +46,10 @@ public class ImplControllerGamePanel extends Thread {
             } catch (InterruptedException e) {
                 break;
             }
+
+            controllerAnimation.update(now);
             player.updatePlayer(delta);
+            
         }
     }
 
@@ -83,16 +87,9 @@ public class ImplControllerGamePanel extends Thread {
         return this.player;
     }
 
-    public void openInventario(){
-        
-    }
 
-    public void avviaAnimazione(){
-        view.azioneDisenga = true;
-    }
-
-    public void setAnimazione(){
-        view.azioneStartTime = System.nanoTime();
+    public void setControllerAnimation(){
+        this.controllerAnimation = new ImplAnimationController(this);
     }
 
 }

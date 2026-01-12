@@ -2,6 +2,9 @@ package it.unibo.Player;
 
 import  static it.unibo.GamePanel.api.ControllerGamePanel.UserInput;
 
+import it.unibo.GamePanel.api.ControllerGamePanel.UserInput;
+import java.awt.image.*;
+
 public class BasePlayer  {
     private double posX;
     private double posY;
@@ -24,7 +27,6 @@ public class BasePlayer  {
             case RIGHT -> posX += delta;
             case UP -> posY -= delta;
             case DOWN -> posY += delta;
-            case AZIONE -> actionAttack();
             case FERMO -> { }
         }
     }
@@ -36,6 +38,7 @@ public class BasePlayer  {
      * @param direction the direction requested by the user
      */
     public final  void setDirection(final UserInput direction) {
+        System.out.print("*******DIRECTION ATTUALE**********" + direction);
         this.direction = direction;
     }
 
@@ -57,10 +60,7 @@ public class BasePlayer  {
         return this.posY; 
     }
 
-    /**
-     * 
-     */
-    public final  void actionAttack() {
-        System.out.print("STO ATTACCANDO \n");
-    }
+    public final UserInput getDirection(){ return this.direction;}
+
+   
 }

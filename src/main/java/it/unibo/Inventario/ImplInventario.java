@@ -14,9 +14,6 @@ public class ImplInventario extends JPanel {
         this.setVisible(false);
         this.setSize(300,300);
         
-       
-
-
     }
 
     public void openInventario(){}

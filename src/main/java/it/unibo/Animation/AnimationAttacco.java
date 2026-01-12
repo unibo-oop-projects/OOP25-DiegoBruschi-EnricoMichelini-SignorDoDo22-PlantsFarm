@@ -1,40 +1,48 @@
 package it.unibo.Animation;
 
 import java.awt.image.BufferedImage;
+import it.unibo.Animation.api.*;;
 
-public class AnimationAttacco {
+public class AnimationAttacco  implements Animation {
 
-    private  BufferedImage[] frames;
+    private final BufferedImage[] frames;
     private int frameIndex;
-    private long lastTime;
-    private final long frameDuration;
-    private long now = System.nanoTime();
-   
-    public AnimationAttacco(final long frameDuration) {
+    private long lastFrameTimeNs;
+    private final long frameDurationNs;
+    private boolean playing = false;
+    private AnimationFrames animationframes = new AnimationFrames();
 
-        this.frameDuration = frameDuration;
-        frames = new BufferedImage[] {
-        new SpriteLoader("/Player/tile042.png").getImage(),
-        new SpriteLoader("/Player/tile043.png").getImage(),
-        new SpriteLoader("/Player/tile044.png").getImage(),
-        new SpriteLoader("/Player/tile045.png").getImage()
-        };
+    public AnimationAttacco(final long frameDurationNs) {
+        this.frameDurationNs = frameDurationNs;
+        frames = animationframes.water;
     }
 
-    /**
-     * 
-     * @param now
-     * @return
-     */
-    public BufferedImage getCurrentFrame(final long now) {
-        System.out.println("delta=" + (now - lastTime));
-        if (now - lastTime >= frameDuration) {
-            System.out.println("Sto disegnando \n");
-            System.out.println("current frame (SONO QUA DENTRO ANIMATION )" + frameIndex + "\n");
-            frameIndex = (frameIndex + 1) % frames.length;
-            lastTime = now; 
+    @Override
+    public void start(final long nowNs) {
+       
+        frameIndex = 0;
+        lastFrameTimeNs = nowNs;
+    }
+
+    public BufferedImage getCurrentFrame(final long nowNs) {
+        
+        if (nowNs - lastFrameTimeNs >= frameDurationNs) {
+            frameIndex++;
+            lastFrameTimeNs = nowNs;
+            
+            if (frameIndex >= frames.length) {
+                frameIndex = frames.length - 1;
+                playing = false; 
+            }
         }
         return frames[frameIndex];
     }
 
+    public boolean isPlaying() {
+        return playing;
+    }
+
+    public boolean getisPlaying() {
+        return playing;
+    }
 }
