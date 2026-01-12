@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.controller;
 
 import it.unibo.plantsfarm.controller.menu.EncyclopediaController;
+import it.unibo.plantsfarm.controller.menu.PauseMenuController;
 import it.unibo.plantsfarm.controller.menu.ShopController;
 import it.unibo.plantsfarm.controller.menu.StorageController;
 import it.unibo.plantsfarm.model.GameState;
@@ -46,7 +47,7 @@ public final class MainScreenController {
 
         // Exit Button
         this.view.attachExitListener(e -> {
-            this.view.close();
+            new PauseMenuController(this.view::close).start();
         });
     }
 
