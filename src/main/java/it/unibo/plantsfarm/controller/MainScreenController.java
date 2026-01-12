@@ -1,0 +1,56 @@
+package it.unibo.plantsfarm.controller;
+
+import it.unibo.plantsfarm.controller.menu.EncyclopediaController;
+import it.unibo.plantsfarm.controller.menu.ShopController;
+import it.unibo.plantsfarm.controller.menu.StorageController;
+import it.unibo.plantsfarm.model.GameState;
+import it.unibo.plantsfarm.view.MainScreen;
+
+/**
+ * Controller responsible for managing the Main Screen interactions.
+ */
+public final class MainScreenController {
+
+    private final MainScreen view;
+
+    /**
+     * Creates the Main Screen Controller.
+     *
+     * @param gameState The current game state.
+     */
+    public MainScreenController(final GameState gameState) {
+        this.view = new MainScreen();
+        this.view.createMainScreen();
+
+        setupListeners(gameState);
+        updateView(gameState);
+    }
+
+    private void setupListeners(final GameState gameState) {
+
+        // Shop Button
+        this.view.attachShopListener(e -> {
+            new ShopController(gameState, () -> updateView(gameState)).start();
+            updateView(gameState);
+        });
+
+        // Encyclopedia Button
+        this.view.attachEncyclopediaListener(e -> {
+            new EncyclopediaController().start(gameState);
+        });
+
+        // Storage Button
+        this.view.attachStorageListener(e -> {
+            new StorageController(gameState).start();
+        });
+
+        // Exit Button
+        this.view.attachExitListener(e -> {
+            this.view.close();
+        });
+    }
+
+    private void updateView(final GameState gameState) {
+        this.view.updateCoinLabel(gameState.getWallet());
+    }
+}
