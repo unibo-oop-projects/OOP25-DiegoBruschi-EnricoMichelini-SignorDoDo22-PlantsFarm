@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.Map;
 
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
-
-import it.unibo.view.GamePanel;
 
 public class TileManager {
     

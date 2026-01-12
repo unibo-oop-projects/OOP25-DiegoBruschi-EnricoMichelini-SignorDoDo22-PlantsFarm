@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.Map;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -6,12 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 import javax.swing.JPanel;
 
-import it.unibo.view.Tile;
-import it.unibo.view.TileManager;
-
 public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16; // 16x16 tile
-    final int scale = 2; // Optimal is 3
+    public final int scale = 2; // Optimal is 3
 
     public final int tileSize = originalTileSize * scale; // 48x48 tile
     public final int maxScreenCol = 32; //66 for full map, 32 for small map

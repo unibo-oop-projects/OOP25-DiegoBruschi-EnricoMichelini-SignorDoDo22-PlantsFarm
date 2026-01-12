@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.Map;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
