@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.view;
 
+import it.unibo.plantsfarm.view.Map.GamePanel;
 import it.unibo.plantsfarm.view.menu.MenuPanel;
 import it.unibo.plantsfarm.view.utility.Texture;
 
@@ -25,6 +26,7 @@ public final class MainScreen {
     private static final int FONT_SIZE = 24;
 
     private final MenuPanel menuPanel;
+    private GamePanel gamePanel;
     private JFrame frame;
     private JLabel coinLabel;
 
@@ -33,7 +35,7 @@ public final class MainScreen {
      */
     public MainScreen() {
         this.menuPanel = new MenuPanel();
-        //this.menuPanel.setFocusable(false);
+        this.menuPanel.setFocusable(false);
     }
 
     /**
@@ -68,8 +70,14 @@ public final class MainScreen {
         coinPanel.add(this.coinLabel);
         gameContainer.add(coinPanel, BorderLayout.NORTH);
 
+        this.gamePanel = new GamePanel();
+        gameContainer.add(this.gamePanel, BorderLayout.CENTER);
+
         this.frame.add(gameContainer, BorderLayout.CENTER);
         this.frame.setVisible(true);
+
+        this.gamePanel.startGameThread();
+        this.gamePanel.requestFocusInWindow();
     }
 
     /**

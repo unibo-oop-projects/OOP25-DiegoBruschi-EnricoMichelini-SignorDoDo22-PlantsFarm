@@ -1,4 +1,4 @@
-package it.unibo.view.Map;
+package it.unibo.plantsfarm.view.Map;
 
 import java.awt.image.BufferedImage;
 
