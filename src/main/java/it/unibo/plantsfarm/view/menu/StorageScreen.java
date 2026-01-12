@@ -1,0 +1,112 @@
+package it.unibo.plantsfarm.view.menu;
+
+import it.unibo.plantsfarm.view.utility.ButtonFactory;
+import it.unibo.plantsfarm.view.utility.Texture;
+import it.unibo.plantsfarm.view.utility.WindowFactory;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+/**
+ * Manages the view for the Storage feature.
+ */
+public final class StorageScreen {
+
+    private static final String TITLE = "Storage";
+    private static final int GAP = 10;
+    private static final int PADDING = 20;
+    private static final int GRID_COLS = 3;
+
+    private static final Color BG_COLOR = new Color(245, 245, 220);
+
+    private final JDialog dialog;
+    private final JPanel itemsPanel;
+    private final Map<String, JButton> itemButtons;
+
+    /**
+     * Creates a new StorageScreen using WindowFactory.
+     */
+    public StorageScreen() {
+
+        this.dialog = WindowFactory.createMenuWindow(TITLE);
+        this.dialog.setLayout(new BorderLayout());
+
+        this.itemsPanel = new JPanel(new GridLayout(0, GRID_COLS, GAP, GAP));
+        this.itemsPanel.setBackground(BG_COLOR);
+        this.itemsPanel.setBorder(BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING));
+
+        this.dialog.add(itemsPanel, BorderLayout.CENTER);
+
+        this.itemButtons = new HashMap<>();
+    }
+
+    /**
+     * Creates a visual slot for a plant using ButtonFactory.
+     *
+     * @param plantName The name of the plant.
+     */
+    public void createStorageSlot(final String plantName) {
+        if (itemButtons.containsKey(plantName)) {
+            return;
+        }
+
+        final ImageIcon icon = Texture.getPlantIcon(plantName);
+        final String buttonText = formatButtonText(plantName, 0);
+
+        final JButton itemButton = ButtonFactory.createButton(buttonText);
+
+        itemButton.setIcon(icon);
+        itemButton.setHorizontalTextPosition(SwingConstants.RIGHT);
+        itemButton.setVerticalTextPosition(SwingConstants.CENTER);
+        itemButton.setHorizontalAlignment(SwingConstants.LEFT);
+
+        itemButton.setBackground(Color.WHITE);
+        itemButton.setToolTipText("Inventory: " + plantName);
+        itemButton.setEnabled(false);
+
+        this.itemButtons.put(plantName, itemButton);
+        this.itemsPanel.add(itemButton);
+    }
+
+    /**
+     * Updates the quantity for a specific plant.
+     *
+     * @param plantName   The name of the plant.
+     * @param newQuantity The new quantity to display.
+     */
+    public void updateItemQuantity(final String plantName, final int newQuantity) {
+        final JButton button = itemButtons.get(plantName);
+        if (button != null) {
+            button.setText(formatButtonText(plantName, newQuantity));
+            button.setEnabled(newQuantity > 0);
+        }
+    }
+
+    /**
+     * Shows the storage screen.
+     */
+    public void show() {
+        dialog.setVisible(true);
+    }
+
+    /**
+     * Formats the text.
+     *
+     * @param name     The plant name.
+     * @param quantity The quantity.
+     * @return The formatted string.
+     */
+    private String formatButtonText(final String name, final int quantity) {
+        return "<html><font size='4'><b>" + name + "</b></font><br>"
+             + "Quantity: " + quantity + "</html>";
+    }
+}
