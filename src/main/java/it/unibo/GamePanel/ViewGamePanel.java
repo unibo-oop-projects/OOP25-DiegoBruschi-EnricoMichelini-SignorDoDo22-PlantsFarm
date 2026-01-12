@@ -41,7 +41,6 @@ private static final long AZIONE_DURATION = 600_000_000L;
       this.setBackground(Color.WHITE);
       this.setDoubleBuffered(true);
       this.setVisible(true);
-      this.setSize(700,700);
       this.setFocusable(true);
       this.setBackground(Color.BLACK);
       this.addKeyListener(new KeyAdapter() {
