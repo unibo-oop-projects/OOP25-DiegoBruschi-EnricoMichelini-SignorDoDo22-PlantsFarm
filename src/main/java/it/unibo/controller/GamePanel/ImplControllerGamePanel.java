@@ -1,10 +1,9 @@
-package it.unibo.GamePanel;
-
+package it.unibo.controller.GamePanel;
 import java.util.concurrent.LinkedBlockingQueue;
-import it.unibo.Animation.AnimationAttacco;
-import it.unibo.Animation.ImplAnimationController;
-import it.unibo.GamePanel.api.ControllerGamePanel.UserInput;
-import it.unibo.Player.BasePlayer;
+
+import it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput;
+import it.unibo.model.Player.BasePlayer;
+import it.unibo.view.Animation.AnimationAzione;
 
 public class ImplControllerGamePanel extends Thread {
     private ViewGamePanel view;
@@ -12,7 +11,7 @@ public class ImplControllerGamePanel extends Thread {
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
     private BasePlayer player;
     public ImplAnimationController controllerAnimation;
-    public AnimationAttacco animazione = new AnimationAttacco(120_000_000L); 
+    public AnimationAzione animazione = new AnimationAzione(120_000_000L); 
     
     public ImplControllerGamePanel() {
 
@@ -20,7 +19,6 @@ public class ImplControllerGamePanel extends Thread {
         this.view = new ViewGamePanel();
         this.view.setController(this);
         setControllerAnimation();
-        this.controllerAnimation.setPlayer(player);
     }
 
     @Override

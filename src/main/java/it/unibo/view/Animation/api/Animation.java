@@ -1,4 +1,4 @@
-package it.unibo.Animation.api;
+package it.unibo.view.Animation.api;
 
 import java.awt.image.BufferedImage;
 

@@ -3,7 +3,8 @@ package it.unibo;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import it.unibo.GamePanel.ImplControllerGamePanel;
+
+import it.unibo.controller.GamePanel.ImplControllerGamePanel;
 
 
 public class Main {

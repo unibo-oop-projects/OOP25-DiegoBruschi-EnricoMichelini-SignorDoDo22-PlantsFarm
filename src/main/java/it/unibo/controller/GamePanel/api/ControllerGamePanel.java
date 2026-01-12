@@ -1,4 +1,4 @@
-package it.unibo.GamePanel.api;
+package it.unibo.controller.GamePanel.api;
 
 public class ControllerGamePanel {
     

@@ -1,4 +1,6 @@
-package it.unibo.GamePanel;
+package it.unibo.controller.GamePanel;
+
+import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput.*;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -8,9 +10,9 @@ import java.awt.event.KeyEvent;
 import java.util.Map;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import it.unibo.GamePanel.api.ControllerGamePanel;
-import it.unibo.GamePanel.api.ControllerGamePanel.UserInput;
-import static  it.unibo.GamePanel.api.ControllerGamePanel.UserInput.*;
+
+import it.unibo.controller.GamePanel.api.ControllerGamePanel;
+import it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput;
 
 public class ViewGamePanel extends JPanel {
 
@@ -85,6 +87,6 @@ public long azioneStartTime = 0;
     this.controller = controller;
   }
 
-}
-    
+ 
+}  
 

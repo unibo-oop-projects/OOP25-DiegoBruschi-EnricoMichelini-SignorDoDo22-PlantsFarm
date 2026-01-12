@@ -1,8 +1,8 @@
-package it.unibo.Animation.api;
+package it.unibo.view.Animation.api;
 
 import java.awt.image.BufferedImage;
 
-import it.unibo.Animation.SpriteLoader;
+import it.unibo.controller.Animation.SpriteLoader;
 
 public final class AnimationFrames {
     
@@ -67,9 +67,7 @@ public final class AnimationFrames {
             new SpriteLoader("/Player/Actions/Dig/tile012.png").getImage(),
             new SpriteLoader("/Player/Actions/Dig/tile013.png").getImage()
         };
-        
 
     }
-
 
 }

@@ -1,4 +1,4 @@
-package it.unibo.Animation;
+package it.unibo.controller.Animation;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

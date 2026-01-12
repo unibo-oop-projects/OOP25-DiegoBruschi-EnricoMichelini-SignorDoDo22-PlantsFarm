@@ -1,15 +1,18 @@
-package it.unibo.Player;
+package it.unibo.model.Player;
 
-import  static it.unibo.GamePanel.api.ControllerGamePanel.UserInput;
+import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput;
 
-import it.unibo.GamePanel.api.ControllerGamePanel.UserInput;
 import java.awt.image.*;
+
+import it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput;
 
 public class BasePlayer  {
     private double posX;
     private double posY;
     private double speed = 200;
     private UserInput direction = UserInput.FERMO;
+    enum StatePlayer { IN_MOVEMENT, IN_ACTION};
+    StatePlayer state = null;
    
     public BasePlayer() { }
    /**
@@ -22,6 +25,7 @@ public class BasePlayer  {
 
    public void updatePlayer(final long time) {
         final double delta = speed * time / 1000.0;
+
         switch (direction) {
             case LEFT -> posX -= delta;
             case RIGHT -> posX += delta;
@@ -38,7 +42,6 @@ public class BasePlayer  {
      * @param direction the direction requested by the user
      */
     public final  void setDirection(final UserInput direction) {
-        System.out.print("*******DIRECTION ATTUALE**********" + direction);
         this.direction = direction;
     }
 
@@ -60,7 +63,12 @@ public class BasePlayer  {
         return this.posY; 
     }
 
-    public final UserInput getDirection(){ return this.direction;}
+    public final UserInput getDirection(){ 
+        return this.direction;
+    }
+
+
+
 
    
 }

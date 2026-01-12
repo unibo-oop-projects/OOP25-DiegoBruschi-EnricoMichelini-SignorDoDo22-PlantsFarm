@@ -1,4 +1,4 @@
-package it.unibo.Inventario;
+package it.unibo.model.Inventario;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

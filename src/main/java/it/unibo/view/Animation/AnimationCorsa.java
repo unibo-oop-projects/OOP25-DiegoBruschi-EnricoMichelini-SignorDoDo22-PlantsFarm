@@ -1,6 +1,9 @@
-package it.unibo.Animation;
+package it.unibo.view.Animation;
 import java.awt.image.*;
-import it.unibo.Animation.api.*;
+
+import it.unibo.controller.Animation.SpriteLoader;
+import it.unibo.controller.Animation.api.*;
+import it.unibo.view.Animation.api.Animation;
 
 public class AnimationCorsa implements Animation {
 

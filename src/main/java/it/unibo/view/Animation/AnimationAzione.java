@@ -1,9 +1,13 @@
-package it.unibo.Animation;
+package it.unibo.view.Animation;
 
 import java.awt.image.BufferedImage;
-import it.unibo.Animation.api.*;;
 
-public class AnimationAttacco  implements Animation {
+import it.unibo.controller.Animation.SpriteLoader;
+import it.unibo.controller.Animation.api.*;
+import it.unibo.view.Animation.api.Animation;
+import it.unibo.view.Animation.api.AnimationFrames;;
+
+public class AnimationAzione  implements Animation {
 
     private final BufferedImage[] frames;
     private int frameIndex;
@@ -11,8 +15,9 @@ public class AnimationAttacco  implements Animation {
     private final long frameDurationNs;
     private boolean playing = false;
     private AnimationFrames animationframes = new AnimationFrames();
+    BufferedImage base =  new SpriteLoader("/Player/tile001.png").getImage();
 
-    public AnimationAttacco(final long frameDurationNs) {
+    public AnimationAzione(final long frameDurationNs) {
         this.frameDurationNs = frameDurationNs;
         frames = animationframes.water;
     }
@@ -24,6 +29,7 @@ public class AnimationAttacco  implements Animation {
         lastFrameTimeNs = nowNs;
     }
 
+    @Override
     public BufferedImage getCurrentFrame(final long nowNs) {
         
         if (nowNs - lastFrameTimeNs >= frameDurationNs) {
@@ -35,6 +41,7 @@ public class AnimationAttacco  implements Animation {
                 playing = false; 
             }
         }
+
         return frames[frameIndex];
     }
 

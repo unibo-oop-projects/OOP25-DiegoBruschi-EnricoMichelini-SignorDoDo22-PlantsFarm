@@ -1,4 +1,4 @@
-package it.unibo.Animation.api;
+package it.unibo.controller.Animation.api;
 
 public class AnimationTime {
     public static final long FRAME_60_FPS = 16_666_667L;

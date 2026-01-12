@@ -1,25 +1,29 @@
-package it.unibo.Animation;
+package it.unibo.controller.GamePanel;
 
-import static it.unibo.GamePanel.api.ControllerGamePanel.UserInput.AZIONE;
-import static it.unibo.GamePanel.api.ControllerGamePanel.UserInput.DOWN;
-import static it.unibo.GamePanel.api.ControllerGamePanel.UserInput.FERMO;
-import static it.unibo.GamePanel.api.ControllerGamePanel.UserInput.LEFT;
-import static it.unibo.GamePanel.api.ControllerGamePanel.UserInput.RIGHT;
-import static it.unibo.GamePanel.api.ControllerGamePanel.UserInput.UP;
+import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput.AZIONE;
+import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput.DOWN;
+import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput.FERMO;
+import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput.LEFT;
+import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput.RIGHT;
+import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput.UP;
 
-import it.unibo.Animation.api.*;
 import java.awt.image.BufferedImage;
-import it.unibo.Animation.api.*;
-import it.unibo.GamePanel.ImplControllerGamePanel;
-import it.unibo.GamePanel.api.ControllerGamePanel.UserInput;
-import it.unibo.Player.BasePlayer;
+
+import it.unibo.controller.Animation.SpriteLoader;
+import it.unibo.controller.Animation.api.*;
+import it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput;
+import it.unibo.model.Player.BasePlayer;
+import it.unibo.view.Animation.AnimationAzione;
+import it.unibo.view.Animation.AnimationCorsa;
+import it.unibo.view.Animation.api.Animation;
+import it.unibo.view.Animation.api.AnimationFrames;
 
 
 public class ImplAnimationController implements AnimationController {
 
     private ImplControllerGamePanel controllerGameScreen;
     private static final long FRAME_DURATION_NS = 120_000_000L;
-    private AnimationAttacco animation1 = new AnimationAttacco(FRAME_DURATION_NS);
+    private AnimationAzione animation1 = new AnimationAzione(FRAME_DURATION_NS);
     private AnimationFrames frames = new AnimationFrames();
     private AnimationCorsa animationLeft = new AnimationCorsa(FRAME_DURATION_NS, frames.walkLeft);
     private AnimationCorsa animationUp = new AnimationCorsa(FRAME_DURATION_NS, frames.walkUp);
@@ -30,14 +34,10 @@ public class ImplAnimationController implements AnimationController {
     private long nowNs;
     private Animation currentAnimation;
     private BufferedImage currentImage = frames.base;
-    private BasePlayer player;
 
-    
     public ImplAnimationController(ImplControllerGamePanel controllerGamePanel){
         this.controllerGameScreen = controllerGamePanel;
     }
-
-    public void setPlayer(BasePlayer player){ this.player = player;}
 
     @Override
     public void takeInput(UserInput input) {
@@ -46,7 +46,6 @@ public class ImplAnimationController implements AnimationController {
            nowNs = System.nanoTime();
            animation1.start(nowNs);
            currentAnimation = animation1;
-           
         }
 
         if( input == UP ){
@@ -74,27 +73,26 @@ public class ImplAnimationController implements AnimationController {
         }
 
         if( input == FERMO  ){
-            if(currentAnimation != animation1){
+            if(currentAnimation == animation1 && animation1.isPlaying()){
             this.currentImage = normale.getImage();
             this.currentAnimation = null;
+            }else{
+                this.currentImage = normale.getImage();
+                this.currentAnimation = null;
             }
         }
-
-       
-
     }
 
     public void update(Long now){
         
         long durationAnim = nowNs + FRAME_DURATION_NS;
-        
         if(now <= durationAnim && currentAnimation != null ){
             this.currentImage = currentAnimation.getCurrentFrame(System.nanoTime());
         }
-
     }
 
-    public BufferedImage getCurrentImage(){ return this.currentImage;}
+    final public BufferedImage getCurrentImage(){ 
+        return this.currentImage;
+    }
   
-    
 }

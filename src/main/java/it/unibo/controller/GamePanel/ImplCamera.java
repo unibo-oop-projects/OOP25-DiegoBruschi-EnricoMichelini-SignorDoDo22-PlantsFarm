@@ -1,6 +1,6 @@
-package it.unibo.GamePanel;
+package it.unibo.controller.GamePanel;
 
-import it.unibo.GamePanel.api.Camera;
+import it.unibo.controller.GamePanel.api.Camera;
 
 public class ImplCamera implements Camera{
 
