@@ -1,4 +1,4 @@
-package it.unibo.controller.Animation;
+package it.unibo.plantsfarm.view.utility;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

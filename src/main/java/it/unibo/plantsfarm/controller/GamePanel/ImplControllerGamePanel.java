@@ -1,23 +1,22 @@
-package it.unibo.controller.GamePanel;
+package it.unibo.plantsfarm.controller.GamePanel;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput;
-import it.unibo.model.Player.BasePlayer;
-import it.unibo.view.Animation.AnimationAzione;
+import it.unibo.plantsfarm.controller.Animation.ImplAnimationController;
+import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInput;
+import it.unibo.plantsfarm.model.Player.BasePlayer;
+import it.unibo.plantsfarm.view.ViewGamePanel;
 
 public class ImplControllerGamePanel extends Thread {
     private ViewGamePanel view;
     private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
     private BasePlayer player;
-    public ImplAnimationController controllerAnimation;
-    public AnimationAzione animazione = new AnimationAzione(120_000_000L); 
+    private ImplAnimationController controllerAnimation;
+     
     
     public ImplControllerGamePanel() {
 
         this.player = new BasePlayer();
-        this.view = new ViewGamePanel();
-        this.view.setController(this);
         setControllerAnimation();
     }
 
@@ -25,7 +24,9 @@ public class ImplControllerGamePanel extends Thread {
     public void run() {
         long lastTime = System.currentTimeMillis();
         
+        
         while (true) {
+            
             long now = System.currentTimeMillis();
             long delta = now - lastTime;
             lastTime = now;
@@ -36,43 +37,34 @@ public class ImplControllerGamePanel extends Thread {
                 player.setDirection(input);
                 controllerAnimation.takeInput(input);
             }
-
-            view.show(player.getPosx(), player.getPosy());
+            
+            view.show(player.getPosx(), player.getPosy(), controllerAnimation.getCurrentImage());
             
             try {
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
             } catch (InterruptedException e) {
                 break;
             }
-
+            
             controllerAnimation.update(now);
             player.updatePlayer(delta);
-            
+            view.camera.followPlayer();            
         }
     }
-
-    /**
-     * 
-     * @param input
-     */
+ 
     public void takeInput(final UserInput input) {
         if(input != null){
         this.queue.add(input);
         }
     }
     
-    /**
-     * Create the Main GamePanel. Only one GamePanel can be create at time
-     */
     public void addView() {
         view = new ViewGamePanel();
         view.setController(this);
+        view.camera.setPlayer(player);
+        
     }
 
-    /**
-     * 
-     * @return
-     */
     public ViewGamePanel getView() {
         return this.view;
     }

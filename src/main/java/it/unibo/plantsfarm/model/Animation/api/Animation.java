@@ -1,4 +1,4 @@
-package it.unibo.view.Animation.api;
+package it.unibo.plantsfarm.model.Animation.api;
 
 import java.awt.image.BufferedImage;
 

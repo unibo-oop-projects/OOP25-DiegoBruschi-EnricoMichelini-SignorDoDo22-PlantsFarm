@@ -1,4 +1,4 @@
-package it.unibo.controller.GamePanel.api;
+package it.unibo.plantsfarm.controller.GamePanel.api;
 
 public class ControllerGamePanel {
     

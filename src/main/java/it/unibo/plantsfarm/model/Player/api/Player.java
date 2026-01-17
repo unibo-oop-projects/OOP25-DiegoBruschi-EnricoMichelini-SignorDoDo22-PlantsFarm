@@ -1,4 +1,4 @@
-package it.unibo.model.Player.api;
+package it.unibo.plantsfarm.model.Player.api;
 
 public interface Player {
 

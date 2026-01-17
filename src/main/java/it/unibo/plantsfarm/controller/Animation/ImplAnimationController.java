@@ -1,29 +1,23 @@
-package it.unibo.controller.GamePanel;
+package it.unibo.plantsfarm.controller.Animation;
 
-import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput.AZIONE;
-import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput.DOWN;
-import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput.FERMO;
-import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput.LEFT;
-import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput.RIGHT;
-import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput.UP;
-
+import static it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInput.*;
 import java.awt.image.BufferedImage;
 
-import it.unibo.controller.Animation.SpriteLoader;
-import it.unibo.controller.Animation.api.*;
-import it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput;
-import it.unibo.model.Player.BasePlayer;
-import it.unibo.view.Animation.AnimationAzione;
-import it.unibo.view.Animation.AnimationCorsa;
-import it.unibo.view.Animation.api.Animation;
-import it.unibo.view.Animation.api.AnimationFrames;
+import it.unibo.plantsfarm.controller.Animation.api.*;
+import it.unibo.plantsfarm.controller.GamePanel.ImplControllerGamePanel;
+import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInput;
+import it.unibo.plantsfarm.model.Animation.AnimationAzione;
+import it.unibo.plantsfarm.model.Animation.AnimationCorsa;
+import it.unibo.plantsfarm.model.Animation.api.Animation;
+import it.unibo.plantsfarm.model.Animation.api.AnimationFrames;
+import it.unibo.plantsfarm.view.utility.SpriteLoader;
 
 
 public class ImplAnimationController implements AnimationController {
 
     private ImplControllerGamePanel controllerGameScreen;
     private static final long FRAME_DURATION_NS = 120_000_000L;
-    private AnimationAzione animation1 = new AnimationAzione(FRAME_DURATION_NS);
+    private AnimationAzione azione = new AnimationAzione(FRAME_DURATION_NS);
     private AnimationFrames frames = new AnimationFrames();
     private AnimationCorsa animationLeft = new AnimationCorsa(FRAME_DURATION_NS, frames.walkLeft);
     private AnimationCorsa animationUp = new AnimationCorsa(FRAME_DURATION_NS, frames.walkUp);
@@ -44,38 +38,37 @@ public class ImplAnimationController implements AnimationController {
     
         if( input == AZIONE ){
            nowNs = System.nanoTime();
-           animation1.start(nowNs);
-           currentAnimation = animation1;
+           azione.start(nowNs);
+           currentAnimation = azione;
         }
 
-        if( input == UP ){
+        if( input == UP ) {
             nowNs = System.nanoTime();
             currentAnimation = animationUp;
             animationUp.start(nowNs);
         }
 
-        if( input == RIGHT ){
+        if( input == RIGHT ) {
             nowNs = System.nanoTime();
             currentAnimation = animationRight;
             animationRight.start(nowNs);
         }
 
-        if( input == DOWN ){
+        if( input == DOWN ) {
             nowNs = System.nanoTime();
             currentAnimation = animationDown;
             animationDown.start(nowNs);
         }
 
-        if( input == LEFT ){
+        if( input == LEFT ) {
             nowNs = System.nanoTime();
             animationLeft.start(nowNs);
             currentAnimation = animationLeft;
         }
 
-        if( input == FERMO  ){
-            if(currentAnimation == animation1 && animation1.isPlaying()){
-            this.currentImage = normale.getImage();
-            this.currentAnimation = null;
+        if( input == FERMO && currentAnimation != azione ) {
+            if(currentAnimation == azione && azione.isPlaying()){
+                return;
             }else{
                 this.currentImage = normale.getImage();
                 this.currentAnimation = null;

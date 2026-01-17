@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.view;
 
-import it.unibo.plantsfarm.view.Map.GamePanel;
+import it.unibo.plantsfarm.controller.GamePanel.ImplControllerGamePanel;
+import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.view.menu.MenuPanel;
 import it.unibo.plantsfarm.view.utility.Texture;
 
@@ -26,9 +27,10 @@ public final class MainScreen {
     private static final int FONT_SIZE = 24;
 
     private final MenuPanel menuPanel;
-    private GamePanel gamePanel;
+    private ViewGamePanel gamePanel;
     private JFrame frame;
     private JLabel coinLabel;
+    private ImplControllerGamePanel controller;
 
     /**
      * Initializes the main screen components.
@@ -43,6 +45,7 @@ public final class MainScreen {
      */
     public void createMainScreen() {
         this.frame = new JFrame(TITLE);
+    
 
         this.frame.setLayout(new BorderLayout());
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -53,31 +56,35 @@ public final class MainScreen {
         this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.frame.setResizable(false);
         this.frame.setUndecorated(true);
-
         this.frame.add(this.menuPanel, BorderLayout.EAST);
+        
 
         final JPanel gameContainer = new JPanel(new BorderLayout());
         gameContainer.setOpaque(false);
+        gameContainer.setFocusable(true);
 
         final JPanel coinPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
-        coinPanel.setOpaque(false);
+        coinPanel.setOpaque(true);
+        coinPanel.setFocusable(false);
+        coinPanel.setVisible(true);
 
         this.coinLabel = new JLabel(" 0");
         this.coinLabel.setIcon(Texture.COIN_ICON);
         this.coinLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, FONT_SIZE));
         this.coinLabel.setForeground(Color.BLACK);
-
         coinPanel.add(this.coinLabel);
-        gameContainer.add(coinPanel, BorderLayout.NORTH);
+        gameContainer.add(coinPanel,BorderLayout.NORTH);
+        
 
-        this.gamePanel = new GamePanel();
-        gameContainer.add(this.gamePanel, BorderLayout.CENTER);
-
-        this.frame.add(gameContainer, BorderLayout.CENTER);
         this.frame.setVisible(true);
-
-        this.gamePanel.startGameThread();
-        this.gamePanel.requestFocusInWindow();
+        this.controller = new ImplControllerGamePanel();
+        this.controller.addView();
+        this.gamePanel = this.controller.getView(); 
+        gameContainer.add(gamePanel, BorderLayout.CENTER);
+        this.frame.add(gameContainer, BorderLayout.CENTER);
+        this.gamePanel.setFocusable(true); 
+        this.gamePanel.requestFocus();  
+        this.controller.start();
     }
 
     /**

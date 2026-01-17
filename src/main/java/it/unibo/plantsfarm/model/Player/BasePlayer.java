@@ -1,14 +1,14 @@
-package it.unibo.model.Player;
+package it.unibo.plantsfarm.model.Player;
 
-import static it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput;
+import static it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInput;
 
 import java.awt.image.*;
 
-import it.unibo.controller.GamePanel.api.ControllerGamePanel.UserInput;
+import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInput;
 
 public class BasePlayer  {
-    private double posX;
-    private double posY;
+    private double posX = 0;
+    private double posY = 0;
     private double speed = 200;
     private UserInput direction = UserInput.FERMO;
     enum StatePlayer { IN_MOVEMENT, IN_ACTION};

@@ -1,9 +1,8 @@
-package it.unibo.view.Animation;
-import java.awt.image.*;
+package it.unibo.plantsfarm.model.Animation;
 
-import it.unibo.controller.Animation.SpriteLoader;
-import it.unibo.controller.Animation.api.*;
-import it.unibo.view.Animation.api.Animation;
+import java.awt.image.*;
+import it.unibo.plantsfarm.model.Animation.api.Animation;
+import it.unibo.plantsfarm.view.utility.SpriteLoader;
 
 public class AnimationCorsa implements Animation {
 
@@ -36,17 +35,16 @@ public class AnimationCorsa implements Animation {
 
     @Override
     public BufferedImage getCurrentFrame(final long nowNs) {
-        if (!playing) {
-            System.out.print("FERMATI");
-            return base;
         
+        if (!playing) {    
+            return base;
         }
 
         if (nowNs - lastFrameTimeNs >= frameDurationNs) {
             frameIndex = (frameIndex + 1) % frames.length;
             lastFrameTimeNs = nowNs;
         }
-            return frames[frameIndex]; // <-- NON base
+            return frames[frameIndex]; 
     }
 
     public boolean isPlaying() {

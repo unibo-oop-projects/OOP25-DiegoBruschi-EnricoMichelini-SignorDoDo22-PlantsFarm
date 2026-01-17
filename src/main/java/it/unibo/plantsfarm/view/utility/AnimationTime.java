@@ -1,4 +1,4 @@
-package it.unibo.controller.Animation.api;
+package it.unibo.plantsfarm.view.utility;
 
 public class AnimationTime {
     public static final long FRAME_60_FPS = 16_666_667L;

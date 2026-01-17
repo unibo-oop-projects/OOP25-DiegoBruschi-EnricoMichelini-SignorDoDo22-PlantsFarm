@@ -1,8 +1,8 @@
-package it.unibo.view.Animation.api;
+package it.unibo.plantsfarm.model.Animation.api;
 
 import java.awt.image.BufferedImage;
 
-import it.unibo.controller.Animation.SpriteLoader;
+import it.unibo.plantsfarm.view.utility.SpriteLoader;
 
 public final class AnimationFrames {
     
@@ -60,7 +60,9 @@ public final class AnimationFrames {
 
         this.water = new BufferedImage[] {
             new SpriteLoader("/Player/Actions/to Water/tile023.png").getImage(),
-            new SpriteLoader("/Player/Actions/to Water/tile024.png").getImage()
+            new SpriteLoader("/Player/Actions/to Water/tile024.png").getImage(),
+            new SpriteLoader("/Player/Actions/to Water/tile023.png").getImage(),
+            base
         };
 
         this.dig = new BufferedImage[] {

@@ -1,11 +1,9 @@
-package it.unibo.view.Animation;
+package it.unibo.plantsfarm.model.Animation;
 
 import java.awt.image.BufferedImage;
-
-import it.unibo.controller.Animation.SpriteLoader;
-import it.unibo.controller.Animation.api.*;
-import it.unibo.view.Animation.api.Animation;
-import it.unibo.view.Animation.api.AnimationFrames;;
+import it.unibo.plantsfarm.model.Animation.api.Animation;
+import it.unibo.plantsfarm.model.Animation.api.AnimationFrames;
+import it.unibo.plantsfarm.view.utility.SpriteLoader;
 
 public class AnimationAzione  implements Animation {
 
@@ -38,7 +36,7 @@ public class AnimationAzione  implements Animation {
             
             if (frameIndex >= frames.length) {
                 frameIndex = frames.length - 1;
-                playing = false; 
+                playing = false;
             }
         }
 
