@@ -33,6 +33,7 @@ public final class Texture {
     public static final ImageIcon EPIC_GIFT_ICON = loadMenuIcon("EpicGift.png");
     public static final ImageIcon LEGENDARY_GIFT_ICON = loadMenuIcon("LegendaryGift.png");
     public static final ImageIcon COIN_ICON = loadMenuIcon("Coin.png");
+    public static final ImageIcon INVENTORY_ICON = loadMenuIcon("Inventory.png");
 
     private Texture() {
         // Utility class constructor

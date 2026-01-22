@@ -27,6 +27,9 @@ public final class MainScreen {
     private static final String TITLE = "PlantsFarm";
     private static final String FONT_FAMILY = "SansSerif";
     private static final int FONT_SIZE = 24;
+    private static final int UPPER_PANEL_WIDTH = 600;
+    private static final int UPPER_PANEL_HEIGHT = 200;
+    private static final int BUTTON_FONT_SIZE = 18;
 
     private final MenuPanel menuPanel;
     private ImplViewGamePanel gamePanel;
@@ -72,16 +75,16 @@ public final class MainScreen {
         final JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
         topPanel.setOpaque(false);
         topPanel.setFocusable(false);
-        topPanel.setBounds(0, 0, 600, 200);
+        topPanel.setBounds(0, 0, UPPER_PANEL_WIDTH, UPPER_PANEL_HEIGHT);
 
         this.coinLabel = new JLabel(" 0");
         this.coinLabel.setIcon(Texture.COIN_ICON);
         this.coinLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, FONT_SIZE));
         this.coinLabel.setForeground(Color.BLACK);
 
-        this.inventoryButton = new JButton("");
-        this.inventoryButton.setIcon(Texture.STORAGE_ICON);
-        this.inventoryButton.setFont(new Font(FONT_FAMILY, Font.BOLD, 18));
+        this.inventoryButton = new JButton();
+        this.inventoryButton.setIcon(Texture.INVENTORY_ICON);
+        this.inventoryButton.setFont(new Font(FONT_FAMILY, Font.BOLD, BUTTON_FONT_SIZE));
         this.inventoryButton.setFocusable(false);
         this.inventoryButton.setContentAreaFilled(false);
         this.inventoryButton.setBorderPainted(false);
@@ -94,7 +97,7 @@ public final class MainScreen {
 
         this.frame.add(layeredPane, BorderLayout.CENTER);
         this.frame.setVisible(true);
-        
+
         this.gamePanel.setFocusable(true);
         this.gamePanel.requestFocusInWindow();
         this.controller.start();
@@ -117,7 +120,10 @@ public final class MainScreen {
      * @param listener The action to perform.
      */
     public void attachExitListener(final ActionListener listener) {
-        this.menuPanel.addExitListener(listener);
+        this.menuPanel.addExitListener(e -> {
+            listener.actionPerformed(e);
+            this.gamePanel.requestFocusInWindow();
+        });
     }
 
     /**
@@ -126,7 +132,10 @@ public final class MainScreen {
      * @param listener The action to perform.
      */
     public void attachEncyclopediaListener(final ActionListener listener) {
-        this.menuPanel.addEncyclopediaListener(listener);
+        this.menuPanel.addEncyclopediaListener(e -> {
+            listener.actionPerformed(e);
+            this.gamePanel.requestFocusInWindow();
+        });
     }
 
     /**
@@ -135,7 +144,10 @@ public final class MainScreen {
      * @param listener The action to perform.
      */
     public void attachStorageListener(final ActionListener listener) {
-        this.menuPanel.addStorageListener(listener);
+        this.menuPanel.addStorageListener(e -> {
+            listener.actionPerformed(e);
+            this.gamePanel.requestFocusInWindow();
+        });
     }
 
     /**
@@ -144,17 +156,23 @@ public final class MainScreen {
      * @param listener The action to perform.
      */
     public void attachShopListener(final ActionListener listener) {
-        this.menuPanel.addShopListener(listener);
+        this.menuPanel.addShopListener(e -> {
+            listener.actionPerformed(e);
+            this.gamePanel.requestFocusInWindow();
+        });
     }
 
     /**
-     * Allows the controller to attach an action to the Inventory HUD button.
+     * Allows the controller to attach an action to the Inventory button.
      *
      * @param listener The action to perform.
      */
     public void attachInventoryListener(final ActionListener listener) {
         if (this.inventoryButton != null) {
-            this.inventoryButton.addActionListener(listener);
+            this.inventoryButton.addActionListener(e -> {
+                listener.actionPerformed(e);
+                this.gamePanel.requestFocusInWindow();
+            });
         }
     }
 
