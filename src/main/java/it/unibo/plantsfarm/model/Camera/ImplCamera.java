@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.model.Camera;
 
 import it.unibo.plantsfarm.model.Player.BasePlayer;
+import it.unibo.plantsfarm.view.GamePanel.ImplViewGamePanel;
 
 public final class ImplCamera implements Camera {
     private int posX;
@@ -8,8 +9,10 @@ public final class ImplCamera implements Camera {
     private BasePlayer player;
     private final int screenWidth;
     private final int screenHeight;
+    private final int worldWidth = ImplViewGamePanel.windthScreen;
+    private final int worldHeight = ImplViewGamePanel.heighScreen;
 
-    public ImplCamera(final int screenWidth, final int screenHeight, final int worldWidth, final int worldHeight) {
+    public ImplCamera(final int screenWidth, final int screenHeight) {
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
     }
@@ -23,6 +26,14 @@ public final class ImplCamera implements Camera {
         }
         if (posY < 0) {
             posY = 0;
+        }
+        if ((posX > worldWidth - screenWidth - 994)) {
+            posX = worldWidth - screenWidth - 994;
+            System.out.println(worldWidth + " " + screenWidth + " " + posX);
+        }
+        if ((posY > worldHeight - screenHeight - 170)) {
+            posY = worldHeight - screenHeight - 170;
+            System.out.println(worldHeight + " " + screenHeight + " " + posY);
         }
     }
     

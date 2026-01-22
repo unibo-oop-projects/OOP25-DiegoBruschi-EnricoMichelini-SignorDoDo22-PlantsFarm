@@ -34,7 +34,7 @@ public class ImplSelectorFrames implements SelectorFrames {
     @Override
     public void takeInput(UserInput input) {
     
-        System.out.print(input + "\n");
+        //System.out.print(input + "\n");
 
         if( input == AZIONE ){
            nowNs = System.nanoTime();

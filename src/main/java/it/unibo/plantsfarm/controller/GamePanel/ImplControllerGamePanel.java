@@ -2,6 +2,7 @@ package it.unibo.plantsfarm.controller.GamePanel;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel;
+import it.unibo.plantsfarm.model.Mappa;
 import it.unibo.plantsfarm.model.Camera.Camera;
 import it.unibo.plantsfarm.model.Camera.ImplCamera;
 import it.unibo.plantsfarm.model.Player.BasePlayer;
@@ -15,6 +16,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private BasePlayer player;
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
+    private final Mappa mappa = new Mappa();
     
     public ImplControllerGamePanel() {
         this.player = new BasePlayer();
@@ -41,7 +43,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             }
             
             controllerAnimation.update(now);
-            player.updatePlayer(delta);
+            player.updatePlayer(delta, mappa);
             camera.followPlayer();            
         }
     }
@@ -57,7 +59,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         this.controllerAnimation = new ImplSelectorFrames(this);
         view.setSelectorFrames(controllerAnimation);
         view.setController(this);
-        camera = new ImplCamera( view.getWidth(), view.getHeight(), view.getWidth() , view.getHeight() );
+        camera = new ImplCamera( view.getWidth(), view.getHeight());
         camera.setPlayer(player);
     }
 

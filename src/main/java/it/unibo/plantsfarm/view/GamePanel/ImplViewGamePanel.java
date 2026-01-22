@@ -15,15 +15,16 @@ import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInpu
 import it.unibo.plantsfarm.view.Animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.Map.TileManager;
 
+
 public class ImplViewGamePanel extends JPanel {
 
-  public int orginalTileSize = 16;
+  public static int orginalTileSize = 16;
   public final static int SCALE = 3; 
-  public int tileSize = orginalTileSize * SCALE;
-  public int maxScreenCol = 34;
-  public int maxScreenRow = 18;
-  private final int windthScreen = tileSize * maxScreenCol;
-  private final int heighScreen = tileSize * maxScreenRow;
+  public static int tileSize = orginalTileSize * SCALE;
+  public final static int maxScreenCol = 66; //66
+  public final static int maxScreenRow = 21; //21
+  public final static int windthScreen = tileSize * maxScreenCol;
+  public final static int heighScreen = tileSize * maxScreenRow;
   private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER =
     Map.of(KeyEvent.VK_W, UP, KeyEvent.VK_A, LEFT, KeyEvent.VK_D, RIGHT, KeyEvent.VK_S, DOWN, KeyEvent.VK_R, AZIONE);
   private TileManager tileM;
@@ -66,10 +67,6 @@ public class ImplViewGamePanel extends JPanel {
 
   public void show(final double playerPosX, final double playerPosY, int cameraX, int cameraY ){
     SwingUtilities.invokeLater(() -> {
-      System.out.println("Playerx" + playerPosX);
-      System.out.println("Playery" + playerPosY);
-      System.out.println("CameraX" + cameraX);
-      System.out.println("CameraY" + cameraY);
       this.playerPosX = playerPosX;
       this.playerPosY = playerPosY;
       this.cameraX = cameraX;
