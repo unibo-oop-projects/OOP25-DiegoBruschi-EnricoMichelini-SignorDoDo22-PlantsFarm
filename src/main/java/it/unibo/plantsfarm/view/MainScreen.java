@@ -1,7 +1,7 @@
 package it.unibo.plantsfarm.view;
 
 import it.unibo.plantsfarm.controller.GamePanel.ImplControllerGamePanel;
-import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel;
+import it.unibo.plantsfarm.view.GamePanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.menu.MenuPanel;
 import it.unibo.plantsfarm.view.utility.Texture;
 
@@ -27,7 +27,7 @@ public final class MainScreen {
     private static final int FONT_SIZE = 24;
 
     private final MenuPanel menuPanel;
-    private ViewGamePanel gamePanel;
+    private ImplViewGamePanel gamePanel;
     private JFrame frame;
     private JLabel coinLabel;
     private ImplControllerGamePanel controller;

@@ -1,45 +1,39 @@
 package it.unibo.plantsfarm.controller.GamePanel;
+
 import java.util.concurrent.LinkedBlockingQueue;
-
-import it.unibo.plantsfarm.controller.Animation.ImplAnimationController;
-import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInput;
+import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel;
+import it.unibo.plantsfarm.model.Camera.Camera;
+import it.unibo.plantsfarm.model.Camera.ImplCamera;
 import it.unibo.plantsfarm.model.Player.BasePlayer;
-import it.unibo.plantsfarm.view.ViewGamePanel;
+import it.unibo.plantsfarm.view.Animation.ImplSelectorFrames;
+import it.unibo.plantsfarm.view.GamePanel.ImplViewGamePanel;
 
-public class ImplControllerGamePanel extends Thread {
-    private ViewGamePanel view;
-    private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
+public final class ImplControllerGamePanel extends Thread implements ControllerGamePanel {
+    private ImplViewGamePanel view;
+    private  final static  int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
     private BasePlayer player;
-    private ImplAnimationController controllerAnimation;
-     
+    private ImplSelectorFrames controllerAnimation;
+    private Camera camera;
     
     public ImplControllerGamePanel() {
-
         this.player = new BasePlayer();
-        setControllerAnimation();
     }
 
     @Override
     public void run() {
         long lastTime = System.currentTimeMillis();
-        
-        
         while (true) {
-            
             long now = System.currentTimeMillis();
             long delta = now - lastTime;
             lastTime = now;
-            UserInput input = queue.poll();
-            
+            UserInput input = queue.poll();  
             if (input != null) {
-                
                 player.setDirection(input);
                 controllerAnimation.takeInput(input);
             }
-            
-            view.show(player.getPosx(), player.getPosy(), controllerAnimation.getCurrentImage());
-            
+
+            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY());
             try {
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
             } catch (InterruptedException e) {
@@ -48,24 +42,26 @@ public class ImplControllerGamePanel extends Thread {
             
             controllerAnimation.update(now);
             player.updatePlayer(delta);
-            view.camera.followPlayer();            
+            camera.followPlayer();            
         }
     }
  
     public void takeInput(final UserInput input) {
-        if(input != null){
-        this.queue.add(input);
+        if (input != null) {
+            this.queue.add(input);
         }
     }
     
     public void addView() {
-        view = new ViewGamePanel();
+        view = new ImplViewGamePanel();
+        this.controllerAnimation = new ImplSelectorFrames(this);
+        view.setSelectorFrames(controllerAnimation);
         view.setController(this);
-        view.camera.setPlayer(player);
-        
+        camera = new ImplCamera( view.getWidth(), view.getHeight(), view.getWidth() , view.getHeight() );
+        camera.setPlayer(player);
     }
 
-    public ViewGamePanel getView() {
+    public ImplViewGamePanel getView() {
         return this.view;
     }
 
@@ -76,10 +72,4 @@ public class ImplControllerGamePanel extends Thread {
     public BasePlayer getPlayer() {
         return this.player;
     }
-
-
-    public void setControllerAnimation(){
-        this.controllerAnimation = new ImplAnimationController(this);
-    }
-
 }

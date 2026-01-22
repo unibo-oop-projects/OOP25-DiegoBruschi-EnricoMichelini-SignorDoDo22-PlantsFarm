@@ -1,21 +1,20 @@
-package it.unibo.plantsfarm.controller.Animation;
+package it.unibo.plantsfarm.view.Animation;
 
 import static it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInput.*;
 import java.awt.image.BufferedImage;
 
-import it.unibo.plantsfarm.controller.Animation.api.*;
 import it.unibo.plantsfarm.controller.GamePanel.ImplControllerGamePanel;
+import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.Animation.AnimationAzione;
 import it.unibo.plantsfarm.model.Animation.AnimationCorsa;
 import it.unibo.plantsfarm.model.Animation.api.Animation;
 import it.unibo.plantsfarm.model.Animation.api.AnimationFrames;
-import it.unibo.plantsfarm.view.utility.SpriteLoader;
+import it.unibo.plantsfarm.view.Animation.api.SelectorFrames;
 
+public class ImplSelectorFrames implements SelectorFrames {
 
-public class ImplAnimationController implements AnimationController {
-
-    private ImplControllerGamePanel controllerGameScreen;
+    private ImplControllerGamePanel controller;
     private static final long FRAME_DURATION_NS = 120_000_000L;
     private AnimationAzione azione = new AnimationAzione(FRAME_DURATION_NS);
     private AnimationFrames frames = new AnimationFrames();
@@ -24,18 +23,19 @@ public class ImplAnimationController implements AnimationController {
     private AnimationCorsa animationDown = new AnimationCorsa(FRAME_DURATION_NS, frames.walkDown);
     private AnimationCorsa animationRight = new AnimationCorsa(FRAME_DURATION_NS, frames.walkRight);
 
-    public SpriteLoader normale = new SpriteLoader("/Player/tile001.png");
     private long nowNs;
     private Animation currentAnimation;
     private BufferedImage currentImage = frames.base;
 
-    public ImplAnimationController(ImplControllerGamePanel controllerGamePanel){
-        this.controllerGameScreen = controllerGamePanel;
+    public ImplSelectorFrames(ImplControllerGamePanel controller){
+        this.controller = controller;
     }
 
     @Override
     public void takeInput(UserInput input) {
     
+        System.out.print(input + "\n");
+
         if( input == AZIONE ){
            nowNs = System.nanoTime();
            azione.start(nowNs);
@@ -70,7 +70,7 @@ public class ImplAnimationController implements AnimationController {
             if(currentAnimation == azione && azione.isPlaying()){
                 return;
             }else{
-                this.currentImage = normale.getImage();
+                this.currentImage = frames.base;
                 this.currentAnimation = null;
             }
         }
