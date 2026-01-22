@@ -12,8 +12,10 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
@@ -30,6 +32,7 @@ public final class MainScreen {
     private ImplViewGamePanel gamePanel;
     private JFrame frame;
     private JLabel coinLabel;
+    private JButton inventoryButton;
     private ImplControllerGamePanel controller;
 
     /**
@@ -45,7 +48,6 @@ public final class MainScreen {
      */
     public void createMainScreen() {
         this.frame = new JFrame(TITLE);
-    
 
         this.frame.setLayout(new BorderLayout());
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -56,34 +58,45 @@ public final class MainScreen {
         this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.frame.setResizable(false);
         this.frame.setUndecorated(true);
+
         this.frame.add(this.menuPanel, BorderLayout.EAST);
-        
 
-        final JPanel gameContainer = new JPanel(new BorderLayout());
-        gameContainer.setOpaque(false);
-        gameContainer.setFocusable(true);
+        final JLayeredPane layeredPane = new JLayeredPane();
 
-        final JPanel coinPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
-        coinPanel.setOpaque(true);
-        coinPanel.setFocusable(false);
-        coinPanel.setVisible(true);
+        this.controller = new ImplControllerGamePanel();
+        this.controller.addView();
+        this.gamePanel = this.controller.getView();
+        this.gamePanel.setBounds(0, 0, screenSize.width, screenSize.height);
+        layeredPane.add(this.gamePanel, JLayeredPane.DEFAULT_LAYER);
+
+        final JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
+        topPanel.setOpaque(false);
+        topPanel.setFocusable(false);
+        topPanel.setBounds(0, 0, 600, 200);
 
         this.coinLabel = new JLabel(" 0");
         this.coinLabel.setIcon(Texture.COIN_ICON);
         this.coinLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, FONT_SIZE));
         this.coinLabel.setForeground(Color.BLACK);
-        coinPanel.add(this.coinLabel);
-        gameContainer.add(coinPanel,BorderLayout.NORTH);
-        
 
+        this.inventoryButton = new JButton("");
+        this.inventoryButton.setIcon(Texture.STORAGE_ICON);
+        this.inventoryButton.setFont(new Font(FONT_FAMILY, Font.BOLD, 18));
+        this.inventoryButton.setFocusable(false);
+        this.inventoryButton.setContentAreaFilled(false);
+        this.inventoryButton.setBorderPainted(false);
+        this.inventoryButton.setOpaque(false);
+
+        topPanel.add(this.coinLabel);
+        topPanel.add(this.inventoryButton);
+
+        layeredPane.add(topPanel, JLayeredPane.PALETTE_LAYER);
+
+        this.frame.add(layeredPane, BorderLayout.CENTER);
         this.frame.setVisible(true);
-        this.controller = new ImplControllerGamePanel();
-        this.controller.addView();
-        this.gamePanel = this.controller.getView(); 
-        gameContainer.add(gamePanel, BorderLayout.CENTER);
-        this.frame.add(gameContainer, BorderLayout.CENTER);
-        this.gamePanel.setFocusable(true); 
-        this.gamePanel.requestFocus();  
+        
+        this.gamePanel.setFocusable(true);
+        this.gamePanel.requestFocusInWindow();
         this.controller.start();
     }
 
@@ -132,6 +145,17 @@ public final class MainScreen {
      */
     public void attachShopListener(final ActionListener listener) {
         this.menuPanel.addShopListener(listener);
+    }
+
+    /**
+     * Allows the controller to attach an action to the Inventory HUD button.
+     *
+     * @param listener The action to perform.
+     */
+    public void attachInventoryListener(final ActionListener listener) {
+        if (this.inventoryButton != null) {
+            this.inventoryButton.addActionListener(listener);
+        }
     }
 
     /**
