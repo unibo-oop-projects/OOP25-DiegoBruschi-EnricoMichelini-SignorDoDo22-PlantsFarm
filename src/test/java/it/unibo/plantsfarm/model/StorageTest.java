@@ -1,4 +1,4 @@
-package it.unibo.oop.plantsfarm.model;
+package it.unibo.plantsfarm.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
