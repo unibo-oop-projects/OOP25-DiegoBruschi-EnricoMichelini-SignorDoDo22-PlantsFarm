@@ -1,6 +1,6 @@
 package it.unibo.plantsfarm.controller.GamePanel.api;
 
-import it.unibo.plantsfarm.model.Player.BasePlayer;
+import it.unibo.plantsfarm.model.Player.FarmerPlayer;
 import it.unibo.plantsfarm.view.GamePanel.ImplViewGamePanel;
 
 public interface ControllerGamePanel {
@@ -38,5 +38,5 @@ public interface ControllerGamePanel {
      * 
      * @return
      */
-    BasePlayer getPlayer();
+    FarmerPlayer getPlayer();
 }

@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -69,7 +70,6 @@ public final class MainScreen {
         this.controller = new ImplControllerGamePanel();
         this.controller.addView();
         this.gamePanel = this.controller.getView();
-        this.gamePanel.setBounds(0, 0, screenSize.width, screenSize.height);
         layeredPane.add(this.gamePanel, JLayeredPane.DEFAULT_LAYER);
 
         final JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
@@ -82,16 +82,10 @@ public final class MainScreen {
         this.coinLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, FONT_SIZE));
         this.coinLabel.setForeground(Color.BLACK);
 
-        this.inventoryButton = new JButton();
-        this.inventoryButton.setIcon(Texture.INVENTORY_ICON);
-        this.inventoryButton.setFont(new Font(FONT_FAMILY, Font.BOLD, BUTTON_FONT_SIZE));
-        this.inventoryButton.setFocusable(false);
-        this.inventoryButton.setContentAreaFilled(false);
-        this.inventoryButton.setBorderPainted(false);
-        this.inventoryButton.setOpaque(false);
+        
 
         topPanel.add(this.coinLabel);
-        topPanel.add(this.inventoryButton);
+        
 
         layeredPane.add(topPanel, JLayeredPane.PALETTE_LAYER);
 

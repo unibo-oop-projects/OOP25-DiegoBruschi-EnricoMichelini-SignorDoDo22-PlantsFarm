@@ -3,7 +3,7 @@ package it.unibo.plantsfarm.model.Animation.api;
 import java.awt.image.BufferedImage;
 
 /**
- * 
+ * This class is used for define the generic Animation and its base methods.
  */
 public interface Animation {
     /**

@@ -129,26 +129,26 @@ public class TileManager {
             
     }
 
-    public void drawTile(Graphics2D g2, int cameraX, int cameraY) {
-        int col = 0;
-        int row = 0;
-        int x = 0;
-        int y = 0;
+   public void drawTile(Graphics2D g2, int cameraX, int cameraY) {
 
-        while (col < gp.maxScreenCol && row < gp.maxScreenRow) {
-            
+    for (int row = 0; row < gp.maxScreenRow; row++) {
+        for (int col = 0; col < gp.maxScreenCol; col++) {
+
             int tileNum = mapTileNum[col][row];
-            g2.drawImage(tile[tileNum].image, x - cameraX  , y - cameraY, gp.tileSize, gp.tileSize, null);
-            col++;
-            x += gp.tileSize;
+            int worldX = col * gp.tileSize;
+            int worldY = row * gp.tileSize;
+            int screenX = worldX - cameraX;
+            int screenY = worldY - cameraY;
 
-            if (col == gp.maxScreenCol) {
-                
-                col = 0;
-                x = 0;
-                row++;
-                y += gp.tileSize;
+            
+            if (screenX + gp.tileSize > 0 &&
+                screenX < gp.worldWidth &&
+                screenY + gp.tileSize > 0 &&
+                screenY < gp.getHeight()) {
+
+                g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
         }
+    }
     }
 }

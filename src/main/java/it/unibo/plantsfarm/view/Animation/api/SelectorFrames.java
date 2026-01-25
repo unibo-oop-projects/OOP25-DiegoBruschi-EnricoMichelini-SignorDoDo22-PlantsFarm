@@ -1,7 +1,6 @@
 package it.unibo.plantsfarm.view.Animation.api;
 
 import java.awt.image.BufferedImage;
-
 import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInput;
 
 public interface SelectorFrames {

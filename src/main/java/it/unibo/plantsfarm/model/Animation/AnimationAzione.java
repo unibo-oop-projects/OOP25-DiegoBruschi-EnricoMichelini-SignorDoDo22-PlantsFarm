@@ -11,7 +11,7 @@ public class AnimationAzione  implements Animation {
     private int frameIndex;
     private long lastFrameTimeNs;
     private final long frameDurationNs;
-    private boolean playing = false;
+    private boolean playing;
     private AnimationFrames animationframes = new AnimationFrames();
     BufferedImage base =  new SpriteLoader("/Player/tile001.png").getImage();
 
@@ -22,24 +22,20 @@ public class AnimationAzione  implements Animation {
 
     @Override
     public void start(final long nowNs) {
-       
         frameIndex = 0;
         lastFrameTimeNs = nowNs;
     }
 
     @Override
-    public BufferedImage getCurrentFrame(final long nowNs) {
-        
+    public BufferedImage getCurrentFrame(final long nowNs) { 
         if (nowNs - lastFrameTimeNs >= frameDurationNs) {
             frameIndex++;
             lastFrameTimeNs = nowNs;
-            
             if (frameIndex >= frames.length) {
                 frameIndex = frames.length - 1;
                 playing = false;
             }
         }
-
         return frames[frameIndex];
     }
 

@@ -33,13 +33,12 @@ public class Mappa {
                 
                 this.logicaMap2[row][col].rect = new Rectangle(worldX, worldY, 48, 48);
 
-                boolean traversable = true;
+                if (num == 3 || num == 4 || num == 6 ) {
+                    this.logicaMap2[row][col].isAttraversabile = false;
+                }else{
 
-                if (num == 3 || num == 4 || num == 6 || (num >= 20 && num <= 64)) {
-                    traversable = false;
+                    this.logicaMap2[row][col].isAttraversabile = true;
                 }
-
-                this.logicaMap2[row][col].isAttraversabile = traversable;
             }
         }
         br.close();

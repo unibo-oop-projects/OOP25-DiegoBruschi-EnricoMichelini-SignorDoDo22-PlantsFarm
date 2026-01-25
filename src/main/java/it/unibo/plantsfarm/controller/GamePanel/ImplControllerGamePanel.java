@@ -5,7 +5,7 @@ import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.model.Mappa;
 import it.unibo.plantsfarm.model.Camera.Camera;
 import it.unibo.plantsfarm.model.Camera.ImplCamera;
-import it.unibo.plantsfarm.model.Player.BasePlayer;
+import it.unibo.plantsfarm.model.Player.FarmerPlayer;
 import it.unibo.plantsfarm.view.Animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.GamePanel.ImplViewGamePanel;
 
@@ -13,13 +13,13 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private ImplViewGamePanel view;
     private  final static  int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
-    private BasePlayer player;
+    private FarmerPlayer player;
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
     private final Mappa mappa = new Mappa();
     
     public ImplControllerGamePanel() {
-        this.player = new BasePlayer();
+        this.player = new FarmerPlayer();
     }
 
     @Override
@@ -68,10 +68,10 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     }
 
     public void setPlayer() {
-        this.player = new BasePlayer();
+        this.player = new FarmerPlayer();
     }
 
-    public BasePlayer getPlayer() {
+    public FarmerPlayer getPlayer() {
         return this.player;
     }
 }

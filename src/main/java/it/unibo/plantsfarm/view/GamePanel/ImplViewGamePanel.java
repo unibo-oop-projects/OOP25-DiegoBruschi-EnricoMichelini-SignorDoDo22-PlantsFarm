@@ -4,6 +4,7 @@ import static it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.U
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Map;
@@ -12,19 +13,21 @@ import javax.swing.SwingUtilities;
 import it.unibo.plantsfarm.controller.GamePanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInput;
+import it.unibo.plantsfarm.view.Inventario;
 import it.unibo.plantsfarm.view.Animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.Map.TileManager;
 
 
 public class ImplViewGamePanel extends JPanel {
-
   public static int orginalTileSize = 16;
   public final static int SCALE = 3; 
   public static int tileSize = orginalTileSize * SCALE;
   public final static int maxScreenCol = 66; //66
   public final static int maxScreenRow = 21; //21
-  public final static int windthScreen = tileSize * maxScreenCol;
-  public final static int heighScreen = tileSize * maxScreenRow;
+  public final static int worldWidth = tileSize * maxScreenCol; //WORLDWIDTH
+  public final static int worldheigh = tileSize * maxScreenRow; //WORLDHEIGH
+  public final static int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+  public final static int screenHeigh = Toolkit.getDefaultToolkit().getScreenSize().height;
   private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER =
     Map.of(KeyEvent.VK_W, UP, KeyEvent.VK_A, LEFT, KeyEvent.VK_D, RIGHT, KeyEvent.VK_S, DOWN, KeyEvent.VK_R, AZIONE);
   private TileManager tileM;
@@ -35,13 +38,14 @@ public class ImplViewGamePanel extends JPanel {
   private double playerPosY;
   private ImplControllerGamePanel controller;
   private SelectorFrames selector;
+  Boolean inventario = false;
+  Inventario inventory = new Inventario(this);
   
   public ImplViewGamePanel(){
-    
     this.requestFocus();
     this.setVisible(true);
     this.setDoubleBuffered(true);
-    this.setSize(700,700);
+    this.setSize(screenWidth,screenHeigh);
     this.setFocusable(true);
     this.requestFocusInWindow(true);
     this.setBackground(Color.black);
@@ -51,6 +55,10 @@ public class ImplViewGamePanel extends JPanel {
     @Override
     public void keyPressed(final KeyEvent e) {
       super.keyPressed(e);
+      if(e.getKeyCode() == KeyEvent.VK_I ){
+          inventario = !inventario;
+          repaint();  
+        }
       if (KEY_MAPPER.containsKey(e.getKeyCode())) {
         controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
         selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
@@ -75,12 +83,17 @@ public class ImplViewGamePanel extends JPanel {
     });
   }
 
+
   @Override
   protected void paintComponent(final Graphics g) {
     super.paintComponent(g);
     final Graphics2D g2D = (Graphics2D) g;
     tileM.drawTile(g2D, cameraX, cameraY);
-    g2D.drawImage(selector.getCurrentImage(), (int) playerPosX - cameraX, (int)playerPosY - cameraY, 64,64,null);
+    g2D.drawImage(selector.getCurrentImage(), (int) playerPosX - cameraX, (int)playerPosY  - cameraY, 64,64,null);
+    if(inventario){
+      inventory.createInventory(g2D);
+    }
+
   }
 
   public void setController(final ImplControllerGamePanel controller){
@@ -91,13 +104,5 @@ public class ImplViewGamePanel extends JPanel {
     this.selector = selector;
   }
 
-  public int getWidthScreen(){ 
-    return this.windthScreen; 
-  }
-
-  public int getHeightScreen(){ 
-    return this.heighScreen; 
-  }
-
-}  
-
+ 
+}
