@@ -66,6 +66,8 @@ public final class ShopController {
         final int earnings = gameState.getShop().sellProducts(gameState, requests);
 
         if (earnings > 0) {
+            this.view.playSuccessSound();
+
             showMessage("Sold!", "You earned " + earnings + " coins.");
 
             if (this.onTransactionListener != null) {

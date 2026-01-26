@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.view;
 
 import it.unibo.plantsfarm.view.menu.MenuPanel;
+import it.unibo.plantsfarm.view.music.MusicPlayer;
 import it.unibo.plantsfarm.view.utility.Texture;
 
 import java.awt.BorderLayout;
@@ -25,6 +26,7 @@ public final class MainScreen {
     private static final int FONT_SIZE = 24;
 
     private final MenuPanel menuPanel;
+    private final MusicPlayer musicPlayer;
     private JFrame frame;
     private JLabel coinLabel;
 
@@ -33,7 +35,7 @@ public final class MainScreen {
      */
     public MainScreen() {
         this.menuPanel = new MenuPanel();
-        //this.menuPanel.setFocusable(false);
+        this.musicPlayer = new MusicPlayer();
     }
 
     /**
@@ -70,6 +72,8 @@ public final class MainScreen {
 
         this.frame.add(gameContainer, BorderLayout.CENTER);
         this.frame.setVisible(true);
+
+        this.musicPlayer.playLoop("music/GardenMusic.wav");
     }
 
     /**
@@ -126,5 +130,6 @@ public final class MainScreen {
         if (this.frame != null) {
             this.frame.dispose();
         }
+        this.musicPlayer.stop();
     }
 }

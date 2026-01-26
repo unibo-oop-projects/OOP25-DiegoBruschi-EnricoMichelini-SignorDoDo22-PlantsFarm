@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.view.menu;
 
+import it.unibo.plantsfarm.view.music.MusicPlayer;
 import it.unibo.plantsfarm.view.utility.ButtonFactory;
 import it.unibo.plantsfarm.view.utility.Texture;
 import it.unibo.plantsfarm.view.utility.WindowFactory;
@@ -23,8 +24,6 @@ import java.awt.event.ActionListener;
 
 /**
  * View for the Shop.
- * Left: Selling panel, plant labels for requests.
- * Right: Get random plant panel.
  */
 public final class ShopScreen {
 
@@ -56,11 +55,13 @@ public final class ShopScreen {
     private final JPanel plantRequests;
     private final JPanel rightBoxPanel;
     private final JPanel leftRequestPanel;
+    private final MusicPlayer soundSystem;
 
     /**
      * Creates the Shop Screen.
      */
     public ShopScreen() {
+        this.soundSystem = new MusicPlayer();
         this.screen = WindowFactory.createMenuWindow(TITLE);
 
         final JPanel mainPanel = new JPanel();
@@ -156,7 +157,7 @@ public final class ShopScreen {
     }
 
     /**
-     * Sets up the 4 Buy buttons in the right panel, using different rarity icons.
+     * Sets up the 4 Buy buttons in the right panel.
      *
      * @param listener Action when clicked.
      */
@@ -196,6 +197,13 @@ public final class ShopScreen {
                 comp.setEnabled(enabled);
             }
         }
+    }
+
+    /**
+     * Plays the coin sound.
+     */
+    public void playSuccessSound() {
+        this.soundSystem.playEffect("music/menuSound/coin.wav");
     }
 
     /**
