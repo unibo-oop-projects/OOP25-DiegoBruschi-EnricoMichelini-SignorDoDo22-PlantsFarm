@@ -202,8 +202,15 @@ public final class ShopScreen {
     /**
      * Plays the coin sound.
      */
-    public void playSuccessSound() {
+    public void playCoinSound() {
         this.soundSystem.playEffect("music/menuSound/coin.wav");
+    }
+
+    /**
+     * Plays the mystery box sound.
+     */
+    public void playMisteryBoxSound() {
+        this.soundSystem.playEffect("music/menuSound/box.wav");
     }
 
     /**
