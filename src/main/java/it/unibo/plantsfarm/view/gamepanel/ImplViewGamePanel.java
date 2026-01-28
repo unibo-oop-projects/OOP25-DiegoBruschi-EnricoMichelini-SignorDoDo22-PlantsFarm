@@ -18,6 +18,7 @@ import it.unibo.plantsfarm.view.Inventario;
 import it.unibo.plantsfarm.view.map.TileManager;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamepanel.api.ViewGamePael;
+import it.unibo.plantsfarm.view.map.TileManager;
 
 public class ImplViewGamePanel extends JPanel implements ViewGamePael{
   public static int orginalTileSize = 16;
