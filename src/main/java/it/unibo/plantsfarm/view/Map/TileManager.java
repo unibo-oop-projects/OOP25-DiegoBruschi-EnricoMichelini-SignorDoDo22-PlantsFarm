@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.InputStream;
-import it.unibo.plantsfarm.view.GamePanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
 
 public class TileManager {
@@ -18,7 +18,7 @@ public class TileManager {
 
         tile = new Tile[2000];
         
-        mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
+        mapTileNum = new int[ImplViewGamePanel.MAXSCREENCOL][ImplViewGamePanel.MAXSCREENROW];
 
         getTileImage();
         loadMap("/maps/map.txt");
@@ -56,7 +56,7 @@ public class TileManager {
 
         int numColonne = 9;
         int numRighe = 5;
-        int tileSize = 16 * gp.SCALE * 3;
+        int tileSize = 16 * ImplViewGamePanel.SCALE * 3;
    
         int indexPartenza = 20;
 
@@ -112,9 +112,9 @@ public class TileManager {
         try {
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new java.io.InputStreamReader(is));
-            for (int row = 0; row < gp.maxScreenRow; row++) {
+            for (int row = 0; row < ImplViewGamePanel.MAXSCREENROW; row++) {
                 String line = br.readLine();
-                for (int column = 0; column < gp.maxScreenCol; column++) {
+                for (int column = 0; column < ImplViewGamePanel.MAXSCREENCOL; column++) {
                     String numbers[] = line.split(" ");
 
                     int num = Integer.parseInt(numbers[column]);
@@ -131,22 +131,22 @@ public class TileManager {
 
    public void drawTile(Graphics2D g2, int cameraX, int cameraY) {
 
-    for (int row = 0; row < gp.maxScreenRow; row++) {
-        for (int col = 0; col < gp.maxScreenCol; col++) {
+    for (int row = 0; row < ImplViewGamePanel.MAXSCREENROW; row++) {
+        for (int col = 0; col < ImplViewGamePanel.MAXSCREENCOL; col++) {
 
             int tileNum = mapTileNum[col][row];
-            int worldX = col * gp.tileSize;
-            int worldY = row * gp.tileSize;
+            int worldX = col * ImplViewGamePanel.tileSize;
+            int worldY = row * ImplViewGamePanel.tileSize;
             int screenX = worldX - cameraX;
             int screenY = worldY - cameraY;
 
             
-            if (screenX + gp.tileSize > 0 &&
-                screenX < gp.worldWidth &&
-                screenY + gp.tileSize > 0 &&
+            if (screenX + ImplViewGamePanel.tileSize > 0 &&
+                screenX < ImplViewGamePanel.worldWidth &&
+                screenY + ImplViewGamePanel.tileSize > 0 &&
                 screenY < gp.getHeight()) {
 
-                g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                g2.drawImage(tile[tileNum].image, screenX, screenY, ImplViewGamePanel.tileSize, ImplViewGamePanel.tileSize, null);
             }
         }
     }

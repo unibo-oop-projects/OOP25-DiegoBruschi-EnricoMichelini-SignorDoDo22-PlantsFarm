@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.model.Animation.api;
+package it.unibo.plantsfarm.model.animation.api;
 
 import java.awt.image.BufferedImage;
 
@@ -21,4 +21,8 @@ public interface Animation {
      * @param nowNs time begin 
      */
     void start(long nowNs);
+
+
+    
+    boolean getisPlaying();
 }

@@ -1,12 +1,12 @@
-package it.unibo.plantsfarm.model.Camera;
+package it.unibo.plantsfarm.model.camera;
 
-import it.unibo.plantsfarm.model.Player.FarmerPlayer;
-import it.unibo.plantsfarm.view.GamePanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.model.player.api.Player;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
 public final class ImplCamera implements Camera {
     private int posX;
     private int posY;
-    private FarmerPlayer player;
+    private Player player;
     private final int screenWidth;
     private final int screenHeight;
     private final int worldWidth = ImplViewGamePanel.worldWidth;
@@ -19,8 +19,8 @@ public final class ImplCamera implements Camera {
 
     @Override
     public void followPlayer() {
-
-        posX = (int) player.getPosx() - ImplViewGamePanel.screenWidth / 2; //per la telecamera 
+        
+        posX = (int) player.getPosx() - ImplViewGamePanel.screenWidth / 2; 
         posY = (int) player.getPosy() - ImplViewGamePanel.screenHeigh / 2; 
 
         if (posX < 0){ 
@@ -45,7 +45,7 @@ public final class ImplCamera implements Camera {
     }
 
     @Override
-    public void setPlayer(final FarmerPlayer player) {
+    public void setPlayer(final Player player) {
         this.player = player;
     }
 }

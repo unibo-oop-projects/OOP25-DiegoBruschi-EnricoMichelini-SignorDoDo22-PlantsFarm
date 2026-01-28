@@ -1,7 +1,7 @@
 package it.unibo.plantsfarm.view;
 
-import it.unibo.plantsfarm.controller.GamePanel.ImplControllerGamePanel;
-import it.unibo.plantsfarm.view.GamePanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.menu.MenuPanel;
 import it.unibo.plantsfarm.view.utility.Texture;
 

@@ -1,7 +1,13 @@
-package it.unibo.plantsfarm.model.Player.api;
+package it.unibo.plantsfarm.model.player.api;
 
-import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInput;
+import java.awt.Rectangle;
+import java.util.LinkedList;
+import java.util.List;
+
+import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.Mappa;
+import it.unibo.plantsfarm.model.Pod;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
 /**
  * Abstract base class representing a generic player entity.
@@ -16,10 +22,16 @@ public abstract class Player {
     private double posY = 100;
 
     /** Movement speed of the player (units per second). */
-    private double speed = 200;
+    protected double speed = 200;
 
     /** Current movement direction of the player. */
     private UserInput direction = UserInput.FERMO;
+
+    private Mappa map = new Mappa();
+
+    public Player(){
+        map.loadMap("/maps/map.txt");
+    }
 
     /**
      * Updates the position of the player based on the elapsed time
@@ -28,7 +40,7 @@ public abstract class Player {
      * @param time the elapsed time since the last update, in milliseconds
      * @param mappaModel the game map model (used for future collision checks)
      */
-    public void updatePlayer(final long time, final Mappa mappaModel) {
+    public void updatePlayer(final long time) {
         final double delta = speed * time / 1000.0;
 
         double nextPosX = posX;
@@ -39,10 +51,11 @@ public abstract class Player {
             case RIGHT -> nextPosX += delta;
             case UP -> nextPosY -= delta;
             case DOWN -> nextPosY += delta;
+            case AZIONE -> pianta();
             case FERMO -> { }
         }
 
-        if (nextPosX >= 0 && nextPosY >= 0) {
+        if (nextPosX > 1 && nextPosY > 1 && nextPosX < ImplViewGamePanel.worldWidth && nextPosY < ImplViewGamePanel.worldheigh ) {
             posX = nextPosX;
             posY = nextPosY;
         }
@@ -82,5 +95,18 @@ public abstract class Player {
      */
     public final UserInput getDirection() {
         return this.direction;
+    }
+
+
+    public void pianta(){
+        Rectangle hitbox = new Rectangle((int)posX,(int)posY,30,30);
+        List<Pod> list = new LinkedList<>();
+        list = map.getPod();
+        for (Pod zolla : list) {
+            if(zolla.getCoordinate().contains(hitbox)){
+                System.out.print("SONO DENTRO");
+
+            }
+        }   
     }
 }

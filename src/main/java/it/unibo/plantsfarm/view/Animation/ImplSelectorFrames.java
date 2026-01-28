@@ -1,27 +1,28 @@
-package it.unibo.plantsfarm.view.Animation;
+package it.unibo.plantsfarm.view.animation;
 
+import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.*;
 import java.awt.image.BufferedImage;
-import it.unibo.plantsfarm.controller.GamePanel.ImplControllerGamePanel;
-import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInput;
-import it.unibo.plantsfarm.model.Animation.AnimationAzione;
-import it.unibo.plantsfarm.model.Animation.AnimationCorsa;
-import it.unibo.plantsfarm.model.Animation.api.Animation;
-import it.unibo.plantsfarm.model.Animation.api.AnimationFrames;
-import it.unibo.plantsfarm.view.Animation.api.SelectorFrames;
+import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
+import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
+import it.unibo.plantsfarm.model.animation.AnimationAzione;
+import it.unibo.plantsfarm.model.animation.AnimationCorsa;
+import it.unibo.plantsfarm.model.animation.api.Animation;
+import it.unibo.plantsfarm.model.animation.api.AnimationFrames;
+import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.utility.AnimationTime;
 
 public class ImplSelectorFrames implements SelectorFrames {
 
     private ImplControllerGamePanel controller;
-    static private  final long FRAME_DURATION_NS = 120_000_000L;
-    private AnimationAzione azione = new AnimationAzione(AnimationTime.FRAME_10_FPS);
-    private AnimationCorsa animationLeft = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.walkLeft);
-    private AnimationCorsa animationUp = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.walkUp);
-    private AnimationCorsa animationDown = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.walkDown);
-    private AnimationCorsa animationRight = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.walkRight);
+    private final  AnimationAzione azione = new AnimationAzione(AnimationTime.FRAME_10_FPS, AnimationFrames.WATER);
+    private final  AnimationCorsa animationLeft = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.WALKLEFT);
+    private final AnimationCorsa animationUp = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.WALKUP);
+    private final AnimationCorsa animationDown = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.WALKDOWN);
+    private final AnimationCorsa animationRight = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.WALKRIGHT);
+
     private long nowNs;
     private Animation currentAnimation;
-    private BufferedImage currentImage = AnimationFrames.base;
+    private BufferedImage currentImage = AnimationFrames.BASE;
 
     public ImplSelectorFrames(ImplControllerGamePanel controller){
         this.controller = controller;
@@ -29,49 +30,52 @@ public class ImplSelectorFrames implements SelectorFrames {
 
     @Override
     public void takeInput(final UserInput input) {
+        
 
-        final long nowNs = System.nanoTime();
+        if( input == AZIONE ) {
+           nowNs = System.nanoTime();
+           azione.start(nowNs);
+           currentAnimation = azione;
+        }
 
-        switch (input) {
+        if( input == UP ) {
+            nowNs = System.nanoTime();
+            currentAnimation = animationUp;
+            animationUp.start(nowNs);
+        }
 
-            case AZIONE -> {
-                azione.start(nowNs);
-                currentAnimation = azione;
-            }
+        if( input == RIGHT ) {
+            nowNs = System.nanoTime();
+            currentAnimation = animationRight;
+            animationRight.start(nowNs);
+        }
 
-            case UP -> {
-                animationUp.start(nowNs);
-                currentAnimation = animationUp;
-            }
+        if( input == DOWN ) {
+            nowNs = System.nanoTime();
+            currentAnimation = animationDown;
+            animationDown.start(nowNs);
+        }
 
-            case RIGHT -> {
-                animationRight.start(nowNs);
-                currentAnimation = animationRight;
-            }
-
-            case DOWN -> {
-                animationDown.start(nowNs);
-                currentAnimation = animationDown;
-            }
-
-            case LEFT -> {
-                animationLeft.start(nowNs);
-                currentAnimation = animationLeft;
-            }
-
-            case FERMO -> {
-                if (currentAnimation == azione && azione.isPlaying()) {
-                    return;
-                }
-                this.currentImage = AnimationFrames.base;
+        if( input == LEFT ) {
+            nowNs = System.nanoTime();
+            animationLeft.start(nowNs);
+            currentAnimation = animationLeft;
+        }
+        
+        if( input == FERMO && currentAnimation != azione && currentAnimation != null ) {
+            if(currentAnimation.equals(azione)  && azione.getisPlaying()){
+                return;
+            }else{
+                this.currentImage = AnimationFrames.BASE;
                 this.currentAnimation = null;
             }
         }
-    }
 
+    }
+ 
     public void update(Long now){
         
-        long durationAnim = nowNs + FRAME_DURATION_NS;
+        long durationAnim = nowNs + AnimationTime.FRAME_10_FPS;
         if(now <= durationAnim && currentAnimation != null ){
             this.currentImage = currentAnimation.getCurrentFrame(System.nanoTime());
         }
@@ -80,4 +84,5 @@ public class ImplSelectorFrames implements SelectorFrames {
     final public BufferedImage getCurrentImage(){ 
         return this.currentImage;
     }
+  
 }

@@ -1,6 +1,6 @@
-package it.unibo.plantsfarm.view.GamePanel;
+package it.unibo.plantsfarm.view.gamepanel;
 
-import static it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInput.*;
+import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -10,22 +10,23 @@ import java.awt.event.KeyEvent;
 import java.util.Map;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import it.unibo.plantsfarm.controller.GamePanel.ImplControllerGamePanel;
-import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel;
-import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel.UserInput;
+
+import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
+import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
+import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.view.Inventario;
-import it.unibo.plantsfarm.view.Animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.Map.TileManager;
+import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
+import it.unibo.plantsfarm.view.gamepanel.api.ViewGamePael;
 
-
-public class ImplViewGamePanel extends JPanel {
+public class ImplViewGamePanel extends JPanel implements ViewGamePael{
   public static int orginalTileSize = 16;
   public final static int SCALE = 3; 
   public static int tileSize = orginalTileSize * SCALE;
-  public final static int maxScreenCol = 66; //66
-  public final static int maxScreenRow = 21; //21
-  public final static int worldWidth = tileSize * maxScreenCol; //WORLDWIDTH
-  public final static int worldheigh = tileSize * maxScreenRow; //WORLDHEIGH
+  public final static int MAXSCREENCOL = 66; 
+  public final static int MAXSCREENROW = 21; 
+  public final static int worldWidth = tileSize * (MAXSCREENCOL - 2); 
+  public final static int worldheigh = tileSize * (MAXSCREENROW - 2); 
   public final static int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
   public final static int screenHeigh = Toolkit.getDefaultToolkit().getScreenSize().height;
   private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER =
@@ -83,7 +84,6 @@ public class ImplViewGamePanel extends JPanel {
     });
   }
 
-
   @Override
   protected void paintComponent(final Graphics g) {
     super.paintComponent(g);
@@ -93,16 +93,15 @@ public class ImplViewGamePanel extends JPanel {
     if(inventario){
       inventory.createInventory(g2D);
     }
-
   }
 
+  @Override
   public void setController(final ImplControllerGamePanel controller){
     this.controller = controller;
   }
 
+  @Override
   public void setSelectorFrames(final SelectorFrames selector){
     this.selector = selector;
   }
-
- 
 }

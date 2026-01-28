@@ -1,13 +1,13 @@
-package it.unibo.plantsfarm.model.Animation;
+package it.unibo.plantsfarm.model.animation;
 
 import java.awt.image.*;
-import it.unibo.plantsfarm.model.Animation.api.Animation;
-import it.unibo.plantsfarm.view.utility.SpriteLoader;
+
+import it.unibo.plantsfarm.model.animation.api.Animation;
+import it.unibo.plantsfarm.model.animation.api.AnimationFrames;
 
 public class AnimationCorsa implements Animation {
 
     private final BufferedImage[] frames;
-    private final BufferedImage base =  new SpriteLoader("/Player/tile001.png").getImage();
     private int frameIndex;
     private long lastFrameTimeNs;
     private final long frameDurationNs;
@@ -28,26 +28,23 @@ public class AnimationCorsa implements Animation {
         lastFrameTimeNs = nowNs;
     }
 
-    public void stop() {
-        playing = false;
-        frameIndex = 0;
-    }
-
     @Override
     public BufferedImage getCurrentFrame(final long nowNs) {
         
         if (!playing) {    
-            return base;
+            return AnimationFrames.BASE;
         }
-
+        
         if (nowNs - lastFrameTimeNs >= frameDurationNs) {
             frameIndex = (frameIndex + 1) % frames.length;
             lastFrameTimeNs = nowNs;
         }
-            return frames[frameIndex]; 
+        
+        return frames[frameIndex]; 
     }
 
-    public boolean isPlaying() {
+    @Override
+    public boolean getisPlaying() {
         return playing;
     }
 }

@@ -1,25 +1,27 @@
-package it.unibo.plantsfarm.controller.GamePanel;
+package it.unibo.plantsfarm.controller.gamepanel;
 
 import java.util.concurrent.LinkedBlockingQueue;
-import it.unibo.plantsfarm.controller.GamePanel.api.ControllerGamePanel;
-import it.unibo.plantsfarm.model.Mappa;
-import it.unibo.plantsfarm.model.Camera.Camera;
-import it.unibo.plantsfarm.model.Camera.ImplCamera;
-import it.unibo.plantsfarm.model.Player.FarmerPlayer;
-import it.unibo.plantsfarm.view.Animation.ImplSelectorFrames;
-import it.unibo.plantsfarm.view.GamePanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
+import it.unibo.plantsfarm.model.camera.*;
+import it.unibo.plantsfarm.model.player.FactoryPlayer;
+import it.unibo.plantsfarm.model.player.FarmerPlayer;
+import it.unibo.plantsfarm.model.player.PlayersTypes;
+import it.unibo.plantsfarm.model.player.api.Player;
+import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
 public final class ImplControllerGamePanel extends Thread implements ControllerGamePanel {
     private ImplViewGamePanel view;
+    private final  FactoryPlayer factoryPlayer = new FactoryPlayer();
     private  final static  int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
-    private FarmerPlayer player;
+    private Player player;
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
-    private final Mappa mappa = new Mappa();
-    
+   
     public ImplControllerGamePanel() {
-        this.player = new FarmerPlayer();
+        setPlayer();
+        this.player = getPlayer();
     }
 
     @Override
@@ -43,17 +45,19 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             }
             
             controllerAnimation.update(now);
-            player.updatePlayer(delta, mappa);
+            player.updatePlayer(delta);
             camera.followPlayer();            
         }
     }
  
+    @Override
     public void takeInput(final UserInput input) {
         if (input != null) {
             this.queue.add(input);
         }
     }
     
+    @Override
     public void addView() {
         view = new ImplViewGamePanel();
         this.controllerAnimation = new ImplSelectorFrames(this);
@@ -63,15 +67,20 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         camera.setPlayer(player);
     }
 
+    @Override
     public ImplViewGamePanel getView() {
         return this.view;
     }
 
+    @Override
     public void setPlayer() {
+        
+        player = factoryPlayer.createPlayer(PlayersTypes.FARMER);
         this.player = new FarmerPlayer();
     }
 
-    public FarmerPlayer getPlayer() {
+    @Override
+    public Player getPlayer() {
         return this.player;
     }
 }

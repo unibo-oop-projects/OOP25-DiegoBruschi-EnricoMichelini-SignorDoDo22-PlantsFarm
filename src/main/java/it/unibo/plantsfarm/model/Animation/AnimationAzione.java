@@ -1,23 +1,18 @@
-package it.unibo.plantsfarm.model.Animation;
+package it.unibo.plantsfarm.model.animation;
 
 import java.awt.image.BufferedImage;
-import it.unibo.plantsfarm.model.Animation.api.Animation;
-import it.unibo.plantsfarm.model.Animation.api.AnimationFrames;
-import it.unibo.plantsfarm.view.utility.SpriteLoader;
+import it.unibo.plantsfarm.model.animation.api.Animation;
 
 public class AnimationAzione  implements Animation {
-
     private final BufferedImage[] frames;
     private int frameIndex;
     private long lastFrameTimeNs;
     private final long frameDurationNs;
-    private boolean playing;
-    private AnimationFrames animationframes = new AnimationFrames();
-    BufferedImage base =  new SpriteLoader("/Player/tile001.png").getImage();
+    private boolean playing = false;
 
-    public AnimationAzione(final long frameDurationNs) {
+    public AnimationAzione(final long frameDurationNs, BufferedImage[] frames) {
         this.frameDurationNs = frameDurationNs;
-        frames = animationframes.water;
+        this.frames = frames;
     }
 
     @Override
@@ -27,20 +22,18 @@ public class AnimationAzione  implements Animation {
     }
 
     @Override
-    public BufferedImage getCurrentFrame(final long nowNs) { 
+    public BufferedImage getCurrentFrame(final long nowNs) {
         if (nowNs - lastFrameTimeNs >= frameDurationNs) {
             frameIndex++;
             lastFrameTimeNs = nowNs;
+            
             if (frameIndex >= frames.length) {
                 frameIndex = frames.length - 1;
                 playing = false;
             }
         }
-        return frames[frameIndex];
-    }
 
-    public boolean isPlaying() {
-        return playing;
+        return frames[frameIndex];
     }
 
     public boolean getisPlaying() {

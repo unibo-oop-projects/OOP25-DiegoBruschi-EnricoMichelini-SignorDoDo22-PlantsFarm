@@ -1,11 +1,14 @@
-package it.unibo.plantsfarm.view.GamePanel.api;
+package it.unibo.plantsfarm.view.gamepanel.api;
 
-import it.unibo.plantsfarm.view.Animation.api.SelectorFrames;
+import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
+import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 
 public interface ViewGamePael {
     
-    void show(int playerPosX, int playerPosY, int cameraX, int cameraY);
+    void show(double playerPosX, double playerPosY, int cameraX, int cameraY);
 
     void setSelectorFrames(SelectorFrames selector);
+
+    void setController(ImplControllerGamePanel controller);
     
 }

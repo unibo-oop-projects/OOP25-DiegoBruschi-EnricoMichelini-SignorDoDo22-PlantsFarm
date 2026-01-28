@@ -3,12 +3,13 @@ package it.unibo.plantsfarm.model;
 import java.awt.Rectangle;
 import java.io.BufferedReader;
 import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Mappa {
     
     private int logicMap1 [][] = new int[21][66];
-    private ModelTile logicaMap2 [][] = new ModelTile[21][66];
-    
+    private List<Pod> pod = new LinkedList<>(List.of());
 
     public void loadMap(String filePath) {
 
@@ -21,23 +22,14 @@ public class Mappa {
             String numbers[] = line.split(" ");
             
             for (int col = 0; col < 66; col++) {
-                
                 int num = Integer.parseInt(numbers[col]);
-                
                 this.logicMap1[row][col] = num;
-                
-                this.logicaMap2[row][col] = new ModelTile();
-                
                 int worldX = col * 48; 
                 int worldY = row * 48;
-                
-                this.logicaMap2[row][col].rect = new Rectangle(worldX, worldY, 48, 48);
-
-                if (num == 3 || num == 4 || num == 6 ) {
-                    this.logicaMap2[row][col].isAttraversabile = false;
-                }else{
-
-                    this.logicaMap2[row][col].isAttraversabile = true;
+                System.out.println(num);
+                if (num == 18 ) {
+                    Rectangle rect = new Rectangle(worldX, worldY, 48 * 3, 48 * 3);
+                    pod.add(new Pod(rect));
                 }
             }
         }
@@ -47,8 +39,7 @@ public class Mappa {
         }
     }
 
-    public ModelTile[][] getLogicaMap2() {
-        return this.logicaMap2;
-    }
+
+    public List<Pod> getPod(){ return this.pod;}
 
 }

@@ -6,17 +6,16 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.JPanel;
 
-import it.unibo.plantsfarm.view.GamePanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
 public class Inventario extends JPanel {
     
     boolean isVisible = false;
     ImplViewGamePanel view;
     int gap = 15;
-    int slotSize = view.tileSize + view.tileSize / 2;
+    int slotSize = ImplViewGamePanel.tileSize + ImplViewGamePanel.tileSize / 2;
     ItemsView itemsImg = new ItemsView();
     Rectangle backgroundInventory;
     Rectangle borderInventory;
@@ -32,8 +31,8 @@ public class Inventario extends JPanel {
         
         int screenW = view.getWidth();
         int screenH = view.getHeight();
-        int invW = view.tileSize * 7 + view.tileSize / 2;
-        int invH = view.tileSize * 2;
+        int invW = ImplViewGamePanel.tileSize * 7 + ImplViewGamePanel.tileSize / 2;
+        int invH = ImplViewGamePanel.tileSize * 2;
         int invX = (screenW - invW) / 2;
         int invY = screenH - invH - 30;
         backgroundInventory = new Rectangle(invX, invY, invW, invH);
@@ -50,7 +49,7 @@ public class Inventario extends JPanel {
             int x = backgroundInventory.x + gap + w;
             int y = backgroundInventory.y + gap;
             g2d.fillRect(x, y, slotSize, slotSize);
-            g2d.drawImage(itemsImg.waterCanImage, x, y, slotSize, slotSize, null);
+            g2d.drawImage(ItemsView.waterCanImage, x, y, slotSize, slotSize, null);
             w = w + slotSize + gap;
         }
     }
