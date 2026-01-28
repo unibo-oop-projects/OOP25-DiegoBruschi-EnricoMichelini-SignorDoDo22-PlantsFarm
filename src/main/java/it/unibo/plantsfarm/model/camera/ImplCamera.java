@@ -1,7 +1,7 @@
 package it.unibo.plantsfarm.model.camera;
 
 import it.unibo.plantsfarm.model.player.api.Player;
-import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class ImplCamera implements Camera {
     private int posX;

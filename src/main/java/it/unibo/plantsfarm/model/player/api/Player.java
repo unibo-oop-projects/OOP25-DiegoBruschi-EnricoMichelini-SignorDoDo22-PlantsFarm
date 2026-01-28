@@ -7,7 +7,7 @@ import java.util.List;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.Mappa;
 import it.unibo.plantsfarm.model.Pod;
-import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 /**
  * Abstract base class representing a generic player entity.

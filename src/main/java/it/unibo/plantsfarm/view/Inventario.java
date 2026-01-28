@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JPanel;
 
-import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public class Inventario extends JPanel {
     

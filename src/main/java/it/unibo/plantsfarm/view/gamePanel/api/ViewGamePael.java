@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.view.gamepanel.api;
+package it.unibo.plantsfarm.view.gamePanel.api;
 
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;

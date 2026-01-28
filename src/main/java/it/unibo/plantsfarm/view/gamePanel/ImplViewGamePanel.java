@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.view.gamepanel;
+package it.unibo.plantsfarm.view.gamePanel;
 
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.*;
 import java.awt.Color;
@@ -17,8 +17,7 @@ import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInpu
 import it.unibo.plantsfarm.view.Inventario;
 import it.unibo.plantsfarm.view.map.TileManager;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
-import it.unibo.plantsfarm.view.gamepanel.api.ViewGamePael;
-import it.unibo.plantsfarm.view.map.TileManager;
+import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePael;
 
 public class ImplViewGamePanel extends JPanel implements ViewGamePael{
   public static int orginalTileSize = 16;

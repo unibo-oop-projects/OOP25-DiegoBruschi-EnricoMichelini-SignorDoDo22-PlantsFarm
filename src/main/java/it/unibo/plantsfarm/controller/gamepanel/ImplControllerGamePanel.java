@@ -8,7 +8,7 @@ import it.unibo.plantsfarm.model.player.FarmerPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
-import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class ImplControllerGamePanel extends Thread implements ControllerGamePanel {
     private ImplViewGamePanel view;
