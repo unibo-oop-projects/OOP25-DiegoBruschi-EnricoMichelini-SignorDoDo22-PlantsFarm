@@ -12,6 +12,7 @@ import it.unibo.plantsfarm.controller.memory.DataMemory;
 public final class Coin {
 
     private static final String FILE_NAME = "wallet.txt";
+    private static final int INITIAL_COINS = 250;
     private static final Logger LOGGER = Logger.getLogger(Coin.class.getName());
 
     private int value;
@@ -64,6 +65,14 @@ public final class Coin {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Resets the wallet to the initial value.
+     */
+    public void reset() {
+        this.value = INITIAL_COINS;
+        save();
     }
 
     /**

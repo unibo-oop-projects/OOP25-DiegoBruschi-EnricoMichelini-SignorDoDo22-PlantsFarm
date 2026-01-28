@@ -50,6 +50,17 @@ public final class Encyclopedia {
     }
 
     /**
+     * Resets encyclopedia.
+     */
+    public void reset() {
+        for (final PlantType type : PlantType.values()) {
+            type.lock();
+        }
+        PlantType.CARROT.unlock();
+        save();
+    }
+
+    /**
      * Gets all plants in the encyclopedia.
      *
      * @return unmodifiable list of plants

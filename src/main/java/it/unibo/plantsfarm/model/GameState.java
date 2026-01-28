@@ -138,4 +138,13 @@ public final class GameState {
     public void saveEncyclopedia() {
         this.encyclopedia.save();
     }
+
+    /**
+     * Resets the entire game state.
+     */
+    public void resetGame() {
+        this.storage.reset();
+        this.wallet.reset();
+        this.encyclopedia.reset();
+    }
 }

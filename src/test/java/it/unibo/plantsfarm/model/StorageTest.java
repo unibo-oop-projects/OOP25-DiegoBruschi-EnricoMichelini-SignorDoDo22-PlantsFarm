@@ -15,12 +15,13 @@ import it.unibo.plantsfarm.model.plant.PlantType;
  */
 final class StorageTest {
 
-    private static final int INITIAL_QUANTITY = 999;
+    private static final int INITIAL_QUANTITY = 0;
     private static final int Q1 = 10;
     private static final int Q2 = 50;
     private static final int Q3 = -100;
     private static final int Q4 = 9;
     private static final int Q5 = 5000;
+    private static final int Q6 = 100;
 
     private final Storage storage = new Storage();
 
@@ -29,6 +30,8 @@ final class StorageTest {
      */
     @Test
     void testInitialization() {
+        storage.reset();
+
         assertEquals(INITIAL_QUANTITY, storage.getQuantity(PlantType.CARROT));
         assertEquals(INITIAL_QUANTITY, storage.getQuantity(PlantType.TOMATO));
 
@@ -41,6 +44,8 @@ final class StorageTest {
      */
     @Test
     void testAddItem() {
+        storage.reset();
+
         storage.addItem(PlantType.CARROT, Q1);
         assertEquals(INITIAL_QUANTITY + Q1, storage.getQuantity(PlantType.CARROT));
 
@@ -56,13 +61,15 @@ final class StorageTest {
      */
     @Test
     void testRemoveItem() {
-        assertTrue(storage.removeItem(PlantType.POTATO, Q4));
+        storage.reset();
 
-        assertEquals(INITIAL_QUANTITY - Q4, storage.getQuantity(PlantType.POTATO));
+        storage.addItem(PlantType.POTATO, Q6);
+
+        assertTrue(storage.removeItem(PlantType.POTATO, Q4));
+        assertEquals(Q6 - Q4, storage.getQuantity(PlantType.POTATO));
 
         assertFalse(storage.removeItem(PlantType.POTATO, Q5));
-
-        assertEquals(INITIAL_QUANTITY - Q4, storage.getQuantity(PlantType.POTATO));
+        assertEquals(Q6 - Q4, storage.getQuantity(PlantType.POTATO));
 
         assertFalse(storage.removeItem(PlantType.BEGONIA, 1));
     }

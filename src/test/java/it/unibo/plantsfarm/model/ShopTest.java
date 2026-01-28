@@ -21,7 +21,7 @@ final class ShopTest {
     private static final int CARROTS_QUANTITY_TO_ADD = 50;
     private static final int CARROT_QUANTITY_TO_SELL = 10;
     private static final int MYSTERY_BOX_COST = 50;
-    private static final int STORAGE_DEFAULT = 999;
+    private static final int STORAGE_DEFAULT = 0;
     private static final int BIG_QUANTITY = 5000;
 
     private final Shop shop = new Shop();
@@ -33,6 +33,8 @@ final class ShopTest {
      */
     @Test
     void testGenerateRequests() {
+        gameState.resetGame();
+
         carrot.getType().unlock();
 
         final Map<PlantType, Integer> requests = shop.generateRequests(gameState);
@@ -47,6 +49,8 @@ final class ShopTest {
      */
     @Test
     void testSellProductsSuccess() {
+        gameState.resetGame();
+
         carrot.getType().unlock();
         gameState.addHarvest(PlantType.CARROT, CARROTS_QUANTITY_TO_ADD);
 
@@ -70,6 +74,8 @@ final class ShopTest {
      */
     @Test
     void testSellProductsNotEnoughItems() {
+        gameState.resetGame();
+
         carrot.getType().unlock();
         final Map<PlantType, Integer> request = new EnumMap<>(PlantType.class);
         request.put(PlantType.CARROT, STORAGE_DEFAULT + BIG_QUANTITY);
@@ -85,6 +91,8 @@ final class ShopTest {
      */
     @Test
     void testMysteryBoxSuccess() {
+        gameState.resetGame();
+
         final PlantType unlocked = shop.buyMysteryBox(gameState, MYSTERY_BOX_COST);
 
         if (unlocked != null) {
@@ -98,6 +106,8 @@ final class ShopTest {
      */
     @Test
     void testMysteryBoxNoMoney() {
+        gameState.resetGame();
+
         gameState.spendCoins(INITIAL_COINS);
 
         final PlantType unlocked = shop.buyMysteryBox(gameState, MYSTERY_BOX_COST);
@@ -105,4 +115,3 @@ final class ShopTest {
         assertEquals(null, unlocked);
     }
 }
-

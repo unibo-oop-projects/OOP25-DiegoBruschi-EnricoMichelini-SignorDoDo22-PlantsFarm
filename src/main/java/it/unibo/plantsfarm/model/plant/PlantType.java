@@ -109,6 +109,13 @@ public enum PlantType {
     }
 
     /**
+     * Locks this plant type.
+     */
+    public void lock() {
+        this.isDiscovered = false;
+    }
+
+    /**
      * Checks if this plant type has been discovered.
      *
      * @return true if discovered, false otherwise.
