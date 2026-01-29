@@ -34,6 +34,13 @@ public final class Texture {
     public static final ImageIcon LEGENDARY_GIFT_ICON = loadMenuIcon("LegendaryGift.png");
     public static final ImageIcon COIN_ICON = loadMenuIcon("Coin.png");
 
+    public static final ImageIcon RESUME_ICON = loadMenuIcon("Resume.png");
+    public static final ImageIcon COMMANDS_ICON = loadMenuIcon("Commands.png");
+    public static final ImageIcon RESET_ICON = loadMenuIcon("Reset.png");
+    public static final ImageIcon EXTRA_ICON = loadMenuIcon("Extra.png");
+    public static final ImageIcon CREDITS_ICON = loadMenuIcon("Credit.png");
+    public static final ImageIcon EXIT_ICON = loadMenuIcon("Exit.png");
+
     private Texture() {
         // Utility class constructor
     }
