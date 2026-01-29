@@ -1,21 +1,19 @@
 package it.unibo.plantsfarm.model.animation;
 
-import java.awt.image.*;
-
+import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.model.animation.api.Animation;
 import it.unibo.plantsfarm.model.animation.api.AnimationFrames;
 
-public class AnimationCorsa implements Animation {
-
+public final class AnimationCorsa implements Animation {
     private final BufferedImage[] frames;
     private int frameIndex;
     private long lastFrameTimeNs;
     private final long frameDurationNs;
-    private boolean playing = false;
+    private boolean playing;
 
-    public AnimationCorsa(final long frameDurationNs, BufferedImage[] frames) {
+    public AnimationCorsa(final long frameDurationNs, final BufferedImage[] frames) {
         this.frameDurationNs = frameDurationNs;
-        this.frames = frames;
+        this.frames = frames.clone();
     }
 
     @Override
@@ -30,16 +28,14 @@ public class AnimationCorsa implements Animation {
 
     @Override
     public BufferedImage getCurrentFrame(final long nowNs) {
-        
         if (!playing) {    
             return AnimationFrames.BASE;
         }
-        
+
         if (nowNs - lastFrameTimeNs >= frameDurationNs) {
             frameIndex = (frameIndex + 1) % frames.length;
             lastFrameTimeNs = nowNs;
         }
-        
         return frames[frameIndex]; 
     }
 

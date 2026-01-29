@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.util.Map;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
@@ -19,7 +18,7 @@ import it.unibo.plantsfarm.view.map.TileManager;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePael;
 
-public class ImplViewGamePanel extends JPanel implements ViewGamePael{
+public class  ImplViewGamePanel extends JPanel implements ViewGamePael{
   public static int orginalTileSize = 16;
   public final static int SCALE = 3; 
   public static int tileSize = orginalTileSize * SCALE;
@@ -43,13 +42,14 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael{
   Inventario inventory = new Inventario(this);
   
   public ImplViewGamePanel(){
+    super();
     this.requestFocus();
     this.setVisible(true);
     this.setDoubleBuffered(true);
     this.setSize(screenWidth,screenHeigh);
     this.setFocusable(true);
     this.requestFocusInWindow(true);
-    this.setBackground(Color.black);
+    this.setBackground(Color.BLACK);
     this.tileM = new TileManager(this);
     this.addKeyListener(new KeyAdapter() {
     

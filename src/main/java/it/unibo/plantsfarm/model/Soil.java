@@ -2,12 +2,12 @@ package it.unibo.plantsfarm.model;
 
 import java.awt.Rectangle;
 
-public class Pod {
+public class Soil {
     
     private Rectangle coordinatePod;
     private boolean isPlanted;
     
-    public Pod(Rectangle coordinatePod){
+    public Soil(Rectangle coordinatePod){
         this.coordinatePod = coordinatePod;
     }
 

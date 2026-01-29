@@ -3,16 +3,16 @@ package it.unibo.plantsfarm.model.animation;
 import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.model.animation.api.Animation;
 
-public class AnimationAzione  implements Animation {
+public final class AnimationAzione  implements Animation {
     private final BufferedImage[] frames;
     private int frameIndex;
     private long lastFrameTimeNs;
     private final long frameDurationNs;
-    private boolean playing = false;
+    private boolean playing;
 
-    public AnimationAzione(final long frameDurationNs, BufferedImage[] frames) {
+    public AnimationAzione(final long frameDurationNs, final BufferedImage[] frames) {
         this.frameDurationNs = frameDurationNs;
-        this.frames = frames;
+        this.frames = frames.clone();
     }
 
     @Override
@@ -32,10 +32,10 @@ public class AnimationAzione  implements Animation {
                 playing = false;
             }
         }
-
         return frames[frameIndex];
     }
 
+    @Override
     public boolean getisPlaying() {
         return playing;
     }

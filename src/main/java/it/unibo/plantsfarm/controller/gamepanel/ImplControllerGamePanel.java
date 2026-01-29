@@ -3,8 +3,7 @@ package it.unibo.plantsfarm.controller.gamepanel;
 import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.model.camera.*;
-import it.unibo.plantsfarm.model.player.FactoryPlayer;
-import it.unibo.plantsfarm.model.player.FarmerPlayer;
+import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
@@ -12,8 +11,8 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class ImplControllerGamePanel extends Thread implements ControllerGamePanel {
     private ImplViewGamePanel view;
-    private final  FactoryPlayer factoryPlayer = new FactoryPlayer();
-    private  final static  int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
+    private final  ImplFactoryPlayer factoryPlayer = new ImplFactoryPlayer();
+    private  final   int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
     private Player player;
     private ImplSelectorFrames controllerAnimation;
@@ -36,14 +35,12 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                 player.setDirection(input);
                 controllerAnimation.takeInput(input);
             }
-
             view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY());
             try {
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
             } catch (InterruptedException e) {
                 break;
             }
-            
             controllerAnimation.update(now);
             player.updatePlayer(delta);
             camera.followPlayer();            
@@ -74,9 +71,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
 
     @Override
     public void setPlayer() {
-        
-        player = factoryPlayer.createPlayer(PlayersTypes.FARMER);
-        this.player = new FarmerPlayer();
+        this.player = factoryPlayer.createPlayer(PlayersTypes.FARMER);
     }
 
     @Override

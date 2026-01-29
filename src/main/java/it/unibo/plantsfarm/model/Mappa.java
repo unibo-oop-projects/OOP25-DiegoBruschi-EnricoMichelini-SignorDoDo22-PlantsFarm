@@ -9,7 +9,7 @@ import java.util.List;
 public class Mappa {
     
     private int logicMap1 [][] = new int[21][66];
-    private List<Pod> pod = new LinkedList<>(List.of());
+    private List<Soil> pod = new LinkedList<>(List.of());
 
     public void loadMap(String filePath) {
 
@@ -29,7 +29,7 @@ public class Mappa {
                 System.out.println(num);
                 if (num == 18 ) {
                     Rectangle rect = new Rectangle(worldX, worldY, 48 * 3, 48 * 3);
-                    pod.add(new Pod(rect));
+                    pod.add(new Soil(rect));
                 }
             }
         }
@@ -40,6 +40,6 @@ public class Mappa {
     }
 
 
-    public List<Pod> getPod(){ return this.pod;}
+    public List<Soil> getPod(){ return this.pod;}
 
 }
