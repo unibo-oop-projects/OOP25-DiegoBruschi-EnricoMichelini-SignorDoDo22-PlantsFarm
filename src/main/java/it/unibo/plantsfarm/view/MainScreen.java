@@ -1,7 +1,7 @@
 package it.unibo.plantsfarm.view;
 
-import it.unibo.plantsfarm.controller.GamePanel.ImplControllerGamePanel;
-import it.unibo.plantsfarm.view.GamePanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
+import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.menu.MenuPanel;
 import it.unibo.plantsfarm.view.music.MusicPlayer;
 import it.unibo.plantsfarm.view.utility.Texture;
@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -72,7 +73,7 @@ public final class MainScreen {
         this.controller = new ImplControllerGamePanel();
         this.controller.addView();
         this.gamePanel = this.controller.getView();
-        this.gamePanel.setBounds(0, 0, screenSize.width, screenSize.height);
+        //this.gamePanel.setBounds(0, 0, screenSize.width, screenSize.height);
         
         layeredPane.add(this.gamePanel, JLayeredPane.DEFAULT_LAYER);
 
@@ -86,16 +87,10 @@ public final class MainScreen {
         this.coinLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, FONT_SIZE));
         this.coinLabel.setForeground(Color.BLACK);
 
-        this.inventoryButton = new JButton();
-        this.inventoryButton.setIcon(Texture.INVENTORY_ICON);
-        this.inventoryButton.setFont(new Font(FONT_FAMILY, Font.BOLD, BUTTON_FONT_SIZE));
-        this.inventoryButton.setFocusable(false);
-        this.inventoryButton.setContentAreaFilled(false);
-        this.inventoryButton.setBorderPainted(false);
-        this.inventoryButton.setOpaque(false);
+        
 
         topPanel.add(this.coinLabel);
-        topPanel.add(this.inventoryButton);
+        
 
         layeredPane.add(topPanel, JLayeredPane.PALETTE_LAYER);
 
