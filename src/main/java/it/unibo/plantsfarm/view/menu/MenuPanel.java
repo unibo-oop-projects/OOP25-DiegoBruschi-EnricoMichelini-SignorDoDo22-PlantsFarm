@@ -27,7 +27,7 @@ public final class MenuPanel extends JPanel {
      * Initializes the menu panel using the ButtonFactory.
      */
     public MenuPanel() {
-        super(new GridLayout(ROWS, COLS, 0, GAP));
+        super(new GridLayout(ROWS, COLS, GAP, GAP));
 
         this.shop = ButtonFactory.createMenuButton(Texture.SHOP_ICON);
         this.storage = ButtonFactory.createMenuButton(Texture.STORAGE_ICON);

@@ -1,9 +1,11 @@
 package it.unibo.plantsfarm.view.menu;
 
 import it.unibo.plantsfarm.view.utility.ButtonFactory;
+import it.unibo.plantsfarm.view.utility.Texture;
 import it.unibo.plantsfarm.view.utility.WindowFactory;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -19,12 +21,12 @@ public final class PauseMenuScreen {
 
     private static final String TITLE = "Pause Menu";
     private static final Color BG_COLOR = new Color(245, 245, 220);
-    private static final int GAP = 15;
-    private static final int PADDING = 30;
+    private static final int GAP = 10;
+    private static final int PADDING = 20;
     private static final int BTN_WIDTH = 200;
-    private static final int BTN_HEIGHT = 50;
-    private static final int WIDTH = 350;
-    private static final int HEIGHT = 400;
+    private static final int BTN_HEIGHT = 45;
+    private static final int ROWS = 3;
+    private static final int COLS = 2;
 
     private final JDialog screen;
     private final JPanel buttonPanel;
@@ -34,19 +36,18 @@ public final class PauseMenuScreen {
      */
     public PauseMenuScreen() {
         this.screen = WindowFactory.createMenuWindow(TITLE);
-        this.screen.setSize(WIDTH, HEIGHT);
-        this.screen.setLocationRelativeTo(null);
 
         this.buttonPanel = new JPanel();
-        this.buttonPanel.setLayout(new GridLayout(3, 1, 0, GAP));
+        this.buttonPanel.setLayout(new GridLayout(ROWS, COLS, GAP, GAP));
         this.buttonPanel.setBackground(BG_COLOR);
         this.buttonPanel.setBorder(BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING));
 
         this.screen.add(this.buttonPanel);
     }
 
-    private void addButton(final String text, final ActionListener listener) {
+    private void addButton(final String text, final ImageIcon icon, final ActionListener listener) {
         final JButton button = ButtonFactory.createButton(text);
+        button.setIcon(icon);
         button.setPreferredSize(new Dimension(BTN_WIDTH, BTN_HEIGHT));
         button.addActionListener(listener);
         this.buttonPanel.add(button);
@@ -58,7 +59,25 @@ public final class PauseMenuScreen {
      * @param listener The action listener.
      */
     public void setResumeButton(final ActionListener listener) {
-        addButton("RESUME", listener);
+        addButton("RESUME", Texture.RESUME_ICON, listener);
+    }
+
+    /**
+     * Sets the action for the Commands button.
+     *
+     * @param listener The action listener.
+     */
+    public void setCommandsButton(final ActionListener listener) {
+        addButton("COMMANDS", Texture.COMMANDS_ICON, listener);
+    }
+
+    /**
+     * Sets the action for the Reset button.
+     *
+     * @param listener The action listener.
+     */
+    public void setResetButton(final ActionListener listener) {
+        addButton("RESET DATA", Texture.RESET_ICON, listener);
     }
 
     /**
@@ -67,7 +86,16 @@ public final class PauseMenuScreen {
      * @param listener The action listener.
      */
     public void setExtraButton(final ActionListener listener) {
-        addButton("EXTRA", listener);
+        addButton("EXTRA", Texture.EXTRA_ICON, listener);
+    }
+
+    /**
+     * Sets the action for the Credits button.
+     *
+     * @param listener The action listener.
+     */
+    public void setCreditsButton(final ActionListener listener) {
+        addButton("CREDITS", Texture.CREDITS_ICON, listener);
     }
 
     /**
@@ -76,7 +104,7 @@ public final class PauseMenuScreen {
      * @param listener The action listener.
      */
     public void setExitButton(final ActionListener listener) {
-        addButton("EXIT GAME", listener);
+        addButton("EXIT GAME", Texture.EXIT_ICON, listener);
     }
 
     /**

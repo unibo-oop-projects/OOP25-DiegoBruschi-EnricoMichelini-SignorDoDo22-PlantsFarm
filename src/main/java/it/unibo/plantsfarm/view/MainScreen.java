@@ -3,6 +3,7 @@ package it.unibo.plantsfarm.view;
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.menu.MenuPanel;
+import it.unibo.plantsfarm.view.music.MusicPlayer;
 import it.unibo.plantsfarm.view.utility.Texture;
 
 import java.awt.BorderLayout;
@@ -38,6 +39,7 @@ public final class MainScreen {
     private JLabel coinLabel;
     private JButton inventoryButton;
     private ImplControllerGamePanel controller;
+    private final MusicPlayer musicPlayer;
 
     /**
      * Initializes the main screen components.
@@ -45,6 +47,7 @@ public final class MainScreen {
     public MainScreen() {
         this.menuPanel = new MenuPanel();
         this.menuPanel.setFocusable(false);
+        this.musicPlayer = new MusicPlayer();
     }
 
     /**
@@ -70,6 +73,8 @@ public final class MainScreen {
         this.controller = new ImplControllerGamePanel();
         this.controller.addView();
         this.gamePanel = this.controller.getView();
+        this.gamePanel.setBounds(0, 0, screenSize.width - 222, screenSize.height);
+        
         layeredPane.add(this.gamePanel, JLayeredPane.DEFAULT_LAYER);
 
         final JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
@@ -90,11 +95,14 @@ public final class MainScreen {
         layeredPane.add(topPanel, JLayeredPane.PALETTE_LAYER);
 
         this.frame.add(layeredPane, BorderLayout.CENTER);
-        this.frame.setVisible(true);
-
+        
         this.gamePanel.setFocusable(true);
         this.gamePanel.requestFocusInWindow();
+        
+        this.frame.setVisible(true);
         this.controller.start();
+
+        this.musicPlayer.playLoop("music/GardenMusic.wav");
     }
 
     /**
@@ -177,5 +185,6 @@ public final class MainScreen {
         if (this.frame != null) {
             this.frame.dispose();
         }
+        this.musicPlayer.stop();
     }
 }

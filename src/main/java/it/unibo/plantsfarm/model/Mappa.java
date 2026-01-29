@@ -6,6 +6,10 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.cfg.ContextAttributes.Impl;
+
+import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
+
 public class Mappa {
     
     private int logicMap1 [][] = new int[21][66];
@@ -26,10 +30,9 @@ public class Mappa {
                 this.logicMap1[row][col] = num;
                 int worldX = col * 48; 
                 int worldY = row * 48;
-                System.out.println(num);
-                if (num == 18 ) {
-                    Rectangle rect = new Rectangle(worldX, worldY, 48 * 3, 48 * 3);
-                    pod.add(new Soil(rect));
+                if (num == 2 || num == 11 || num == 12 || num == 13 || num == 14 || num == 15 || num == 16 || num == 17 || num == 18 || num == 19) {
+                    Rectangle rect = new Rectangle(worldX, worldY, ImplViewGamePanel.tileSize, ImplViewGamePanel.tileSize);
+                    pod.add(new Pod(rect));
                 }
             }
         }

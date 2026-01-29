@@ -47,7 +47,7 @@ public final class MainScreenController {
 
         // Exit Button
         this.view.attachExitListener(e -> {
-            new PauseMenuController(this.view::close).start();
+            new PauseMenuController(this.view::close, gameState::resetGame).start();
         });
     }
 

@@ -1,10 +1,15 @@
 package it.unibo.plantsfarm.model.menu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import it.unibo.plantsfarm.controller.memory.DataMemory;
 import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantType;
 
 /**
  * Represents the encyclopedia containing information about all plants in the game.
@@ -12,13 +17,47 @@ import it.unibo.plantsfarm.model.plant.Plant;
  */
 public final class Encyclopedia {
 
+    private static final String FILE_NAME = "encyclopedia.txt";
+    private static final String SEPARATOR = ":";
+    private static final Logger LOGGER = Logger.getLogger(Encyclopedia.class.getName());
+
     private final List<Plant> plants;
+    private final DataMemory memory;
 
     /**
      * Creates a new empty Encyclopedia.
      */
     public Encyclopedia() {
         this.plants = new ArrayList<>();
+        this.memory = new DataMemory();
+    }
+
+    /**
+     * Saves the current unlocked plants list to file.
+     */
+    public void save() {
+        final StringBuilder sb = new StringBuilder();
+        for (final PlantType type : PlantType.values()) {
+            if (type.isDiscovered()) {
+                sb.append(type.name()).append(SEPARATOR);
+            }
+        }
+        try {
+            this.memory.save(FILE_NAME, sb.toString());
+        } catch (final IOException e) {
+            LOGGER.log(Level.SEVERE, "Error saving encyclopedia", e);
+        }
+    }
+
+    /**
+     * Resets encyclopedia.
+     */
+    public void reset() {
+        for (final PlantType type : PlantType.values()) {
+            type.lock();
+        }
+        PlantType.CARROT.unlock();
+        save();
     }
 
     /**
@@ -57,6 +96,7 @@ public final class Encyclopedia {
         for (final Plant plant : plants) {
             plant.getType().unlock();
         }
+        save();
     }
 
     /**

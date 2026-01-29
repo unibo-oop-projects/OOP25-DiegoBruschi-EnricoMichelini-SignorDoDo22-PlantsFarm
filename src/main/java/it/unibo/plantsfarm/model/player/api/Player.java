@@ -3,10 +3,11 @@ package it.unibo.plantsfarm.model.player.api;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 import java.util.List;
-
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.Mappa;
-import it.unibo.plantsfarm.model.Soil;
+import it.unibo.plantsfarm.model.Pod;
+import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 /**
@@ -14,6 +15,9 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
  * It stores the player position, movement speed and direction.
  */
 public abstract class Player {
+
+    private Plant piantaDisponibile = new Plant(PlantType.TOMATO);
+    public List<Pod> listPod = new LinkedList<>();
 
     /** Current X position of the player in world coordinates. */
     private double posX = ImplViewGamePanel.worldWidth / 2;
@@ -31,6 +35,7 @@ public abstract class Player {
 
     public Player(){
         map.loadMap("/maps/map.txt");
+        
     }
 
     /**
@@ -96,19 +101,27 @@ public abstract class Player {
         return this.direction;
     }
 
-    /**
-     * 
-     */
-    public void pianta() {
-        final int widthHitBox = 30;
-        final int heighHitBox = 30;
-        Rectangle hitbox = new Rectangle((int) posX, (int) posY,widthHitBox, heighHitBox);
-        List<Soil> list = new LinkedList<>();
-        list = map.getPod();
-        for (Soil zolla : list) {
-            if (zolla.getCoordinate().contains(hitbox)) {
-                System.out.print("SONO DENTRO ");
+
+    public void pianta(){
+        Rectangle hitbox = new Rectangle((int)posX,(int)posY,30,30);
+        for (Pod zolla : listPod) {
+            if(zolla.getCoordinate().contains(hitbox)){
+                if(zolla.getisPlanted() == false){
+                    zolla.setPlanted(piantaDisponibile);
+                }
+                if (zolla.gePlant() != null) {
+                    zolla.gePlant().water(System.currentTimeMillis());
+                }
             }
-        }   
+        }
+    }
+
+    public void updatePdod(Long now){
+        for (Pod zolla : listPod) {
+            Plant plant = zolla.gePlant();
+            if(plant != null) {
+                plant.updateNeedsWater(now);
+            }
+        }
     }
 }
