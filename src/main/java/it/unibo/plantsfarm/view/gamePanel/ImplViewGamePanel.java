@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
@@ -19,40 +20,43 @@ import it.unibo.plantsfarm.view.map.TileManager;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePael;
 
-public class ImplViewGamePanel extends JPanel implements ViewGamePael{
-  public static int orginalTileSize = 16;
-  public final static int SCALE = 3; 
-  public static int tileSize = orginalTileSize * SCALE;
-  public final static int MAXSCREENCOL = 66; 
-  public final static int MAXSCREENROW = 21; 
-  public final static int worldWidth = tileSize * (MAXSCREENCOL - 2); 
-  public final static int worldheigh = tileSize * (MAXSCREENROW - 2); 
-  public final static int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-  public final static int screenHeigh = Toolkit.getDefaultToolkit().getScreenSize().height;
-  private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER =
-    Map.of(KeyEvent.VK_W, UP, KeyEvent.VK_A, LEFT, KeyEvent.VK_D, RIGHT, KeyEvent.VK_S, DOWN, KeyEvent.VK_R, AZIONE);
-  private TileManager tileM;
+public class ImplViewGamePanel extends JPanel implements ViewGamePael {
+    public static int orginalTileSize = 16;
+    public final static int SCALE = 3;
+    public static int tileSize = orginalTileSize * SCALE;
+    public final static int MAXSCREENCOL = 66;
+    public final static int MAXSCREENROW = 21;
+    public final static int worldWidth = tileSize * (MAXSCREENCOL - 2);
+    public final static int worldheigh = tileSize * (MAXSCREENROW - 2);
+    public final static int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+    public final static int screenHeigh = Toolkit.getDefaultToolkit().getScreenSize().height;
+    private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER =
+        Map.of(KeyEvent.VK_W, UP, KeyEvent.VK_A, LEFT, KeyEvent.VK_D, RIGHT, KeyEvent.VK_S, DOWN, KeyEvent.VK_R, AZIONE);
+    private TileManager tileM;
 
-  private int cameraX; 
-  private int cameraY; 
-  private double playerPosX;
-  private double playerPosY;
-  private ImplControllerGamePanel controller;
-  private SelectorFrames selector;
-  Boolean inventario = false;
-  Inventario inventory = new Inventario(this);
-  
-  public ImplViewGamePanel(){
-    this.requestFocus();
-    this.setVisible(true);
-    this.setDoubleBuffered(true);
-    this.setSize(screenWidth,screenHeigh);
-    this.setFocusable(true);
-    this.requestFocusInWindow(true);
-    this.setBackground(Color.black);
-    this.tileM = new TileManager(this);
-    this.addKeyListener(new KeyAdapter() {
-    
+    private int cameraX;
+    private int cameraY;
+    private double playerPosX;
+    private double playerPosY;
+    private ImplControllerGamePanel controller;
+    private SelectorFrames selector;
+
+    private boolean plantWindow = true; //da modificare in base alle piante da visualizzare
+
+    Boolean inventario = false;
+    Inventario inventory = new Inventario(this);
+
+    public ImplViewGamePanel(){
+        this.requestFocus();
+        this.setVisible(true);
+        this.setDoubleBuffered(true);
+        this.setSize(screenWidth,screenHeigh);
+        this.setFocusable(true);
+        this.requestFocusInWindow(true);
+        this.setBackground(Color.black);
+        this.tileM = new TileManager(this);        
+        this.addKeyListener(new KeyAdapter() {
+
     @Override
     public void keyPressed(final KeyEvent e) {
       super.keyPressed(e);
@@ -60,17 +64,24 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael{
           inventario = !inventario;
           repaint();  
         }
-      if (KEY_MAPPER.containsKey(e.getKeyCode())) {
-        controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
-        selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
-      }
-    }
 
-    @Override
-    public void keyReleased(final KeyEvent e) {
-      if (KEY_MAPPER.containsKey(e.getKeyCode())) {
-        controller.takeInput(UserInput.FERMO);
-      }
+                if (e.getKeyCode() == KeyEvent.VK_P) {
+                    new SeedController(selectedPlant -> {
+                        System.out.println("Selected plant: " + selectedPlant.getName());
+                    }, plantWindow).start();
+                }
+                
+                if (KEY_MAPPER.containsKey(e.getKeyCode())) {
+                    controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
+                    selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
+                }
+            }
+
+            @Override
+            public void keyReleased(final KeyEvent e) {
+                if (KEY_MAPPER.containsKey(e.getKeyCode())) {
+                    controller.takeInput(UserInput.FERMO);
+                }
     }});
   }
 
