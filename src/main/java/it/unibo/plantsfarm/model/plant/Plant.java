@@ -15,6 +15,9 @@ public class Plant {
     private int growthStage;
     private boolean needsWater;
     private boolean isPlanted;
+    private long lastWateredTime = System.currentTimeMillis();
+    private long waterTime = 2000L;
+    
 
     /**
      * Creates a new Plant based on a specific type.
@@ -41,11 +44,21 @@ public class Plant {
     /**
      * Waters the plant, upgrade its growth stage if possible.
      */
-    public final void water() {
+    public final void water(Long Now) {
         if (isPlanted && needsWater) {
             needsWater = false;
-            if (growthStage < type.getMaxGrowthStage()) {
+            if (growthStage < type.getMaxGrowthStage() && Now - this.lastWateredTime >= this.waterTime) {
                 growthStage++;
+                this.lastWateredTime = System.currentTimeMillis();
+                System.out.println("Plant watered. Growth stage: " + growthStage);
+            }
+        }
+    }
+
+    public final void updateNeedsWater(Long Now) {
+        if (this.type.getMaxGrowthStage() > this.growthStage) {
+            if (Now - this.lastWateredTime >= this.waterTime) {
+                this.needsWater = true;
             }
         }
     }

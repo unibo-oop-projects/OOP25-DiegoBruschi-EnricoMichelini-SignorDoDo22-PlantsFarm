@@ -7,6 +7,8 @@ import java.util.List;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.Mappa;
 import it.unibo.plantsfarm.model.Pod;
+import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 /**
@@ -15,6 +17,9 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
  */
 public abstract class Player {
 
+    private Plant piantaDisponibile = new Plant(PlantType.TOMATO);
+    public List<Pod> listPod = new LinkedList<>();
+
     /** Current X position of the player in world coordinates. */
     private double posX = 100;
 
@@ -22,7 +27,7 @@ public abstract class Player {
     private double posY = 100;
 
     /** Movement speed of the player (units per second). */
-    protected double speed = 200;
+    protected double speed = 500;
 
     /** Current movement direction of the player. */
     private UserInput direction = UserInput.FERMO;
@@ -31,6 +36,7 @@ public abstract class Player {
 
     public Player(){
         map.loadMap("/maps/map.txt");
+        this.listPod = map.getPod();
     }
 
     /**
@@ -100,13 +106,24 @@ public abstract class Player {
 
     public void pianta(){
         Rectangle hitbox = new Rectangle((int)posX,(int)posY,30,30);
-        List<Pod> list = new LinkedList<>();
-        list = map.getPod();
-        for (Pod zolla : list) {
+        for (Pod zolla : listPod) {
             if(zolla.getCoordinate().contains(hitbox)){
-                System.out.print("SONO DENTRO");
-
+                if(zolla.getisPlanted() == false){
+                    zolla.setPlanted(piantaDisponibile);
+                }
+                if (zolla.gePlant() != null) {
+                    zolla.gePlant().water(System.currentTimeMillis());
+                }
             }
-        }   
+        }
+    }
+
+    public void updatePdod(Long now){
+        for (Pod zolla : listPod) {
+            Plant plant = zolla.gePlant();
+            if(plant != null) {
+                plant.updateNeedsWater(now);
+            }
+        }
     }
 }

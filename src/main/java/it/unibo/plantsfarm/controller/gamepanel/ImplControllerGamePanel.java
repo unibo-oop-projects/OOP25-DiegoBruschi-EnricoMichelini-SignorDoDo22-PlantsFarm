@@ -3,6 +3,7 @@ package it.unibo.plantsfarm.controller.gamepanel;
 import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.model.camera.*;
+import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.player.FactoryPlayer;
 import it.unibo.plantsfarm.model.player.FarmerPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
@@ -16,6 +17,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private  final static  int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
     private Player player;
+    private Plant plant;
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
    
@@ -37,7 +39,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                 controllerAnimation.takeInput(input);
             }
 
-            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY());
+            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY(), player.listPod);
             try {
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
             } catch (InterruptedException e) {
@@ -46,7 +48,8 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             
             controllerAnimation.update(now);
             player.updatePlayer(delta);
-            camera.followPlayer();            
+            player.updatePdod(now);
+            camera.followPlayer();    
         }
     }
  

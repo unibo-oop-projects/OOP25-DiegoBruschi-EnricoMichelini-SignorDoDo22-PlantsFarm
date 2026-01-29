@@ -26,8 +26,7 @@ public class Mappa {
                 this.logicMap1[row][col] = num;
                 int worldX = col * 48; 
                 int worldY = row * 48;
-                System.out.println(num);
-                if (num == 18 ) {
+                if (num == 11 || num == 12 || num == 13 || num == 14 || num == 15 || num == 16 || num == 17 || num == 18 || num == 19) {
                     Rectangle rect = new Rectangle(worldX, worldY, 48 * 3, 48 * 3);
                     pod.add(new Pod(rect));
                 }
