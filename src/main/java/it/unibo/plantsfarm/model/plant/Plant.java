@@ -50,7 +50,6 @@ public class Plant {
             if (growthStage < type.getMaxGrowthStage() && Now - this.lastWateredTime >= this.waterTime) {
                 growthStage++;
                 this.lastWateredTime = System.currentTimeMillis();
-                System.out.println("Plant watered. Growth stage: " + growthStage);
             }
         }
     }
