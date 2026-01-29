@@ -1,5 +1,7 @@
 package it.unibo.plantsfarm.view.utility;
 
+import it.unibo.plantsfarm.view.music.MusicPlayer;
+
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -10,6 +12,7 @@ import javax.swing.JButton;
 public final class ButtonFactory {
 
     private static final Font MAIN_FONT = new Font("Arial", Font.BOLD, 20);
+    private static final MusicPlayer AUDIO = new MusicPlayer();
 
     private ButtonFactory() {
     }
@@ -31,7 +34,9 @@ public final class ButtonFactory {
      * @return A JButton containing the icon.
      */
     public static JButton createMenuButton(final ImageIcon icon) {
-        return new JButton(icon);
+        final JButton button = new JButton(icon);
+        button.addActionListener(e -> AUDIO.playEffect("music/menuSound/click.wav"));
+        return button;
     }
 
     /**
@@ -43,6 +48,7 @@ public final class ButtonFactory {
     private static JButton configureButton(final JButton button) {
         button.setFont(MAIN_FONT);
         button.setFocusPainted(false);
+        button.addActionListener(e -> AUDIO.playEffect("music/menuSound/click.wav"));
         return button;
     }
 }

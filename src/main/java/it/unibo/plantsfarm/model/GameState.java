@@ -130,4 +130,20 @@ public final class GameState {
     public boolean removeHarvest(final PlantType type, final int amount) {
         return this.storage.removeItem(type, amount);
     }
+
+    /**
+     * Saves the current state of the encyclopedia.
+     */
+    public void saveEncyclopedia() {
+        this.encyclopedia.save();
+    }
+
+    /**
+     * Resets the entire game state.
+     */
+    public void resetGame() {
+        this.storage.reset();
+        this.wallet.reset();
+        this.encyclopedia.reset();
+    }
 }
