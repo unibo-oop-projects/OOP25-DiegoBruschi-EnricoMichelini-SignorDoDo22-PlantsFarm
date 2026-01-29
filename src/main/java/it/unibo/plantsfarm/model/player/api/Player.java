@@ -27,7 +27,7 @@ public abstract class Player {
     private double posY = 100;
 
     /** Movement speed of the player (units per second). */
-    protected double speed = 500;
+    protected double speed = 200;
 
     /** Current movement direction of the player. */
     private UserInput direction = UserInput.FERMO;

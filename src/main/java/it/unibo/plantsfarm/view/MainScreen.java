@@ -73,7 +73,7 @@ public final class MainScreen {
         this.controller = new ImplControllerGamePanel();
         this.controller.addView();
         this.gamePanel = this.controller.getView();
-        //this.gamePanel.setBounds(0, 0, screenSize.width, screenSize.height);
+        this.gamePanel.setBounds(0, 0, screenSize.width - 222, screenSize.height);
         
         layeredPane.add(this.gamePanel, JLayeredPane.DEFAULT_LAYER);
 

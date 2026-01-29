@@ -17,7 +17,7 @@ public final class FarmerPlayer extends Player  {
 
     public FarmerPlayer(){
         super();
-        this.speed = 150;
+        this.speed = 300;
         hoe = new ItemHoe();
     }
 }

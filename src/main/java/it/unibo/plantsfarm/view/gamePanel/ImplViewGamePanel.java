@@ -29,15 +29,15 @@ import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePael;
 import it.unibo.plantsfarm.model.Pod;
 
 public class ImplViewGamePanel extends JPanel implements ViewGamePael{
-  public static int orginalTileSize = 16;
+  public static int orginalTileSize = Toolkit.getDefaultToolkit().getScreenSize().height / 67;
   List<Pod> listPod = new LinkedList<>(List.of());
   public final static int SCALE = 3; 
   public static int tileSize = orginalTileSize * SCALE;
   public final static int MAXSCREENCOL = 66; 
   public final static int MAXSCREENROW = 21; 
-  public final static int worldWidth = tileSize * (MAXSCREENCOL - 2); 
-  public final static int worldheigh = tileSize * (MAXSCREENROW - 2); 
-  public final static int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+  public final static int worldWidth = tileSize * (MAXSCREENCOL); 
+  public final static int worldheigh = tileSize * (MAXSCREENROW); 
+  public final static int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width - 222;
   public final static int screenHeigh = Toolkit.getDefaultToolkit().getScreenSize().height;
   private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER =
     Map.of(KeyEvent.VK_W, UP, KeyEvent.VK_A, LEFT, KeyEvent.VK_D, RIGHT, KeyEvent.VK_S, DOWN, KeyEvent.VK_R, AZIONE);
