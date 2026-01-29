@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
@@ -26,7 +27,6 @@ import it.unibo.plantsfarm.view.utility.Texture;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePael;
 import it.unibo.plantsfarm.model.Pod;
-
 
 public class ImplViewGamePanel extends JPanel implements ViewGamePael{
   public static int orginalTileSize = 16;
@@ -50,6 +50,9 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael{
   private Image image = new SpriteLoader("/plantsStage/TomatoStage/Tomato5.png").getImage();
   private ImplControllerGamePanel controller;
   private SelectorFrames selector;
+
+  private boolean plantWindow = true; //da modificare in base alle piante da visualizzare
+
   Boolean inventario = false;
   Inventario inventory = new Inventario(this);
   
@@ -71,17 +74,24 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael{
           inventario = !inventario;
           repaint();  
         }
-      if (KEY_MAPPER.containsKey(e.getKeyCode())) {
-        controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
-        selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
-      }
-    }
 
-    @Override
-    public void keyReleased(final KeyEvent e) {
-      if (KEY_MAPPER.containsKey(e.getKeyCode())) {
-        controller.takeInput(UserInput.FERMO);
-      }
+                if (e.getKeyCode() == KeyEvent.VK_P) {
+                    new SeedController(selectedPlant -> {
+                        System.out.println("Selected plant: " + selectedPlant.getName());
+                    }, plantWindow).start();
+                }
+                
+                if (KEY_MAPPER.containsKey(e.getKeyCode())) {
+                    controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
+                    selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
+                }
+            }
+
+            @Override
+            public void keyReleased(final KeyEvent e) {
+                if (KEY_MAPPER.containsKey(e.getKeyCode())) {
+                    controller.takeInput(UserInput.FERMO);
+                }
     }});
   }
 

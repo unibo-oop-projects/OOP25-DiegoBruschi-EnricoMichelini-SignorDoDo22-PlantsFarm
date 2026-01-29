@@ -11,8 +11,6 @@ import it.unibo.plantsfarm.controller.memory.DataMemory;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
-import it.unibo.plantsfarm.model.plant.Plant;
-
 /**
  * Represents the encyclopedia containing information about all plants in the game.
  * It shows only unlocked plants by the player.
