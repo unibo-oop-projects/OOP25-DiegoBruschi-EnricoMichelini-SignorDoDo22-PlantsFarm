@@ -3,40 +3,51 @@ package it.unibo.plantsfarm.controller.gamepanel.api;
 import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
+/**
+ * Controller for the GamePanel.
+ * This interface defines how the game view and the player model
+ * are connected through user input.
+ */
 public interface ControllerGamePanel {
+
     /**
-     * Represents all possible inputs that can control the player's movement,
-     * including the stationary state.
+     * All possible inputs that can control the player.
+     * Includes movement, actions and the idle state.
      */
-    public enum UserInput {
-        LEFT, RIGHT, DOWN, UP, FERMO, AZIONE 
+    enum UserInput {
+        LEFT, RIGHT, DOWN, UP, FERMO, ACTIONHOE, ACTIONWATER
     }
 
     /**
-     * 
-     * @param input
+     * Sends a user input to the controller.
+     * This method is called by the view when the player presses a key.
+     *
+     * @param input the input received from the user
      */
     void takeInput(UserInput input);
 
     /**
-     * 
+     * Attaches or creates the game view for this controller.
      */
     void addView();
 
     /**
-     * 
-     * @return
+     * Returns the view currently attached to this controller.
+     *
+     * @return the active game view
      */
     ImplViewGamePanel getView();
-    
+
     /**
-     * 
+     * Creates and sets the player using the Player Factory. 
+     * The Factory accepts the Enum PlayerType 
      */
     void setPlayer();
 
     /**
-     * 
-     * @return
+     * Returns the player controlled by this controller.
+     *
+     * @return the current player
      */
     Player getPlayer();
 }

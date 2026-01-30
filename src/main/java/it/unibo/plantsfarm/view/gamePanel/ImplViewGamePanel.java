@@ -11,11 +11,8 @@ import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Map;
-
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
 import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
@@ -23,7 +20,6 @@ import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInpu
 import it.unibo.plantsfarm.view.Inventario;
 import it.unibo.plantsfarm.view.map.TileManager;
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
-import it.unibo.plantsfarm.view.utility.Texture;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePael;
 import it.unibo.plantsfarm.model.Pod;
@@ -40,9 +36,8 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael{
   public final static int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width - 222;
   public final static int screenHeigh = Toolkit.getDefaultToolkit().getScreenSize().height;
   private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER =
-    Map.of(KeyEvent.VK_W, UP, KeyEvent.VK_A, LEFT, KeyEvent.VK_D, RIGHT, KeyEvent.VK_S, DOWN, KeyEvent.VK_R, AZIONE);
+    Map.of(KeyEvent.VK_W, UP, KeyEvent.VK_A, LEFT, KeyEvent.VK_D, RIGHT, KeyEvent.VK_S, DOWN, KeyEvent.VK_R, ACTIONWATER, KeyEvent.VK_Q, ACTIONHOE);
   private TileManager tileM;
-
   private int cameraX; 
   private int cameraY; 
   private double playerPosX;
@@ -57,13 +52,14 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael{
   Inventario inventory = new Inventario(this);
   
   public ImplViewGamePanel(){
+    super();
     this.requestFocus();
     this.setVisible(true);
     this.setDoubleBuffered(true);
     this.setSize(screenWidth,screenHeigh);
     this.setFocusable(true);
     this.requestFocusInWindow(true);
-    this.setBackground(Color.black);
+    this.setBackground(Color.BLACK);
     this.tileM = new TileManager(this);
     this.addKeyListener(new KeyAdapter() {
     
@@ -75,26 +71,26 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael{
           repaint();  
         }
 
-                if (e.getKeyCode() == KeyEvent.VK_P) {
-                    new SeedController(selectedPlant -> {
-                        System.out.println("Selected plant: " + selectedPlant.getName());
-                    }, plantWindow).start();
-                }
+      if (e.getKeyCode() == KeyEvent.VK_P) {
+          new SeedController(selectedPlant -> { System.out.println("Selected plant: " + selectedPlant.getName());
+          }, plantWindow).start();
+          }
                 
-                if (KEY_MAPPER.containsKey(e.getKeyCode())) {
-                    controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
-                    selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
-                }
-            }
+      if (KEY_MAPPER.containsKey(e.getKeyCode())) {
+          controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
+          selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
+          }
+    }
 
-            @Override
-            public void keyReleased(final KeyEvent e) {
-                if (KEY_MAPPER.containsKey(e.getKeyCode())) {
-                    controller.takeInput(UserInput.FERMO);
-                }
+    @Override
+    public void keyReleased(final KeyEvent e) {
+      if (KEY_MAPPER.containsKey(e.getKeyCode())) {
+          controller.takeInput(UserInput.FERMO);
+      }
     }});
   }
 
+  @Override
   public void show(final double playerPosX, final double playerPosY, int cameraX, int cameraY, List<Pod> listPod) {
     SwingUtilities.invokeLater(() -> {
       this.playerPosX = playerPosX;

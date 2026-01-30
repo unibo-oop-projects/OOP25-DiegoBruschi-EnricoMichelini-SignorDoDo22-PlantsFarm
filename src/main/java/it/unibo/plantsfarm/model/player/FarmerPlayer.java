@@ -2,7 +2,6 @@ package it.unibo.plantsfarm.model.player;
 
 import java.util.LinkedList;
 import java.util.List;
-
 import it.unibo.plantsfarm.model.items.ItemHoe;
 import it.unibo.plantsfarm.model.items.ItemsFarmBase;
 import it.unibo.plantsfarm.model.plant.Plant;
@@ -18,6 +17,6 @@ public final class FarmerPlayer extends Player  {
     public FarmerPlayer(){
         super();
         this.speed = 300;
-        hoe = new ItemHoe();
     }
+    
 }

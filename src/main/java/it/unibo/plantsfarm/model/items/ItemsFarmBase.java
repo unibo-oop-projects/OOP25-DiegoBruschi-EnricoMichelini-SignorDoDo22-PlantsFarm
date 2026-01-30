@@ -1,9 +1,17 @@
 package it.unibo.plantsfarm.model.items;
 
 public abstract class ItemsFarmBase {
+    
     protected int posx;
     protected int posy;
-    protected int buff = 5;
+    private final int buff;
+
+    public ItemsFarmBase(int buff){
+        this.buff = buff;   
+    }
+
+    
     public int getBuffItem(){ return this.buff; }
+
 
 } 

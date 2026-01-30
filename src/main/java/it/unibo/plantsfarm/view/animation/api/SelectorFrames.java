@@ -2,7 +2,9 @@ package it.unibo.plantsfarm.view.animation.api;
 
 import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
-
+/**
+ * 
+ */
 public interface SelectorFrames {
  
     /**
@@ -10,14 +12,14 @@ public interface SelectorFrames {
      * 
      * @param input
      */
-    public void takeInput( UserInput input);
+    void takeInput( UserInput input);
 
     /**
      * Calculate animation's next frame based on time rimaining.
-     *  
+     * 
      * @param now
      */
-    public void update(Long now);
+    void update(Long now);
 
     /**
      * Returns the current Frame of the player.

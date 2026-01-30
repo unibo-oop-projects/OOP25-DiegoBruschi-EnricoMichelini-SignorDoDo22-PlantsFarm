@@ -1,10 +1,9 @@
 package it.unibo.plantsfarm.model.animation;
 
 import java.awt.image.BufferedImage;
-
 import it.unibo.plantsfarm.model.animation.api.Animation;
 
-public class AnimationHoe implements Animation{
+public final class AnimationHoe implements Animation{
 
    private final BufferedImage[] frames;
     private int frameIndex;

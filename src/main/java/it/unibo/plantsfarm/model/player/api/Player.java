@@ -3,7 +3,6 @@ package it.unibo.plantsfarm.model.player.api;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 import java.util.List;
-
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.Mappa;
 import it.unibo.plantsfarm.model.Pod;
@@ -21,13 +20,13 @@ public abstract class Player {
     public List<Pod> listPod = new LinkedList<>();
 
     /** Current X position of the player in world coordinates. */
-    private double posX = 100;
+    private double posX = ImplViewGamePanel.worldWidth / 2;
 
     /** Current Y position of the player in world coordinates. */
-    private double posY = 100;
+    private double posY = ImplViewGamePanel.worldheigh / 2;
 
     /** Movement speed of the player (units per second). */
-    protected double speed = 200;
+    protected double speed;
 
     /** Current movement direction of the player. */
     private UserInput direction = UserInput.FERMO;
@@ -36,7 +35,7 @@ public abstract class Player {
 
     public Player(){
         map.loadMap("/maps/map.txt");
-        this.listPod = map.getPod();
+        
     }
 
     /**
@@ -48,7 +47,6 @@ public abstract class Player {
      */
     public void updatePlayer(final long time) {
         final double delta = speed * time / 1000.0;
-
         double nextPosX = posX;
         double nextPosY = posY;
 
@@ -57,14 +55,16 @@ public abstract class Player {
             case RIGHT -> nextPosX += delta;
             case UP -> nextPosY -= delta;
             case DOWN -> nextPosY += delta;
-            case AZIONE -> pianta();
+            case ACTIONHOE -> pianta();
             case FERMO -> { }
         }
 
-        if (nextPosX > 1 && nextPosY > 1 && nextPosX < ImplViewGamePanel.worldWidth && nextPosY < ImplViewGamePanel.worldheigh ) {
+        if (nextPosX > 1 && nextPosY > 1 && nextPosX < ImplViewGamePanel.worldWidth && nextPosY < ImplViewGamePanel.worldheigh) {
             posX = nextPosX;
             posY = nextPosY;
         }
+        
+        System.out.println(posX + " " + posY);
     }
 
     /**

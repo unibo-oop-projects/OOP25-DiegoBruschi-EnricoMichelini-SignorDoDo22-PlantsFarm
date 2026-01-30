@@ -3,14 +3,14 @@ package it.unibo.plantsfarm.model.animation;
 import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.model.animation.api.Animation;
 
-public final class AnimationAzione  implements Animation {
+public final class AnimationWater  implements Animation {
     private final BufferedImage[] frames;
     private int frameIndex;
     private long lastFrameTimeNs;
     private final long frameDurationNs;
     private boolean playing;
 
-    public AnimationAzione(final long frameDurationNs, final BufferedImage[] frames) {
+    public AnimationWater(final long frameDurationNs, final BufferedImage[] frames) {
         this.frameDurationNs = frameDurationNs;
         this.frames = frames.clone();
     }

@@ -2,7 +2,6 @@ package it.unibo.plantsfarm.view.animation;
 
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.*;
 import java.awt.image.BufferedImage;
-import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.animation.AnimationAzione;
 import it.unibo.plantsfarm.model.animation.AnimationCorsa;
@@ -13,29 +12,29 @@ import it.unibo.plantsfarm.view.utility.AnimationTime;
 
 public class ImplSelectorFrames implements SelectorFrames {
 
-    private ImplControllerGamePanel controller;
-    private final  AnimationAzione azione = new AnimationAzione(AnimationTime.FRAME_10_FPS, AnimationFrames.WATER);
+    private final  AnimationAzione animationWater = new AnimationAzione(AnimationTime.FRAME_10_FPS , AnimationFrames.WATER);
+    private final  AnimationAzione animationHoe = new AnimationAzione(AnimationTime.FRAME_10_FPS, AnimationFrames.DIG);
     private final  AnimationCorsa animationLeft = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.WALKLEFT);
     private final AnimationCorsa animationUp = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.WALKUP);
     private final AnimationCorsa animationDown = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.WALKDOWN);
     private final AnimationCorsa animationRight = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.WALKRIGHT);
-
     private long nowNs;
     private Animation currentAnimation;
     private BufferedImage currentImage = AnimationFrames.BASE;
 
-    public ImplSelectorFrames(ImplControllerGamePanel controller){
-        this.controller = controller;
-    }
-
     @Override
     public void takeInput(final UserInput input) {
         
-
-        if( input == AZIONE ) {
+        if( input == ACTIONHOE ) {
            nowNs = System.nanoTime();
-           azione.start(nowNs);
-           currentAnimation = azione;
+           animationHoe.start(nowNs);
+           currentAnimation = animationHoe;
+        }
+
+        if( input == ACTIONWATER ) {
+           nowNs = System.nanoTime();
+           animationWater.start(nowNs);
+           currentAnimation = animationWater;
         }
 
         if( input == UP ) {
@@ -62,8 +61,8 @@ public class ImplSelectorFrames implements SelectorFrames {
             currentAnimation = animationLeft;
         }
         
-        if( input == FERMO && currentAnimation != azione && currentAnimation != null ) {
-            if(currentAnimation.equals(azione)  && azione.getisPlaying()){
+        if( input == FERMO && currentAnimation != animationWater && currentAnimation != null  && currentAnimation != animationHoe) {
+            if(currentAnimation.equals(animationHoe)  && animationHoe.getisPlaying() || currentAnimation.equals(animationWater)  && animationWater.getisPlaying() ){
                 return;
             }else{
                 this.currentImage = AnimationFrames.BASE;
