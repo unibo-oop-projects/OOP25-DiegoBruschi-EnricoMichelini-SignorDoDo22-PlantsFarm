@@ -3,17 +3,16 @@ package it.unibo.plantsfarm.model.animation;
 import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.model.animation.api.Animation;
 
-public final class AnimationHoe implements Animation{
-
-   private final BufferedImage[] frames;
+public final class AnimationWater  implements Animation {
+    private final BufferedImage[] frames;
     private int frameIndex;
     private long lastFrameTimeNs;
     private final long frameDurationNs;
-    private boolean playing = false;
+    private boolean playing;
 
-    public AnimationHoe(final long frameDurationNs, BufferedImage[] frames) {
+    public AnimationWater(final long frameDurationNs, final BufferedImage[] frames) {
         this.frameDurationNs = frameDurationNs;
-        this.frames = frames;
+        this.frames = frames.clone();
     }
 
     @Override
@@ -33,12 +32,11 @@ public final class AnimationHoe implements Animation{
                 playing = false;
             }
         }
-
         return frames[frameIndex];
     }
 
+    @Override
     public boolean getisPlaying() {
         return playing;
     }
-    
 }

@@ -55,7 +55,7 @@ public abstract class Player {
             case RIGHT -> nextPosX += delta;
             case UP -> nextPosY -= delta;
             case DOWN -> nextPosY += delta;
-            case AZIONE -> pianta();
+            case ACTIONHOE -> pianta();
             case FERMO -> { }
         }
 
@@ -63,6 +63,8 @@ public abstract class Player {
             posX = nextPosX;
             posY = nextPosY;
         }
+        
+        System.out.println(posX + " " + posY);
     }
 
     /**

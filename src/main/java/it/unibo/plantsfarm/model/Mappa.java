@@ -41,8 +41,6 @@ public class Mappa {
             e.printStackTrace();
         }
     }
-
-
+    
     public List<Soil> getPod(){ return this.pod;}
-
 }

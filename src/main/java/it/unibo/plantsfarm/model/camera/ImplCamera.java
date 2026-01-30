@@ -22,7 +22,6 @@ public final class ImplCamera implements Camera {
         
         posX = (int) player.getPosx() - ImplViewGamePanel.screenWidth / 2; 
         posY = (int) player.getPosy() - ImplViewGamePanel.screenHeigh / 2; 
-
         if (posX < 0) { 
             posX = 0;
         } 
