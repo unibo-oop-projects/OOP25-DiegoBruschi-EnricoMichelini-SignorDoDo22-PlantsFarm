@@ -12,7 +12,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -74,7 +73,7 @@ public final class MainScreen {
         this.controller.addView();
         this.gamePanel = this.controller.getView();
         this.gamePanel.setBounds(0, 0, screenSize.width - 222, screenSize.height);
-        
+
         layeredPane.add(this.gamePanel, JLayeredPane.DEFAULT_LAYER);
 
         final JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
@@ -87,18 +86,15 @@ public final class MainScreen {
         this.coinLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, FONT_SIZE));
         this.coinLabel.setForeground(Color.BLACK);
 
-        
-
         topPanel.add(this.coinLabel);
-        
 
         layeredPane.add(topPanel, JLayeredPane.PALETTE_LAYER);
 
         this.frame.add(layeredPane, BorderLayout.CENTER);
-        
+
         this.gamePanel.setFocusable(true);
         this.gamePanel.requestFocusInWindow();
-        
+
         this.frame.setVisible(true);
         this.controller.start();
 
