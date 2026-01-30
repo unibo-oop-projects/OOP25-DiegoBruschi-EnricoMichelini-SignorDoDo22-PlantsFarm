@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.controller.memory;
+package it.unibo.plantsfarm.controller.memory.impl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
+import it.unibo.plantsfarm.controller.memory.api.DataMemory;
+
 /**
  * A system to save and load data from files.
  */
-public class DataMemory {
+public class DataMemoryImpl implements DataMemory {
 
     private static final String FOLDER_NAME = ".plantsfarm";
 
@@ -40,6 +42,7 @@ public class DataMemory {
      * @param data          The object to save.
      * @throws IOException  If the writing operation fails.
      */
+    @Override
     public void save(final String fileName, final Object data) throws IOException {
         try (BufferedWriter writer = Files.newBufferedWriter(getFile(fileName).toPath(), StandardCharsets.UTF_8)) {
             writer.write(data.toString());
@@ -53,6 +56,7 @@ public class DataMemory {
      * @return              The content, or null if file doesn't exist.
      * @throws IOException  If the reading operation fails.
      */
+    @Override
     public String load(final String fileName) throws IOException {
         final File file = getFile(fileName);
 

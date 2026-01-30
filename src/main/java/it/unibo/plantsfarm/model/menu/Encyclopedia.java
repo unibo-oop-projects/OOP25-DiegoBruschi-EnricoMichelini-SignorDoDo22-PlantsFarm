@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import it.unibo.plantsfarm.controller.memory.DataMemory;
+import it.unibo.plantsfarm.controller.memory.api.DataMemory;
+import it.unibo.plantsfarm.controller.memory.impl.DataMemoryImpl;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
@@ -29,7 +30,7 @@ public final class Encyclopedia {
      */
     public Encyclopedia() {
         this.plants = new ArrayList<>();
-        this.memory = new DataMemory();
+        this.memory = new DataMemoryImpl();
     }
 
     /**
