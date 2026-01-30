@@ -1,6 +1,11 @@
 package it.unibo.plantsfarm.view.gamePanel;
 
-import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.*;
+import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.ACTIONHOE;
+import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.ACTIONWATER;
+import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.DOWN;
+import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.LEFT;
+import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.RIGHT;
+import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.UP;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -24,19 +29,25 @@ import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePael;
 import it.unibo.plantsfarm.model.Pod;
 
-public class ImplViewGamePanel extends JPanel implements ViewGamePael{
+public class ImplViewGamePanel extends JPanel implements ViewGamePael {
   public static int orginalTileSize = Toolkit.getDefaultToolkit().getScreenSize().height / 67;
   List<Pod> listPod = new LinkedList<>(List.of());
-  public final static int SCALE = 3; 
+  public static final int SCALE = 3; 
   public static int tileSize = orginalTileSize * SCALE;
-  public final static int MAXSCREENCOL = 66; 
-  public final static int MAXSCREENROW = 21; 
-  public final static int worldWidth = tileSize * (MAXSCREENCOL); 
-  public final static int worldheigh = tileSize * (MAXSCREENROW); 
-  public final static int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width - 222;
-  public final static int screenHeigh = Toolkit.getDefaultToolkit().getScreenSize().height;
-  private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER =
-    Map.of(KeyEvent.VK_W, UP, KeyEvent.VK_A, LEFT, KeyEvent.VK_D, RIGHT, KeyEvent.VK_S, DOWN, KeyEvent.VK_R, ACTIONWATER, KeyEvent.VK_Q, ACTIONHOE);
+  public static final int MAXSCREENCOL = 66; 
+  public static final int MAXSCREENROW = 21; 
+  public static final int WORLD_WIDTH = tileSize * MAXSCREENCOL; 
+  public static final int WORLD_HEIGHT = tileSize * MAXSCREENROW; 
+  public static final int SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width - 222;
+  public static final int SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
+  private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER = Map.of(
+    KeyEvent.VK_W, UP,
+    KeyEvent.VK_A, LEFT,
+    KeyEvent.VK_D, RIGHT,
+    KeyEvent.VK_S, DOWN,
+    KeyEvent.VK_R, ACTIONWATER,
+    KeyEvent.VK_Q, ACTIONHOE
+  );
   private TileManager tileM;
   private int cameraX; 
   private int cameraY; 
@@ -50,32 +61,33 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael{
 
   Boolean inventario = false;
   Inventario inventory = new Inventario(this);
-  
-  public ImplViewGamePanel(){
+
+  public ImplViewGamePanel() {
     super();
     this.requestFocus();
     this.setVisible(true);
     this.setDoubleBuffered(true);
-    this.setSize(screenWidth,screenHeigh);
+    this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
     this.setFocusable(true);
     this.requestFocusInWindow(true);
     this.setBackground(Color.BLACK);
     this.tileM = new TileManager(this);
     this.addKeyListener(new KeyAdapter() {
-    
+
     @Override
     public void keyPressed(final KeyEvent e) {
       super.keyPressed(e);
-      if(e.getKeyCode() == KeyEvent.VK_I ){
+      if (e.getKeyCode() == KeyEvent.VK_I) {
           inventario = !inventario;
-          repaint();  
+          repaint();
         }
 
       if (e.getKeyCode() == KeyEvent.VK_P) {
-          new SeedController(selectedPlant -> { System.out.println("Selected plant: " + selectedPlant.getName());
+          new SeedController(selectedPlant -> {
+            System.out.println("Selected plant: " + selectedPlant.getName());
           }, plantWindow).start();
           }
-                
+
       if (KEY_MAPPER.containsKey(e.getKeyCode())) {
           controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
           selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
@@ -87,11 +99,12 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael{
       if (KEY_MAPPER.containsKey(e.getKeyCode())) {
           controller.takeInput(UserInput.FERMO);
       }
-    }});
+    }
+  });
   }
 
   @Override
-  public void show(final double playerPosX, final double playerPosY, int cameraX, int cameraY, List<Pod> listPod) {
+  public void show(final double playerPosX, final double playerPosY, final int cameraX, final int cameraY, final List<Pod> listPod) {
     SwingUtilities.invokeLater(() -> {
       this.playerPosX = playerPosX;
       this.playerPosY = playerPosY;
@@ -108,13 +121,13 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael{
     super.paintComponent(g);
     final Graphics2D g2D = (Graphics2D) g;
     tileM.drawTile(g2D, cameraX, cameraY);
-    g2D.drawImage(selector.getCurrentImage(), (int) playerPosX - cameraX, (int)playerPosY  - cameraY, 64,64,null);
-    if(inventario){
+    g2D.drawImage(selector.getCurrentImage(), (int) playerPosX - cameraX, (int) playerPosY - cameraY, 64, 64, null);
+    if (inventario) {
       inventory.createInventory(g2D);
     }
-    
-    for (Pod pod : listPod) {
-      if(pod.getisPlanted() != false){
+
+    for (final Pod pod : listPod) {
+      if (pod.getisPlanted()) {
         g2D.drawImage(image, pod.getCoordinate().x - cameraX, pod.getCoordinate().y - cameraY, 48, 48, null);
         // System.out.println(pod.getCoordinate().x + ", " + pod.getCoordinate().y);
       }
@@ -122,12 +135,12 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael{
   }
 
   @Override
-  public void setController(final ImplControllerGamePanel controller){
+  public void setController(final ImplControllerGamePanel controller) {
     this.controller = controller;
   }
 
   @Override
-  public void setSelectorFrames(final SelectorFrames selector){
+  public void setSelectorFrames(final SelectorFrames selector) {
     this.selector = selector;
   }
 }

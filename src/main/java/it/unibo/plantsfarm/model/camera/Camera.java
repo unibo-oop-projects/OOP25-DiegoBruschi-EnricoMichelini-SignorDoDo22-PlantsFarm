@@ -10,6 +10,7 @@ public interface Camera {
      * Calculate the position of camera based on player position. 
      */
     void followPlayer();
+
     /**
      * Return Position of the camera on the X axis.
      * 

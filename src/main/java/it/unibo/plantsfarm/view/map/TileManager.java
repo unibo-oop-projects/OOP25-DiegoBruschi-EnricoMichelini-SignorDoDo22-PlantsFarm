@@ -136,7 +136,7 @@ public final class TileManager {
             final int screenY = worldY - cameraY;
 
             if (screenX + ImplViewGamePanel.tileSize > 0
-                && screenX < ImplViewGamePanel.worldWidth
+                && screenX < ImplViewGamePanel.WORLD_WIDTH
                 && screenY + ImplViewGamePanel.tileSize > 0
                 && screenY < gp.getHeight()) {
 

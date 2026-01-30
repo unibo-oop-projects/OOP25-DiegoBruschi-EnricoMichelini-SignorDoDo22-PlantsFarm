@@ -18,7 +18,7 @@ public final class AnimationCorsa implements Animation {
 
     @Override
     public void start(final long nowNs) {
-        if (playing) {              
+        if (playing) {
             return;
         }
         playing = true;
@@ -28,7 +28,7 @@ public final class AnimationCorsa implements Animation {
 
     @Override
     public BufferedImage getCurrentFrame(final long nowNs) {
-        if (!playing) {    
+        if (!playing) {
             return AnimationFrames.BASE;
         }
 

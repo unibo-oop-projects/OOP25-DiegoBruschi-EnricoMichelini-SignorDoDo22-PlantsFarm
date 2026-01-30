@@ -3,7 +3,7 @@ package it.unibo.plantsfarm.model.animation;
 import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.model.animation.api.Animation;
 
-public final class AnimationAzione  implements Animation {
+public final class AnimationAzione implements Animation {
     private final BufferedImage[] frames;
     private int frameIndex;
     private long lastFrameTimeNs;
@@ -26,7 +26,7 @@ public final class AnimationAzione  implements Animation {
         if (nowNs - lastFrameTimeNs >= frameDurationNs) {
             frameIndex++;
             lastFrameTimeNs = nowNs;
-            
+
             if (frameIndex >= frames.length) {
                 frameIndex = frames.length - 1;
                 playing = false;

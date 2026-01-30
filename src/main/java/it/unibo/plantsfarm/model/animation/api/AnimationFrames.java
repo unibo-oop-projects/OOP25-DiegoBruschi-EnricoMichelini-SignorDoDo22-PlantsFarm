@@ -6,9 +6,9 @@ import it.unibo.plantsfarm.view.utility.SpriteLoader;
 
 public final class AnimationFrames {
 
-    public final static BufferedImage BASE =  new SpriteLoader("/Player/tile001.png").getImage();
-    
-    public final static BufferedImage[] WALKRIGHT =  { 
+    public static final BufferedImage BASE = new SpriteLoader("/Player/tile001.png").getImage();
+
+    public static final BufferedImage[] WALKRIGHT = {
         new SpriteLoader("/Player/tile024.png").getImage(),
         new SpriteLoader("/Player/tile025.png").getImage(),
         new SpriteLoader("/Player/tile026.png").getImage(),
@@ -43,14 +43,14 @@ public final class AnimationFrames {
         new SpriteLoader("/Player/Walking/Up/tile035.png").getImage(),
     };
 
-    public static  final BufferedImage[] WATER = {
+    public static final BufferedImage[] WATER = {
         new SpriteLoader("/Player/Actions/to Water/tile023.png").getImage(),
         new SpriteLoader("/Player/Actions/to Water/tile024.png").getImage(),
         new SpriteLoader("/Player/Actions/to Water/tile023.png").getImage(),
         BASE
     };
 
-    public static final BufferedImage[] DIG =  {
+    public static final BufferedImage[] DIG = {
         new SpriteLoader("/Player/Actions/Dig/tile012.png").getImage(),
         new SpriteLoader("/Player/Actions/Dig/tile013.png").getImage(),
         new SpriteLoader("/Player/Actions/Dig/tile012.png").getImage(),

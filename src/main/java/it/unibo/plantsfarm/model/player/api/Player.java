@@ -20,10 +20,10 @@ public abstract class Player {
     public List<Pod> listPod = new LinkedList<>();
 
     /** Current X position of the player in world coordinates. */
-    private double posX = ImplViewGamePanel.worldWidth / 2;
+    private double posX = ImplViewGamePanel.WORLD_WIDTH / 2;
 
     /** Current Y position of the player in world coordinates. */
-    private double posY = ImplViewGamePanel.worldheigh / 2;
+    private double posY = ImplViewGamePanel.WORLD_HEIGHT / 2;
 
     /** Movement speed of the player (units per second). */
     protected double speed;
@@ -59,7 +59,7 @@ public abstract class Player {
             case FERMO -> { }
         }
 
-        if (nextPosX > 1 && nextPosY > 1 && nextPosX < ImplViewGamePanel.worldWidth && nextPosY < ImplViewGamePanel.worldheigh) {
+        if (nextPosX > 1 && nextPosY > 1 && nextPosX < ImplViewGamePanel.WORLD_WIDTH && nextPosY < ImplViewGamePanel.WORLD_HEIGHT) {
             posX = nextPosX;
             posY = nextPosY;
         }

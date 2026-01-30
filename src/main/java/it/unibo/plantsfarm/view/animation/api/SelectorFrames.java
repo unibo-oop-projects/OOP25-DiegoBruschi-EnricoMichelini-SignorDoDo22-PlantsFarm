@@ -12,7 +12,7 @@ public interface SelectorFrames {
      * 
      * @param input
      */
-    void takeInput( UserInput input);
+    void takeInput(UserInput input);
 
     /**
      * Calculate animation's next frame based on time rimaining.
@@ -23,7 +23,7 @@ public interface SelectorFrames {
 
     /**
      * Returns the current Frame of the player.
-     *  
+     * 
      * @return CurrentFrame 
      */
     BufferedImage getCurrentImage();

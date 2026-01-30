@@ -3,15 +3,15 @@ package it.unibo.plantsfarm.model.animation;
 import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.model.animation.api.Animation;
 
-public final class AnimationHoe implements Animation{
+public final class AnimationHoe implements Animation {
 
    private final BufferedImage[] frames;
     private int frameIndex;
     private long lastFrameTimeNs;
     private final long frameDurationNs;
-    private boolean playing = false;
+    private boolean playing;
 
-    public AnimationHoe(final long frameDurationNs, BufferedImage[] frames) {
+    public AnimationHoe(final long frameDurationNs, final BufferedImage[] frames) {
         this.frameDurationNs = frameDurationNs;
         this.frames = frames;
     }
@@ -27,7 +27,7 @@ public final class AnimationHoe implements Animation{
         if (nowNs - lastFrameTimeNs >= frameDurationNs) {
             frameIndex++;
             lastFrameTimeNs = nowNs;
-            
+
             if (frameIndex >= frames.length) {
                 frameIndex = frames.length - 1;
                 playing = false;
@@ -40,5 +40,5 @@ public final class AnimationHoe implements Animation{
     public boolean getisPlaying() {
         return playing;
     }
-    
+
 }

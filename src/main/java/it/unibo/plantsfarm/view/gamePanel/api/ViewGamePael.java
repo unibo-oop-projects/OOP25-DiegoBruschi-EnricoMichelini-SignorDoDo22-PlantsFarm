@@ -10,7 +10,6 @@ import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
  * 
  */
 public interface ViewGamePael {
-    
     void show(double playerPosX, double playerPosY, int cameraX, int cameraY, List<Pod> listPod);
 
     /**
@@ -24,5 +23,4 @@ public interface ViewGamePael {
      * @param controller
      */
     void setController(ImplControllerGamePanel controller);
-    
 }

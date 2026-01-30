@@ -11,14 +11,14 @@ import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class ImplControllerGamePanel extends Thread implements ControllerGamePanel {
+    private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
     private ImplViewGamePanel view;
     private final ImplFactoryPlayer factoryPlayer = new ImplFactoryPlayer();
-    private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
     private Player player;
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
-   
+
     public ImplControllerGamePanel() {
         setPlayer();
         this.player = getPlayer();
@@ -28,11 +28,11 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     public void run() {
         long lastTime = System.currentTimeMillis();
         while (true) {
-            long now = System.currentTimeMillis();
-            long delta = now - lastTime;
+            final long now = System.currentTimeMillis();
+            final long delta = now - lastTime;
             lastTime = now;
-            UserInput input = queue.poll();  
-           
+            final UserInput input = queue.poll();
+
             view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY(), player.listPod);
             try {
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
@@ -41,13 +41,13 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                 System.out.println(input);
                 controllerAnimation.takeInput(input);
             }
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 break;
             }
             controllerAnimation.update(now);
             player.updatePlayer(delta);
             player.updatePdod(now);
-            camera.followPlayer();    
+            camera.followPlayer();
         }
     }
  
@@ -57,7 +57,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             this.queue.add(input);
         }
     }
-    
+
     @Override
     public void addView() {
         view = new ImplViewGamePanel();

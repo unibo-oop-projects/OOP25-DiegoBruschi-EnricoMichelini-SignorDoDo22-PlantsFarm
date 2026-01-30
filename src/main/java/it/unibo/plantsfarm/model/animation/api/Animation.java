@@ -22,7 +22,5 @@ public interface Animation {
      */
     void start(long nowNs);
 
-
-    
     boolean getisPlaying();
 }
