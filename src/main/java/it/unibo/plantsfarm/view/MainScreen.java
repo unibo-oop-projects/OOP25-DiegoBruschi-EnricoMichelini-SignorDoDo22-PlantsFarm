@@ -30,7 +30,6 @@ public final class MainScreen {
     private static final int FONT_SIZE = 24;
     private static final int UPPER_PANEL_WIDTH = 600;
     private static final int UPPER_PANEL_HEIGHT = 200;
-    private static final int BUTTON_FONT_SIZE = 18;
 
     private final MenuPanel menuPanel;
     private ImplViewGamePanel gamePanel;
@@ -72,7 +71,7 @@ public final class MainScreen {
         this.controller = new ImplControllerGamePanel();
         this.controller.addView();
         this.gamePanel = this.controller.getView();
-        this.gamePanel.setBounds(0, 0, screenSize.width - 222, screenSize.height);
+        this.gamePanel.setBounds(0, 0, screenSize.width, screenSize.height);
 
         layeredPane.add(this.gamePanel, JLayeredPane.DEFAULT_LAYER);
 

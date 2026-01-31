@@ -1,32 +1,32 @@
 package it.unibo.plantsfarm.model;
 
 import java.awt.Rectangle;
-
 import it.unibo.plantsfarm.model.plant.Plant;
 
-public class Soil {
-    
+public final class Soil {
+
     private Rectangle coordinatePod;
     private boolean isPlanted;
-    private Plant plant;    
-    public Soil(Rectangle coordinatePod){
+    private Plant plant;
+
+    public Soil(final Rectangle coordinatePod) {
         this.coordinatePod = coordinatePod;
     }
 
-    public Rectangle getCoordinate(){
+    public Rectangle getCoordinate() {
         return this.coordinatePod;
     }
 
-    public void setPlanted(Plant plant){
+    public void setPlanted(final Plant selectedPlant) {
         this.isPlanted = true;
-        this.plant = plant;
+        this.plant = selectedPlant;
     }
 
-    public boolean getisPlanted(){
+    public boolean getIsPlanted() {
         return this.isPlanted;
     }
 
-    public Plant gePlant(){
+    public Plant getPlant() {
         return this.plant;
     }
 }

@@ -47,13 +47,13 @@ public final class AnimationFrames {
         new SpriteLoader("/Player/Actions/to Water/tile023.png").getImage(),
         new SpriteLoader("/Player/Actions/to Water/tile024.png").getImage(),
         new SpriteLoader("/Player/Actions/to Water/tile023.png").getImage(),
-        BASE
+        BASE,
     };
 
     public static final BufferedImage[] DIG = {
         new SpriteLoader("/Player/Actions/Dig/tile012.png").getImage(),
         new SpriteLoader("/Player/Actions/Dig/tile013.png").getImage(),
         new SpriteLoader("/Player/Actions/Dig/tile012.png").getImage(),
-        BASE
+        BASE,
     };
 }

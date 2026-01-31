@@ -1,10 +1,11 @@
 package it.unibo.plantsfarm.model.items;
 
-public class ItemHoe extends ItemsFarmBase{
-    
-    public ItemHoe(int buff){
+public final class ItemHoe extends ItemsFarmBase {
+    public ItemHoe(final int buff) {
         super(buff);
     }
-    
-    public Tooltype getTypeItem(){ return Tooltype.HOE;}
+
+    public Tooltype getTypeItem() {
+        return Tooltype.HOE;
+    }
 }

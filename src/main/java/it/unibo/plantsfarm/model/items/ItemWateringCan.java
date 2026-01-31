@@ -1,10 +1,12 @@
 package it.unibo.plantsfarm.model.items;
 
-public class ItemWateringCan extends ItemsFarmBase {
-    
-    public ItemWateringCan(int buff){
+public final class ItemWateringCan extends ItemsFarmBase {
+
+    public ItemWateringCan(final int buff) {
         super(buff);
     }
-    
-    public Tooltype getTypeItem(){ return Tooltype.WATERINGCAN;}
+
+    public Tooltype getTypeItem() {
+        return Tooltype.WATERINGCAN;
+    }
 }

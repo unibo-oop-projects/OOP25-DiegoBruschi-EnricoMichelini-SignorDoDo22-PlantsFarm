@@ -9,6 +9,7 @@ import it.unibo.plantsfarm.model.plant.PlantType.Rarity;
 public class Plant {
 
     // Static info
+    private static final long WATER_TIME = 2000L;
     private final PlantType type;
 
     // Dynamic info
@@ -16,8 +17,6 @@ public class Plant {
     private boolean needsWater;
     private boolean isPlanted;
     private long lastWateredTime = System.currentTimeMillis();
-    private long waterTime = 2000L;
-    
 
     /**
      * Creates a new Plant based on a specific type.
@@ -43,20 +42,27 @@ public class Plant {
 
     /**
      * Waters the plant, upgrade its growth stage if possible.
+     * 
+     *  @param now The current time in milliseconds.
      */
-    public final void water(Long Now) {
+    public final void water(final Long now) {
         if (isPlanted && needsWater) {
             needsWater = false;
-            if (growthStage < type.getMaxGrowthStage() && Now - this.lastWateredTime >= this.waterTime) {
+            if (growthStage < type.getMaxGrowthStage() && now - this.lastWateredTime >= this.WATER_TIME) {
                 growthStage++;
                 this.lastWateredTime = System.currentTimeMillis();
             }
         }
     }
 
-    public final void updateNeedsWater(Long Now) {
+    /**
+     * Updates the water needs of the plant based on time.
+     *
+     * @param now The current time in milliseconds.
+     */
+    public final void updateNeedsWater(final Long now) {
         if (this.type.getMaxGrowthStage() > this.growthStage) {
-            if (Now - this.lastWateredTime >= this.waterTime) {
+            if (now - this.lastWateredTime >= this.WATER_TIME) {
                 this.needsWater = true;
             }
         }

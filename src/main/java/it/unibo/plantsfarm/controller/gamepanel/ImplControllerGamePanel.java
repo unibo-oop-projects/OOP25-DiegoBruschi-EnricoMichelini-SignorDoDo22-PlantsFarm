@@ -33,7 +33,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             lastTime = now;
             final UserInput input = queue.poll();
 
-            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY(), player.listPod);
+            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY(), player.listSoil);
             try {
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
                 if (input != null) {
@@ -46,7 +46,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             }
             controllerAnimation.update(now);
             player.updatePlayer(delta);
-            player.updatePdod(now);
+            player.updateSoil(now);
             camera.followPlayer();
         }
     }

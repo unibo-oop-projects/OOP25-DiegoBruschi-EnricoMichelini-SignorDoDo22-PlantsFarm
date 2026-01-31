@@ -1,12 +1,13 @@
 package it.unibo.plantsfarm.model.player;
 
-import static it.unibo.plantsfarm.model.player.PlayersTypes.*;
+import static it.unibo.plantsfarm.model.player.PlayersTypes.EXPERTFARMER;
+import static it.unibo.plantsfarm.model.player.PlayersTypes.FARMER;
 import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.model.player.api.FactoryPlayer;
 
-public class ImplFactoryPlayer implements FactoryPlayer {   
-    
-    public Player createPlayer(PlayersTypes request) {
+public final class ImplFactoryPlayer implements FactoryPlayer {
+
+    public Player createPlayer(final PlayersTypes request) {
         if (request.equals(FARMER)) {
             return new FarmerPlayer();
 

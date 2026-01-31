@@ -11,15 +11,15 @@ public final class ImplCamera implements Camera {
     private final int screenHeight;
     private final int worldWidth = ImplViewGamePanel.WORLD_WIDTH;
     private final int worldHeight = ImplViewGamePanel.WORLD_HEIGHT;
-   
-    public ImplCamera (final int screenWidth, final int screenHeight) {
+
+    public ImplCamera(final int screenWidth, final int screenHeight) {
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
     }
 
     @Override
     public void followPlayer() {
-        
+
         posX = (int) player.getPosx() - ImplViewGamePanel.SCREEN_WIDTH / 2; 
         posY = (int) player.getPosy() - ImplViewGamePanel.SCREEN_HEIGHT / 2; 
         if (posX < 0) { 

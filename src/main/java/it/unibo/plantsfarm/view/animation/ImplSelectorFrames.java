@@ -93,7 +93,7 @@ public class ImplSelectorFrames implements SelectorFrames {
         }
     }
 
-    final public BufferedImage getCurrentImage() { 
+    public final BufferedImage getCurrentImage() { 
         return this.currentImage;
     }
 }

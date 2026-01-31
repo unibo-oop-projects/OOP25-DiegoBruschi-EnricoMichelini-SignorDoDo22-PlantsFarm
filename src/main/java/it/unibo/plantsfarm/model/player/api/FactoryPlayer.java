@@ -8,7 +8,7 @@ import it.unibo.plantsfarm.model.player.PlayersTypes;
  * such as a faster or slower farmer.
  */
 public interface FactoryPlayer {
-    
+
     /**
      * Creates a new Player based on the requested type.
      *

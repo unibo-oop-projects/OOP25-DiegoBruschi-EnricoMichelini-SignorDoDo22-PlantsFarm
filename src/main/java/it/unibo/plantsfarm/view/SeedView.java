@@ -15,7 +15,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-public class SeedView {
+public final class SeedView {
 
     private static final String TITLE_EDIBLE = "Edible Seeds";
     private static final String TITLE_ORNAMENTAL = "Ornamental Plants";

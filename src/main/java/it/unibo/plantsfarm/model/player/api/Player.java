@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.Mappa;
-import it.unibo.plantsfarm.model.Pod;
+import it.unibo.plantsfarm.model.Soil;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
@@ -16,8 +16,14 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
  */
 public abstract class Player {
 
+    public static final int FARMER_SPEED = 300;
+    public static final int EXPERT_FARMER_SPEED = 500;
+    public List<Soil> listSoil = new LinkedList<>();
+
+    /** Movement speed of the player (units per second). */
+    protected double speed;
+
     private Plant piantaDisponibile = new Plant(PlantType.TOMATO);
-    public List<Pod> listPod = new LinkedList<>();
 
     /** Current X position of the player in world coordinates. */
     private double posX = ImplViewGamePanel.WORLD_WIDTH / 2;
@@ -25,17 +31,13 @@ public abstract class Player {
     /** Current Y position of the player in world coordinates. */
     private double posY = ImplViewGamePanel.WORLD_HEIGHT / 2;
 
-    /** Movement speed of the player (units per second). */
-    protected double speed;
-
     /** Current movement direction of the player. */
     private UserInput direction = UserInput.FERMO;
 
     private Mappa map = new Mappa();
 
-    public Player(){
+    public Player() {
         map.loadMap("/maps/map.txt");
-        
     }
 
     /**
@@ -43,7 +45,6 @@ public abstract class Player {
      * and the current movement direction.
      *
      * @param time the elapsed time since the last update, in milliseconds
-     * @param mappaModel the game map model (used for future collision checks)
      */
     public void updatePlayer(final long time) {
         final double delta = speed * time / 1000.0;
@@ -59,12 +60,15 @@ public abstract class Player {
             case FERMO -> { }
         }
 
-        if (nextPosX > 1 && nextPosY > 1 && nextPosX < ImplViewGamePanel.WORLD_WIDTH && nextPosY < ImplViewGamePanel.WORLD_HEIGHT) {
+        if (nextPosX > 1
+            && nextPosY > 1
+            && nextPosX < ImplViewGamePanel.WORLD_WIDTH
+            && nextPosY < ImplViewGamePanel.WORLD_HEIGHT) {
             posX = nextPosX;
             posY = nextPosY;
         }
-        
-        System.out.println(posX + " " + posY);
+
+        System.out.println("Player position: " + posX + " " + posY);
     }
 
     /**
@@ -103,25 +107,24 @@ public abstract class Player {
         return this.direction;
     }
 
-
-    public void pianta(){
-        Rectangle hitbox = new Rectangle((int)posX,(int)posY,30,30);
-        for (Pod zolla : listPod) {
-            if(zolla.getCoordinate().contains(hitbox)){
-                if(zolla.getisPlanted() == false){
+    public void pianta() {
+        final Rectangle hitbox = new Rectangle((int) posX, (int) posY, 30, 30);
+        for (final Soil zolla : listSoil) {
+            if (zolla.getCoordinate().contains(hitbox)) {
+                if (!zolla.getIsPlanted()) {
                     zolla.setPlanted(piantaDisponibile);
                 }
-                if (zolla.gePlant() != null) {
-                    zolla.gePlant().water(System.currentTimeMillis());
+                if (zolla.getPlant() != null) {
+                    zolla.getPlant().water(System.currentTimeMillis());
                 }
             }
         }
     }
 
-    public void updatePdod(Long now){
-        for (Pod zolla : listPod) {
-            Plant plant = zolla.gePlant();
-            if(plant != null) {
+    public void updateSoil(final Long now) {
+        for (final Soil zolla : listSoil) {
+            final Plant plant = zolla.getPlant();
+            if (plant != null) {
                 plant.updateNeedsWater(now);
             }
         }

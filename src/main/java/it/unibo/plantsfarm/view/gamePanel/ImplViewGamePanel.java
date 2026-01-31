@@ -22,24 +22,25 @@ import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
-import it.unibo.plantsfarm.view.Inventario;
 import it.unibo.plantsfarm.view.map.TileManager;
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
-import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePael;
-import it.unibo.plantsfarm.model.Pod;
+import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePanel;
+import it.unibo.plantsfarm.model.Soil;
 
-public class ImplViewGamePanel extends JPanel implements ViewGamePael {
+public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   public static int orginalTileSize = Toolkit.getDefaultToolkit().getScreenSize().height / 67;
-  List<Pod> listPod = new LinkedList<>(List.of());
-  public static final int SCALE = 3; 
+  public static final int SCALE = 3;
+  public static final int POD_SIZE = 48;
+  public static final int PLAYER_SIZE = 64;
   public static int tileSize = orginalTileSize * SCALE;
   public static final int MAXSCREENCOL = 66; 
-  public static final int MAXSCREENROW = 21; 
+  public static final int MAXSCREENROW = 23; 
   public static final int WORLD_WIDTH = tileSize * MAXSCREENCOL; 
   public static final int WORLD_HEIGHT = tileSize * MAXSCREENROW; 
   public static final int SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width - 222;
   public static final int SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
+
   private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER = Map.of(
     KeyEvent.VK_W, UP,
     KeyEvent.VK_A, LEFT,
@@ -48,6 +49,7 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael {
     KeyEvent.VK_R, ACTIONWATER,
     KeyEvent.VK_Q, ACTIONHOE
   );
+
   private TileManager tileM;
   private int cameraX; 
   private int cameraY; 
@@ -59,8 +61,8 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael {
 
   private boolean plantWindow = true; //da modificare in base alle piante da visualizzare
 
-  Boolean inventario = false;
-  Inventario inventory = new Inventario(this);
+  private boolean inventario;
+  private List<Soil> listPod = new LinkedList<>(List.of());
 
   public ImplViewGamePanel() {
     super();
@@ -77,10 +79,6 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael {
     @Override
     public void keyPressed(final KeyEvent e) {
       super.keyPressed(e);
-      if (e.getKeyCode() == KeyEvent.VK_I) {
-          inventario = !inventario;
-          repaint();
-        }
 
       if (e.getKeyCode() == KeyEvent.VK_P) {
           new SeedController(selectedPlant -> {
@@ -104,13 +102,18 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael {
   }
 
   @Override
-  public void show(final double playerPosX, final double playerPosY, final int cameraX, final int cameraY, final List<Pod> listPod) {
+  public void show(final double posX,
+    final double posY,
+    final int camX,
+    final int camY,
+    final List<Soil> pods
+  ) {
     SwingUtilities.invokeLater(() -> {
-      this.playerPosX = playerPosX;
-      this.playerPosY = playerPosY;
-      this.cameraX = cameraX;
-      this.cameraY = cameraY;
-      this.listPod = listPod;
+      this.playerPosX = posX;
+      this.playerPosY = posY;
+      this.cameraX = camX;
+      this.cameraY = camY;
+      this.listPod = pods;
       //System.out.println("LISTA POD: " + listPod.size());
       repaint();
     });
@@ -121,14 +124,17 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael {
     super.paintComponent(g);
     final Graphics2D g2D = (Graphics2D) g;
     tileM.drawTile(g2D, cameraX, cameraY);
-    g2D.drawImage(selector.getCurrentImage(), (int) playerPosX - cameraX, (int) playerPosY - cameraY, 64, 64, null);
-    if (inventario) {
-      inventory.createInventory(g2D);
-    }
+    g2D.drawImage(selector.getCurrentImage(),
+      (int) playerPosX - cameraX,
+      (int) playerPosY - cameraY,
+      PLAYER_SIZE,
+      PLAYER_SIZE,
+      null
+    );
 
-    for (final Pod pod : listPod) {
-      if (pod.getisPlanted()) {
-        g2D.drawImage(image, pod.getCoordinate().x - cameraX, pod.getCoordinate().y - cameraY, 48, 48, null);
+    for (final Soil pod : listPod) {
+      if (pod.getIsPlanted()) {
+        g2D.drawImage(image, pod.getCoordinate().x - cameraX, pod.getCoordinate().y - cameraY, POD_SIZE, POD_SIZE, null);
         // System.out.println(pod.getCoordinate().x + ", " + pod.getCoordinate().y);
       }
     }
@@ -140,7 +146,7 @@ public class ImplViewGamePanel extends JPanel implements ViewGamePael {
   }
 
   @Override
-  public void setSelectorFrames(final SelectorFrames selector) {
-    this.selector = selector;
+  public void setSelectorFrames(final SelectorFrames selectorFrames) {
+    this.selector = selectorFrames;
   }
 }

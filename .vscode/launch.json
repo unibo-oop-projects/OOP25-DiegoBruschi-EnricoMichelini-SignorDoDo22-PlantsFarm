@@ -9,6 +9,13 @@
       "name": "Main",
       "request": "launch",
       "mainClass": "it.unibo.plantsfarm.Main",
+      "projectName": "PROJECT_GAME_FARM"
+    },
+    {
+      "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "it.unibo.plantsfarm.Main",
       "projectName": "ProjectMergeVersion"
     },
     {
