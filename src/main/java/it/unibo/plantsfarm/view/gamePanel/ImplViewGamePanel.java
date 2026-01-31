@@ -29,11 +29,12 @@ import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePanel;
 import it.unibo.plantsfarm.model.Soil;
 
 public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
-  public static int orginalTileSize = Toolkit.getDefaultToolkit().getScreenSize().height / 67;
+  public static final int MAP_RENDER_SCALE = 67;
+  public static int orginalTileSize = Toolkit.getDefaultToolkit().getScreenSize().height / MAP_RENDER_SCALE;
   public static final int SCALE = 3;
+  public static int tileSize = orginalTileSize * SCALE;
   public static final int POD_SIZE = 48;
   public static final int PLAYER_SIZE = 64;
-  public static int tileSize = orginalTileSize * SCALE;
   public static final int MAXSCREENCOL = 66; 
   public static final int MAXSCREENROW = 23; 
   public static final int WORLD_WIDTH = tileSize * MAXSCREENCOL; 
@@ -46,7 +47,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
     KeyEvent.VK_A, LEFT,
     KeyEvent.VK_D, RIGHT,
     KeyEvent.VK_S, DOWN,
-    KeyEvent.VK_R, ACTIONWATER,
+    KeyEvent.VK_E, ACTIONWATER,
     KeyEvent.VK_Q, ACTIONHOE
   );
 
@@ -60,8 +61,6 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   private SelectorFrames selector;
 
   private boolean plantWindow = true; //da modificare in base alle piante da visualizzare
-
-  private boolean inventario;
   private List<Soil> listPod = new LinkedList<>(List.of());
 
   public ImplViewGamePanel() {

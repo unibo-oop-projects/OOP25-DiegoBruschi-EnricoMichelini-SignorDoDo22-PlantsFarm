@@ -1,11 +1,10 @@
 package it.unibo.plantsfarm.model.player.api;
 
 import java.awt.Rectangle;
-import java.util.LinkedList;
-import java.util.List;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.Mappa;
 import it.unibo.plantsfarm.model.Soil;
+import it.unibo.plantsfarm.model.SolidBlock;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
@@ -18,7 +17,6 @@ public abstract class Player {
 
     public static final int FARMER_SPEED = 300;
     public static final int EXPERT_FARMER_SPEED = 500;
-    public List<Soil> listSoil = new LinkedList<>();
 
     /** Movement speed of the player (units per second). */
     protected double speed;
@@ -34,7 +32,7 @@ public abstract class Player {
     /** Current movement direction of the player. */
     private UserInput direction = UserInput.FERMO;
 
-    private Mappa map = new Mappa();
+    public Mappa map = new Mappa();
 
     public Player() {
         map.loadMap("/maps/map.txt");
@@ -57,19 +55,26 @@ public abstract class Player {
             case UP -> nextPosY -= delta;
             case DOWN -> nextPosY += delta;
             case ACTIONHOE -> pianta();
+            case ACTIONWATER -> pianta();
             case FERMO -> { }
         }
 
-        if (nextPosX > 1
-            && nextPosY > 1
-            && nextPosX < ImplViewGamePanel.WORLD_WIDTH
-            && nextPosY < ImplViewGamePanel.WORLD_HEIGHT) {
-            posX = nextPosX;
-            posY = nextPosY;
-        }
+final Rectangle futureHitbox = new Rectangle((int) nextPosX, (int) nextPosY, 48, 48);
 
-        System.out.println("Player position: " + posX + " " + posY);
+    boolean collisionDetected = false;
+
+    for (final SolidBlock tile : map.solidBlocks) {
+        if (tile.getCoordinate().intersects(futureHitbox)) {
+            collisionDetected = true;
+            break;
+        }
     }
+
+    if (!collisionDetected) {
+        posX = nextPosX;
+        posY = nextPosY;
+    }
+}
 
     /**
      * Sets the current movement direction of the player.
@@ -107,9 +112,9 @@ public abstract class Player {
         return this.direction;
     }
 
-    public void pianta() {
-        final Rectangle hitbox = new Rectangle((int) posX, (int) posY, 30, 30);
-        for (final Soil zolla : listSoil) {
+    public final void pianta() {
+        final Rectangle hitbox = new Rectangle((int) posX, (int) posY, 48, 48);
+        for (final Soil zolla : map.pod) {
             if (zolla.getCoordinate().contains(hitbox)) {
                 if (!zolla.getIsPlanted()) {
                     zolla.setPlanted(piantaDisponibile);
@@ -121,8 +126,8 @@ public abstract class Player {
         }
     }
 
-    public void updateSoil(final Long now) {
-        for (final Soil zolla : listSoil) {
+    public final void updateSoil(final Long now) {
+        for (final Soil zolla : map.pod) {
             final Plant plant = zolla.getPlant();
             if (plant != null) {
                 plant.updateNeedsWater(now);

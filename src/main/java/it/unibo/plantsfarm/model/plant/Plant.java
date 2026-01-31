@@ -48,7 +48,7 @@ public class Plant {
     public final void water(final Long now) {
         if (isPlanted && needsWater) {
             needsWater = false;
-            if (growthStage < type.getMaxGrowthStage() && now - this.lastWateredTime >= this.WATER_TIME) {
+            if (growthStage < type.getMaxGrowthStage() && now - this.lastWateredTime >= WATER_TIME) {
                 growthStage++;
                 this.lastWateredTime = System.currentTimeMillis();
             }
@@ -62,7 +62,7 @@ public class Plant {
      */
     public final void updateNeedsWater(final Long now) {
         if (this.type.getMaxGrowthStage() > this.growthStage) {
-            if (now - this.lastWateredTime >= this.WATER_TIME) {
+            if (now - this.lastWateredTime >= WATER_TIME) {
                 this.needsWater = true;
             }
         }
