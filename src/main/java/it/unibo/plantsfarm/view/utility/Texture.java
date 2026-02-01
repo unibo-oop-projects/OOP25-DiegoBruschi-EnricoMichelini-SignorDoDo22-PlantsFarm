@@ -20,6 +20,9 @@ public final class Texture {
     public static final double PLANT_ICON_RATIO = 0.05;
     public static final int PLANT_ICON_SIZE = calculateSize(PLANT_ICON_RATIO);
 
+    public static final double MYSTERY_ICON_RATIO = 0.30;
+    public static final int MYSTERY_ICON_SIZE = calculateSize(MYSTERY_ICON_RATIO);
+
     public static final String STAGE_PATH = "plantsStage/";
     public static final double STAGE_ICON_RATIO = 0.20;
     public static final int STAGE_ICON_SIZE = calculateSize(STAGE_ICON_RATIO);
@@ -41,6 +44,8 @@ public final class Texture {
     public static final ImageIcon CREDITS_ICON = loadMenuIcon("Credit.png");
     public static final ImageIcon EXIT_ICON = loadMenuIcon("Exit.png");
 
+    private static final String EXTENSION = ".png";
+
     private Texture() {
         // Utility class constructor
     }
@@ -52,8 +57,19 @@ public final class Texture {
      * @return The ImageIcon.
      */
     public static ImageIcon getPlantIcon(final String plantName) {
-        final String fullPath = PLANT_PATH + plantName + ".png";
+        final String fullPath = PLANT_PATH + plantName + EXTENSION;
         return loadAndScale(fullPath, PLANT_ICON_SIZE, PLANT_ICON_SIZE);
+    }
+
+    /**
+     * Gets a giant plant icon dynamically for Mystery Box.
+     *
+     * @param plantName The name of the plant.
+     * @return The ImageIcon.
+     */
+    public static ImageIcon getMysteryPlantIcon(final String plantName) {
+        final String fullPath = PLANT_PATH + plantName + EXTENSION;
+        return loadAndScale(fullPath, MYSTERY_ICON_SIZE, MYSTERY_ICON_SIZE);
     }
 
     /**
@@ -64,7 +80,7 @@ public final class Texture {
      * @return The ImageIcon.
      */
     public static ImageIcon getPlantStageIcon(final String plantName, final int stage) {
-        final String fullPath = STAGE_PATH + plantName + "Stage/" + plantName + stage + ".png";
+        final String fullPath = STAGE_PATH + plantName + "Stage/" + plantName + stage + EXTENSION;
         return loadAndScale(fullPath, STAGE_ICON_SIZE, STAGE_ICON_SIZE);
     }
 
