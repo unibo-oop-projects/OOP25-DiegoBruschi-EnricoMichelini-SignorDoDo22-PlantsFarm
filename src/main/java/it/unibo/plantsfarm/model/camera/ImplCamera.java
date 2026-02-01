@@ -1,12 +1,12 @@
 package it.unibo.plantsfarm.model.camera;
 
-import it.unibo.plantsfarm.model.player.api.Player;
+import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class ImplCamera implements Camera {
     private int posX;
     private int posY;
-    private Player player;
+    private AbstractPlayer player;
     private final int screenWidth;
     private final int screenHeight;
     private final int worldWidth = ImplViewGamePanel.WORLD_WIDTH;
@@ -47,7 +47,7 @@ public final class ImplCamera implements Camera {
     }
 
     @Override
-    public void setPlayer(final Player player) {
+    public void setPlayer(final AbstractPlayer player) {
         this.player = player;
     }
 }

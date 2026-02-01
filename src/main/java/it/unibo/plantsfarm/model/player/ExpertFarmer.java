@@ -1,8 +1,8 @@
 package it.unibo.plantsfarm.model.player;
 
-import it.unibo.plantsfarm.model.player.api.Player;
+import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 
-public class ExpertFarmer extends Player {
+public class ExpertFarmer extends AbstractPlayer {
 
     public ExpertFarmer() {
         super();

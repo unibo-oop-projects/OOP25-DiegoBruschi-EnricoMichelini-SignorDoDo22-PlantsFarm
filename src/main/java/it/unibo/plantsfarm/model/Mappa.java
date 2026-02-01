@@ -43,8 +43,9 @@ public final class Mappa {
                     || num == 6
                     || num >= 22 && num <= 26
                     || num >= 31 && num <= 35
-                    || num >= 40 && num <= 44
-                    || num >= 49 && num <= 53
+                    || num >= 40 && num <= 45
+                    || num >= 48 && num <= 54
+                    || num >= 58 && num <= 60
                 ) {
                     final Rectangle rect = new Rectangle(worldX, worldY, TILE_SIZE, TILE_SIZE);
                     this.solidBlocks.add(new SolidBlock(rect));

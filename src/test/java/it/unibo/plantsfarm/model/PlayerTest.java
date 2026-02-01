@@ -15,13 +15,13 @@ public class PlayerTest {
 
     @Test
     void testCreationPlayer(){
-        Player player = factory.createPlayer(PlayersTypes.FARMER);
+        AbstractPlayer player = factory.createPlayer(PlayersTypes.FARMER);
         assertTrue(player instanceof FarmerPlayer);
     }
 
     @Test
     void testMovementRight() {
-        Player player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
+        AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
         double startX = player.getPosx();
         player.setDirection(RIGHT);
         long t0 = 1000;
@@ -34,7 +34,7 @@ public class PlayerTest {
 
     @Test
     void testMovementLeft() {
-        Player player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
+        AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
         double startX = player.getPosx();
         player.setDirection(LEFT);
         long t0 = 1000;
@@ -47,7 +47,7 @@ public class PlayerTest {
 
     @Test
     void testMovementUp() {
-        Player player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
+        AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
         double startY = player.getPosy();
         player.setDirection(UP);
         long t0 = 1000;
@@ -60,7 +60,7 @@ public class PlayerTest {
 
     @Test
     void testMovementDown() {
-        Player player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
+        AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
         double startY = player.getPosy();
         player.setDirection(DOWN);
         long t0 = 1000;

@@ -7,7 +7,7 @@ import it.unibo.plantsfarm.model.camera.Camera;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
-import it.unibo.plantsfarm.model.player.api.Player;
+import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
@@ -16,7 +16,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private ImplViewGamePanel view;
     private final ImplFactoryPlayer factoryPlayer = new ImplFactoryPlayer();
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
-    private Player player;
+    private AbstractPlayer player;
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
     private Mappa map = new Mappa();
@@ -81,7 +81,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     }
 
     @Override
-    public Player getPlayer() {
+    public AbstractPlayer getPlayer() {
         return this.player;
     }
 }

@@ -13,13 +13,17 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
  * Abstract base class representing a generic player entity.
  * It stores the player position, movement speed and direction.
  */
-public abstract class Player {
+public abstract class AbstractPlayer {
 
     public static final int FARMER_SPEED = 300;
     public static final int EXPERT_FARMER_SPEED = 500;
 
     /** Movement speed of the player (units per second). */
     protected double speed;
+
+    private final Rectangle solidArea = new Rectangle(8, 32, 32, 16);
+
+    private Mappa map = new Mappa();
 
     private Plant piantaDisponibile = new Plant(PlantType.TOMATO);
 
@@ -32,9 +36,7 @@ public abstract class Player {
     /** Current movement direction of the player. */
     private UserInput direction = UserInput.FERMO;
 
-    public Mappa map = new Mappa();
-
-    public Player() {
+    public AbstractPlayer() {
         map.loadMap("/maps/map.txt");
     }
 
@@ -59,7 +61,9 @@ public abstract class Player {
             case FERMO -> { }
         }
 
-final Rectangle futureHitbox = new Rectangle((int) nextPosX, (int) nextPosY, 48, 48);
+    final int futureSolidX = (int) (nextPosX + solidArea.x);
+    final int futureSolidY = (int) (nextPosY + solidArea.y);
+    final Rectangle futureHitbox = new Rectangle(futureSolidX, futureSolidY, solidArea.width, solidArea.height);
 
     boolean collisionDetected = false;
 

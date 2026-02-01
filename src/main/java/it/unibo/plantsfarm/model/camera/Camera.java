@@ -1,6 +1,6 @@
 package it.unibo.plantsfarm.model.camera;
 
-import it.unibo.plantsfarm.model.player.api.Player;
+import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 
 /**
  * 
@@ -30,5 +30,5 @@ public interface Camera {
      * 
      * @param player set the current player from the ControllerGamePanel
      */
-    void setPlayer(Player player);
+    void setPlayer(AbstractPlayer player);
 }

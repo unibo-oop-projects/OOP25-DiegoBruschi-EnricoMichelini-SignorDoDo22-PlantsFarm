@@ -1,6 +1,6 @@
 package it.unibo.plantsfarm.controller.gamepanel.api;
 
-import it.unibo.plantsfarm.model.player.api.Player;
+import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 /**
@@ -49,5 +49,5 @@ public interface ControllerGamePanel {
      *
      * @return the current player
      */
-    Player getPlayer();
+    AbstractPlayer getPlayer();
 }
