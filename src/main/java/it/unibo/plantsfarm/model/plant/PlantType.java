@@ -23,10 +23,10 @@ public enum PlantType {
     WATERMELON("Watermelon", 5, 2, Rarity.RARE, new HarvestInfo(15, 6, 12)),
     MANGO("Mango", 5, 3, Rarity.EPIC, new HarvestInfo(50, 5, 8)),
     AVOCADO("Avocado", 5, 3, Rarity.EPIC, new HarvestInfo(75, 3, 7)),
-    DRAGONFRUIT("DragonFruit", 4, 2, Rarity.EPIC, new HarvestInfo(100, 2, 4)),
+    DRAGONFRUIT("DragonFruit", 5, 2, Rarity.EPIC, new HarvestInfo(100, 2, 4)),
     ANANAS("Ananas", 5, 2, Rarity.EPIC, new HarvestInfo(100, 1, 1)),
     PAPAYA("Papaya", 6, 3, Rarity.EPIC, new HarvestInfo(55, 2, 6)),
-    POMEGRANATE("Pomegranate", 7, 4, Rarity.LEGENDARY, new HarvestInfo(90, 3, 7)),
+    POMEGRANATE("Pomegranate", 7, 4, Rarity.LEGENDARY, new HarvestInfo(40, 7, 10)),
     BUDDHAHAND("Buddha's Hand", 7, 4, Rarity.LEGENDARY, new HarvestInfo(100, 3, 6)),
 
     //ORNAMENTAL PLANTS

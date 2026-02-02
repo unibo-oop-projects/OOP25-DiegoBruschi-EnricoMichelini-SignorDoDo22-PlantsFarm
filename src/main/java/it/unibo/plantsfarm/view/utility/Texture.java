@@ -17,14 +17,14 @@ public final class Texture {
     public static final int MENU_ICON_SIZE = calculateSize(MENU_ICON_RATIO);
 
     public static final String PLANT_PATH = "icons/plantIcon/";
-    public static final double PLANT_ICON_RATIO = 0.05;
+    public static final double PLANT_ICON_RATIO = 0.06;
     public static final int PLANT_ICON_SIZE = calculateSize(PLANT_ICON_RATIO);
 
     public static final double MYSTERY_ICON_RATIO = 0.30;
     public static final int MYSTERY_ICON_SIZE = calculateSize(MYSTERY_ICON_RATIO);
 
     public static final String STAGE_PATH = "plantsStage/";
-    public static final double STAGE_ICON_RATIO = 0.20;
+    public static final double STAGE_ICON_RATIO = 0.28;
     public static final int STAGE_ICON_SIZE = calculateSize(STAGE_ICON_RATIO);
 
     public static final ImageIcon ENCYCLOPEDIA_ICON = loadMenuIcon("Encyclopedia.png");

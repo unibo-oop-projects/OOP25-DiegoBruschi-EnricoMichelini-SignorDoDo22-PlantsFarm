@@ -40,13 +40,13 @@ public final class MysteryBox {
 
     private static final Color BG_COMMON = new Color(144, 238, 144);
     private static final Color BG_RARE = new Color(221, 160, 221);
-    private static final Color BG_EPIC = new Color(255, 99, 71);
-    private static final Color BG_LEGENDARY = new Color(255, 215, 0);
+    private static final Color BG_EPIC = new Color(255, 117, 120);
+    private static final Color BG_LEGENDARY = new Color(255, 252, 115);
 
     private static final Color DARK_COMMON = new Color(34, 139, 34);
-    private static final Color DARK_RARE = new Color(75, 0, 130);
-    private static final Color DARK_EPIC = new Color(139, 0, 0);
-    private static final Color DARK_LEGENDARY = new Color(184, 134, 11);
+    private static final Color DARK_RARE = new Color(138, 43, 226);
+    private static final Color DARK_EPIC = new Color(220, 20, 60);
+    private static final Color DARK_LEGENDARY = new Color(255, 140, 0);
 
     private final JDialog dialog;
     private final JLabel titleLabel;
