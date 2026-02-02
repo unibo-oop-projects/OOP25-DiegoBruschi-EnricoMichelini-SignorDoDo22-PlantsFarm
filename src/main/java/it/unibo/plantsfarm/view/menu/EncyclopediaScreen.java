@@ -28,26 +28,30 @@ public final class EncyclopediaScreen {
 
     private static final String TITLE = "Encyclopedia";
     private static final String FONT_NAME = "Arial";
-    private static final int GRID_COLS = 4;
-    private static final int GAP = 10;
-    private static final int PADDING = 20;
+    private static final int GRID_COLS = 5;
+    private static final int GAP = 5;
+    private static final int PADDING = 10;
 
-    private static final Color BADGE_COMMON = new Color(60, 179, 113);
-    private static final Color BADGE_RARE = new Color(138, 43, 226);
-    private static final Color BADGE_EPIC = new Color(220, 20, 60);
-    private static final Color BADGE_LEGENDARY = new Color(255, 165, 0);
+    private static final Color BG_COMMON = new Color(144, 238, 144);
+    private static final Color BG_RARE = new Color(221, 160, 221);
+    private static final Color BG_EPIC = new Color(255, 117, 120);
+    private static final Color BG_LEGENDARY = new Color(255, 252, 115);
+
+    private static final Color DARK_COMMON = new Color(34, 139, 34);
+    private static final Color DARK_RARE = new Color(138, 43, 226);
+    private static final Color DARK_EPIC = new Color(220, 20, 60);
+    private static final Color DARK_LEGENDARY = new Color(255, 140, 0);
 
     private static final Color BG = new Color(245, 245, 220);
 
-    private static final int FONT_SIZE_TITLE = 30;
-    private static final int FONT_SIZE_BADGE = 25;
+    private static final int FONT_SIZE_TITLE = 25;
     private static final int FONT_SIZE_DESCRIPTION = 15;
 
     private final JDialog encyclpediaScreen;
     private final JPanel buttonPanel;
+    private final JPanel detailsPanel;
     private final JLabel nameLabel;
     private final JLabel plantStageImageLabel;
-    private final JLabel rarityLabel;
     private final JTextArea plantDescriptionArea;
     private final JButton stageButton;
 
@@ -61,15 +65,19 @@ public final class EncyclopediaScreen {
         this.buttonPanel = new JPanel(new GridLayout(0, GRID_COLS, GAP, GAP));
         this.buttonPanel.setBorder(BorderFactory.createEmptyBorder(GAP, GAP, GAP, GAP));
 
-        final JPanel detailsPanel = new JPanel(new BorderLayout(GAP, GAP));
-        detailsPanel.setBorder(BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING));
-        detailsPanel.setBackground(BG);
+        this.detailsPanel = new JPanel(new BorderLayout(GAP, GAP));
+        this.detailsPanel.setBorder(BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING));
+        this.detailsPanel.setBackground(BG);
 
         final JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, GAP, 0));
         topPanel.setOpaque(false);
 
         this.nameLabel = new JLabel("Select a Plant");
         this.nameLabel.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_TITLE));
+        this.nameLabel.setOpaque(true);
+        this.nameLabel.setBackground(BG);
+        this.nameLabel.setForeground(Color.BLACK);
+        this.nameLabel.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
 
         this.stageButton = ButtonFactory.createButton("Next Stage");
         this.stageButton.setVisible(false);
@@ -83,33 +91,20 @@ public final class EncyclopediaScreen {
         this.plantStageImageLabel = new JLabel();
         this.plantStageImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        this.rarityLabel = new JLabel("");
-        this.rarityLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        this.rarityLabel.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_BADGE));
-        this.rarityLabel.setOpaque(true);
-        this.rarityLabel.setForeground(Color.WHITE);
-        this.rarityLabel.setBorder(BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING));
-        this.rarityLabel.setVisible(false);
-
-        final JPanel rarityBadge = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        rarityBadge.setOpaque(false);
-        rarityBadge.add(this.rarityLabel);
-
         centerWrapper.add(this.plantStageImageLabel, BorderLayout.CENTER);
-        centerWrapper.add(rarityBadge, BorderLayout.SOUTH);
 
         this.plantDescriptionArea = new JTextArea("Click on a plant icon.");
-        this.plantDescriptionArea.setFont(new Font(FONT_NAME, Font.PLAIN, FONT_SIZE_DESCRIPTION));
+        this.plantDescriptionArea.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_DESCRIPTION));
         this.plantDescriptionArea.setEditable(false);
         this.plantDescriptionArea.setLineWrap(true);
         this.plantDescriptionArea.setOpaque(false);
 
-        detailsPanel.add(topPanel, BorderLayout.NORTH);
-        detailsPanel.add(centerWrapper, BorderLayout.CENTER);
-        detailsPanel.add(this.plantDescriptionArea, BorderLayout.SOUTH);
+        this.detailsPanel.add(topPanel, BorderLayout.NORTH);
+        this.detailsPanel.add(centerWrapper, BorderLayout.CENTER);
+        this.detailsPanel.add(this.plantDescriptionArea, BorderLayout.SOUTH);
 
         this.encyclpediaScreen.add(this.buttonPanel);
-        this.encyclpediaScreen.add(detailsPanel);
+        this.encyclpediaScreen.add(this.detailsPanel);
     }
 
     /**
@@ -118,26 +113,28 @@ public final class EncyclopediaScreen {
      * @param rarity the name of the rarity.
      */
     public void setRarity(final String rarity) {
-        this.rarityLabel.setVisible(true);
+        this.nameLabel.setForeground(Color.WHITE);
         switch (rarity) {
             case "COMMON":
-                this.rarityLabel.setText("COMMON");
-                this.rarityLabel.setBackground(BADGE_COMMON);
+                this.nameLabel.setBackground(DARK_COMMON);
+                this.detailsPanel.setBackground(BG_COMMON);
                 break;
             case "RARE":
-                this.rarityLabel.setText("RARE");
-                this.rarityLabel.setBackground(BADGE_RARE);
+                this.nameLabel.setBackground(DARK_RARE);
+                this.detailsPanel.setBackground(BG_RARE);
                 break;
             case "EPIC":
-                this.rarityLabel.setText("EPIC");
-                this.rarityLabel.setBackground(BADGE_EPIC);
+                this.nameLabel.setBackground(DARK_EPIC);
+                this.detailsPanel.setBackground(BG_EPIC);
                 break;
             case "LEGENDARY":
-                this.rarityLabel.setText("LEGENDARY");
-                this.rarityLabel.setBackground(BADGE_LEGENDARY);
+                this.nameLabel.setBackground(DARK_LEGENDARY);
+                this.detailsPanel.setBackground(BG_LEGENDARY);
                 break;
             default:
-                this.rarityLabel.setVisible(false);
+                this.nameLabel.setBackground(BG);
+                this.nameLabel.setForeground(Color.BLACK);
+                this.detailsPanel.setBackground(BG);
                 break;
         }
     }

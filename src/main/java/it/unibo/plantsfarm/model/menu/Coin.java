@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import it.unibo.plantsfarm.controller.memory.DataMemory;
+import it.unibo.plantsfarm.controller.memory.api.DataMemory;
+import it.unibo.plantsfarm.controller.memory.impl.DataMemoryImpl;
 
 /**
  * Represents the coins of the player.
@@ -25,7 +26,7 @@ public final class Coin {
      * @param initialValue The starting amount of coins if no save exists.
      */
     public Coin(final int initialValue) {
-        this.memory = new DataMemory();
+        this.memory = new DataMemoryImpl();
 
         try {
             final String savedData = memory.load(FILE_NAME);

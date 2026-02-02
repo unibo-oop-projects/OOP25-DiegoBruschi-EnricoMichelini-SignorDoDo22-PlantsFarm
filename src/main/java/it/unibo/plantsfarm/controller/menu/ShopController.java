@@ -2,6 +2,7 @@ package it.unibo.plantsfarm.controller.menu;
 
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.plant.PlantType;
+import it.unibo.plantsfarm.view.menu.MysteryBox;
 import it.unibo.plantsfarm.view.menu.ShopScreen;
 
 import javax.swing.JButton;
@@ -46,7 +47,7 @@ public final class ShopController {
             this.view.setBuyButtonsEnabled(true);
         }
 
-        final Map<PlantType, Integer> requests = gameState.getShop().generateRequests(gameState);
+        final Map<PlantType, Integer> requests = gameState.getRequests();
 
         for (final Map.Entry<PlantType, Integer> entry : requests.entrySet()) {
             final PlantType type = entry.getKey();
@@ -61,7 +62,7 @@ public final class ShopController {
 
     private void performSellAction(final GameState gameState) {
 
-        final Map<PlantType, Integer> requests = gameState.getShop().generateRequests(gameState);
+        final Map<PlantType, Integer> requests = gameState.getRequests();
 
         final int earnings = gameState.getShop().sellProducts(gameState, requests);
 
@@ -94,9 +95,10 @@ public final class ShopController {
         final PlantType unlockedPlant = gameState.getShop().buyMysteryBox(gameState, cost);
 
         if (unlockedPlant != null) {
-            gameState.saveEncyclopedia(); 
+            gameState.saveEncyclopedia();
             this.view.playMisteryBoxSound();
-            showMessage("New Discovery!", "You unlocked: " + unlockedPlant.getName() + "!");
+            //showMessage("New Discovery!", "You unlocked: " + unlockedPlant.getName() + "!");
+            new MysteryBox(unlockedPlant).start();
 
             if (this.onTransactionListener != null) {
                 this.onTransactionListener.run();

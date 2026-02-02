@@ -3,11 +3,22 @@ package it.unibo.plantsfarm.controller.menu;
 import it.unibo.plantsfarm.view.menu.PauseMenuScreen;
 
 import javax.swing.JOptionPane;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * Controller responsible for managing the Pause Menu interactions.
  */
 public final class PauseMenuController {
+
+    private static final Logger LOGGER = Logger.getLogger(PauseMenuController.class.getName());
+    private static final String RESOURCE_PATH = "extraFiles/";
 
     private final PauseMenuScreen view;
     private final Runnable onCloseMainScreen;
@@ -30,13 +41,7 @@ public final class PauseMenuController {
         this.view.setResumeButton(e -> this.view.close());
 
         this.view.setCommandsButton(e -> {
-            final String commands = """
-                A -> sinistra
-                W -> alto
-                S -> basso
-                D -> destra
-                E -> annaffiatoio
-                """;
+            final String commands = readResourceText("commands.txt");
             JOptionPane.showMessageDialog(null, commands, "Commands", JOptionPane.INFORMATION_MESSAGE);
         });
 
@@ -64,11 +69,13 @@ public final class PauseMenuController {
         });
 
         this.view.setExtraButton(e -> {
-            final String message = "Plants Farm created by\nEnrico Michelini - Diego Bruschi - Francesco Fusillo";
+            final String message = readResourceText("extra.txt");
             JOptionPane.showMessageDialog(null, message, "Extra Info", JOptionPane.INFORMATION_MESSAGE);
         });
 
         this.view.setCreditsButton(e -> {
+            final String credits = readResourceText("credits.txt");
+            JOptionPane.showMessageDialog(null, credits, "Credits", JOptionPane.INFORMATION_MESSAGE);
         });
 
         this.view.setExitButton(e -> {
@@ -77,6 +84,29 @@ public final class PauseMenuController {
                 onCloseMainScreen.run();
             }
         });
+    }
+
+    /**
+     * Helper method to read text files from resources.
+     * 
+     * @param fileName The name of the file inside resources/extraFiles/
+     * 
+     * @return The content of the file or an error message.
+     */
+    private String readResourceText(final String fileName) {
+        final String fullPath = RESOURCE_PATH + fileName;
+        final InputStream inputStream = ClassLoader.getSystemResourceAsStream(fullPath);
+
+        if (inputStream == null) {
+            return "File not found: " + fullPath;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            return reader.lines().collect(Collectors.joining("\n"));
+        } catch (final IOException e) {
+            LOGGER.log(Level.WARNING, "Error reading file: " + fileName, e);
+            return "Error reading content of file: " + fileName;
+        }
     }
 
     /**

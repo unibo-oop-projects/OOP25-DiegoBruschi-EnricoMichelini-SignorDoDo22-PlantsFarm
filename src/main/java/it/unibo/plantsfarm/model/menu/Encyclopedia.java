@@ -1,13 +1,19 @@
 package it.unibo.plantsfarm.model.menu;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
-import it.unibo.plantsfarm.controller.memory.DataMemory;
+import it.unibo.plantsfarm.controller.memory.api.DataMemory;
+import it.unibo.plantsfarm.controller.memory.impl.DataMemoryImpl;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
@@ -29,7 +35,7 @@ public final class Encyclopedia {
      */
     public Encyclopedia() {
         this.plants = new ArrayList<>();
-        this.memory = new DataMemory();
+        this.memory = new DataMemoryImpl();
     }
 
     /**
@@ -127,6 +133,30 @@ public final class Encyclopedia {
             }
         }
         return total;
+    }
+
+    /**
+     * Reads the description of a plant from a resource file.
+     * 
+     * @param type The type of the plant.
+     * 
+     * @return The description string or a default message if not found.
+     */
+    public String getPlantDescription(final PlantType type) {
+
+        final String path = "encyclopediaFiles/" + type.name() + ".txt";
+        final InputStream inputStream = ClassLoader.getSystemResourceAsStream(path);
+
+        if (inputStream == null) {
+            return "Description not available for " + type.getName();
+        }
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            return reader.lines().collect(Collectors.joining("\n"));
+        } catch (final IOException e) {
+            LOGGER.log(Level.WARNING, "Error reading description for " + type.getName(), e);
+            return "Error loading description.";
+        }
     }
 
     @Override

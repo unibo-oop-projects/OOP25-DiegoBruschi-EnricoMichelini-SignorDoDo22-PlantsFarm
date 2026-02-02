@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.controller.loader;
 
-import it.unibo.plantsfarm.controller.memory.DataMemory;
+import it.unibo.plantsfarm.controller.memory.api.DataMemory;
+import it.unibo.plantsfarm.controller.memory.impl.DataMemoryImpl;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
@@ -25,7 +26,7 @@ public class PlantLoader {
      * @return A list of initialized plants.
      */
     public List<Plant> loadPlants() {
-        final DataMemory memory = new DataMemory();
+        final DataMemory memory = new DataMemoryImpl();
         String loadedData = null;
 
         try {

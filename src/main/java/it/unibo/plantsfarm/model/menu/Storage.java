@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.model.menu;
 
-import it.unibo.plantsfarm.controller.memory.DataMemory;
+import it.unibo.plantsfarm.controller.memory.api.DataMemory;
+import it.unibo.plantsfarm.controller.memory.impl.DataMemoryImpl;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class Storage {
      * Initializes slots only for edible plants.
      */
     public Storage() {
-        this.memory = new DataMemory();
+        this.memory = new DataMemoryImpl();
         this.items = new EnumMap<>(PlantType.class);
 
         for (final PlantType type : PlantType.values()) {

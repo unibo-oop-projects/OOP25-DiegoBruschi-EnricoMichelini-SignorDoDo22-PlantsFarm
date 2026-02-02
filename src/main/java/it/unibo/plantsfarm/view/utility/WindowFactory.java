@@ -11,7 +11,7 @@ import javax.swing.WindowConstants;
  */
 public final class WindowFactory {
 
-    private static final double SCREEN_RATIO = 1.5;
+    private static final double SCREEN_RATIO = 1.45;
 
     private WindowFactory() { }
 
