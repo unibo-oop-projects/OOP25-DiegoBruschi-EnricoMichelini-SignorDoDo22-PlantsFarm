@@ -4,14 +4,14 @@ import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.model.animation.api.Animation;
 import it.unibo.plantsfarm.model.animation.api.AnimationFrames;
 
-public final class AnimationCorsa implements Animation {
+public final class AnimationFertilizer implements Animation {
     private final BufferedImage[] frames;
     private int frameIndex;
     private long lastFrameTimeNs;
     private final long frameDurationNs;
     private boolean playing;
 
-    public AnimationCorsa(final long frameDurationNs, final BufferedImage[] frames) {
+    public AnimationFertilizer(final long frameDurationNs, final BufferedImage[] frames) {
         this.frameDurationNs = frameDurationNs;
         this.frames = frames.clone();
     }

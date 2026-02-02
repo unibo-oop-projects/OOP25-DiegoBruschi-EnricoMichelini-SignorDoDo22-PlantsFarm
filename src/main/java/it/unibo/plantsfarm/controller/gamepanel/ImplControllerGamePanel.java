@@ -41,19 +41,18 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
                 if (input != null) {
                 player.setDirection(input);
-                //System.out.println(input);
                 controllerAnimation.takeInput(input);
             }
             } catch (final InterruptedException e) {
                 break;
             }
-            controllerAnimation.update(now);
+            controllerAnimation.update(System.nanoTime());
             player.updatePlayer(delta);
             player.updateSoil(now);
             camera.followPlayer();
         }
     }
- 
+
     @Override
     public void takeInput(final UserInput input) {
         if (input != null) {

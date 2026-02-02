@@ -19,6 +19,7 @@ public final class AnimationAzione implements Animation {
     public void start(final long nowNs) {
         frameIndex = 0;
         lastFrameTimeNs = nowNs;
+        this.playing = true;
     }
 
     @Override

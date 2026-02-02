@@ -5,11 +5,13 @@ import java.util.List;
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.TileMap;
+import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.Soil;
 import it.unibo.plantsfarm.model.SolidBlock;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
+
 
 /**
  * Abstract base class representing a generic player entity.
@@ -28,7 +30,7 @@ public abstract class AbstractPlayer {
     private final Rectangle solidArea = new Rectangle(8, 32, 32, 16);
 
     private TileMap map = new TileMap();
-    
+
     private Plant piantaDisponibile = new Plant(PlantType.TOMATO);
 
     /** Current X position of the player in world coordinates. */
@@ -40,11 +42,14 @@ public abstract class AbstractPlayer {
     /** Current movement direction of the player. */
     private UserInput direction = UserInput.FERMO;
 
-    public AbstractPlayer() {
+    private final List<ItemsFarm> inventario;
+
+    public AbstractPlayer(final List<ItemsFarm> inventario) {
         this.map.loadMap("/maps/map.txt");
         this.soils = this.map.getSoilList();
+        this.inventario = inventario;
     }
-    
+
 
     /**
      * Updates the position of the player based on the elapsed time
@@ -56,7 +61,7 @@ public abstract class AbstractPlayer {
         final double delta = speed * time / 1000.0;
         double nextPosX = posX;
         double nextPosY = posY;
-
+        System.out.println("Current Player State: " + direction);
         switch (direction) {
             case LEFT -> nextPosX -= delta;
             case RIGHT -> nextPosX += delta;
@@ -67,24 +72,23 @@ public abstract class AbstractPlayer {
             case FERMO -> { }
         }
 
-    final int futureSolidX = (int) (nextPosX + solidArea.x);
-    final int futureSolidY = (int) (nextPosY + solidArea.y);
-    final Rectangle futureHitbox = new Rectangle(futureSolidX, futureSolidY, solidArea.width, solidArea.height);
+        final int futureSolidX = (int) (nextPosX + solidArea.x);
+        final int futureSolidY = (int) (nextPosY + solidArea.y);
+        final Rectangle futureHitbox = new Rectangle(futureSolidX, futureSolidY, solidArea.width, solidArea.height);
 
-    boolean collisionDetected = false;
+        boolean collisionDetected = false;
 
-    for (final SolidBlock tile : map.solidBlocks) {
-        if (tile.getCoordinate().intersects(futureHitbox)) {
-            collisionDetected = true;
-            break;
+        for (final SolidBlock tile : map.solidBlocks) {
+            if (tile.getCoordinate().intersects(futureHitbox)) {
+                collisionDetected = true;
+                break;
+            }
         }
-    }
-    
 
-    if (!collisionDetected) {
-        posX = nextPosX;
-        posY = nextPosY;
-    }
+        if (!collisionDetected) {
+            posX = nextPosX;
+            posY = nextPosY;
+        }
 }
 
     /**
@@ -122,6 +126,7 @@ public abstract class AbstractPlayer {
     public final UserInput getDirection() {
         return this.direction;
     }
+
 
     public final void pianta() {
         final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
