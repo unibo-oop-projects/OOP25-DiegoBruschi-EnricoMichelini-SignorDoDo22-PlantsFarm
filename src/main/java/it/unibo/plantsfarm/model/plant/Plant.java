@@ -33,7 +33,7 @@ public class Plant {
     /**
      * Plants the seed if it hasn't been planted.
      */
-    public final void plant() {
+    public final void plant(PlantType plantType) {
         if (!isPlanted) {
             isPlanted = true;
             needsWater = true;

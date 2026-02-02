@@ -43,6 +43,7 @@ public final class SeedController {
         this.view.addPlantButton(plant.getName(), plant.isDiscovered(), action);
     }
 
+    //Ritorna plantType
     private ActionListener createListener(final PlantType plant) {
         return e -> {
             if (plant.isDiscovered()) {

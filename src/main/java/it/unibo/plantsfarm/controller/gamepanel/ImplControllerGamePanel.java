@@ -24,6 +24,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     public ImplControllerGamePanel() {
         setPlayer();
         this.player = getPlayer();
+        map.loadMap("/maps/map.txt");
     }
 
    @Override
@@ -35,7 +36,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             lastTime = now;
             final UserInput input = queue.poll();
 
-            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY(), map.getSoilList());
+            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY(), player.getSoils());
             try {
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
                 if (input != null) {

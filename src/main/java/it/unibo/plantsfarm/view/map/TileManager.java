@@ -25,6 +25,7 @@ public final class TileManager {
         loadMap("/maps/map.txt");
     }
 
+    @SuppressWarnings("checkstyle:magicnumber")
     public void getTileImage() {
 
         tile[0] = new Tile();
@@ -102,6 +103,23 @@ public final class TileManager {
 
                 tile[indexPartenza].image = bigSheet.getSubimage(col * tileSize, row * tileSize, tileSize, tileSize);
                 indexPartenza++;
+            }
+        }
+
+        final int numColonnePozzo = 3;
+        final int numRighePozzo = 3;
+        final int tileSizePozzo = 16 * ImplViewGamePanel.SCALE;
+        int indexPartenzaPozzo = 65;
+
+        final BufferedImage bigSheetPozzo = new SpriteLoader("/icons/tiles/well.png").getImage();
+
+        for (int row = 0; row < numRighePozzo; row++) {
+            for (int col = 0; col < numColonnePozzo; col++) {
+
+                tile[indexPartenzaPozzo] = new Tile();
+
+                tile[indexPartenzaPozzo].image = bigSheetPozzo.getSubimage(col * tileSizePozzo, row * tileSizePozzo, tileSizePozzo, tileSizePozzo);
+                indexPartenzaPozzo++;
             }
         }
     }

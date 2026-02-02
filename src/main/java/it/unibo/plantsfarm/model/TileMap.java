@@ -37,7 +37,7 @@ public final class TileMap {
                 if (num == 2 || num >= 11 && num <= 19) {
                     final Rectangle rect = new Rectangle(worldX, worldY, TILE_SIZE, TILE_SIZE);
                     this.soilList.add(new Soil(rect));
-                    System.out.println("Added soil at: " + worldX + ", " + worldY);
+                    System.out.println("Added soil at: " + worldX + ", " + worldY + " - Total soils: " + soilList.size());
                 }
                 if (num == 3
                     || num == 4
@@ -47,6 +47,9 @@ public final class TileMap {
                     || num >= 40 && num <= 45
                     || num >= 48 && num <= 54
                     || num >= 58 && num <= 60
+                    || num == 66 
+                    || num >= 68 && num <= 70
+                    || num == 72
                 ) {
                     final Rectangle rect = new Rectangle(worldX, worldY, TILE_SIZE, TILE_SIZE);
                     this.solidBlocks.add(new SolidBlock(rect));

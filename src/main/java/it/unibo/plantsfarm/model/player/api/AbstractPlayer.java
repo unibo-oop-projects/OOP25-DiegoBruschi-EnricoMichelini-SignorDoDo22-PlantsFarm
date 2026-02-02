@@ -1,5 +1,7 @@
 package it.unibo.plantsfarm.model.player.api;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.TileMap;
@@ -21,10 +23,12 @@ public abstract class AbstractPlayer {
     /** Movement speed of the player (units per second). */
     protected double speed;
 
+    private List<Soil> soils = new LinkedList<>(List.of());
+
     private final Rectangle solidArea = new Rectangle(8, 32, 32, 16);
 
     private TileMap map = new TileMap();
-
+    
     private Plant piantaDisponibile = new Plant(PlantType.TOMATO);
 
     /** Current X position of the player in world coordinates. */
@@ -37,8 +41,10 @@ public abstract class AbstractPlayer {
     private UserInput direction = UserInput.FERMO;
 
     public AbstractPlayer() {
-        map.loadMap("/maps/map.txt");
+        this.map.loadMap("/maps/map.txt");
+        this.soils = this.map.getSoilList();
     }
+    
 
     /**
      * Updates the position of the player based on the elapsed time
@@ -118,7 +124,7 @@ public abstract class AbstractPlayer {
     }
 
     public final void pianta() {
-        final Rectangle hitbox = new Rectangle((int) posX, (int) posY, 48, 48);
+        final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
         for (final Soil zolla : map.soilList) {
             if (zolla.getCoordinate().contains(hitbox)) {
                 if (!zolla.getIsPlanted()) {
@@ -139,4 +145,9 @@ public abstract class AbstractPlayer {
             }
         }
     }
+
+   public final List<Soil> getSoils() {
+        return this.soils;
+    }
+
 }

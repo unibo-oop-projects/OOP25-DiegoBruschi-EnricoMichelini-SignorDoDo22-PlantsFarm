@@ -15,6 +15,8 @@ import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Map;
+
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import it.unibo.plantsfarm.controller.action.SeedController;
@@ -22,10 +24,9 @@ import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.view.map.TileManager;
-import it.unibo.plantsfarm.view.utility.SpriteLoader;
+import it.unibo.plantsfarm.view.utility.Texture;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePanel;
-import it.unibo.plantsfarm.model.TileMap;
 import it.unibo.plantsfarm.model.Soil;
 
 public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
@@ -33,7 +34,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   public static int orginalTileSize = Toolkit.getDefaultToolkit().getScreenSize().height / MAP_RENDER_SCALE;
   public static final int SCALE = 3;
   public static int tileSize = orginalTileSize * SCALE;
-  public static final int POD_SIZE = 48;
+  public static final int POD_SIZE = ImplViewGamePanel.tileSize;
   public static final int PLAYER_SIZE = 64;
   public static final int MAXSCREENCOL = 66; 
   public static final int MAXSCREENROW = 23; 
@@ -56,13 +57,11 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   private int cameraY; 
   private double playerPosX;
   private double playerPosY;
-  private Image image = new SpriteLoader("/plantsStage/TomatoStage/Tomato5.png").getImage();
   private ImplControllerGamePanel controller;
   private SelectorFrames selector;
-  private TileMap map = new TileMap();
 
   private boolean plantWindow = true; //da modificare in base alle piante da visualizzare
-  private List<Soil> soilList = map.getSoilList();
+  private List<Soil> soilList = List.of();
 
   public ImplViewGamePanel() {
     super();
@@ -131,10 +130,14 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
       null
     );
 
+
     for (final Soil pod : soilList) {
+     
       if (pod.getIsPlanted()) {
+        final ImageIcon icon = Texture.getPlantStageIcon("Tomato", 3);
+        final Image image = icon.getImage();
+        pod.setPlanted(null); //da sostituire con pod.getPlant().getCurrentStageImage()
         g2D.drawImage(image, pod.getCoordinate().x - cameraX, pod.getCoordinate().y - cameraY, POD_SIZE, POD_SIZE, null);
-        //System.out.println(pod.getCoordinate().x + ", " + pod.getCoordinate().y);
       }
     }
   }
