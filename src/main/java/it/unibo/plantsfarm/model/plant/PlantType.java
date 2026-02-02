@@ -30,15 +30,15 @@ public enum PlantType {
     BUDDHAHAND("Buddha's Hand", 7, 4, Rarity.LEGENDARY, new HarvestInfo(100, 3, 6)),
 
     //ORNAMENTAL PLANTS
-    SNAPDRAGON("SnapDragon", 3, 1, Rarity.COMMON, null),
-    BEGONIA("Begonia", 5, 2, Rarity.COMMON, null),
-    MONSTERA("Monstera", 4, 2, Rarity.RARE, null),
-    BLEEDINGHEARTH("BleedingHearth", 4, 2, Rarity.RARE, null),
-    HIBISCUS("Hibiscus", 4, 2, Rarity.RARE, null),
-    STRELITZIA("Strelitzia", 5, 2, Rarity.EPIC, null),
-    ORCHID("Orchid", 3, 1, Rarity.EPIC, null),
-    NEPENTHES("Nepenthes", 4, 2, Rarity.LEGENDARY, null),
-    RAFFLESIA("Rafflesia", 4, 2, Rarity.LEGENDARY, null);
+    SNAPDRAGON("SnapDragon", 3, 0, Rarity.COMMON, null),
+    BEGONIA("Begonia", 5, 0, Rarity.COMMON, null),
+    MONSTERA("Monstera", 4, 0, Rarity.RARE, null),
+    BLEEDINGHEARTH("BleedingHearth", 4, 0, Rarity.RARE, null),
+    HIBISCUS("Hibiscus", 4, 0, Rarity.RARE, null),
+    STRELITZIA("Strelitzia", 5, 0, Rarity.EPIC, null),
+    ORCHID("Orchid", 3, 0, Rarity.EPIC, null),
+    NEPENTHES("Nepenthes", 4, 0, Rarity.LEGENDARY, null),
+    RAFFLESIA("Rafflesia", 3, 0, Rarity.LEGENDARY, null);
 
     private final String name;
     private final int maxGrowthStage;

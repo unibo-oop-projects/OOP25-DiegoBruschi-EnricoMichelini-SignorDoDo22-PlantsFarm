@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.controller.menu;
 
 import it.unibo.plantsfarm.model.GameState;
+import it.unibo.plantsfarm.model.menu.Encyclopedia;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.view.menu.EncyclopediaScreen;
 
@@ -16,6 +17,7 @@ public final class EncyclopediaController {
 
     private static final String NEXT_STAGE_COMMAND = "NEXT_STAGE";
     private final EncyclopediaScreen encyclopediaScreen;
+    private final Encyclopedia encyclopedia;
     private Plant selectedPlant;
     private int currentStageIndex;
 
@@ -24,6 +26,7 @@ public final class EncyclopediaController {
      */
     public EncyclopediaController() {
         this.encyclopediaScreen = new EncyclopediaScreen();
+        this.encyclopedia = new Encyclopedia();
     }
 
     /**
@@ -56,8 +59,10 @@ public final class EncyclopediaController {
         for (final Plant plant : gameState.getAllPlants()) {
             if (plant.getName().equals(name)) {
                 this.selectedPlant = plant;
-                this.currentStageIndex = 1;
-                this.encyclopediaScreen.updateDetails(plant.getName(), plant.toString());
+                this.currentStageIndex = plant.getType().getMaxGrowthStage();
+                final String description = this.encyclopedia.getPlantDescription(plant.getType());
+
+                this.encyclopediaScreen.updateDetails(plant.getName(), description);
                 this.encyclopediaScreen.setRarity(plant.getType().getRarity().name());
                 this.encyclopediaScreen.updateStageImage(plant.getName(), this.currentStageIndex);
                 break;
