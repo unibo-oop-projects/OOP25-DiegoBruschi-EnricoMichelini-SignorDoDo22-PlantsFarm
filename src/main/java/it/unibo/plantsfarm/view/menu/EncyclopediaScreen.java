@@ -28,7 +28,7 @@ public final class EncyclopediaScreen {
 
     private static final String TITLE = "Encyclopedia";
     private static final String FONT_NAME = "Arial";
-    private static final int GRID_COLS = 4;
+    private static final int GRID_COLS = 5;
     private static final int GAP = 10;
     private static final int PADDING = 20;
 

@@ -7,35 +7,42 @@ package it.unibo.plantsfarm.model.plant;
 public enum PlantType {
 
     //EDIBLE PLANTS
-    CARROT("Carrot", 3, Rarity.COMMON, new HarvestInfo(10, 2, 3)),
-    ONION("Onion", 3, Rarity.COMMON, new HarvestInfo(12, 2, 3)),
-    RADISH("Radish", 3, Rarity.COMMON, new HarvestInfo(8, 4, 5)),
-    ZUCCHINI("Zucchini", 4, Rarity.COMMON, new HarvestInfo(15, 1, 3)),
-    TOMATO("Tomato", 5, Rarity.COMMON, new HarvestInfo(7, 3, 7)),
-    POTATO("Potato", 3, Rarity.COMMON, new HarvestInfo(15, 2, 3)),
-    PEPPER("Pepper", 5, Rarity.COMMON, new HarvestInfo(15, 2, 4)),
-    CORN("Corn", 5, Rarity.COMMON, new HarvestInfo(20, 1, 3)),
-    EGGPLANT("Eggplant", 4, Rarity.RARE, new HarvestInfo(30, 1, 3)),
-    APPLE("Apple", 5, Rarity.RARE, new HarvestInfo(15, 5, 10)),
-    FIG("Fig", 6, Rarity.RARE, new HarvestInfo(15, 3, 12)),
-    PUMPKIN("Pumpkin", 6, Rarity.RARE, new HarvestInfo(35, 1, 3)),
-    CHERRY("Cherry", 5, Rarity.RARE, new HarvestInfo(5, 10, 25)),
-    WATERMELON("Watermelon", 5, Rarity.RARE, new HarvestInfo(15, 6, 12)),
-    MANGO("Mango", 5, Rarity.EPIC, new HarvestInfo(50, 5, 8)),
-    AVOCADO("Avocado", 5, Rarity.EPIC, new HarvestInfo(75, 3, 7)),
-    DRAGONFRUIT("DragonFruit", 4, Rarity.EPIC, new HarvestInfo(100, 2, 4)),
-    BUDDHAHAND("Buddha's Hand", 7, Rarity.LEGENDARY, new HarvestInfo(100, 3, 6)),
+    CARROT("Carrot", 3, 1, Rarity.COMMON, new HarvestInfo(10, 2, 3)),
+    ONION("Onion", 3, 1, Rarity.COMMON, new HarvestInfo(12, 2, 3)),
+    RADISH("Radish", 3, 1, Rarity.COMMON, new HarvestInfo(8, 4, 5)),
+    ZUCCHINI("Zucchini", 4, 2, Rarity.COMMON, new HarvestInfo(15, 1, 3)),
+    TOMATO("Tomato", 5, 2, Rarity.COMMON, new HarvestInfo(7, 3, 7)),
+    POTATO("Potato", 3, 1, Rarity.COMMON, new HarvestInfo(15, 2, 3)),
+    PEPPER("Pepper", 5, 2, Rarity.COMMON, new HarvestInfo(15, 2, 4)),
+    CORN("Corn", 5, 3, Rarity.COMMON, new HarvestInfo(20, 1, 3)),
+    EGGPLANT("Eggplant", 4, 2, Rarity.RARE, new HarvestInfo(30, 1, 3)),
+    APPLE("Apple", 5, 3, Rarity.RARE, new HarvestInfo(15, 5, 10)),
+    FIG("Fig", 6, 3, Rarity.RARE, new HarvestInfo(15, 3, 12)),
+    PUMPKIN("Pumpkin", 6, 3, Rarity.RARE, new HarvestInfo(35, 1, 3)),
+    CHERRY("Cherry", 5, 3, Rarity.RARE, new HarvestInfo(5, 10, 25)),
+    WATERMELON("Watermelon", 5, 2, Rarity.RARE, new HarvestInfo(15, 6, 12)),
+    MANGO("Mango", 5, 3, Rarity.EPIC, new HarvestInfo(50, 5, 8)),
+    AVOCADO("Avocado", 5, 3, Rarity.EPIC, new HarvestInfo(75, 3, 7)),
+    DRAGONFRUIT("DragonFruit", 4, 2, Rarity.EPIC, new HarvestInfo(100, 2, 4)),
+    ANANAS("Ananas", 5, 2, Rarity.EPIC, new HarvestInfo(100, 1, 1)),
+    PAPAYA("Papaya", 6, 3, Rarity.EPIC, new HarvestInfo(55, 2, 6)),
+    POMEGRANATE("Pomegranate", 7, 4, Rarity.LEGENDARY, new HarvestInfo(90, 3, 7)),
+    BUDDHAHAND("Buddha's Hand", 7, 4, Rarity.LEGENDARY, new HarvestInfo(100, 3, 6)),
 
     //ORNAMENTAL PLANTS
-    BEGONIA("Begonia", 5, Rarity.COMMON, null),
-    MONSTERA("Monstera", 4, Rarity.RARE, null),
-    HIBISCUS("Hibiscus", 4, Rarity.RARE, null),
-    STRELITZIA("Strelitzia", 5, Rarity.RARE, null),
-    ORCHID("Orchid", 3, Rarity.EPIC, null),
-    NEPENTHES("Nepenthes", 4, Rarity.LEGENDARY, null);
+    SNAPDRAGON("SnapDragon", 3, 1, Rarity.COMMON, null),
+    BEGONIA("Begonia", 5, 2, Rarity.COMMON, null),
+    MONSTERA("Monstera", 4, 2, Rarity.RARE, null),
+    BLEEDINGHEARTH("BleedingHearth", 4, 2, Rarity.RARE, null),
+    HIBISCUS("Hibiscus", 4, 2, Rarity.RARE, null),
+    STRELITZIA("Strelitzia", 5, 2, Rarity.EPIC, null),
+    ORCHID("Orchid", 3, 1, Rarity.EPIC, null),
+    NEPENTHES("Nepenthes", 4, 2, Rarity.LEGENDARY, null),
+    RAFFLESIA("Rafflesia", 4, 2, Rarity.LEGENDARY, null);
 
     private final String name;
     private final int maxGrowthStage;
+    private final int resetStage;
     private final Rarity rarity;
     private final HarvestInfo harvestInfo;
     private boolean isDiscovered;
@@ -45,12 +52,16 @@ public enum PlantType {
      *
      * @param name            The display name.
      * @param maxGrowthStage  The maximum growth stage.
+     * @param resetStage      The stage to reset to after harvest.
      * @param rarity          The rarity level.
      * @param harvestInfo     Economic info, Null for ornamentals.
      */
-    PlantType(final String name, final int maxGrowthStage, final Rarity rarity, final HarvestInfo harvestInfo) {
+    PlantType(final String name, final int maxGrowthStage, final int resetStage, final Rarity rarity,
+         final HarvestInfo harvestInfo) {
+
         this.name = name;
         this.maxGrowthStage = maxGrowthStage;
+        this.resetStage = resetStage;
         this.rarity = rarity;
         this.harvestInfo = harvestInfo;
         this.isDiscovered = false;
@@ -72,6 +83,15 @@ public enum PlantType {
      */
     public int getMaxGrowthStage() {
         return maxGrowthStage;
+    }
+
+    /**
+     * Gets the stage the plant reverts to after harvest.
+     *
+     * @return The reset stage index.
+     */
+    public int getResetStage() {
+        return resetStage;
     }
 
     /**
