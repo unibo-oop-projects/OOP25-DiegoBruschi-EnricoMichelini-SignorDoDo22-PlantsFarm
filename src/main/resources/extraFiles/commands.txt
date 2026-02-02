@@ -1,0 +1,6 @@
+A -> LEFT
+W -> UP
+S -> DOWN
+D -> RIGHT
+E -> WATER A TILE
+P -> PLANT IN A TILE
