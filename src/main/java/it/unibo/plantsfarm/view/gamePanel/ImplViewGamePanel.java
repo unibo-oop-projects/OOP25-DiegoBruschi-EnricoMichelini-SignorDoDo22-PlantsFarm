@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.util.LinkedList;
 import java.util.List;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
@@ -26,6 +25,7 @@ import it.unibo.plantsfarm.view.map.TileManager;
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePanel;
+import it.unibo.plantsfarm.model.TileMap;
 import it.unibo.plantsfarm.model.Soil;
 
 public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
@@ -59,9 +59,10 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   private Image image = new SpriteLoader("/plantsStage/TomatoStage/Tomato5.png").getImage();
   private ImplControllerGamePanel controller;
   private SelectorFrames selector;
+  private TileMap map = new TileMap();
 
   private boolean plantWindow = true; //da modificare in base alle piante da visualizzare
-  private List<Soil> listPod = new LinkedList<>(List.of());
+  private List<Soil> soilList = map.getSoilList();
 
   public ImplViewGamePanel() {
     super();
@@ -112,8 +113,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
       this.playerPosY = posY;
       this.cameraX = camX;
       this.cameraY = camY;
-      this.listPod = pods;
-      //System.out.println("LISTA POD: " + listPod.size());
+      this.soilList = pods;
       repaint();
     });
   }
@@ -131,10 +131,10 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
       null
     );
 
-    for (final Soil pod : listPod) {
+    for (final Soil pod : soilList) {
       if (pod.getIsPlanted()) {
         g2D.drawImage(image, pod.getCoordinate().x - cameraX, pod.getCoordinate().y - cameraY, POD_SIZE, POD_SIZE, null);
-        // System.out.println(pod.getCoordinate().x + ", " + pod.getCoordinate().y);
+        //System.out.println(pod.getCoordinate().x + ", " + pod.getCoordinate().y);
       }
     }
   }

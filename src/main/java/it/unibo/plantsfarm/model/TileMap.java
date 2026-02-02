@@ -7,18 +7,18 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-public final class Mappa {
+public final class TileMap {
 
     private static final int TILE_SIZE = 48;
     private static final int MAX_WORLD_COL = 66;
     private static final int MAX_WORLD_ROW = 23;
     private int[][] logicMap1 = new int[MAX_WORLD_ROW][MAX_WORLD_COL];
-    public List<Soil> pod = new LinkedList<>(List.of());
+    public List<Soil> soilList = new LinkedList<>(List.of());
     public List<SolidBlock> solidBlocks = new LinkedList<>(List.of());
 
     public void loadMap(final String filePath) {
 
-    this.pod.clear();
+    this.soilList.clear();
     this.solidBlocks.clear();
 
     try {
@@ -36,7 +36,8 @@ public final class Mappa {
                 final int worldY = row * TILE_SIZE;
                 if (num == 2 || num >= 11 && num <= 19) {
                     final Rectangle rect = new Rectangle(worldX, worldY, TILE_SIZE, TILE_SIZE);
-                    this.pod.add(new Soil(rect));
+                    this.soilList.add(new Soil(rect));
+                    System.out.println("Added soil at: " + worldX + ", " + worldY);
                 }
                 if (num == 3
                     || num == 4
@@ -58,7 +59,7 @@ public final class Mappa {
         }
     }
 
-    public List<Soil> getPod() {
-        return this.pod;
+    public List<Soil> getSoilList() {
+        return this.soilList;
     }
 }

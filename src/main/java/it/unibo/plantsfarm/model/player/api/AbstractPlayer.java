@@ -2,7 +2,7 @@ package it.unibo.plantsfarm.model.player.api;
 
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
-import it.unibo.plantsfarm.model.Mappa;
+import it.unibo.plantsfarm.model.TileMap;
 import it.unibo.plantsfarm.model.Soil;
 import it.unibo.plantsfarm.model.SolidBlock;
 import it.unibo.plantsfarm.model.plant.Plant;
@@ -23,7 +23,7 @@ public abstract class AbstractPlayer {
 
     private final Rectangle solidArea = new Rectangle(8, 32, 32, 16);
 
-    private Mappa map = new Mappa();
+    private TileMap map = new TileMap();
 
     private Plant piantaDisponibile = new Plant(PlantType.TOMATO);
 
@@ -57,7 +57,7 @@ public abstract class AbstractPlayer {
             case UP -> nextPosY -= delta;
             case DOWN -> nextPosY += delta;
             case ACTIONHOE -> pianta();
-            case ACTIONWATER -> pianta();
+            case ACTIONWATER -> System.out.println("Watering action executed");
             case FERMO -> { }
         }
 
@@ -73,6 +73,7 @@ public abstract class AbstractPlayer {
             break;
         }
     }
+    
 
     if (!collisionDetected) {
         posX = nextPosX;
@@ -118,7 +119,7 @@ public abstract class AbstractPlayer {
 
     public final void pianta() {
         final Rectangle hitbox = new Rectangle((int) posX, (int) posY, 48, 48);
-        for (final Soil zolla : map.pod) {
+        for (final Soil zolla : map.soilList) {
             if (zolla.getCoordinate().contains(hitbox)) {
                 if (!zolla.getIsPlanted()) {
                     zolla.setPlanted(piantaDisponibile);
@@ -131,7 +132,7 @@ public abstract class AbstractPlayer {
     }
 
     public final void updateSoil(final Long now) {
-        for (final Soil zolla : map.pod) {
+        for (final Soil zolla : map.soilList) {
             final Plant plant = zolla.getPlant();
             if (plant != null) {
                 plant.updateNeedsWater(now);

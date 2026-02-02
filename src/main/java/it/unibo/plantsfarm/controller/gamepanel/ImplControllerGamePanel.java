@@ -2,7 +2,7 @@ package it.unibo.plantsfarm.controller.gamepanel;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
-import it.unibo.plantsfarm.model.Mappa;
+import it.unibo.plantsfarm.model.TileMap;
 import it.unibo.plantsfarm.model.camera.Camera;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
@@ -19,7 +19,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private AbstractPlayer player;
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
-    private Mappa map = new Mappa();
+    private TileMap map = new TileMap();
 
     public ImplControllerGamePanel() {
         setPlayer();
@@ -35,12 +35,12 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             lastTime = now;
             final UserInput input = queue.poll();
 
-            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY(), map.getPod());
+            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY(), map.getSoilList());
             try {
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
                 if (input != null) {
                 player.setDirection(input);
-                System.out.println(input);
+                //System.out.println(input);
                 controllerAnimation.takeInput(input);
             }
             } catch (final InterruptedException e) {
