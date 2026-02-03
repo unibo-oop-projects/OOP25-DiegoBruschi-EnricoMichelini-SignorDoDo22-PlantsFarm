@@ -167,7 +167,8 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
                     // Esempio: Image image = pod.getPlant().getCurrentStageImage().getImage();
                     
                     // Placeholder temporaneo come da tuo codice
-                    final ImageIcon icon = Texture.getPlantStageIcon("Tomato", 3);
+                    final ImageIcon icon = Texture.getPlantStageIcon(pod.getPlant().getName(), pod.getPlant().getGrowthStage() + 1);
+                    System.out.println(pod.getPlant().getName() + " " + pod.getPlant().getGrowthStage());
                     if (icon != null) {
                       final Image image = icon.getImage();
                          g2D.drawImage(image, 

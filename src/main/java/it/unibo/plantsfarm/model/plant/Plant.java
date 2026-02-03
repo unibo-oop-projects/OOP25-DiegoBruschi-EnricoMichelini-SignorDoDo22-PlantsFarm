@@ -48,7 +48,7 @@ public class Plant {
     }
 
     public final void increaseGrowthStage(final long now){
-        if (watered && System.currentTimeMillis() >= currentStageTime + GROWTH_TIME && growthStage < getMaxGrowthStage()) {
+        if (System.currentTimeMillis() >= currentStageTime + GROWTH_TIME && growthStage < getMaxGrowthStage()) {
             currentStageTime = now;
             watered = false;
             growthStage++;

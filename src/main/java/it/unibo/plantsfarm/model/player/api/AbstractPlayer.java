@@ -127,14 +127,16 @@ public abstract class AbstractPlayer {
     }
 
     public final void pianta(PlantType plant) {
-        Plant pianta = new Plant(plant);
-        final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
-        for (final Soil zolla : map.soilList) {
-            if (zolla.getCoordinate().contains(hitbox)) {
-                if (!zolla.getIsPlanted()) {
-                    zolla.setPlanted(pianta);
-                    System.out.println(zolla.getPlant());
-                    System.out.println("PLANT TYPE" + zolla.getPlant().currentStageTime);
+        if (plant != null){
+            Plant pianta = new Plant(plant);
+            final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
+            for (final Soil zolla : map.soilList) {
+                if (zolla.getCoordinate().contains(hitbox)) {
+                    if (!zolla.getIsPlanted()) {
+                        zolla.setPlanted(pianta);
+                        System.out.println(zolla.getPlant());
+                        System.out.println("PLANT TYPE" + zolla.getPlant().currentStageTime);
+                    }
                 }
             }
         }
@@ -158,7 +160,7 @@ public abstract class AbstractPlayer {
             if (plant != null) {
                 plant.updateNeedsWater(now);
                 plant.increaseGrowthStage(now);
-                System.out.println(plant.toString());
+                //System.out.println(plant.toString());
             }
         }
     }
