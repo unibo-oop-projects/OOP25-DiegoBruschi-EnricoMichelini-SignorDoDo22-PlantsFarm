@@ -27,6 +27,7 @@ import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.Soil;
+import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.view.UpgradeItemsView;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
@@ -43,7 +44,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
     public static final int SCREEN_WIDTH = SCREEN_SIZE.width - SIDEBAR_WIDTH;
     public static final int SCREEN_HEIGHT = SCREEN_SIZE.height;
 
-    private static final int VISIBLE_TILES_VERTICAL = 22;
+    private static final int VISIBLE_TILES_VERTICAL = 11;//22
 
     public static final int TILE_SIZE = SCREEN_HEIGHT / VISIBLE_TILES_VERTICAL;
     public static final int POD_SIZE = TILE_SIZE;
@@ -152,22 +153,51 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         if (soilList != null) {
             for (final Soil pod : soilList) {
                 if (pod.getIsPlanted()) {
-
-                    final ImageIcon icon = Texture.getPlantStageIcon(pod.getPlant().getName(), pod.getPlant().getGrowthStage() + 1);
-                    if (icon != null) {
-                        final Image image = icon.getImage();
-                        g2D.drawImage(image,
-                            pod.getCoordinate().x - cameraX,
-                            pod.getCoordinate().y - cameraY,
-                            POD_SIZE,
-                            POD_SIZE,
-                            null
-                        );
-                    }
+                    drawPlant(g2D, pod);
                 }
             }
         }
         g2D.dispose();
+    }
+
+    private void drawPlant(final Graphics2D g2D, final Soil pod) {
+        final Plant plant = pod.getPlant();
+        final String plantName = plant.getName();
+        final int stage = plant.getGrowthStage() + 1;
+
+        final ImageIcon icon = Texture.getPlantStageIcon(plantName, stage);
+
+        if (icon != null) {
+            final Image image = icon.getImage();
+
+            final double scale = 1.3;
+            final int plantSize = (int) (POD_SIZE * scale);
+            final int offset = (plantSize - POD_SIZE) / 2;
+
+            g2D.drawImage(image,
+                pod.getCoordinate().x - cameraX - offset,
+                pod.getCoordinate().y - cameraY - offset,
+                plantSize,
+                plantSize,
+                null
+            );
+
+            ImageIcon statusIcon = null;
+
+            if (plant.isMature()) {
+                statusIcon = Texture.READY_ICON;
+            } else if (plant.needsWater()) {
+                statusIcon = Texture.WATER_ICON;
+            }
+
+            if (statusIcon != null) {
+                final int statusSize = Texture.STATUS_ICON_SIZE;
+                final int iconX = (pod.getCoordinate().x - cameraX) - (statusSize / 3);
+                final int iconY = (pod.getCoordinate().y - cameraY) - (statusSize / 3);
+
+                g2D.drawImage(statusIcon.getImage(), iconX, iconY, statusSize, statusSize, null);
+            }
+        }
     }
 
     @Override

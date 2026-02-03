@@ -27,6 +27,10 @@ public final class Texture {
     public static final double STAGE_ICON_RATIO = 0.28;
     public static final int STAGE_ICON_SIZE = calculateSize(STAGE_ICON_RATIO);
 
+    public static final String STATUS_PATH = "plantStatus/";
+    public static final double STATUS_ICON_RATIO = 0.03;
+    public static final int STATUS_ICON_SIZE = calculateSize(STATUS_ICON_RATIO);
+
     public static final ImageIcon ENCYCLOPEDIA_ICON = loadMenuIcon("Encyclopedia.png");
     public static final ImageIcon SHOP_ICON = loadMenuIcon("Shop.png");
     public static final ImageIcon STORAGE_ICON = loadMenuIcon("Storage.png");
@@ -44,6 +48,9 @@ public final class Texture {
     public static final ImageIcon EXTRA_ICON = loadMenuIcon("Extra.png");
     public static final ImageIcon CREDITS_ICON = loadMenuIcon("Credit.png");
     public static final ImageIcon EXIT_ICON = loadMenuIcon("Exit.png");
+
+    public static final ImageIcon WATER_ICON = loadStatusIcon("Water.png");
+    public static final ImageIcon READY_ICON = loadStatusIcon("Ready.png");
 
     private static final String EXTENSION = ".png";
 
@@ -108,6 +115,17 @@ public final class Texture {
     }
 
     /**
+     * Loads an icon from the status folder.
+     *
+     * @param fileName The name of the file.
+     * @return The ImageIcon.
+     */
+    private static ImageIcon loadStatusIcon(final String fileName) {
+        final String fullPath = STATUS_PATH + fileName;
+        return loadAndScale(fullPath, STATUS_ICON_SIZE, STATUS_ICON_SIZE);
+    }
+
+    /**
      * Generic method to load and scale an image from resources.
      *
      * @param path The path to the resource.
@@ -116,7 +134,7 @@ public final class Texture {
      * @return The ImageIcon, or null if not found.
      */
     private static ImageIcon loadAndScale(final String path, final int width, final int height) {
-        final URL imageURL = ClassLoader.getSystemResource(path);
+        final URL imageURL = Texture.class.getResource("/" + path);
 
         if (imageURL == null) {
             return null;

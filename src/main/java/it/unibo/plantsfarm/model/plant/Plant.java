@@ -70,7 +70,7 @@ public class Plant {
      * @param now The current time in milliseconds.
      */
     public final void updateNeedsWater(final Long now) {
-        System.out.println("NeedsWater " + needsWater + "  -  Watered " + watered);
+        //System.out.println("NeedsWater " + needsWater + "  -  Watered " + watered);
         if (this.type.getMaxGrowthStage() > this.growthStage) {
             if (now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
                 this.needsWater = true;
@@ -84,7 +84,7 @@ public class Plant {
      * @return true if mature, false otherwise.
      */
     public final boolean isMature() {
-        return growthStage >= type.getMaxGrowthStage();
+        return growthStage >= (type.getMaxGrowthStage()-1);
     }
 
     /**
