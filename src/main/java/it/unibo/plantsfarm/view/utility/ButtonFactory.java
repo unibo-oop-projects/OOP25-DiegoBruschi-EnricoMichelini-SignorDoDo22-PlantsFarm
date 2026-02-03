@@ -48,7 +48,7 @@ public final class ButtonFactory {
     private static JButton configureButton(final JButton button) {
         button.setFont(MAIN_FONT);
         button.setFocusPainted(false);
-        button.addActionListener(e -> AUDIO.playEffect("music/menuSound/click.wav"));
+        //button.addActionListener(e -> AUDIO.playEffect("music/menuSound/click.wav"));
         return button;
     }
 }
