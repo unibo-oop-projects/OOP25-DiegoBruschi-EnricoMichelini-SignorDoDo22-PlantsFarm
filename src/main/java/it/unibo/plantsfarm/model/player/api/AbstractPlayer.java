@@ -31,8 +31,6 @@ public abstract class AbstractPlayer {
 
     private TileMap map = new TileMap();
 
-    private Plant piantaDisponibile = new Plant(PlantType.TOMATO);
-
     /** Current X position of the player in world coordinates. */
     private double posX = ImplViewGamePanel.WORLD_WIDTH / 2;
 
@@ -61,14 +59,15 @@ public abstract class AbstractPlayer {
         final double delta = speed * time / 1000.0;
         double nextPosX = posX;
         double nextPosY = posY;
-        System.out.println("Current Player State: " + direction);
+
+        //System.out.println("Current Player State: " + direction);
         switch (direction) {
             case LEFT -> nextPosX -= delta;
             case RIGHT -> nextPosX += delta;
             case UP -> nextPosY -= delta;
             case DOWN -> nextPosY += delta;
-            case ACTIONHOE -> pianta();
-            case ACTIONWATER -> System.out.println("Watering action executed");
+            case ACTIONHOE -> pianta(ImplViewGamePanel.selectedPlant);
+            case ACTIONWATER -> innaffia(System.currentTimeMillis());
             case FERMO -> { }
         }
 
@@ -127,16 +126,29 @@ public abstract class AbstractPlayer {
         return this.direction;
     }
 
+    public final void pianta(PlantType plant) {
+        if (plant != null){
+            Plant pianta = new Plant(plant);
+            final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
+            for (final Soil zolla : map.soilList) {
+                if (zolla.getCoordinate().contains(hitbox)) {
+                    if (!zolla.getIsPlanted()) {
+                        zolla.setPlanted(pianta);
+                        System.out.println(zolla.getPlant());
+                        System.out.println("PLANT TYPE" + zolla.getPlant().currentStageTime);
+                    }
+                }
+            }
+        }
+    }
 
-    public final void pianta() {
+    public final void innaffia(final long now) {
         final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
         for (final Soil zolla : map.soilList) {
             if (zolla.getCoordinate().contains(hitbox)) {
-                if (!zolla.getIsPlanted()) {
-                    zolla.setPlanted(piantaDisponibile);
-                }
-                if (zolla.getPlant() != null) {
-                    zolla.getPlant().water(System.currentTimeMillis());
+                if (zolla.getIsPlanted()) {
+                    zolla.getPlant().water(now);
+                    break;
                 }
             }
         }
@@ -147,6 +159,8 @@ public abstract class AbstractPlayer {
             final Plant plant = zolla.getPlant();
             if (plant != null) {
                 plant.updateNeedsWater(now);
+                plant.increaseGrowthStage(now);
+                //System.out.println(plant.toString());
             }
         }
     }

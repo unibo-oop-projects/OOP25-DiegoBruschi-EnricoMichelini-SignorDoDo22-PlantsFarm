@@ -11,15 +11,17 @@ public class Plant {
     // Static info
     private static final long WATER_REDUCTION_TIME = 5_000L;
     private static final long WATER_TIME_COOLDOWN = 15_000L;
-    private static final long GROWTH_TIME = 30_000L;
+    private static final long GROWTH_TIME = 5_000L; //30000
     private final PlantType type;
 
     // Dynamic info
     private int growthStage;
     private boolean needsWater;
+    private boolean watered;
+    private boolean fertilized;
     private boolean isPlanted;
-    private long currentStageTime = System.currentTimeMillis();
-    private long lastWateredTime = System.currentTimeMillis();
+    public long currentStageTime;
+    public long lastWateredTime;
 
     /**
      * Creates a new Plant based on a specific type.
@@ -31,6 +33,8 @@ public class Plant {
         this.growthStage = 0;
         this.needsWater = false;
         this.isPlanted = false;
+        this.currentStageTime = System.currentTimeMillis();
+        this.lastWateredTime = System.currentTimeMillis();
     }
 
     /**
@@ -43,17 +47,25 @@ public class Plant {
         }
     }
 
+    public final void increaseGrowthStage(final long now){
+        if (System.currentTimeMillis() >= currentStageTime + GROWTH_TIME && growthStage < getMaxGrowthStage()) {
+            currentStageTime = now;
+            watered = false;
+            growthStage++;
+        }
+    }
+
     /**
      * Waters the plant, upgrade its growth stage if possible.
-     * 
+     *
      *  @param now The current time in milliseconds.
      */
     public final void water(final Long now) {
         if (isPlanted && needsWater) {
             needsWater = false;
             if (growthStage < type.getMaxGrowthStage() && now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
-                growthStage++;
                 this.lastWateredTime = System.currentTimeMillis();
+                watered = true;
             }
         }
     }
