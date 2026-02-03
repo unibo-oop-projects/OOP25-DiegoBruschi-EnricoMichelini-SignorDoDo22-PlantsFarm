@@ -1,6 +1,8 @@
 package it.unibo.plantsfarm.controller.loader;
 
 import it.unibo.plantsfarm.controller.MainScreenController;
+import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
+import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.plant.Plant;
 
@@ -18,13 +20,15 @@ public class GameLoader {
      */
     public final GameState initializeGame() {
 
-        //MODEL
+
         final PlantLoader plantLoader = new PlantLoader();
         final List<Plant> plants = plantLoader.loadPlants();
+        final ImplControllerGamePanel gamePanel = new ImplControllerGamePanel();
+        gamePanel.addView();
+        gamePanel.start();
         final GameState gameState = new GameState(plants);
-
         //CONTROLLER
-        new MainScreenController(gameState);
+        new MainScreenController(gameState, gamePanel);
 
         return gameState;
     }

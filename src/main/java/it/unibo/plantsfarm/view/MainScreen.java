@@ -1,6 +1,5 @@
 package it.unibo.plantsfarm.view;
 
-import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.menu.MenuPanel;
 import it.unibo.plantsfarm.view.music.MusicPlayer;
@@ -32,11 +31,10 @@ public final class MainScreen {
     private static final int UPPER_PANEL_HEIGHT = 200;
 
     private final MenuPanel menuPanel;
-    private ImplViewGamePanel gamePanel;
+    private ImplViewGamePanel gameViewPanel;
     private JFrame frame;
     private JLabel coinLabel;
     private JButton inventoryButton;
-    private ImplControllerGamePanel controller;
     private final MusicPlayer musicPlayer;
 
     /**
@@ -51,9 +49,9 @@ public final class MainScreen {
     /**
      * Creates and displays the main screen window.
      */
-    public void createMainScreen() {
+    public void createMainScreen(ImplViewGamePanel gameViewPanel) {
         this.frame = new JFrame(TITLE);
-
+        this.gameViewPanel = gameViewPanel;
         this.frame.setLayout(new BorderLayout());
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,12 +66,9 @@ public final class MainScreen {
 
         final JLayeredPane layeredPane = new JLayeredPane();
 
-        this.controller = new ImplControllerGamePanel();
-        this.controller.addView();
-        this.gamePanel = this.controller.getView();
-        this.gamePanel.setBounds(0, 0, screenSize.width, screenSize.height);
+        this.gameViewPanel.setBounds(0, 0, screenSize.width, screenSize.height);
 
-        layeredPane.add(this.gamePanel, JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(this.gameViewPanel, JLayeredPane.DEFAULT_LAYER);
 
         final JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
         topPanel.setOpaque(false);
@@ -91,11 +86,10 @@ public final class MainScreen {
 
         this.frame.add(layeredPane, BorderLayout.CENTER);
 
-        this.gamePanel.setFocusable(true);
-        this.gamePanel.requestFocusInWindow();
+        this.gameViewPanel.setFocusable(true);
+        this.gameViewPanel.requestFocusInWindow();
 
         this.frame.setVisible(true);
-        this.controller.start();
 
         this.musicPlayer.playLoop("music/GardenMusic.wav");
     }
@@ -119,7 +113,7 @@ public final class MainScreen {
     public void attachExitListener(final ActionListener listener) {
         this.menuPanel.addExitListener(e -> {
             listener.actionPerformed(e);
-            this.gamePanel.requestFocusInWindow();
+            this.gameViewPanel.requestFocusInWindow();
         });
     }
 
@@ -131,7 +125,7 @@ public final class MainScreen {
     public void attachEncyclopediaListener(final ActionListener listener) {
         this.menuPanel.addEncyclopediaListener(e -> {
             listener.actionPerformed(e);
-            this.gamePanel.requestFocusInWindow();
+            this.gameViewPanel.requestFocusInWindow();
         });
     }
 
@@ -143,7 +137,7 @@ public final class MainScreen {
     public void attachStorageListener(final ActionListener listener) {
         this.menuPanel.addStorageListener(e -> {
             listener.actionPerformed(e);
-            this.gamePanel.requestFocusInWindow();
+            this.gameViewPanel.requestFocusInWindow();
         });
     }
 
@@ -155,7 +149,7 @@ public final class MainScreen {
     public void attachShopListener(final ActionListener listener) {
         this.menuPanel.addShopListener(e -> {
             listener.actionPerformed(e);
-            this.gamePanel.requestFocusInWindow();
+            this.gameViewPanel.requestFocusInWindow();
         });
     }
 
@@ -168,7 +162,7 @@ public final class MainScreen {
         if (this.inventoryButton != null) {
             this.inventoryButton.addActionListener(e -> {
                 listener.actionPerformed(e);
-                this.gamePanel.requestFocusInWindow();
+                this.gameViewPanel.requestFocusInWindow();
             });
         }
     }

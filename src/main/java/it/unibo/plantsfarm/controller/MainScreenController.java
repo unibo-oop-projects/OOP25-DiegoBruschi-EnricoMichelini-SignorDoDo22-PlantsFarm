@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.controller;
 
+import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.menu.EncyclopediaController;
 import it.unibo.plantsfarm.controller.menu.PauseMenuController;
 import it.unibo.plantsfarm.controller.menu.ShopController;
@@ -13,16 +14,17 @@ import it.unibo.plantsfarm.view.MainScreen;
 public final class MainScreenController {
 
     private final MainScreen view;
+    private final ImplControllerGamePanel gamecontroller;
 
     /**
      * Creates the Main Screen Controller.
      *
      * @param gameState The current game state.
      */
-    public MainScreenController(final GameState gameState) {
+    public MainScreenController(final GameState gameState, final ImplControllerGamePanel gamecontroller) {
+        this.gamecontroller = gamecontroller;
         this.view = new MainScreen();
-        this.view.createMainScreen();
-
+        this.view.createMainScreen(gamecontroller.getView());
         setupListeners(gameState);
         updateView(gameState);
     }
