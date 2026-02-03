@@ -2,6 +2,7 @@ package it.unibo.plantsfarm.controller.gamepanel;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
+import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.TileMap;
 import it.unibo.plantsfarm.model.camera.Camera;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
@@ -20,10 +21,12 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
     private TileMap map = new TileMap();
+    private final GameState gameState;
 
-    public ImplControllerGamePanel() {
+    public ImplControllerGamePanel(final GameState gameState) {
         setPlayer();
         this.player = getPlayer();
+        this.gameState = gameState;
         map.loadMap("/maps/map.txt");
     }
 

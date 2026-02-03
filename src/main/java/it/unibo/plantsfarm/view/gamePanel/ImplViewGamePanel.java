@@ -28,6 +28,7 @@ import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.Soil;
 import it.unibo.plantsfarm.model.plant.PlantType;
+import it.unibo.plantsfarm.view.UpgradeItensView;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePanel;
 import it.unibo.plantsfarm.view.map.TileManager;
@@ -70,13 +71,14 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   private double playerPosY;
   private ImplControllerGamePanel controller;
   private SelectorFrames selector;
-
+  private UpgradeItensView itemsView;
   private boolean plantWindow = true;
   private List<Soil> soilList = List.of();
   public static PlantType selectedPlant;
 
   public ImplViewGamePanel() {
     super();
+    this.itemsView = new UpgradeItensView(this);
     this.setLayout(null);
     this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
     this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -84,7 +86,6 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
     this.setFocusable(true);
     this.requestFocusInWindow();
     this.setBackground(Color.BLACK);
-
     this.tileM = new TileManager(this);
 
     this.addKeyListener(new KeyAdapter() {
@@ -102,6 +103,10 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         if (KEY_MAPPER.containsKey(e.getKeyCode())) {
           if (controller != null) controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
             if (selector != null) selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
+        }
+
+        if(KeyEvent.VK_F == e.getKeyCode()) {
+            itemsView.setVisible(true);
         }
       }
 
