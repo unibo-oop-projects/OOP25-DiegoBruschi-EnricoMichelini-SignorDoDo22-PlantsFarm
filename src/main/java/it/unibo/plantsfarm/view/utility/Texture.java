@@ -17,8 +17,12 @@ public final class Texture {
     public static final int MENU_ICON_SIZE = calculateSize(MENU_ICON_RATIO);
 
     public static final String PLANT_PATH = "icons/plantIcon/";
+
     public static final double PLANT_ICON_RATIO = 0.06;
     public static final int PLANT_ICON_SIZE = calculateSize(PLANT_ICON_RATIO);
+
+    public static final double SHOP_PLANT_ICON_RATIO = 0.10;
+    public static final int SHOP_PLANT_ICON_SIZE = calculateSize(SHOP_PLANT_ICON_RATIO);
 
     public static final double MYSTERY_ICON_RATIO = 0.30;
     public static final int MYSTERY_ICON_SIZE = calculateSize(MYSTERY_ICON_RATIO);
@@ -62,7 +66,18 @@ public final class Texture {
     }
 
     /**
-     * Gets a giant plant icon dynamically for Mystery Box.
+     * Gets a larger plant icon for the Shop.
+     *
+     * @param plantName The name of the plant.
+     * @return The ImageIcon.
+     */
+    public static ImageIcon getShopPlantIcon(final String plantName) {
+        final String fullPath = PLANT_PATH + plantName + EXTENSION;
+        return loadAndScale(fullPath, SHOP_PLANT_ICON_SIZE, SHOP_PLANT_ICON_SIZE);
+    }
+
+    /**
+     * Gets a giant plant icon for Mystery Box.
      *
      * @param plantName The name of the plant.
      * @return The ImageIcon.
@@ -115,7 +130,7 @@ public final class Texture {
      * @return The ImageIcon, or null if not found.
      */
     private static ImageIcon loadAndScale(final String path, final int width, final int height) {
-        final URL imageURL = ClassLoader.getSystemResource(path);
+        final URL imageURL = Texture.class.getResource("/" + path);
 
         if (imageURL == null) {
             return null;

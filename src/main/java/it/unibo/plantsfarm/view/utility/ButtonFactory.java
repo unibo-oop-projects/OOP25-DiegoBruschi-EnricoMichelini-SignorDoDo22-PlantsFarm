@@ -5,13 +5,18 @@ import it.unibo.plantsfarm.view.music.MusicPlayer;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.Toolkit;
 
 /**
  * Factory utility class for creating buttons.
  */
 public final class ButtonFactory {
 
-    private static final Font MAIN_FONT = new Font("Arial", Font.BOLD, 20);
+    private static final double FONT_SCALE_RATIO = 0.02;
+    private static final int SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
+    private static final int FONT_SIZE = (int) (SCREEN_HEIGHT * FONT_SCALE_RATIO);
+
+    private static final Font MAIN_FONT = new Font("Arial", Font.BOLD, FONT_SIZE);
     private static final MusicPlayer AUDIO = new MusicPlayer();
 
     private ButtonFactory() {

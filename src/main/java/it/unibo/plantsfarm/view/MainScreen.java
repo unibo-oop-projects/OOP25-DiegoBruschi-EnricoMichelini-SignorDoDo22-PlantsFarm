@@ -23,7 +23,9 @@ public final class MainScreen {
 
     private static final String TITLE = "PlantsFarm";
     private static final String FONT_FAMILY = "SansSerif";
-    private static final int FONT_SIZE = 24;
+
+    private static final double FONT_SCALE_RATIO = 0.025;
+    private static final double GAP_RATIO = 0.015;
 
     private final MenuPanel menuPanel;
     private final MusicPlayer musicPlayer;
@@ -59,12 +61,16 @@ public final class MainScreen {
         final JPanel gameContainer = new JPanel(new BorderLayout());
         gameContainer.setOpaque(false);
 
-        final JPanel coinPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
+        final int hGap = (int) (screenSize.width * GAP_RATIO);
+        final int vGap = (int) (screenSize.height * GAP_RATIO);
+        final int fontSize = (int) (screenSize.height * FONT_SCALE_RATIO);
+
+        final JPanel coinPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, hGap, vGap));
         coinPanel.setOpaque(false);
 
         this.coinLabel = new JLabel(" 0");
         this.coinLabel.setIcon(Texture.COIN_ICON);
-        this.coinLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, FONT_SIZE));
+        this.coinLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, fontSize));
         this.coinLabel.setForeground(Color.BLACK);
 
         coinPanel.add(this.coinLabel);
