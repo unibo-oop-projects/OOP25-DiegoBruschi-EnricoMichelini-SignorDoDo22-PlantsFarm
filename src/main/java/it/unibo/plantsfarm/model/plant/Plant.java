@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.model.plant;
 
+import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.model.plant.PlantType.Rarity;
 
 /**
@@ -38,10 +39,14 @@ public class Plant {
     }
 
     public final void increaseGrowthStage(final long now){
-        if (watered && System.currentTimeMillis() >= currentStageTime + GROWTH_TIME && growthStage < getMaxGrowthStage()) {
-            currentStageTime = now;
-            watered = false;
-            growthStage++;
+        if (!isMature()) {
+            if (watered && System.currentTimeMillis() >= currentStageTime + GROWTH_TIME && growthStage < getMaxGrowthStage()) {
+                currentStageTime = now;
+                watered = false;
+                growthStage++;
+            }
+        } else {
+            ImplControllerGamePanel.gameState.addHarvest(type, 10);
         }
     }
 

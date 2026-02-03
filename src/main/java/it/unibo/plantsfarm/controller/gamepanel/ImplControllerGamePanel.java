@@ -22,7 +22,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
     private TileMap map = new TileMap();
-    private GameState gameState;
+    public static GameState gameState;
 
     public ImplControllerGamePanel(final GameState gameState) {
         this.gameState = gameState;
