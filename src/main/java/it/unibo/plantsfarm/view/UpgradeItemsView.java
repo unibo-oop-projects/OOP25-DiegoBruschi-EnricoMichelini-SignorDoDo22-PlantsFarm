@@ -5,11 +5,11 @@ import java.awt.event.WindowEvent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-public class UpgradeItensView extends JDialog {
+public class UpgradeItemsView extends JDialog {
 
     private final JPanel gamePanel;
 
-    public UpgradeItensView(final JPanel gamePanel) {
+    public UpgradeItemsView(final JPanel gamePanel) {
         super();
         this.gamePanel = gamePanel;
 
