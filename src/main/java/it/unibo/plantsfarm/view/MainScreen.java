@@ -75,7 +75,7 @@ public final class MainScreen {
         topPanel.setFocusable(false);
         topPanel.setBounds(0, 0, UPPER_PANEL_WIDTH, UPPER_PANEL_HEIGHT);
 
-        this.coinLabel = new JLabel(" 0");
+        this.coinLabel = new JLabel(" 0 ");
         this.coinLabel.setIcon(Texture.COIN_ICON);
         this.coinLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, FONT_SIZE));
         this.coinLabel.setForeground(Color.BLACK);

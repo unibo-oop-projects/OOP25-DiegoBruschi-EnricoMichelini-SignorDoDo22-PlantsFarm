@@ -19,7 +19,6 @@ public class GameLoader {
      */
     public final GameState initializeGame() {
 
-
         final PlantLoader plantLoader = new PlantLoader();
         final List<Plant> plants = plantLoader.loadPlants();
         final GameState gameState = new GameState(plants);

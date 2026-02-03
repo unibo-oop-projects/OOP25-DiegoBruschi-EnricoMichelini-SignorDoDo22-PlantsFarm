@@ -30,6 +30,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         gameState.addHarvest(PlantType.ANANAS, 100);
         gameState.addHarvest(PlantType.CARROT, 100);
         this.player = getPlayer();
+        this.gameState = gameState;
         map.loadMap("/maps/map.txt");
     }
 
