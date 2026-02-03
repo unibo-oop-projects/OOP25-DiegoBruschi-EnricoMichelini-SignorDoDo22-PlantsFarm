@@ -30,7 +30,7 @@ public final class EncyclopediaScreen {
     private static final String FONT_NAME = "Arial";
     private static final int GRID_COLS = 5;
     private static final int GAP = 5;
-    private static final int PADDING = 10;
+    private static final int PADDING = 15;
 
     private static final Color BG_COMMON = new Color(144, 238, 144);
     private static final Color BG_RARE = new Color(221, 160, 221);
@@ -77,8 +77,8 @@ public final class EncyclopediaScreen {
         this.nameLabel.setOpaque(true);
         this.nameLabel.setBackground(BG);
         this.nameLabel.setForeground(Color.BLACK);
-        this.nameLabel.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
-
+        this.nameLabel.setBorder(BorderFactory.createEmptyBorder(PADDING, PADDING,
+            PADDING, PADDING));
         this.stageButton = ButtonFactory.createButton("Next Stage");
         this.stageButton.setVisible(false);
 
