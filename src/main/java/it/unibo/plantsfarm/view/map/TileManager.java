@@ -5,12 +5,19 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
 
 public final class TileManager {
+    
     private static final int TILE_ARRAY_SIZE = 2000;
+
+    private static final int ASSET_ORIGINAL_TILE_SIZE = 16;
+    private static final int ASSET_SCALE = 3; 
+    private static final int ASSET_ACTUAL_SIZE = ASSET_ORIGINAL_TILE_SIZE * ASSET_SCALE;
+
     private final ImplViewGamePanel gp;
     private final Tile[] tile;
     private final int[][] mapTileNum;
@@ -18,149 +25,136 @@ public final class TileManager {
     public TileManager(final ImplViewGamePanel gp) {
         this.gp = gp;
 
-        tile = new Tile[TILE_ARRAY_SIZE];
-        mapTileNum = new int[ImplViewGamePanel.MAXSCREENCOL][ImplViewGamePanel.MAXSCREENROW];
+        this.tile = new Tile[TILE_ARRAY_SIZE];
+        this.mapTileNum = new int[ImplViewGamePanel.MAX_WORLD_COL][ImplViewGamePanel.MAX_WORLD_ROW];
 
         getTileImage();
         loadMap("/maps/map.txt");
     }
 
-    @SuppressWarnings("checkstyle:magicnumber")
     public void getTileImage() {
 
-        tile[0] = new Tile();
-        tile[0].image = new SpriteLoader("/icons/tiles/grass.png").getImage();
+        setupTile(0, "grass.png");
+        setupTile(1, "pathVer.png");
+        setupTile(2, "dirt.png");
+        setupTile(3, "wall.png");
+        setupTile(4, "tree.png");
+        setupTile(5, "spawn.png");
+        setupTile(6, "chest.png");
+        setupTile(7, "floor.png");
+        setupTile(9, "pathOri.png");
+        setupTile(10, "path.png");
+        setupTile(11, "dirtUp.png");
+        setupTile(12, "dirtDown.png");
+        setupTile(13, "dirtLeft.png");
+        setupTile(14, "dirtRight.png");
+        setupTile(15, "dirtLUpRight.png");
+        setupTile(16, "dirtLDownRight.png");
+        setupTile(17, "dirtLDownLeft.png");
+        setupTile(18, "dirtLUpLeft.png");
+        setupTile(19, "dirtContained.png");
 
-        tile[1] = new Tile();
-        tile[1].image = new SpriteLoader("/icons/tiles/pathVer.png").getImage();
-
-        tile[2] = new Tile();
-        tile[2].image = new SpriteLoader("/icons/tiles/dirt.png").getImage();
-
-        //NON POSSO ATTRAVERSARE 
-        tile[3] = new Tile();
-        tile[3].image = new SpriteLoader("/icons/tiles/wall.png").getImage();
-
-        //NON POSSO ATTRAVERSARE 
-        tile[4] = new Tile();
-        tile[4].image = new SpriteLoader("/icons/tiles/tree.png").getImage();
-
-        tile[5] = new Tile();
-        tile[5].image = new SpriteLoader("/icons/tiles/spawn.png").getImage();
-
-        //NON POSSO ATTRAVERSARE 
-        tile[6] = new Tile();
-        tile[6].image = new SpriteLoader("/icons/tiles/chest.png").getImage();
-
-        tile[7] = new Tile();
-        tile[7].image = new SpriteLoader("/icons/tiles/floor.png").getImage();
-
-        tile[9] = new Tile();
-        tile[9].image = new SpriteLoader("/icons/tiles/pathOri.png").getImage();
-
-        tile[10] = new Tile();
-        tile[10].image = new SpriteLoader("/icons/tiles/path.png").getImage();
-
-        tile[11] = new Tile();
-        tile[11].image = new SpriteLoader("/icons/tiles/dirtUp.png").getImage();
-
-        tile[12] = new Tile();
-        tile[12].image = new SpriteLoader("/icons/tiles/dirtDown.png").getImage();
-
-        tile[13] = new Tile();
-        tile[13].image = new SpriteLoader("/icons/tiles/dirtLeft.png").getImage();
-
-        tile[14] = new Tile();
-        tile[14].image = new SpriteLoader("/icons/tiles/dirtRight.png").getImage();
-
-        tile[15] = new Tile();
-        tile[15].image = new SpriteLoader("/icons/tiles/dirtLUpRight.png").getImage();
-
-        tile[16] = new Tile();
-        tile[16].image = new SpriteLoader("/icons/tiles/dirtLDownRight.png").getImage();
-
-        tile[17] = new Tile();
-        tile[17].image = new SpriteLoader("/icons/tiles/dirtLDownLeft.png").getImage();
-
-        tile[18] = new Tile();
-        tile[18].image = new SpriteLoader("/icons/tiles/dirtLUpLeft.png").getImage();
-
-        tile[19] = new Tile();
-        tile[19].image = new SpriteLoader("/icons/tiles/dirtContained.png").getImage();
-
-        //Shop cutting and building tiles (NON POSSO ATTRAVERSARE)
+        // Shop slicing and loading
         final int numColonne = 9;
         final int numRighe = 5;
-        final int tileSize = 16 * ImplViewGamePanel.SCALE * 3;
-        int indexPartenza = 20;
 
+        final int shopSourceSliceSize = ASSET_ACTUAL_SIZE * 3; 
+        
+        int indexPartenza = 20;
         final BufferedImage bigSheet = new SpriteLoader("/icons/tiles/shop.png").getImage();
 
         for (int row = 0; row < numRighe; row++) {
             for (int col = 0; col < numColonne; col++) {
-
                 tile[indexPartenza] = new Tile();
-
-                tile[indexPartenza].image = bigSheet.getSubimage(col * tileSize, row * tileSize, tileSize, tileSize);
+                tile[indexPartenza].image = bigSheet.getSubimage(
+                    col * shopSourceSliceSize, 
+                    row * shopSourceSliceSize, 
+                    shopSourceSliceSize, 
+                    shopSourceSliceSize
+                );
                 indexPartenza++;
             }
         }
 
+        // Well slicing and loading
         final int numColonnePozzo = 3;
         final int numRighePozzo = 3;
-        final int tileSizePozzo = 16 * ImplViewGamePanel.SCALE;
+        final int wellSourceSliceSize = ASSET_ACTUAL_SIZE;
+        
         int indexPartenzaPozzo = 65;
-
         final BufferedImage bigSheetPozzo = new SpriteLoader("/icons/tiles/well.png").getImage();
 
         for (int row = 0; row < numRighePozzo; row++) {
             for (int col = 0; col < numColonnePozzo; col++) {
-
                 tile[indexPartenzaPozzo] = new Tile();
-
-                tile[indexPartenzaPozzo].image = bigSheetPozzo.getSubimage(col * tileSizePozzo, row * tileSizePozzo, tileSizePozzo, tileSizePozzo);
+                tile[indexPartenzaPozzo].image = bigSheetPozzo.getSubimage(
+                    col * wellSourceSliceSize, 
+                    row * wellSourceSliceSize, 
+                    wellSourceSliceSize, 
+                    wellSourceSliceSize
+                );
                 indexPartenzaPozzo++;
             }
         }
+    }
+    
+    private void setupTile(int index, String fileName) {
+        tile[index] = new Tile();
+        tile[index].image = new SpriteLoader("/icons/tiles/" + fileName).getImage();
     }
 
     public void loadMap(final String filePath) {
         try {
             final InputStream is = getClass().getResourceAsStream(filePath);
-            final BufferedReader br = new BufferedReader(new java.io.InputStreamReader(is));
-            for (int row = 0; row < ImplViewGamePanel.MAXSCREENROW; row++) {
-                final String line = br.readLine();
-                for (int column = 0; column < ImplViewGamePanel.MAXSCREENCOL; column++) {
-                    final String[] numbers = line.split(" ");
+            final BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-                    final int num = Integer.parseInt(numbers[column]);
-                    mapTileNum[column][row] = num;
+            for (int row = 0; row < ImplViewGamePanel.MAX_WORLD_ROW; row++) {
+                final String line = br.readLine();
+                if (line == null) break;
+                
+                final String[] numbers = line.split(" ");
+                for (int column = 0; column < ImplViewGamePanel.MAX_WORLD_COL; column++) {
+                    if (column < numbers.length) {
+                        final int num = Integer.parseInt(numbers[column]);
+                        mapTileNum[column][row] = num;
+                    }
                 }
             }
             br.close();
-        } catch (final IOException e) {
+        } catch (final IOException | NumberFormatException e) {
             e.printStackTrace();
         }
     }
 
-   public void drawTile(final Graphics2D g2, final int cameraX, final int cameraY) {
-    for (int row = 0; row < ImplViewGamePanel.MAXSCREENROW; row++) {
-        for (int col = 0; col < ImplViewGamePanel.MAXSCREENCOL; col++) {
+    public void drawTile(final Graphics2D g2, final int cameraX, final int cameraY) {
+        for (int row = 0; row < ImplViewGamePanel.MAX_WORLD_ROW; row++) {
+            for (int col = 0; col < ImplViewGamePanel.MAX_WORLD_COL; col++) {
 
-            final int tileNum = mapTileNum[col][row];
-            final int worldX = col * ImplViewGamePanel.tileSize;
-            final int worldY = row * ImplViewGamePanel.tileSize;
-            final int screenX = worldX - cameraX;
-            final int screenY = worldY - cameraY;
+                final int tileNum = mapTileNum[col][row];
 
-            if (screenX + ImplViewGamePanel.tileSize > 0
-                && screenX < ImplViewGamePanel.WORLD_WIDTH
-                && screenY + ImplViewGamePanel.tileSize > 0
-                && screenY < gp.getHeight()) {
+                if (tileNum < 0 || tileNum >= tile.length || tile[tileNum] == null) {
+                    continue;
+                }
 
-                g2.drawImage(tile[tileNum].image, screenX, screenY, ImplViewGamePanel.tileSize, ImplViewGamePanel.tileSize, null);
+                final int worldX = col * ImplViewGamePanel.TILE_SIZE;
+                final int worldY = row * ImplViewGamePanel.TILE_SIZE;
+                final int screenX = worldX - cameraX;
+                final int screenY = worldY - cameraY;
+
+                if (screenX + ImplViewGamePanel.TILE_SIZE > 0
+                    && screenX < gp.getWidth()
+                    && screenY + ImplViewGamePanel.TILE_SIZE > 0
+                    && screenY < gp.getHeight()) {
+
+                    g2.drawImage(tile[tileNum].image, 
+                        screenX, 
+                        screenY, 
+                        ImplViewGamePanel.TILE_SIZE, 
+                        ImplViewGamePanel.TILE_SIZE, 
+                        null
+                    );
+                }
             }
         }
-    }
     }
 }

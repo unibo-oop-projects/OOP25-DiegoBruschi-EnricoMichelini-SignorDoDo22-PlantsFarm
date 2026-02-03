@@ -9,14 +9,19 @@ import it.unibo.plantsfarm.model.plant.PlantType.Rarity;
 public class Plant {
 
     // Static info
-    private static final long WATER_TIME = 2000L;
+    private static final long WATER_REDUCTION_TIME = 5_000L;
+    private static final long WATER_TIME_COOLDOWN = 15_000L;
+    private static final long GROWTH_TIME = 5_000L; //30000
     private final PlantType type;
 
     // Dynamic info
     private int growthStage;
     private boolean needsWater;
+    private boolean watered;
+    private boolean fertilized;
     private boolean isPlanted;
-    private long lastWateredTime = System.currentTimeMillis();
+    public long currentStageTime;
+    public long lastWateredTime;
 
     /**
      * Creates a new Plant based on a specific type.
@@ -28,6 +33,8 @@ public class Plant {
         this.growthStage = 0;
         this.needsWater = false;
         this.isPlanted = false;
+        this.currentStageTime = System.currentTimeMillis();
+        this.lastWateredTime = System.currentTimeMillis();
     }
 
     /**
@@ -40,6 +47,14 @@ public class Plant {
         }
     }
 
+    public final void increaseGrowthStage(final long now){
+        if (System.currentTimeMillis() >= currentStageTime + GROWTH_TIME && growthStage < getMaxGrowthStage()) {
+            currentStageTime = now;
+            watered = false;
+            growthStage++;
+        }
+    }
+
     /**
      * Waters the plant, upgrade its growth stage if possible.
      * 
@@ -48,9 +63,9 @@ public class Plant {
     public final void water(final Long now) {
         if (isPlanted && needsWater) {
             needsWater = false;
-            if (growthStage < type.getMaxGrowthStage() && now - this.lastWateredTime >= WATER_TIME) {
-                growthStage++;
+            if (growthStage < type.getMaxGrowthStage() && now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
                 this.lastWateredTime = System.currentTimeMillis();
+                watered = true;
             }
         }
     }
@@ -62,7 +77,7 @@ public class Plant {
      */
     public final void updateNeedsWater(final Long now) {
         if (this.type.getMaxGrowthStage() > this.growthStage) {
-            if (now - this.lastWateredTime >= WATER_TIME) {
+            if (now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
                 this.needsWater = true;
             }
         }
