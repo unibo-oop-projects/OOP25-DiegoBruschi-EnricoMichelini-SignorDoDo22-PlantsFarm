@@ -1,20 +1,23 @@
 package it.unibo.plantsfarm.model.items;
 
+
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 
-public  class ItemsFarmBase implements ItemsFarm {
-    private int totalintegrity;
+public class ItemsExpert implements ItemsFarm {
+
+    private int totalintegrity = 200000;
     private int actualintegrity;
     private int level;
-    private int costRepair;
+    private final int costRepair;
     private Tooltype type;
 
-    public ItemsFarmBase(final int integrity, final int level, final int costRepair, Tooltype type){
+    public ItemsExpert(final int integrity, final int level, final int costRepair, Tooltype type){
         this.costRepair = costRepair;
         this.totalintegrity = integrity;
         this.actualintegrity = totalintegrity;
         this.level = level;
         this.type = type;
+
     }
 
     @Override
@@ -24,22 +27,22 @@ public  class ItemsFarmBase implements ItemsFarm {
 
     @Override
     public void repairItem() {
-        this.actualintegrity = totalintegrity;
+       return;
     }
 
     @Override
     public Tooltype getTooltype() {
-        return this.type;
+        return type;
     }
 
     @Override
     public void upgrade() {
-        this.level = level + 1;
+        return;
     }
 
     @Override
     public void useItem() {
-        this.actualintegrity = actualintegrity - 4;
+        return;
     }
 
     @Override
@@ -51,6 +54,5 @@ public  class ItemsFarmBase implements ItemsFarm {
     public int getCostRepair() {
         return this.costRepair;
     }
-
 
 }

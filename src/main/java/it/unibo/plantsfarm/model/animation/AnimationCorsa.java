@@ -36,7 +36,7 @@ public final class AnimationCorsa implements Animation {
             frameIndex = (frameIndex + 1) % frames.length;
             lastFrameTimeNs = nowNs;
         }
-        return frames[frameIndex]; 
+        return frames[frameIndex];
     }
 
     @Override

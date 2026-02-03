@@ -37,10 +37,10 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   public static int tileSize = orginalTileSize * SCALE;
   public static final int POD_SIZE = ImplViewGamePanel.tileSize;
   public static final int PLAYER_SIZE = 64;
-  public static final int MAXSCREENCOL = 66; 
-  public static final int MAXSCREENROW = 23; 
-  public static final int WORLD_WIDTH = tileSize * MAXSCREENCOL; 
-  public static final int WORLD_HEIGHT = tileSize * MAXSCREENROW; 
+  public static final int MAXSCREENCOL = 66;
+  public static final int MAXSCREENROW = 23;
+  public static final int WORLD_WIDTH = tileSize * MAXSCREENCOL;
+  public static final int WORLD_HEIGHT = tileSize * MAXSCREENROW;
   public static final int SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width - 222;
   public static final int SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
 
@@ -54,8 +54,8 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   );
 
   private TileManager tileM;
-  private int cameraX; 
-  private int cameraY; 
+  private int cameraX;
+  private int cameraY;
   private double playerPosX;
   private double playerPosY;
   private ImplControllerGamePanel controller;
@@ -135,7 +135,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
     //Da sistemare il foreach in modo che cicli su una lista di plant, non di pod, con PlantType, il GrowthStage e le coordinate
     for (final Soil pod : soilList) {
-     
+
       if (pod.getIsPlanted()) {
         final ImageIcon icon = Texture.getPlantStageIcon(selectedPlant.getName(), 3);
         final Image image = icon.getImage();

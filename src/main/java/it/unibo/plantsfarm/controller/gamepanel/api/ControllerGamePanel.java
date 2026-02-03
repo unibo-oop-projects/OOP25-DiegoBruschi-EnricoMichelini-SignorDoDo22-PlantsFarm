@@ -39,8 +39,8 @@ public interface ControllerGamePanel {
     ImplViewGamePanel getView();
 
     /**
-     * Creates and sets the player using the Player Factory. 
-     * The Factory accepts the Enum PlayerType 
+     * Creates and sets the player using the Player Factory.
+     * The Factory accepts the Enum PlayerType
      */
     void setPlayer();
 

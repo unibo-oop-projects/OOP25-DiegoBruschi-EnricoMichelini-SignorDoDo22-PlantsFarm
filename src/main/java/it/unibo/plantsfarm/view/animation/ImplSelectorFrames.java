@@ -16,14 +16,17 @@ import it.unibo.plantsfarm.model.animation.api.AnimationFrames;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.utility.AnimationTime;
 
-public class ImplSelectorFrames implements SelectorFrames {
+/**
+ * Implementation of the class SelectorFrames.
+ */
+public final class ImplSelectorFrames implements SelectorFrames {
 
-    private final AnimationAzione animationWater = new AnimationAzione(AnimationTime.FRAME_10_FPS, AnimationFrames.WATER);
-    private final AnimationAzione animationHoe = new AnimationAzione(AnimationTime.FRAME_10_FPS, AnimationFrames.DIG);
-    private final AnimationCorsa animationLeft = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.WALKLEFT);
-    private final AnimationCorsa animationUp = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.WALKUP);
-    private final AnimationCorsa animationDown = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.WALKDOWN);
-    private final AnimationCorsa animationRight = new AnimationCorsa(AnimationTime.FRAME_10_FPS, AnimationFrames.WALKRIGHT);
+    private final AnimationAzione animationWater = new AnimationAzione(AnimationTime.FRAME_8_FPS, AnimationFrames.WATER);
+    private final AnimationAzione animationHoe = new AnimationAzione(AnimationTime.FRAME_8_FPS, AnimationFrames.DIG);
+    private final AnimationCorsa animationLeft = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.WALKLEFT);
+    private final AnimationCorsa animationUp = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.WALKUP);
+    private final AnimationCorsa animationDown = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.WALKDOWN);
+    private final AnimationCorsa animationRight = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.WALKRIGHT);
     private long nowNs;
     private Animation currentAnimation;
     private BufferedImage currentImage = AnimationFrames.BASE;
@@ -86,14 +89,20 @@ public class ImplSelectorFrames implements SelectorFrames {
 
     }
 
-    public void update(final Long now) {
-        final long durationAnim = nowNs + AnimationTime.FRAME_10_FPS;
-        if (now <= durationAnim && currentAnimation != null) {
-            this.currentImage = currentAnimation.getCurrentFrame(System.nanoTime());
+    @Override
+    public void update(final Long nowNs) {
+    if (currentAnimation != null) {
+        currentImage = currentAnimation.getCurrentFrame(nowNs);
+
+        if (!currentAnimation.getisPlaying()) {
+            currentAnimation = null;
+            currentImage = AnimationFrames.BASE;
+        }
         }
     }
 
-    public final BufferedImage getCurrentImage() { 
+    @Override
+    public BufferedImage getCurrentImage() {
         return this.currentImage;
     }
 }
