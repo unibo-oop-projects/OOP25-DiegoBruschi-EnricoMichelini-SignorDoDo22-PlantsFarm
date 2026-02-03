@@ -2,7 +2,6 @@ package it.unibo.plantsfarm.model.items;
 
 import static it.unibo.plantsfarm.model.player.PlayersTypes.EXPERTFARMER;
 import static it.unibo.plantsfarm.model.player.PlayersTypes.FARMER;
-
 import java.util.LinkedList;
 import java.util.List;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;

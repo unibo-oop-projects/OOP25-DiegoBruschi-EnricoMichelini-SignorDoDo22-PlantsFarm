@@ -16,7 +16,10 @@ import it.unibo.plantsfarm.model.animation.api.AnimationFrames;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.utility.AnimationTime;
 
-public class ImplSelectorFrames implements SelectorFrames {
+/**
+ * Implementation of the class SelectorFrames.
+ */
+public final class ImplSelectorFrames implements SelectorFrames {
 
     private final AnimationAzione animationWater = new AnimationAzione(AnimationTime.FRAME_8_FPS, AnimationFrames.WATER);
     private final AnimationAzione animationHoe = new AnimationAzione(AnimationTime.FRAME_8_FPS, AnimationFrames.DIG);
@@ -86,20 +89,20 @@ public class ImplSelectorFrames implements SelectorFrames {
 
     }
 
+    @Override
     public void update(final Long nowNs) {
     if (currentAnimation != null) {
-        // aggiorna il frame usando lo STESSO timestamp del game loop
         currentImage = currentAnimation.getCurrentFrame(nowNs);
 
-        // se è un'azione finita (playing = false) torna alla base
         if (!currentAnimation.getisPlaying()) {
             currentAnimation = null;
             currentImage = AnimationFrames.BASE;
         }
+        }
     }
-}
 
-    public final BufferedImage getCurrentImage() {
+    @Override
+    public BufferedImage getCurrentImage() {
         return this.currentImage;
     }
 }

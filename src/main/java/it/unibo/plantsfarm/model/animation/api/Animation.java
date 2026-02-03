@@ -8,19 +8,26 @@ import java.awt.image.BufferedImage;
 public interface Animation {
     /**
      * this method return the current frame of the player animation.
-     * 
-     * @param now CurrentTime, is used for calculate the next frame based on begin time 
-     * 
-     * @return CurrentImage 
+     *
+     * @param now CurrentTime, is used for calculate the next frame based on begin time
+     *
+     * @return CurrentImage
      */
     BufferedImage getCurrentFrame(long now);
 
     /**
      * Start animation from time nowNs.
-     * 
-     * @param nowNs time begin 
+     *
+     * @param nowNs time begin
      */
     void start(long nowNs);
 
+    /**
+     * Returns the current the state of the animation.
+     * If is not finished, then it will return true.
+     * if is finished, it will return false
+     *
+     * @return
+     */
     boolean getisPlaying();
 }
