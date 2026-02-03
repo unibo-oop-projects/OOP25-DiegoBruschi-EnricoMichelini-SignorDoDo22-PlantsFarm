@@ -77,8 +77,7 @@ public final class EncyclopediaScreen {
         this.nameLabel.setOpaque(true);
         this.nameLabel.setBackground(BG);
         this.nameLabel.setForeground(Color.BLACK);
-        this.nameLabel.setBorder(BorderFactory.createEmptyBorder(PADDING, PADDING,
-            PADDING, PADDING));
+        this.nameLabel.setBorder(BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING));
         this.stageButton = ButtonFactory.createButton("Next Stage");
         this.stageButton.setVisible(false);
 
