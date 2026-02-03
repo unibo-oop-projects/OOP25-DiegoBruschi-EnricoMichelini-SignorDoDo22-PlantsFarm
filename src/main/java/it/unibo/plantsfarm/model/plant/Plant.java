@@ -11,7 +11,7 @@ public class Plant {
     // Static info
     private static final long WATER_REDUCTION_TIME = 5_000L;
     private static final long WATER_TIME_COOLDOWN = 15_000L;
-    private static final long GROWTH_TIME = 5_000L; //30000
+    private static final long GROWTH_TIME = 30_000L;
     private final PlantType type;
 
     // Dynamic info
@@ -31,24 +31,14 @@ public class Plant {
     public Plant(final PlantType type) {
         this.type = type;
         this.growthStage = 0;
-        this.needsWater = false;
-        this.isPlanted = false;
+        this.needsWater = true;
+        this.isPlanted = true;
         this.currentStageTime = System.currentTimeMillis();
         this.lastWateredTime = System.currentTimeMillis();
     }
 
-    /**
-     * Plants the seed if it hasn't been planted.
-     */
-    public final void plant(PlantType plantType) {
-        if (!isPlanted) {
-            isPlanted = true;
-            needsWater = true;
-        }
-    }
-
     public final void increaseGrowthStage(final long now){
-        if (System.currentTimeMillis() >= currentStageTime + GROWTH_TIME && growthStage < getMaxGrowthStage()) {
+        if (watered && System.currentTimeMillis() >= currentStageTime + GROWTH_TIME && growthStage < getMaxGrowthStage()) {
             currentStageTime = now;
             watered = false;
             growthStage++;
@@ -61,12 +51,11 @@ public class Plant {
      *  @param now The current time in milliseconds.
      */
     public final void water(final Long now) {
-        if (isPlanted && needsWater) {
+        if (growthStage < type.getMaxGrowthStage() && needsWater) {
+            this.lastWateredTime = System.currentTimeMillis();
+            watered = true;
             needsWater = false;
-            if (growthStage < type.getMaxGrowthStage() && now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
-                this.lastWateredTime = System.currentTimeMillis();
-                watered = true;
-            }
+            currentStageTime -= WATER_REDUCTION_TIME;
         }
     }
 
@@ -76,6 +65,7 @@ public class Plant {
      * @param now The current time in milliseconds.
      */
     public final void updateNeedsWater(final Long now) {
+        System.out.println("NeedsWater " + needsWater + "  -  Watered " + watered);
         if (this.type.getMaxGrowthStage() > this.growthStage) {
             if (now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
                 this.needsWater = true;

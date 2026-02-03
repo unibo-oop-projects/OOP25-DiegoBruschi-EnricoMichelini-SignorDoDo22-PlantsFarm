@@ -150,7 +150,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         if (pod.getIsPlanted()) {
 
           final ImageIcon icon = Texture.getPlantStageIcon(pod.getPlant().getName(), pod.getPlant().getGrowthStage() + 1);
-          System.out.println(pod.getPlant().getName() + " " + pod.getPlant().getGrowthStage());
+          //System.out.println(pod.getPlant().getName() + " " + pod.getPlant().getGrowthStage());
           if (icon != null) {
             final Image image = icon.getImage();
             g2D.drawImage(image,

@@ -2,9 +2,11 @@ package it.unibo.plantsfarm.controller.gamepanel;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
+import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.TileMap;
 import it.unibo.plantsfarm.model.camera.Camera;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
+import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
@@ -20,9 +22,13 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
     private TileMap map = new TileMap();
+    private GameState gameState;
 
-    public ImplControllerGamePanel() {
+    public ImplControllerGamePanel(final GameState gameState) {
+        this.gameState = gameState;
         setPlayer();
+        gameState.addHarvest(PlantType.ANANAS, 100);
+        gameState.addHarvest(PlantType.CARROT, 100);
         this.player = getPlayer();
         map.loadMap("/maps/map.txt");
     }
