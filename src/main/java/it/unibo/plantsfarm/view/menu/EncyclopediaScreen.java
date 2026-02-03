@@ -20,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import java.awt.Toolkit;
+import java.awt.Dimension;
 
 /**
  * Manages the view for the Encyclopedia feature.
@@ -29,8 +31,11 @@ public final class EncyclopediaScreen {
     private static final String TITLE = "Encyclopedia";
     private static final String FONT_NAME = "Arial";
     private static final int GRID_COLS = 5;
-    private static final int GAP = 5;
-    private static final int PADDING = 10;
+
+    private static final double FONT_TITLE_RATIO = 0.025;
+    private static final double FONT_DESCRIPTION_RATIO = 0.015;
+    private static final double GAP_RATIO = 0.01;
+    private static final double PADDING_RATIO = 0.02;
 
     private static final Color BG_COMMON = new Color(144, 238, 144);
     private static final Color BG_RARE = new Color(221, 160, 221);
@@ -44,9 +49,6 @@ public final class EncyclopediaScreen {
 
     private static final Color BG = new Color(245, 245, 220);
 
-    private static final int FONT_SIZE_TITLE = 25;
-    private static final int FONT_SIZE_DESCRIPTION = 15;
-
     private final JDialog encyclpediaScreen;
     private final JPanel buttonPanel;
     private final JPanel detailsPanel;
@@ -59,33 +61,40 @@ public final class EncyclopediaScreen {
      * Initializes the screen.
      */
     public EncyclopediaScreen() {
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        final int screenHeight = screenSize.height;
+
+        final int fontSizeTitle = (int) (screenHeight * FONT_TITLE_RATIO);
+        final int fontSizeDesc = (int) (screenHeight * FONT_DESCRIPTION_RATIO);
+        final int gap = (int) (screenHeight * GAP_RATIO);
+        final int padding = (int) (screenHeight * PADDING_RATIO);
+
         this.encyclpediaScreen = WindowFactory.createMenuWindow(TITLE);
         this.encyclpediaScreen.setLayout(new GridLayout(1, 2));
 
-        this.buttonPanel = new JPanel(new GridLayout(0, GRID_COLS, GAP, GAP));
-        this.buttonPanel.setBorder(BorderFactory.createEmptyBorder(GAP, GAP, GAP, GAP));
+        this.buttonPanel = new JPanel(new GridLayout(0, GRID_COLS, gap, gap));
+        this.buttonPanel.setBorder(BorderFactory.createEmptyBorder(gap, gap, gap, gap));
 
-        this.detailsPanel = new JPanel(new BorderLayout(GAP, GAP));
-        this.detailsPanel.setBorder(BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING));
+        this.detailsPanel = new JPanel(new BorderLayout(gap, gap));
+        this.detailsPanel.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
         this.detailsPanel.setBackground(BG);
 
-        final JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, GAP, 0));
+        final JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, gap, 0));
         topPanel.setOpaque(false);
 
         this.nameLabel = new JLabel("Select a Plant");
-        this.nameLabel.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_TITLE));
+        this.nameLabel.setFont(new Font(FONT_NAME, Font.BOLD, fontSizeTitle));
         this.nameLabel.setOpaque(true);
         this.nameLabel.setBackground(BG);
         this.nameLabel.setForeground(Color.BLACK);
-        this.nameLabel.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
-
+        this.nameLabel.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
         this.stageButton = ButtonFactory.createButton("Next Stage");
         this.stageButton.setVisible(false);
 
         topPanel.add(this.nameLabel);
         topPanel.add(this.stageButton);
 
-        final JPanel centerWrapper = new JPanel(new BorderLayout(0, GAP));
+        final JPanel centerWrapper = new JPanel(new BorderLayout(0, gap));
         centerWrapper.setOpaque(false);
 
         this.plantStageImageLabel = new JLabel();
@@ -94,7 +103,7 @@ public final class EncyclopediaScreen {
         centerWrapper.add(this.plantStageImageLabel, BorderLayout.CENTER);
 
         this.plantDescriptionArea = new JTextArea("Click on a plant icon.");
-        this.plantDescriptionArea.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE_DESCRIPTION));
+        this.plantDescriptionArea.setFont(new Font(FONT_NAME, Font.BOLD, fontSizeDesc));
         this.plantDescriptionArea.setEditable(false);
         this.plantDescriptionArea.setLineWrap(true);
         this.plantDescriptionArea.setOpaque(false);

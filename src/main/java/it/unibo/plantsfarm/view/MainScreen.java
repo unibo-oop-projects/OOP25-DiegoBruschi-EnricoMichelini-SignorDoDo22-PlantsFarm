@@ -12,7 +12,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -26,15 +25,14 @@ public final class MainScreen {
 
     private static final String TITLE = "PlantsFarm";
     private static final String FONT_FAMILY = "SansSerif";
-    private static final int FONT_SIZE = 24;
-    private static final int UPPER_PANEL_WIDTH = 600;
-    private static final int UPPER_PANEL_HEIGHT = 200;
+
+    private static final double FONT_SCALE_RATIO = 0.025;
+    private static final double GAP_RATIO = 0.015;
 
     private final MenuPanel menuPanel;
     private ImplViewGamePanel gameViewPanel;
     private JFrame frame;
     private JLabel coinLabel;
-    private JButton inventoryButton;
     private final MusicPlayer musicPlayer;
 
     /**
@@ -49,7 +47,7 @@ public final class MainScreen {
     /**
      * Creates and displays the main screen window.
      */
-    public void createMainScreen(ImplViewGamePanel gameViewPanel) {
+    public void createMainScreen(final ImplViewGamePanel gameViewPanel) {
         this.frame = new JFrame(TITLE);
         this.gameViewPanel = gameViewPanel;
         this.frame.setLayout(new BorderLayout());
@@ -67,17 +65,20 @@ public final class MainScreen {
         final JLayeredPane layeredPane = new JLayeredPane();
 
         this.gameViewPanel.setBounds(0, 0, screenSize.width, screenSize.height);
+        final int hGap = (int) (screenSize.width * GAP_RATIO);
+        final int vGap = (int) (screenSize.height * GAP_RATIO);
+        final int fontSize = (int) (screenSize.height * FONT_SCALE_RATIO);
 
         layeredPane.add(this.gameViewPanel, JLayeredPane.DEFAULT_LAYER);
 
-        final JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
+        final JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, hGap, vGap));
         topPanel.setOpaque(false);
         topPanel.setFocusable(false);
-        topPanel.setBounds(0, 0, UPPER_PANEL_WIDTH, UPPER_PANEL_HEIGHT);
+        topPanel.setBounds(0, 0, screenSize.width, screenSize.height / 6);
 
         this.coinLabel = new JLabel(" 0 ");
         this.coinLabel.setIcon(Texture.COIN_ICON);
-        this.coinLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, FONT_SIZE));
+        this.coinLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, fontSize));
         this.coinLabel.setForeground(Color.BLACK);
 
         topPanel.add(this.coinLabel);
@@ -151,20 +152,6 @@ public final class MainScreen {
             listener.actionPerformed(e);
             this.gameViewPanel.requestFocusInWindow();
         });
-    }
-
-    /**
-     * Allows the controller to attach an action to the Inventory button.
-     *
-     * @param listener The action to perform.
-     */
-    public void attachInventoryListener(final ActionListener listener) {
-        if (this.inventoryButton != null) {
-            this.inventoryButton.addActionListener(e -> {
-                listener.actionPerformed(e);
-                this.gameViewPanel.requestFocusInWindow();
-            });
-        }
     }
 
     /**

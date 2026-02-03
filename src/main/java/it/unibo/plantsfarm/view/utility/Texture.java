@@ -17,14 +17,18 @@ public final class Texture {
     public static final int MENU_ICON_SIZE = calculateSize(MENU_ICON_RATIO);
 
     public static final String PLANT_PATH = "icons/plantIcon/";
+
     public static final double PLANT_ICON_RATIO = 0.06;
     public static final int PLANT_ICON_SIZE = calculateSize(PLANT_ICON_RATIO);
+
+    public static final double SHOP_PLANT_ICON_RATIO = 0.08;
+    public static final int SHOP_PLANT_ICON_SIZE = calculateSize(SHOP_PLANT_ICON_RATIO);
 
     public static final double MYSTERY_ICON_RATIO = 0.30;
     public static final int MYSTERY_ICON_SIZE = calculateSize(MYSTERY_ICON_RATIO);
 
     public static final String STAGE_PATH = "plantsStage/";
-    public static final double STAGE_ICON_RATIO = 0.28;
+    public static final double STAGE_ICON_RATIO = 0.25;
     public static final int STAGE_ICON_SIZE = calculateSize(STAGE_ICON_RATIO);
 
     public static final String STATUS_PATH = "plantStatus/";
@@ -70,7 +74,18 @@ public final class Texture {
     }
 
     /**
-     * Gets a giant plant icon dynamically for Mystery Box.
+     * Gets a larger plant icon for the Shop.
+     *
+     * @param plantName The name of the plant.
+     * @return The ImageIcon.
+     */
+    public static ImageIcon getShopPlantIcon(final String plantName) {
+        final String fullPath = PLANT_PATH + plantName + EXTENSION;
+        return loadAndScale(fullPath, SHOP_PLANT_ICON_SIZE, SHOP_PLANT_ICON_SIZE);
+    }
+
+    /**
+     * Gets a giant plant icon for Mystery Box.
      *
      * @param plantName The name of the plant.
      * @return The ImageIcon.
