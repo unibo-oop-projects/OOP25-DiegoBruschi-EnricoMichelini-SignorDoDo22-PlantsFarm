@@ -28,6 +28,7 @@ import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.Soil;
 import it.unibo.plantsfarm.model.plant.PlantType;
+import it.unibo.plantsfarm.view.UpgradeItemsView;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePanel;
 import it.unibo.plantsfarm.view.map.TileManager;
@@ -35,35 +36,24 @@ import it.unibo.plantsfarm.view.utility.Texture;
 
 public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
-    // --- SCREEN & DIMENSIONS CONSTANTS ---
     private static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
-    
-    // Definiamo larghezza menu laterale (fisso o proporzionale, qui ho tenuto il tuo 222 circa)
-    // Sarebbe meglio farlo proporzionale: (int)(SCREEN_SIZE.width * 0.15)
-    public static final int SIDEBAR_WIDTH = 222; 
-    
+
+    public static final int SIDEBAR_WIDTH = 222;
+
     public static final int SCREEN_WIDTH = SCREEN_SIZE.width - SIDEBAR_WIDTH;
     public static final int SCREEN_HEIGHT = SCREEN_SIZE.height;
 
-    // QUANTE TILE VOGLIAMO VEDERE IN VERTICALE?
-    // Questo numero definisce lo ZOOM. 
-    // Prima avevi (1080 / 67) * 3 ≈ 48px. 1080 / 48 ≈ 22.5 tiles.
-    private static final int VISIBLE_TILES_VERTICAL = 22; 
+    private static final int VISIBLE_TILES_VERTICAL = 22;
 
-    // Calcolo TILE_SIZE basato sull'altezza dello schermo
     public static final int TILE_SIZE = SCREEN_HEIGHT / VISIBLE_TILES_VERTICAL;
     public static final int POD_SIZE = TILE_SIZE;
 
-    // Il Player era 64px quando la tile era 48px. Il rapporto è circa 1.33
     public static final int PLAYER_SIZE = (int) (TILE_SIZE * 1.33);
 
-    // Mappa
-    public static final int MAX_WORLD_COL = 66; 
-    public static final int MAX_WORLD_ROW = 23; 
-    public static final int WORLD_WIDTH = TILE_SIZE * MAX_WORLD_COL; 
-    public static final int WORLD_HEIGHT = TILE_SIZE * MAX_WORLD_ROW; 
-
-
+    public static final int MAX_WORLD_COL = 66;
+    public static final int MAX_WORLD_ROW = 23;
+    public static final int WORLD_WIDTH = TILE_SIZE * MAX_WORLD_COL;
+    public static final int WORLD_HEIGHT = TILE_SIZE * MAX_WORLD_ROW;
 
     private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER = Map.of(
         KeyEvent.VK_W, UP,
@@ -75,36 +65,34 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
     );
 
     private final TileManager tileM;
-    private int cameraX; 
-    private int cameraY; 
+    private int cameraX;
+    private int cameraY;
     private double playerPosX;
     private double playerPosY;
     private ImplControllerGamePanel controller;
     private SelectorFrames selector;
-
-    private boolean plantWindow = true; 
+    private UpgradeItemsView itemsView;
+    private boolean plantWindow = true;
     private List<Soil> soilList = List.of();
     public static PlantType selectedPlant;
 
     public ImplViewGamePanel() {
         super();
-        this.setLayout(null); // Spesso utile se non usi LayoutManager standard per il rendering custom
+        this.itemsView = new UpgradeItemsView(this);
+        this.setLayout(null);
         this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setDoubleBuffered(true);
         this.setFocusable(true);
-        this.requestFocusInWindow(); // Meglio di requestFocus() nel costruttore
+        this.requestFocusInWindow();
         this.setBackground(Color.BLACK);
-        
         this.tileM = new TileManager(this);
-        
+
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(final KeyEvent e) {
-                // Rimosso super.keyPressed(e) inutile in KeyAdapter
-                
+
                 if (e.getKeyCode() == KeyEvent.VK_P) {
-                    // Nota: Stai creando un Controller nella View. Attenzione all'MVC.
                     new SeedController(selectedPlant -> {
                         System.out.println("Selected plant: " + selectedPlant.getName());
                         ImplViewGamePanel.selectedPlant = selectedPlant;
@@ -115,12 +103,16 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
                     if (controller != null) controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
                     if (selector != null) selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
                 }
+
+                if (KeyEvent.VK_F == e.getKeyCode()) {
+                    itemsView.setVisible(true);
+                }
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
                 if (KEY_MAPPER.containsKey(e.getKeyCode())) {
-                     if (controller != null) controller.takeInput(UserInput.FERMO);
+                    if (controller != null) controller.takeInput(UserInput.FERMO);
                 }
             }
         });
@@ -143,12 +135,10 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         super.paintComponent(g);
         final Graphics2D g2D = (Graphics2D) g;
 
-        // 1. Disegna Mappa
         if (tileM != null) {
             tileM.drawTile(g2D, cameraX, cameraY);
         }
 
-        // 2. Disegna Player
         if (selector != null) {
             g2D.drawImage(selector.getCurrentImage(),
                 (int) playerPosX - cameraX,
@@ -159,34 +149,25 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
             );
         }
 
-        // 3. Disegna Piante/Pods
         if (soilList != null) {
             for (final Soil pod : soilList) {
                 if (pod.getIsPlanted()) {
-                    // TODO: Recuperare l'immagine dinamica dalla pianta nel Soil
-                    // Esempio: Image image = pod.getPlant().getCurrentStageImage().getImage();
-                    
-                    // Placeholder temporaneo come da tuo codice
+
                     final ImageIcon icon = Texture.getPlantStageIcon(pod.getPlant().getName(), pod.getPlant().getGrowthStage() + 1);
-                    System.out.println(pod.getPlant().getName() + " " + pod.getPlant().getGrowthStage());
                     if (icon != null) {
-                      final Image image = icon.getImage();
-                         g2D.drawImage(image, 
-                             pod.getCoordinate().x - cameraX, 
-                             pod.getCoordinate().y - cameraY, 
-                             POD_SIZE, 
-                             POD_SIZE, 
-                             null
-                         );
+                        final Image image = icon.getImage();
+                        g2D.drawImage(image,
+                            pod.getCoordinate().x - cameraX,
+                            pod.getCoordinate().y - cameraY,
+                            POD_SIZE,
+                            POD_SIZE,
+                            null
+                        );
                     }
-                    
-                    // ATTENZIONE: Ho rimosso pod.setPlanted(null).
-                    // NON modificare lo stato del modello dentro paintComponent!
                 }
             }
         }
-        
-        g2D.dispose(); // Buona pratica rilasciare il contesto grafico copia
+        g2D.dispose();
     }
 
     @Override
