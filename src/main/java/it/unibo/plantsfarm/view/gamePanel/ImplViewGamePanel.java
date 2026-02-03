@@ -28,6 +28,7 @@ import it.unibo.plantsfarm.view.utility.Texture;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePanel;
 import it.unibo.plantsfarm.model.Soil;
+import it.unibo.plantsfarm.model.plant.PlantType;
 
 public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   public static final int MAP_RENDER_SCALE = 67;
@@ -62,6 +63,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
   private boolean plantWindow = true; //da modificare in base alle piante da visualizzare
   private List<Soil> soilList = List.of();
+  private static PlantType selectedPlant;
 
   public ImplViewGamePanel() {
     super();
@@ -82,8 +84,9 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
       if (e.getKeyCode() == KeyEvent.VK_P) {
           new SeedController(selectedPlant -> {
             System.out.println("Selected plant: " + selectedPlant.getName());
+            ImplViewGamePanel.selectedPlant = selectedPlant;
           }, plantWindow).start();
-          }
+        }
 
       if (KEY_MAPPER.containsKey(e.getKeyCode())) {
           controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
@@ -130,13 +133,13 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
       null
     );
 
-
+    //Da sistemare il foreach in modo che cicli su una lista di plant, non di pod, con PlantType, il GrowthStage e le coordinate
     for (final Soil pod : soilList) {
      
       if (pod.getIsPlanted()) {
-        final ImageIcon icon = Texture.getPlantStageIcon("Tomato", 3);
+        final ImageIcon icon = Texture.getPlantStageIcon(selectedPlant.getName(), 3);
         final Image image = icon.getImage();
-        pod.setPlanted(null); //da sostituire con pod.getPlant().getCurrentStageImage()
+        pod.setPlanted(null); //qui aggiungo il plant alla lista che avrò creato
         g2D.drawImage(image, pod.getCoordinate().x - cameraX, pod.getCoordinate().y - cameraY, POD_SIZE, POD_SIZE, null);
       }
     }
