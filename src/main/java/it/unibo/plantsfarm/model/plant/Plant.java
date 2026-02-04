@@ -46,7 +46,7 @@ public class Plant {
                 growthStage++;
             }
         } else {
-            ImplControllerGamePanel.gameState.addHarvest(type, 10);
+
         }
     }
 

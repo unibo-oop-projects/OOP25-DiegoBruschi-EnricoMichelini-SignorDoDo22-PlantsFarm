@@ -1,10 +1,9 @@
 package it.unibo.plantsfarm.model.inventario;
 
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
+
 
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
