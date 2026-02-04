@@ -2,10 +2,13 @@ package it.unibo.plantsfarm.model.player.api;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.TileMap;
+import it.unibo.plantsfarm.model.inventario.ModelInventario;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
+import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.model.Soil;
 import it.unibo.plantsfarm.model.SolidBlock;
 import it.unibo.plantsfarm.model.plant.Plant;
@@ -40,12 +43,13 @@ public abstract class AbstractPlayer {
     /** Current movement direction of the player. */
     private UserInput direction = UserInput.FERMO;
 
-    private final List<ItemsFarm> inventario;
+    private final ModelInventario inventory;
 
-    public AbstractPlayer(final List<ItemsFarm> inventario) {
+    public AbstractPlayer(final ModelInventario inventory) {
         this.map.loadMap("/maps/map.txt");
         this.soils = this.map.getSoilList();
-        this.inventario = inventario;
+        this.inventory = inventory;
+        System.out.println("LUNGHEZZA INVENTARIO + " + inventory.getInventorySnapshot().size() + "item1 " + inventory.getDurability(Tooltype.HOE));
     }
 
 
@@ -169,4 +173,7 @@ public abstract class AbstractPlayer {
         return this.soils;
     }
 
+    public ModelInventario getInventory(){
+        return this.inventory;
+    }
 }

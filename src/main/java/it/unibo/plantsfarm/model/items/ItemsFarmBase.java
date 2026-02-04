@@ -3,8 +3,12 @@ package it.unibo.plantsfarm.model.items;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 
 public  class ItemsFarmBase implements ItemsFarm {
-    private int totalintegrity;
-    private int actualintegrity;
+
+    private int totalintegrity = 100;
+    private int actualintegrity = 10;
+    private int minIntegrity = 0;
+    private int minLevel = 0;
+    private int maxLevel = 30;
     private int level;
     private int costRepair;
     private Tooltype type;
@@ -23,8 +27,9 @@ public  class ItemsFarmBase implements ItemsFarm {
     }
 
     @Override
-    public void repairItem() {
+    public void repair() {
         this.actualintegrity = totalintegrity;
+        System.out.println("SONO QUA  RIPARA ITEM ActualIntegrity nell'item: " +  actualintegrity);
     }
 
     @Override
@@ -52,5 +57,24 @@ public  class ItemsFarmBase implements ItemsFarm {
         return this.costRepair;
     }
 
+    @Override
+    public int getMaxIntegrity() {
+        return this.totalintegrity;
+    }
+
+    @Override
+    public int getMinIntegrity() {
+        return this.minIntegrity;
+    }
+
+    @Override
+    public int getMaxLevel() {
+        return this.totalintegrity;
+    }
+
+    @Override
+    public int getMinLevel() {
+        return this.minIntegrity;
+    }
 
 }

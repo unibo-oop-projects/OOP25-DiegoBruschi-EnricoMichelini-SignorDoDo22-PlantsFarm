@@ -2,11 +2,11 @@ package it.unibo.plantsfarm.controller.gamepanel;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
+import it.unibo.plantsfarm.controller.inventario.ControllerInventario;
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.TileMap;
 import it.unibo.plantsfarm.model.camera.Camera;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
-import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
@@ -22,16 +22,15 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
     private TileMap map = new TileMap();
-    private GameState gameState;
+    private final GameState gameState;
+    private final ControllerInventario controllerInventario;
 
     public ImplControllerGamePanel(final GameState gameState) {
         this.gameState = gameState;
         setPlayer();
-        gameState.addHarvest(PlantType.ANANAS, 100);
-        gameState.addHarvest(PlantType.CARROT, 100);
         this.player = getPlayer();
-        this.gameState = gameState;
         map.loadMap("/maps/map.txt");
+        this.controllerInventario = new ControllerInventario(gameState, player);
     }
 
    @Override
@@ -69,8 +68,10 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
 
     @Override
     public void addView() {
-        view = new ImplViewGamePanel();
+        this.view = new ImplViewGamePanel();
         this.controllerAnimation = new ImplSelectorFrames();
+        this.controllerInventario.addView(this.view);
+        this.view.setItemsView(controllerInventario.getView());
         view.setSelectorFrames(controllerAnimation);
         view.setController(this);
         camera = new ImplCamera(view.getWidth(), view.getHeight());

@@ -28,10 +28,9 @@ import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.Soil;
 import it.unibo.plantsfarm.model.plant.PlantType;
-import it.unibo.plantsfarm.view.UpgradeItemsView;
-import it.unibo.plantsfarm.view.UpgradeItemsView;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePanel;
+import it.unibo.plantsfarm.view.inventario.UpgradeItemsView;
 import it.unibo.plantsfarm.view.map.TileManager;
 import it.unibo.plantsfarm.view.utility.Texture;
 
@@ -70,16 +69,15 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   private int cameraY;
   private double playerPosX;
   private double playerPosY;
-  private ImplControllerGamePanel controller;
+  private ControllerGamePanel controller;
   private SelectorFrames selector;
-  private UpgradeItemsView itemsView;
+  private UpgradeItemsView inventoryView;
   private boolean plantWindow = true;
   private List<Soil> soilList = List.of();
   public static PlantType selectedPlant;
 
   public ImplViewGamePanel() {
     super();
-    this.itemsView = new UpgradeItemsView(this);
     this.setLayout(null);
     this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
     this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -88,7 +86,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
     this.requestFocusInWindow();
     this.setBackground(Color.BLACK);
     this.tileM = new TileManager(this);
-
+    this.inventoryView = new UpgradeItemsView(this);
     this.addKeyListener(new KeyAdapter() {
       @Override
       public void keyPressed(final KeyEvent e) {
@@ -107,7 +105,8 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         }
 
         if(KeyEvent.VK_F == e.getKeyCode()) {
-            itemsView.setVisible(true);
+          inventoryView.update();
+          inventoryView.setVisible(true);
         }
       }
 
@@ -182,4 +181,9 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   public void setSelectorFrames(final SelectorFrames selectorFrames) {
     this.selector = selectorFrames;
   }
+
+  public void setItemsView(final UpgradeItemsView itemsView){
+    this.inventoryView = itemsView;
+  }
+
 }

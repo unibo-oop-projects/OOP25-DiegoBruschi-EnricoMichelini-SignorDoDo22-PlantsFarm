@@ -14,7 +14,7 @@ public interface ItemsFarm {
     /**
      *
      */
-    void repairItem();
+    void repair();
 
     /**
      *
@@ -43,6 +43,14 @@ public interface ItemsFarm {
      * @return
      */
     int getCostRepair();
+
+    int getMaxIntegrity();
+
+    int getMinIntegrity();
+
+    int getMaxLevel();
+
+    int getMinLevel();
 
     /**
      *
