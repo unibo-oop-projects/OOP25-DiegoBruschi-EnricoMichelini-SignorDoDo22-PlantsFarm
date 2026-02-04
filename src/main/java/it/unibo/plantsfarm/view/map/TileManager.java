@@ -53,6 +53,8 @@ public final class TileManager {
         setupTile(17, "dirtLDownLeft.png");
         setupTile(18, "dirtLUpLeft.png");
         setupTile(19, "dirtContained.png");
+        setupTile(74, "flowers.png");
+        setupTile(75, "lessFlowers.png");
 
         // Shop slicing and loading
         final int numColonne = 9;

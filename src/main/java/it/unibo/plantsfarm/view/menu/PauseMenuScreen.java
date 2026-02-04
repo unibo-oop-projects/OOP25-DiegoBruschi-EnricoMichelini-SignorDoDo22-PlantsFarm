@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 
 /**
@@ -21,26 +22,36 @@ public final class PauseMenuScreen {
 
     private static final String TITLE = "Pause Menu";
     private static final Color BG_COLOR = new Color(245, 245, 220);
-    private static final int GAP = 10;
-    private static final int PADDING = 20;
-    private static final int BTN_WIDTH = 200;
-    private static final int BTN_HEIGHT = 45;
+
     private static final int ROWS = 3;
     private static final int COLS = 2;
 
+    private static final double GAP_RATIO = 0.02;
+    private static final double PADDING_RATIO = 0.02;
+    private static final double BTN_WIDTH_RATIO = 0.10;
+    private static final double BTN_HEIGHT_RATIO = 0.05;
+
     private final JDialog screen;
     private final JPanel buttonPanel;
+    private final int btnWidth;
+    private final int btnHeight;
 
     /**
      * Creates the Pause Menu Screen.
      */
     public PauseMenuScreen() {
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        final int gap = (int) (screenSize.height * GAP_RATIO);
+        final int padding = (int) (screenSize.height * PADDING_RATIO);
+        this.btnWidth = (int) (screenSize.width * BTN_WIDTH_RATIO);
+        this.btnHeight = (int) (screenSize.height * BTN_HEIGHT_RATIO);
+
         this.screen = WindowFactory.createMenuWindow(TITLE);
 
         this.buttonPanel = new JPanel();
-        this.buttonPanel.setLayout(new GridLayout(ROWS, COLS, GAP, GAP));
+        this.buttonPanel.setLayout(new GridLayout(ROWS, COLS, gap, gap));
         this.buttonPanel.setBackground(BG_COLOR);
-        this.buttonPanel.setBorder(BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING));
+        this.buttonPanel.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
 
         this.screen.add(this.buttonPanel);
     }
@@ -48,7 +59,7 @@ public final class PauseMenuScreen {
     private void addButton(final String text, final ImageIcon icon, final ActionListener listener) {
         final JButton button = ButtonFactory.createButton(text);
         button.setIcon(icon);
-        button.setPreferredSize(new Dimension(BTN_WIDTH, BTN_HEIGHT));
+        button.setPreferredSize(new Dimension(this.btnWidth, this.btnHeight));
         button.addActionListener(listener);
         this.buttonPanel.add(button);
     }

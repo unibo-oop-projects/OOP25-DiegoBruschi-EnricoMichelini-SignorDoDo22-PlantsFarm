@@ -15,6 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import java.awt.Toolkit;
+import java.awt.Dimension;
 
 /**
  * Manages the view for the Storage feature.
@@ -22,8 +24,8 @@ import javax.swing.SwingConstants;
 public final class StorageScreen {
 
     private static final String TITLE = "Storage";
-    private static final int GAP = 10;
-    private static final int PADDING = 20;
+    private static final double GAP_RATIO = 0.005;
+    private static final double PADDING_RATIO = 0.005;
     private static final int GRID_COLS = 3;
 
     private static final Color BG_COLOR = new Color(245, 245, 220);
@@ -36,13 +38,16 @@ public final class StorageScreen {
      * Creates a new StorageScreen using WindowFactory.
      */
     public StorageScreen() {
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        final int gap = (int) (screenSize.height * GAP_RATIO);
+        final int padding = (int) (screenSize.height * PADDING_RATIO);
 
         this.dialog = WindowFactory.createMenuWindow(TITLE);
         this.dialog.setLayout(new BorderLayout());
 
-        this.itemsPanel = new JPanel(new GridLayout(0, GRID_COLS, GAP, GAP));
+        this.itemsPanel = new JPanel(new GridLayout(0, GRID_COLS, gap, gap));
         this.itemsPanel.setBackground(BG_COLOR);
-        this.itemsPanel.setBorder(BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING));
+        this.itemsPanel.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
 
         this.dialog.add(itemsPanel, BorderLayout.CENTER);
 

@@ -63,7 +63,6 @@ public abstract class AbstractPlayer {
         final double delta = speed * time / 1000.0;
         double nextPosX = posX;
         double nextPosY = posY;
-
         //System.out.println("Current Player State: " + direction);
         switch (direction) {
             case LEFT -> nextPosX -= delta;

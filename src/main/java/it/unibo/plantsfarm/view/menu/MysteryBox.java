@@ -30,13 +30,14 @@ public final class MysteryBox {
     private static final int CLOCK = 100;
     private static final int FRAMES = 20;
 
-    private static final String FONT = "Arial";
-    private static final int TITLE_SIZE = 40;
-    private static final int NAME_SIZE = 30;
-    private static final int WINNER_SIZE = 45;
-    private static final int BUTTON_SIZE = 30;
-    private static final int PADDING = 40;
-    private static final int GAP = 20;
+    private static final String FONT_NAME = "Arial";
+
+    private static final double TITLE_RATIO = 0.04;
+    private static final double NAME_RATIO = 0.03;
+    private static final double WINNER_RATIO = 0.045;
+    private static final double BUTTON_RATIO = 0.03;
+    private static final double PADDING_RATIO = 0.04;
+    private static final double GAP_RATIO = 0.02;
 
     private static final Color BG_COMMON = new Color(144, 238, 144);
     private static final Color BG_RARE = new Color(221, 160, 221);
@@ -59,6 +60,7 @@ public final class MysteryBox {
     private final List<PlantType> frames;
     private final Timer animationTimer;
     private int currentIndex;
+    private final Font winnerFont;
 
     /**
      * Creates a new Mystery Box opening.
@@ -70,11 +72,24 @@ public final class MysteryBox {
         this.random = new Random();
         this.frames = generateFramesList();
 
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        final int screenHeight = screenSize.height;
+
+        final int padding = (int) (screenHeight * PADDING_RATIO);
+        final int gap = (int) (screenHeight * GAP_RATIO);
+        final int titleSize = (int) (screenHeight * TITLE_RATIO);
+        final int nameSize = (int) (screenHeight * NAME_RATIO);
+        final int winnerSize = (int) (screenHeight * WINNER_RATIO);
+        final int buttonSize = (int) (screenHeight * BUTTON_RATIO);
+
+        final Font titleFont = new Font(FONT_NAME, Font.BOLD, titleSize);
+        final Font nameFont = new Font(FONT_NAME, Font.BOLD, nameSize);
+        final Font buttonFont = new Font(FONT_NAME, Font.BOLD, buttonSize);
+        this.winnerFont = new Font(FONT_NAME, Font.BOLD, winnerSize);
+
         this.dialog = new JDialog((JFrame) null, "Mystery Box", true);
         this.dialog.setUndecorated(true);
         this.dialog.setResizable(false);
-
-        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.dialog.setSize(screenSize);
         this.dialog.setLocationRelativeTo(null);
 
@@ -99,12 +114,12 @@ public final class MysteryBox {
                 tempDark = DARK_LEGENDARY;
             }
         }
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
 
         final Color darkColor = tempDark;
 
         this.titleLabel = new JLabel("OPENING MYSTERY BOX...", SwingConstants.CENTER);
-        this.titleLabel.setFont(new Font(FONT, Font.BOLD, TITLE_SIZE));
+        this.titleLabel.setFont(titleFont);
         this.titleLabel.setForeground(darkColor);
 
         mainPanel.add(this.titleLabel, BorderLayout.NORTH);
@@ -114,18 +129,18 @@ public final class MysteryBox {
 
         mainPanel.add(this.iconLabel, BorderLayout.CENTER);
 
-        final JPanel bottomPanel = new JPanel(new GridLayout(2, 1, 0, GAP));
+        final JPanel bottomPanel = new JPanel(new GridLayout(2, 1, gap, gap));
         bottomPanel.setOpaque(false);
 
         this.nameLabel = new JLabel("???", SwingConstants.CENTER);
-        this.nameLabel.setFont(new Font(FONT, Font.ITALIC, NAME_SIZE));
+        this.nameLabel.setFont(nameFont);
         this.nameLabel.setForeground(darkColor);
 
         final JPanel buttonWrapper = new JPanel();
         buttonWrapper.setOpaque(false);
 
         this.getWinnerButton = ButtonFactory.createButton("GET!");
-        this.getWinnerButton.setFont(new Font(FONT, Font.BOLD, BUTTON_SIZE));
+        this.getWinnerButton.setFont(buttonFont);
         this.getWinnerButton.setForeground(darkColor);
         this.getWinnerButton.setVisible(false);
         this.getWinnerButton.addActionListener(e -> {
@@ -173,7 +188,7 @@ public final class MysteryBox {
         this.titleLabel.setText("NEW PLANT UNLOCKED!");
 
         this.nameLabel.setText(realName);
-        this.nameLabel.setFont(new Font(FONT, Font.BOLD, WINNER_SIZE));
+        this.nameLabel.setFont(this.winnerFont);
 
         this.getWinnerButton.setVisible(true);
         this.getWinnerButton.requestFocusInWindow();

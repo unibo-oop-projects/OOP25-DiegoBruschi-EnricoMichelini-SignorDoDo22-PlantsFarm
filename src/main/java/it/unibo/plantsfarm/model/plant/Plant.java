@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.model.plant;
 
+import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.model.plant.PlantType.Rarity;
 
 /**
@@ -11,7 +12,7 @@ public class Plant {
     // Static info
     private static final long WATER_REDUCTION_TIME = 5_000L;
     private static final long WATER_TIME_COOLDOWN = 15_000L;
-    private static final long GROWTH_TIME = 30_000L;
+    private static final long GROWTH_TIME = 5_000L; //30000
     private final PlantType type;
 
     // Dynamic info
@@ -38,10 +39,14 @@ public class Plant {
     }
 
     public final void increaseGrowthStage(final long now){
-        if (watered && System.currentTimeMillis() >= currentStageTime + GROWTH_TIME && growthStage < getMaxGrowthStage()) {
-            currentStageTime = now;
-            watered = false;
-            growthStage++;
+        if (!isMature()) {
+            if (watered && System.currentTimeMillis() >= currentStageTime + GROWTH_TIME && growthStage < getMaxGrowthStage()) {
+                currentStageTime = now;
+                watered = false;
+                growthStage++;
+            }
+        } else {
+            ImplControllerGamePanel.gameState.addHarvest(type, 10);
         }
     }
 
@@ -65,7 +70,7 @@ public class Plant {
      * @param now The current time in milliseconds.
      */
     public final void updateNeedsWater(final Long now) {
-        System.out.println("NeedsWater " + needsWater + "  -  Watered " + watered);
+        //System.out.println("NeedsWater " + needsWater + "  -  Watered " + watered);
         if (this.type.getMaxGrowthStage() > this.growthStage) {
             if (now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
                 this.needsWater = true;
@@ -79,7 +84,7 @@ public class Plant {
      * @return true if mature, false otherwise.
      */
     public final boolean isMature() {
-        return growthStage >= type.getMaxGrowthStage();
+        return growthStage >= (type.getMaxGrowthStage()-1);
     }
 
     /**

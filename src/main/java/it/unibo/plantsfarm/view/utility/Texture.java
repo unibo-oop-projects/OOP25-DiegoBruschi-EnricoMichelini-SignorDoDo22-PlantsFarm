@@ -17,15 +17,23 @@ public final class Texture {
     public static final int MENU_ICON_SIZE = calculateSize(MENU_ICON_RATIO);
 
     public static final String PLANT_PATH = "icons/plantIcon/";
+
     public static final double PLANT_ICON_RATIO = 0.06;
     public static final int PLANT_ICON_SIZE = calculateSize(PLANT_ICON_RATIO);
+
+    public static final double SHOP_PLANT_ICON_RATIO = 0.08;
+    public static final int SHOP_PLANT_ICON_SIZE = calculateSize(SHOP_PLANT_ICON_RATIO);
 
     public static final double MYSTERY_ICON_RATIO = 0.30;
     public static final int MYSTERY_ICON_SIZE = calculateSize(MYSTERY_ICON_RATIO);
 
     public static final String STAGE_PATH = "plantsStage/";
-    public static final double STAGE_ICON_RATIO = 0.28;
+    public static final double STAGE_ICON_RATIO = 0.25;
     public static final int STAGE_ICON_SIZE = calculateSize(STAGE_ICON_RATIO);
+
+    public static final String STATUS_PATH = "plantStatus/";
+    public static final double STATUS_ICON_RATIO = 0.03;
+    public static final int STATUS_ICON_SIZE = calculateSize(STATUS_ICON_RATIO);
 
     public static final ImageIcon ENCYCLOPEDIA_ICON = loadMenuIcon("Encyclopedia.png");
     public static final ImageIcon SHOP_ICON = loadMenuIcon("Shop.png");
@@ -45,6 +53,9 @@ public final class Texture {
     public static final ImageIcon CREDITS_ICON = loadMenuIcon("Credit.png");
     public static final ImageIcon EXIT_ICON = loadMenuIcon("Exit.png");
 
+    public static final ImageIcon WATER_ICON = loadStatusIcon("Water.png");
+    public static final ImageIcon READY_ICON = loadStatusIcon("Ready.png");
+
     private static final String EXTENSION = ".png";
 
     private Texture() {
@@ -63,7 +74,18 @@ public final class Texture {
     }
 
     /**
-     * Gets a giant plant icon dynamically for Mystery Box.
+     * Gets a larger plant icon for the Shop.
+     *
+     * @param plantName The name of the plant.
+     * @return The ImageIcon.
+     */
+    public static ImageIcon getShopPlantIcon(final String plantName) {
+        final String fullPath = PLANT_PATH + plantName + EXTENSION;
+        return loadAndScale(fullPath, SHOP_PLANT_ICON_SIZE, SHOP_PLANT_ICON_SIZE);
+    }
+
+    /**
+     * Gets a giant plant icon for Mystery Box.
      *
      * @param plantName The name of the plant.
      * @return The ImageIcon.
@@ -108,6 +130,17 @@ public final class Texture {
     }
 
     /**
+     * Loads an icon from the status folder.
+     *
+     * @param fileName The name of the file.
+     * @return The ImageIcon.
+     */
+    private static ImageIcon loadStatusIcon(final String fileName) {
+        final String fullPath = STATUS_PATH + fileName;
+        return loadAndScale(fullPath, STATUS_ICON_SIZE, STATUS_ICON_SIZE);
+    }
+
+    /**
      * Generic method to load and scale an image from resources.
      *
      * @param path The path to the resource.
@@ -116,7 +149,7 @@ public final class Texture {
      * @return The ImageIcon, or null if not found.
      */
     private static ImageIcon loadAndScale(final String path, final int width, final int height) {
-        final URL imageURL = ClassLoader.getSystemResource(path);
+        final URL imageURL = Texture.class.getResource("/" + path);
 
         if (imageURL == null) {
             return null;
