@@ -9,17 +9,6 @@ public interface ItemsFarm {
      *
      * @return
      */
-    int getIntegrity();
-
-    /**
-     *
-     */
-    void repair();
-
-    /**
-     *
-     * @return
-     */
     Tooltype getTooltype();
 
     /**
@@ -38,15 +27,9 @@ public interface ItemsFarm {
      */
     int getLevel();
 
-    /**
-     *
-     * @return
-     */
-    int getCostRepair();
+    int getExperience();
 
-    int getMaxIntegrity();
-
-    int getMinIntegrity();
+    int getExperienceForLevel();
 
     int getMaxLevel();
 

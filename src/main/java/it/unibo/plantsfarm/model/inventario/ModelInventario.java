@@ -4,13 +4,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.tools.Tool;
 
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
-
-import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
-import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.FERTILIZER;
-import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
 
 /**
  * Model of the inventory: stores the player's tools/items inside a map.
@@ -47,7 +44,6 @@ public final class ModelInventario {
      */
     public void putItem(final Tooltype type, final ItemsFarm item) {
         Objects.requireNonNull(type, "type");
-        Objects.requireNonNull(item, "item");
         inventario.put(type, item);
     }
 
@@ -62,6 +58,20 @@ public final class ModelInventario {
     }
 
     /**
+     * For see if a item is upgredable.
+     *
+     * @param tool type of tool
+     *
+     * @return true if the item is upgredable or false if it is not
+     */
+    public boolean isUpgredableItem(Tooltype tool) {
+        if(getItem(tool).getExperience() == getItem(tool).getExperienceForLevel()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Returns the item for a given tool type, if present.
      *
      * @param type tool type
@@ -69,26 +79,7 @@ public final class ModelInventario {
      */
     public ItemsFarm getItem(final Tooltype type) {
         Objects.requireNonNull(type, "type");
-        System.out.println("Type dentro l'inventario" + inventario.get(type));
         return inventario.get(type);
-    }
-
-    /**
-     * Repairs the selected tool/item.
-     *
-     * @param type tool to repair
-     * @return true if the item existed and was repaired
-     */
-    public boolean repair(final Tooltype type) {
-        Objects.requireNonNull(type, "type");
-        final ItemsFarm item = inventario.get(type);
-        if (item == null) {
-            System.out.println("RIPARATOOOOOOOO");
-            return false;
-        }
-        item.repair();
-        System.out.print("RIPARATO DWDWDWDWDW");
-        return true;
     }
 
     /**
@@ -108,37 +99,24 @@ public final class ModelInventario {
     }
 
     /**
-     * Current durability/integrity for the selected item.
+     * checks whether the inventory contains the given tool.
      *
      * @param type tool type
-     * @return current value, or 0 if missing
-     */
-    public int getDurability(final Tooltype type) {
-        Objects.requireNonNull(type, "type");
-        final ItemsFarm item = inventario.get(type);
-        return item.getIntegrity();
-    }
-
-    /**
-     * Max durability/integrity for the selected item.
      *
-     * @param type tool type
-     * @return max value, or 0 if missing
-     */
-    public int getMaxDurability(final Tooltype type) {
-        Objects.requireNonNull(type, "type");
-        final ItemsFarm item = inventario.get(type);
-        return item.getMaxIntegrity();
-    }
-
-    /**
-     * Utility: checks whether the inventory contains the given tool.
-     *
-     * @param type tool type
      * @return true if present
      */
     public boolean contains(final Tooltype type) {
         Objects.requireNonNull(type, "type");
         return inventario.containsKey(type);
+    }
+
+    /**
+     * If the item have been used the right way.
+     * the item experience grow.
+     *
+     * @param tool  tool action
+     */
+    public void useItem(final Tooltype tool){
+        this.inventario.get(tool).useItem();
     }
 }

@@ -2,6 +2,9 @@ package it.unibo.plantsfarm.model.player.api;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
+
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.TileMap;
@@ -69,7 +72,7 @@ public abstract class AbstractPlayer {
             case UP -> nextPosY -= delta;
             case DOWN -> nextPosY += delta;
             case ACTIONHOE -> pianta(ImplViewGamePanel.selectedPlant);
-            case ACTIONWATER -> innaffia(System.currentTimeMillis());
+            case ACTIONWATER -> inventory.getItem(WATERCAN).useItem();
             case FERMO -> { }
         }
 
@@ -130,7 +133,6 @@ public abstract class AbstractPlayer {
 
     public final void pianta(PlantType plant) {
         ItemsFarm item = inventory.getItem(Tooltype.HOE);
-        item.repair();
         if (plant != null){
             Plant pianta = new Plant(plant);
             final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);

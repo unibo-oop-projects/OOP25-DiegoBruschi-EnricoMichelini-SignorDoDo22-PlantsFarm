@@ -25,7 +25,6 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class UpgradeItemsView extends JDialog {
     private ControllerInventario controllerInventario;
-    private final LayoutManager layoutInventario = new GridLayout(3,2);
     private final LayoutManager layoutButtonImages = new GridLayout(3,1);
     private final ImplViewGamePanel gamePanel;
     private final JPanel panelIntern;
@@ -33,8 +32,7 @@ public final class UpgradeItemsView extends JDialog {
     private final JPanel progressItems;
     private final JPanel buttonsActionsItem;
     private final Map<Tooltype,JProgressBar> progressBarMap = new LinkedHashMap<>();
-    private final Map<JButton,Tooltype> progressButtonRepairMap = new LinkedHashMap<>();
-    private final Map<JButton,Tooltype> progressButtonUpgradeMap = new LinkedHashMap<>();
+    private final Map<Tooltype,JButton> progressButtonUpgradeMap = new LinkedHashMap<>();
 
     public UpgradeItemsView(final ImplViewGamePanel gamePanel) {
         super();
@@ -55,7 +53,8 @@ public final class UpgradeItemsView extends JDialog {
 
         createProgressBar();
         createButtonItemsAction();
-        this.buttonsActionsItem.setLayout(layoutInventario);
+        createItemButton();
+        this.buttonsActionsItem.setLayout(layoutButtonImages);
         this.panelIntern.add(buttonImages,BorderLayout.WEST);
         this.panelIntern.add(buttonsActionsItem,BorderLayout.EAST);
         this.panelIntern.add(progressItems, BorderLayout.CENTER);
@@ -80,29 +79,31 @@ public final class UpgradeItemsView extends JDialog {
         gamePanel.setFocusable(true);
     }
 
-    public void createButtonItemsAction(){
+    public void createItemButton(){
         for (Tooltype tool : Tooltype.values()) {
-            JButton upgrade = new JButton("+");
-            JButton repair = new JButton("Repair");
-            repair.addActionListener(e -> {
-            JButton jb = (JButton) e.getSource(); // è repair
-            Tooltype toolButton = progressButtonRepairMap.get(jb);
+            JButton button = new JButton(" UPGRADE ");
+            button.setText(tool.name());
+            button.setEnabled(false);
+            buttonImages.add(button);
+        }
+    }
 
-            ItemsFarm item = controllerInventario.getInventoryClone().get(toolButton);
-            controllerInventario.isReparable(1, item.getTooltype());
+    public void createButtonItemsAction(){
 
-            update(); // aggiorna barre e bottoni dopo l'azione
+        for (Tooltype tool : Tooltype.values()) {
+            JButton upgrade = new JButton(" UPGRADE ");
+            upgrade.addActionListener(e -> {
+                JButton jb = (JButton) e.getSource();
+                if(controllerInventario.isUpgredable(tool)){
+                    controllerInventario.pressUpgradeItem(tool);
+                }
             });
-
-            this.buttonsActionsItem.add(upgrade);
-            this.buttonsActionsItem.add(repair);
-            this.progressButtonRepairMap.put(repair, tool);
-            this.progressButtonUpgradeMap.put(upgrade, tool);
+            progressButtonUpgradeMap.put(tool, upgrade);
+            buttonsActionsItem.add(upgrade);
         }
     }
 
     public void createProgressBar(){
-
         for (Tooltype tool : Tooltype.values()) {
             JProgressBar progressBar = new JProgressBar();
             this.progressBarMap.put(tool, progressBar);
@@ -125,24 +126,18 @@ public final class UpgradeItemsView extends JDialog {
             bar.setForeground(new Color(90, 200, 120));
             bar.setOpaque(true);
             bar.setFont(new Font("Monospaced", Font.BOLD, 12));
+            ItemsFarm item = controllerInventario.getInventoryClone().get(tool);
             bar.setMinimum(0);
-            bar.setMaximum(100);
-            bar.setValue(controllerInventario.getInventoryClone().get(tool).getIntegrity());
+            bar.setMaximum(item.getExperienceForLevel());
+            bar.setValue(item.getExperience());
         }
 
-        for (JButton jb : progressButtonRepairMap.keySet()) {
-            Tooltype tool = progressButtonRepairMap.get(jb);
-            ItemsFarm item = controllerInventario.getInventoryClone().get(tool);
-            if(controllerInventario.controllWallet(item.getCostRepair())) {
-                jb.setEnabled(true);
+        for (Tooltype tool : Tooltype.values()) {
+            JButton button = progressButtonUpgradeMap.get(tool);
+            if(controllerInventario.isUpgredable(tool)){
+                button.setEnabled(true);
             }else{
-                jb.setEnabled(false);
-            }
-
-            if(item.getLevel() < 20){
-                jb.setEnabled(true);
-            }else{
-                jb.setEnabled(false);
+                button.setEnabled(false);
             }
         }
     }

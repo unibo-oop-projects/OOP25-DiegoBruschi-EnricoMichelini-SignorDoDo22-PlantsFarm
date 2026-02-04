@@ -1,52 +1,38 @@
 package it.unibo.plantsfarm.model.items;
 
-
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 
 public class ItemsExpert implements ItemsFarm {
+    private int minLevel = StatsItemBase.LEVEL_MAX;
+    private int maxLevel = StatsItemBase.LEVEL_MAX;
+    private int experience = StatsItemBase.EXPERIENCE_FOR_UPGRADE;
+    private int experienceForLevel = StatsItemBase.EXPERIENCE_FOR_UPGRADE;
+    private int level = StatsItemBase.LEVEL_BEGIN;
+    private final Tooltype type;
 
-    private int totalintegrity = 950;
-    private int actualintegrity = 1;
-    private int minIntegrity = 0;
-    private int minLevel = 0;
-    private int maxLevel = 30;
-    private int level;
-    private int costRepair;
-    private Tooltype type;
-
-    public ItemsExpert(final int integrity, final int level, final int costRepair, Tooltype type){
-        this.costRepair = costRepair;
-        this.totalintegrity = 50;
-        this.actualintegrity = 0;
-        this.level = level;
+    public ItemsExpert(final Tooltype type) {
         this.type = type;
-
-    }
-
-    @Override
-    public int getIntegrity() {
-        return this.actualintegrity;
-    }
-
-    @Override
-    public void repair() {
-       this.actualintegrity = totalintegrity;
-
     }
 
     @Override
     public Tooltype getTooltype() {
-        return type;
+        return this.type;
     }
 
     @Override
     public void upgrade() {
-        return;
+        if (level >= maxLevel || experience < experienceForLevel) {
+            return;
+        }
+        System.out.println("level " +  level + "Experience " + experience + "EXPERIENCE FOR LEVEL " + experienceForLevel );
+        level++;
+        experience = StatsItemBase.EXPERIENCE_BEGIN;
+        experienceForLevel += StatsItemBase.ADD_EXPERIENCE_FOR_UPGRADE;
     }
 
     @Override
     public void useItem() {
-        return;
+        experience += StatsItemBase.EXPERIENCE_FOR_ACTION;
     }
 
     @Override
@@ -55,28 +41,32 @@ public class ItemsExpert implements ItemsFarm {
     }
 
     @Override
-    public int getCostRepair() {
-        return this.costRepair;
-    }
-
-      @Override
-    public int getMaxIntegrity() {
-        return this.totalintegrity;
-    }
-
-    @Override
-    public int getMinIntegrity() {
-        return this.minIntegrity;
-    }
-
-    @Override
     public int getMaxLevel() {
-        return this.totalintegrity;
+        return this.maxLevel;
     }
 
     @Override
     public int getMinLevel() {
-        return this.minIntegrity;
+        return this.minLevel;
+    }
+
+    private static final class StatsItemBase {
+        private static final int EXPERIENCE_FOR_ACTION = 5;
+        private static final int EXPERIENCE_FOR_UPGRADE = 30;
+        private static final int ADD_EXPERIENCE_FOR_UPGRADE = 15;
+        private static final int EXPERIENCE_BEGIN = 0;
+        private static final int LEVEL_BEGIN = 0; // o 1
+        private static final int LEVEL_MAX = 5;
+    }
+
+    @Override
+    public int getExperience() {
+       return this.experience;
+    }
+
+    @Override
+    public int getExperienceForLevel() {
+        return this.experienceForLevel;
     }
 
 }

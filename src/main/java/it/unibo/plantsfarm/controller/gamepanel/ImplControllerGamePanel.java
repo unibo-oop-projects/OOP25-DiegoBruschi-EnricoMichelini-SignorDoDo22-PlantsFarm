@@ -7,6 +7,7 @@ import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.TileMap;
 import it.unibo.plantsfarm.model.camera.Camera;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
+import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
@@ -41,12 +42,20 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             final long delta = now - lastTime;
             lastTime = now;
             final UserInput input = queue.poll();
-
             view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY(), player.getSoils());
+
             try {
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
                 if (input != null) {
-                player.setDirection(input);
+                switch (input) {
+                    case LEFT -> player.setDirection(input);
+                    case RIGHT -> player.setDirection(input);
+                    case UP -> player.setDirection(input);
+                    case DOWN -> player.setDirection(input);
+                    case ACTIONHOE -> { }
+                    case ACTIONWATER -> player.getInventory().getItem(Tooltype.WATERCAN).useItem();
+                    case FERMO -> { }
+                        }
                 controllerAnimation.takeInput(input);
             }
             } catch (final InterruptedException e) {

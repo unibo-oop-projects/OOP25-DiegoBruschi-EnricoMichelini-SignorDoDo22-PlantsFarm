@@ -21,23 +21,17 @@ public final class ControllerInventario {
         this.abstractPlayer = player;
     }
 
-    public void isReparable(int cost, Tooltype tool) {
-        ModelInventario inv = abstractPlayer.getInventory();
-        ItemsFarm item = inv.getItem(tool);
-        System.out.println("Before " + item.getIntegrity());
-
-        if(gameState.spendCoins(cost)) {
-            inv.repair(tool);
-            System.out.println("After " + item.getIntegrity());
+    public boolean isUpgredable(Tooltype tool){
+        if(abstractPlayer.getInventory().isUpgredableItem(tool)){
+            System.out.println("è VERO");
+            return true;
         }
-        viewItemsInventory.update();
+        return false;
     }
 
-    public boolean controllWallet(int values) {
-        if(values > gameState.getWallet()){
-            return false;
-        }
-        return true;
+    public void pressUpgradeItem(Tooltype tool){
+        abstractPlayer.getInventory().upgrade(tool);
+        viewItemsInventory.update();
     }
 
     public UpgradeItemsView getView() {

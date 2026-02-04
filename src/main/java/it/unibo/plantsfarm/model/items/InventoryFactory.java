@@ -16,17 +16,17 @@ public class InventoryFactory {
 
         if (typePlayer == EXPERTFARMER) {
             Map<Tooltype, ItemsFarm> items = new LinkedHashMap<>();
-            items.put(Tooltype.FERTILIZER, new ItemsExpert(100000,10,0,Tooltype.FERTILIZER));
-            items.put(Tooltype.WATERCAN, new ItemsExpert(100000,10,0,Tooltype.WATERCAN));
-            items.put(Tooltype.HOE, new ItemsExpert(100000,10,0,Tooltype.HOE));
+            items.put(Tooltype.FERTILIZER, new ItemsExpert(Tooltype.FERTILIZER));
+            items.put(Tooltype.WATERCAN, new ItemsExpert(Tooltype.WATERCAN));
+            items.put(Tooltype.HOE, new ItemsExpert(Tooltype.HOE));
             ModelInventario inventory = new ModelInventario(items);
             return inventory;
 
         }else if (typePlayer == FARMER) {
             Map<Tooltype, ItemsFarm> items = new LinkedHashMap<>();
-            items.put(Tooltype.FERTILIZER, new ItemsFarmBase(25,1,10,Tooltype.FERTILIZER));
-            items.put(Tooltype.WATERCAN, new ItemsFarmBase(0,1,10,Tooltype.WATERCAN));
-            items.put(Tooltype.HOE, new ItemsFarmBase(0,1,10,Tooltype.HOE));
+            items.put(Tooltype.FERTILIZER, new ItemsFarmBase(Tooltype.FERTILIZER));
+            items.put(Tooltype.WATERCAN, new ItemsFarmBase(Tooltype.WATERCAN));
+            items.put(Tooltype.HOE, new ItemsFarmBase(Tooltype.HOE));
             ModelInventario inventory = new ModelInventario(items);
             return inventory;
 
