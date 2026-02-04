@@ -89,7 +89,7 @@ public final class UpgradeItemsView extends JDialog {
             Tooltype toolButton = progressButtonRepairMap.get(jb);
 
             ItemsFarm item = controllerInventario.getInventoryClone().get(toolButton);
-            controllerInventario.isReparable(item.getCostRepair(), item.getTooltype());
+            controllerInventario.isReparable(1, item.getTooltype());
 
             update(); // aggiorna barre e bottoni dopo l'azione
             });
@@ -105,7 +105,6 @@ public final class UpgradeItemsView extends JDialog {
 
         for (Tooltype tool : Tooltype.values()) {
             JProgressBar progressBar = new JProgressBar();
-            progressBar.setBackground(Color.RED);
             this.progressBarMap.put(tool, progressBar);
             this.progressItems.add(progressBar);
         }

@@ -4,7 +4,6 @@ import static it.unibo.plantsfarm.model.player.PlayersTypes.EXPERTFARMER;
 import static it.unibo.plantsfarm.model.player.PlayersTypes.FARMER;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
@@ -15,7 +14,7 @@ public class InventoryFactory {
 
     public ModelInventario createInventory(PlayersTypes typePlayer) {
 
-        if(typePlayer == EXPERTFARMER) {
+        if (typePlayer == EXPERTFARMER) {
             Map<Tooltype, ItemsFarm> items = new LinkedHashMap<>();
             items.put(Tooltype.FERTILIZER, new ItemsExpert(100000,10,0,Tooltype.FERTILIZER));
             items.put(Tooltype.WATERCAN, new ItemsExpert(100000,10,0,Tooltype.WATERCAN));
@@ -23,11 +22,11 @@ public class InventoryFactory {
             ModelInventario inventory = new ModelInventario(items);
             return inventory;
 
-        }else if(typePlayer == FARMER) {
+        }else if (typePlayer == FARMER) {
             Map<Tooltype, ItemsFarm> items = new LinkedHashMap<>();
-            items.put(Tooltype.FERTILIZER, new ItemsExpert(25,1,10,Tooltype.FERTILIZER));
-            items.put(Tooltype.WATERCAN, new ItemsExpert(0,1,10,Tooltype.WATERCAN));
-            items.put(Tooltype.HOE, new ItemsExpert(0,1,10,Tooltype.HOE));
+            items.put(Tooltype.FERTILIZER, new ItemsFarmBase(25,1,10,Tooltype.FERTILIZER));
+            items.put(Tooltype.WATERCAN, new ItemsFarmBase(0,1,10,Tooltype.WATERCAN));
+            items.put(Tooltype.HOE, new ItemsFarmBase(0,1,10,Tooltype.HOE));
             ModelInventario inventory = new ModelInventario(items);
             return inventory;
 

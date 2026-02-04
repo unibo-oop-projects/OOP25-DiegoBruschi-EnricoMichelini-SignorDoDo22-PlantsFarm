@@ -5,8 +5,8 @@ import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 
 public class ItemsExpert implements ItemsFarm {
 
-    private int totalintegrity = 1000;
-    private int actualintegrity;
+    private int totalintegrity = 950;
+    private int actualintegrity = 1;
     private int minIntegrity = 0;
     private int minLevel = 0;
     private int maxLevel = 30;
@@ -16,8 +16,8 @@ public class ItemsExpert implements ItemsFarm {
 
     public ItemsExpert(final int integrity, final int level, final int costRepair, Tooltype type){
         this.costRepair = costRepair;
-        this.totalintegrity = integrity;
-        this.actualintegrity = totalintegrity;
+        this.totalintegrity = 50;
+        this.actualintegrity = 0;
         this.level = level;
         this.type = type;
 
@@ -30,7 +30,8 @@ public class ItemsExpert implements ItemsFarm {
 
     @Override
     public void repair() {
-       return;
+       this.actualintegrity = totalintegrity;
+
     }
 
     @Override

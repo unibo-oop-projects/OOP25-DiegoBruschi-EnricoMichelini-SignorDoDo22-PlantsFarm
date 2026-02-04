@@ -24,16 +24,16 @@ public final class ControllerInventario {
     public void isReparable(int cost, Tooltype tool) {
         ModelInventario inv = abstractPlayer.getInventory();
         ItemsFarm item = inv.getItem(tool);
-        System.out.println("Before "+  item.getLevel());
+        System.out.println("Before " + item.getIntegrity());
+
         if(gameState.spendCoins(cost)) {
-            item.repair();
-            System.out.println("Integrity after: " + item.getIntegrity());
+            inv.repair(tool);
+            System.out.println("After " + item.getIntegrity());
         }
         viewItemsInventory.update();
     }
 
     public boolean controllWallet(int values) {
-        System.out.println("Coin: " + gameState.getWallet() + " values: " + values);
         if(values > gameState.getWallet()){
             return false;
         }

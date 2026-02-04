@@ -11,7 +11,6 @@ import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 public class ExpertFarmer extends AbstractPlayer {
 
     final Map<Tooltype, ItemsFarm> inventory = new LinkedHashMap<>();
-
     public ExpertFarmer(final ModelInventario inventory) {
         super(inventory);
         this.speed = EXPERT_FARMER_SPEED;

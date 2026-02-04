@@ -2,7 +2,6 @@ package it.unibo.plantsfarm.model.player.api;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.TileMap;
@@ -49,7 +48,7 @@ public abstract class AbstractPlayer {
         this.map.loadMap("/maps/map.txt");
         this.soils = this.map.getSoilList();
         this.inventory = inventory;
-        System.out.println("LUNGHEZZA INVENTARIO + " + inventory.getInventorySnapshot().size() + "item1 " + inventory.getDurability(Tooltype.HOE));
+
     }
 
 
@@ -130,6 +129,8 @@ public abstract class AbstractPlayer {
     }
 
     public final void pianta(PlantType plant) {
+        ItemsFarm item = inventory.getItem(Tooltype.HOE);
+        item.repair();
         if (plant != null){
             Plant pianta = new Plant(plant);
             final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);

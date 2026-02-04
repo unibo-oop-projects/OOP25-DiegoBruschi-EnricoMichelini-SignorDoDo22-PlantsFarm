@@ -8,6 +8,10 @@ import java.util.Objects;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 
+import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
+import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.FERTILIZER;
+import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
+
 /**
  * Model of the inventory: stores the player's tools/items inside a map.
  * The internal map is never exposed as mutable; updates happen only through
@@ -65,11 +69,12 @@ public final class ModelInventario {
      */
     public ItemsFarm getItem(final Tooltype type) {
         Objects.requireNonNull(type, "type");
+        System.out.println("Type dentro l'inventario" + inventario.get(type));
         return inventario.get(type);
     }
 
     /**
-     * Repairs the selected tool/item (model-side operation).
+     * Repairs the selected tool/item.
      *
      * @param type tool to repair
      * @return true if the item existed and was repaired
@@ -78,9 +83,11 @@ public final class ModelInventario {
         Objects.requireNonNull(type, "type");
         final ItemsFarm item = inventario.get(type);
         if (item == null) {
+            System.out.println("RIPARATOOOOOOOO");
             return false;
         }
-        item.repair(); // <-- adatta se il tuo metodo ha un altro nome
+        item.repair();
+        System.out.print("RIPARATO DWDWDWDWDW");
         return true;
     }
 

@@ -30,7 +30,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         setPlayer();
         this.player = getPlayer();
         map.loadMap("/maps/map.txt");
-        this.controllerInventario = new ControllerInventario(gameState, player);
+        this.controllerInventario = new ControllerInventario(gameState, this.player);
     }
 
    @Override

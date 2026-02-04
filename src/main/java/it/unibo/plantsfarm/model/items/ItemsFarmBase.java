@@ -10,14 +10,10 @@ public  class ItemsFarmBase implements ItemsFarm {
     private int minLevel = 0;
     private int maxLevel = 30;
     private int level;
-    private int costRepair;
+    private int costRepair = 1;
     private Tooltype type;
 
     public ItemsFarmBase(final int integrity, final int level, final int costRepair, Tooltype type){
-        this.costRepair = costRepair;
-        this.totalintegrity = integrity;
-        this.actualintegrity = totalintegrity;
-        this.level = level;
         this.type = type;
     }
 
