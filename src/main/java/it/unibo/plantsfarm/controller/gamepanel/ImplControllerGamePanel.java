@@ -14,7 +14,7 @@ import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class ImplControllerGamePanel extends Thread implements ControllerGamePanel {
-    private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
+    private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 25; //10
     private ImplViewGamePanel view;
     private final ImplFactoryPlayer factoryPlayer = new ImplFactoryPlayer();
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
