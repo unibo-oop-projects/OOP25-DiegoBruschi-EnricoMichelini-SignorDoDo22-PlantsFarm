@@ -21,6 +21,7 @@ public final class TileManager {
     private final ImplViewGamePanel gp;
     private final Tile[] tile;
     private final int[][] mapTileNum;
+    private int tileIndex;
 
     public TileManager(final ImplViewGamePanel gp) {
         this.gp = gp;
@@ -33,28 +34,27 @@ public final class TileManager {
     }
 
     public void getTileImage() {
-
-        setupTile(0, "grass.png");
-        setupTile(1, "pathVer.png");
-        setupTile(2, "dirt.png");
-        setupTile(3, "wall.png");
-        setupTile(4, "tree.png");
-        setupTile(5, "spawn.png");
-        setupTile(6, "chest.png");
-        setupTile(7, "floor.png");
-        setupTile(9, "pathOri.png");
-        setupTile(10, "path.png");
-        setupTile(11, "dirtUp.png");
-        setupTile(12, "dirtDown.png");
-        setupTile(13, "dirtLeft.png");
-        setupTile(14, "dirtRight.png");
-        setupTile(15, "dirtLUpRight.png");
-        setupTile(16, "dirtLDownRight.png");
-        setupTile(17, "dirtLDownLeft.png");
-        setupTile(18, "dirtLUpLeft.png");
-        setupTile(19, "dirtContained.png");
-        setupTile(74, "flowers.png");
-        setupTile(75, "lessFlowers.png");
+        tileIndex = 0;
+        setupTile(tileIndex, "grass.png");
+        setupTile(++tileIndex, "pathVer.png");
+        setupTile(++tileIndex, "dirt.png");
+        setupTile(++tileIndex, "wall.png");
+        setupTile(++tileIndex, "tree.png");
+        setupTile(++tileIndex, "spawn.png");
+        setupTile(++tileIndex, "chest.png");
+        setupTile(++tileIndex, "floor.png");
+        tileIndex++;
+        setupTile(++tileIndex, "pathOri.png");
+        setupTile(++tileIndex, "path.png");
+        setupTile(++tileIndex, "dirtUp.png");
+        setupTile(++tileIndex, "dirtDown.png");
+        setupTile(++tileIndex, "dirtLeft.png");
+        setupTile(++tileIndex, "dirtRight.png");
+        setupTile(++tileIndex, "dirtLUpRight.png");
+        setupTile(++tileIndex, "dirtLDownRight.png");
+        setupTile(++tileIndex, "dirtLDownLeft.png");
+        setupTile(++tileIndex, "dirtLUpLeft.png");
+        setupTile(++tileIndex, "dirtContained.png");
 
         // Shop slicing and loading
         final int numColonne = 9;
@@ -62,19 +62,20 @@ public final class TileManager {
 
         final int shopSourceSliceSize = ASSET_ACTUAL_SIZE * 3;
 
-        int indexPartenza = 20;
         final BufferedImage bigSheet = new SpriteLoader("/icons/tiles/shop.png").getImage();
+
+        tileIndex++;
 
         for (int row = 0; row < numRighe; row++) {
             for (int col = 0; col < numColonne; col++) {
-                tile[indexPartenza] = new Tile();
-                tile[indexPartenza].image = bigSheet.getSubimage(
+                tile[tileIndex] = new Tile();
+                tile[tileIndex].image = bigSheet.getSubimage(
                     col * shopSourceSliceSize,
                     row * shopSourceSliceSize,
                     shopSourceSliceSize,
                     shopSourceSliceSize
                 );
-                indexPartenza++;
+                tileIndex++;
             }
         }
 
@@ -83,21 +84,23 @@ public final class TileManager {
         final int numRighePozzo = 3;
         final int wellSourceSliceSize = ASSET_ACTUAL_SIZE;
 
-        int indexPartenzaPozzo = 65;
         final BufferedImage bigSheetPozzo = new SpriteLoader("/icons/tiles/well.png").getImage();
 
         for (int row = 0; row < numRighePozzo; row++) {
             for (int col = 0; col < numColonnePozzo; col++) {
-                tile[indexPartenzaPozzo] = new Tile();
-                tile[indexPartenzaPozzo].image = bigSheetPozzo.getSubimage(
+                tile[tileIndex] = new Tile();
+                tile[tileIndex].image = bigSheetPozzo.getSubimage(
                     col * wellSourceSliceSize,
                     row * wellSourceSliceSize,
                     wellSourceSliceSize,
                     wellSourceSliceSize
                 );
-                indexPartenzaPozzo++;
+                tileIndex++;
             }
         }
+
+        setupTile(tileIndex, "flowers.png");
+        setupTile(++tileIndex, "lessFlowers.png");
     }
 
     private void setupTile(int index, String fileName) {

@@ -21,8 +21,8 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
  */
 public abstract class AbstractPlayer {
 
-    public static final int FARMER_SPEED = 300;
-    public static final int EXPERT_FARMER_SPEED = 500;
+    public static final int FARMER_SPEED = 500;
+    public static final int EXPERT_FARMER_SPEED = 750;
 
     /** Movement speed of the player (units per second). */
     protected double speed;
