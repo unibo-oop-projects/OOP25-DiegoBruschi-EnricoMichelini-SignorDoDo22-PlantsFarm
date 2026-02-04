@@ -21,8 +21,8 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
  */
 public abstract class AbstractPlayer {
 
-    public static final int FARMER_SPEED = 500;
-    public static final int EXPERT_FARMER_SPEED = 750;
+    public static final int FARMER_SPEED = 400;
+    public static final int EXPERT_FARMER_SPEED = 650;
 
     /** Movement speed of the player (units per second). */
     protected double speed;
@@ -138,8 +138,10 @@ public abstract class AbstractPlayer {
                 if (zolla.getCoordinate().contains(hitbox)) {
                     if (!zolla.getIsPlanted()) {
                         zolla.setPlanted(pianta);
-                        System.out.println(zolla.getPlant());
-                        System.out.println("PLANT TYPE" + zolla.getPlant().currentStageTime);
+                        //System.out.println(zolla.getPlant());
+                        //System.out.println("PLANT TYPE" + zolla.getPlant().currentStageTime);
+                    } else {
+                        zolla.getPlant().harvest();
                     }
                 }
             }

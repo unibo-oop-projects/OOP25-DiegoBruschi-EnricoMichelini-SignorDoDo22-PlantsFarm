@@ -45,7 +45,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
     public static final int SCREEN_WIDTH = SCREEN_SIZE.width - SIDEBAR_WIDTH;
     public static final int SCREEN_HEIGHT = SCREEN_SIZE.height;
 
-    private static final int VISIBLE_TILES_VERTICAL = 22;//22
+    private static final int VISIBLE_TILES_VERTICAL = 16;//22
 
     public static final int TILE_SIZE = SCREEN_HEIGHT / VISIBLE_TILES_VERTICAL;
     public static final int POD_SIZE = TILE_SIZE;

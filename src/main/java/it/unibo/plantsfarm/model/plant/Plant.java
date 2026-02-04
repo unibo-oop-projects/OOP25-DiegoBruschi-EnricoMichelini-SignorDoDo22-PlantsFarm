@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.model.plant;
 
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
+import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.plant.PlantType.Rarity;
 
 /**
@@ -14,6 +15,7 @@ public class Plant {
     private static final long WATER_TIME_COOLDOWN = 15_000L;
     private static final long GROWTH_TIME = 5_000L; //30000
     private final PlantType type;
+    //private GameState gameState;
 
     // Dynamic info
     private int growthStage;
@@ -36,6 +38,7 @@ public class Plant {
         this.isPlanted = true;
         this.currentStageTime = System.currentTimeMillis();
         this.lastWateredTime = System.currentTimeMillis();
+        //this.gameState = gameState;
     }
 
     public final void increaseGrowthStage(final long now){
@@ -70,12 +73,16 @@ public class Plant {
      * @param now The current time in milliseconds.
      */
     public final void updateNeedsWater(final Long now) {
-        //System.out.println("NeedsWater " + needsWater + "  -  Watered " + watered);
+        System.out.println("NeedsWater " + needsWater + "  -  Watered " + watered);
         if (this.type.getMaxGrowthStage() > this.growthStage) {
             if (now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
                 this.needsWater = true;
             }
         }
+    }
+
+    public final boolean isHarvestable() {
+        return isMature();
     }
 
     /**
@@ -104,11 +111,12 @@ public class Plant {
      *
      * @return a random number between min and max yield, or 0 if ornamental.
      */
-    public final int harvest() {
+    public final void harvest() {
         if (!type.isEdible()) {
-            return 0;
+            System.out.println("Ornamentale");
         }
-        return type.getHarvestInfo().generateHarvest();
+        growthStage = this.type.getResetStage();
+        //gameState.addHarvest(type, type.getHarvestInfo().generateHarvest());
     }
 
     /**
