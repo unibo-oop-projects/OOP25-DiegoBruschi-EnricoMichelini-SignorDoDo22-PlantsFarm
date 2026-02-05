@@ -54,7 +54,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                     case DOWN -> player.setDirection(input);
                     case ACTIONHOE -> { }
                     case ACTIONWATER -> player.getInventory().getItem(Tooltype.WATERCAN).useItem();
-                    case FERMO -> { }
+                    case FERMO -> player.setDirection(input);
 
                     /**
                      *
