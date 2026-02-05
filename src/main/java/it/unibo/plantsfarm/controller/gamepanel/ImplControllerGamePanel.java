@@ -55,6 +55,22 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                     case ACTIONHOE -> { }
                     case ACTIONWATER -> player.getInventory().getItem(Tooltype.WATERCAN).useItem();
                     case FERMO -> { }
+
+                    /**
+                     *
+                     * NOTA PER DIEGO
+                     * - Ho modificato itemsStats ora li dentro devi solo mettere il buff per il concime o innaffiatoio
+                     * - Per accedere a tutte le robe dell'inventario usa player.getInventario
+                     * - Per prendere l'item sta anche la funzione getItem e una per il level
+                     * - Ripeto per piantare una pianta devi avere la hoe livello tot e il concime livello tot
+                     * - la water ha solo funzione di rigenerare la pianta e dare il buff
+                     * - il buff decidilo tu su statsItem
+                     * - COSA IMPORTANTE FAI QUI TUTTE LE COSE RIGUARDO L'AZIONE SPOSTALE DAL PLAYER UPDATE
+                     * - Ho aggiustato molti problemi su gradlew ma bisogna finire
+                     * - Cosa importante fai la roba per le immagini delle piante lagga di brutto
+                     * - Se hai bisogno dw
+                    */
+
                         }
                 controllerAnimation.takeInput(input);
             }
