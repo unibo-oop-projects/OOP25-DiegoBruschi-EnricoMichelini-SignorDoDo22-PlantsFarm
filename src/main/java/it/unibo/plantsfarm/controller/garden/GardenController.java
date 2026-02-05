@@ -11,29 +11,37 @@ import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.garden.GardenModel;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.model.tiles.Soil;
-import it.unibo.plantsfarm.model.tiles.TileMap;
 
+/**
+ * Controller for garden logic.
+ */
 public class GardenController {
     private GameState gameState;
     private AbstractPlayer player;
     private GardenModel gardenModel;
-    
-    private TileMap map = new TileMap();
 
-
-
+    /**
+     * Creates a new GardenController.
+     *
+     * @param gameState The game state.
+     * @param player    The player.
+     */
     public GardenController (GameState gameState, AbstractPlayer player) {
         this.gameState = gameState;
         this.player = player;
         this.gardenModel = new GardenModel();
-        this.map.loadMap("/maps/map.txt");
     }
 
+    /**
+     * Water the plant.
+     *
+     * @param now The current time in milliseconds.
+     */
     public final void innaffia(final long now) {
         final double posX = player.getPosx();
         final double posY = player.getPosy();
         final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
-        for (final Soil zolla : map.soilList) {
+        for (final Soil zolla : gardenModel.getSoils()) {
             if (zolla.getCoordinate().contains(hitbox)) {
                 if (zolla.getIsPlanted()) {
                     zolla.getPlant().water(now);
@@ -43,46 +51,63 @@ public class GardenController {
         }
     }
 
+    /**
+     * Update the garden model.
+     *
+     * @param now The current time in milliseconds.
+     */
     public final void updateSoil(final Long now) {
-        for (final Soil zolla : map.soilList) {
-            final Plant plant = zolla.getPlant();
-            if (plant != null) {
-                plant.updateNeedsWater(now);
-                plant.increaseGrowthStage(now);
-                System.out.println(plant.toString());
-            }
-        }
+        this.gardenModel.updateGame(now);
     }
 
-    public final void pianta(PlantType plant) {
+    /**
+     * Plant or harvest.
+     *
+     * @param type The plant type selected.
+     */
+    public final void pianta(PlantType type) {
         final double posX = player.getPosx();
         final double posY = player.getPosy();
-        if (plant != null) {
-            Plant pianta = new Plant(plant);
+        if (type != null) {
+            Plant pianta = new Plant(type);
             final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
-            
-            for (final Soil zolla : map.soilList) {
+
+            for (final Soil zolla : gardenModel.getSoils()) {
                 if (zolla.getCoordinate().contains(hitbox) && player.getInventory().getItem(HOE).getLevel() == 0) {
                     if (!zolla.getIsPlanted()) {
-                        zolla.setPlanted(pianta);
+                        //X DIEGO Controllo se la pianta è ornamentale o edibile e la pianta solo nel terreno giusto
+                        if ((zolla.getTileId() == 76 && !type.isEdible()) || (zolla.getTileId() != 76 && type.isEdible())) {
+                            zolla.setPlanted(pianta);
+                        }
                     } else {
                         gameState.addHarvest(zolla.getPlant().getType(), zolla.getPlant().harvest());
                     }
                 }
-            
             }
         }
     }
 
+    /**
+     * Give the list of all soil tiles in the garden.
+     *
+     * @return The list of soil objects.
+     */
     public final List<Soil> getSoilList() {
-        return map.soilList;
+        return gardenModel.getSoils();
     }
 
+    /**
+     * Checks if the player is on a soil tile.
+     *
+     * @param hitbox The hitbox of the player.
+     *
+     * @return True if the player is on soil, false otherwise.
+     */
     public boolean isPlayerOnSoil(final Rectangle hitbox) {
         for (Soil soilRect : gardenModel.getSoils()) {
             if(hitbox.contains(soilRect.getCoordinate())){
                 return true;
-            }         
+            }
         }
         return false;
     }
