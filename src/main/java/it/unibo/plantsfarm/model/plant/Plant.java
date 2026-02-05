@@ -1,7 +1,5 @@
 package it.unibo.plantsfarm.model.plant;
 
-import it.unibo.plantsfarm.model.plant.PlantType.Rarity;
-
 /**
  * Represents a plant in the game.
  * Holds the dynamic state and pick static info from PlantType.

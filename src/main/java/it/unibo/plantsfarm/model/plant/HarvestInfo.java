@@ -1,8 +1,7 @@
 package it.unibo.plantsfarm.model.plant;
 
 /**
- * Encapsulates the economic and harvest data for a plant.
- * Separated logic from the main Plant entity.
+ * Encapsulates the economic and harvest data for a edible plant.
  */
 public class HarvestInfo {
 
