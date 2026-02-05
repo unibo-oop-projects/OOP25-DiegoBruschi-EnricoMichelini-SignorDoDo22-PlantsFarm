@@ -8,18 +8,38 @@ import java.awt.event.ActionListener;
 
 public final class SeedController {
 
-    private final SeedView view;
+    private SeedView view;
     private final SeedSelectionListener selectionListener;
 
-    public SeedController(final SeedSelectionListener selectionListener, final boolean isEdible) {
-        this.view = new SeedView(isEdible);
+    /**
+     * Creates a new controller for the Seed Selection window.
+     *
+     * @param selectionListener When a plant is chosen.
+     * @param switchIndex   True to open on Edible window, false for Ornamental.
+     */
+    public SeedController(final SeedSelectionListener selectionListener, final boolean switchIndex) {
         this.selectionListener = selectionListener;
+        createView(switchIndex);
+    }
+
+    /**
+     * Initializes the view with the specific category of plants.
+     *
+     * @param isEdible True for edible plants, false for ornamental.
+     */
+    private void createView(final boolean isEdible) {
+        this.view = new SeedView(isEdible);
 
         if (isEdible) {
             loadEdiblePlants();
         } else {
             loadOrnamentalPlants();
         }
+
+        this.view.addSwitchModeListener(e -> {
+            createView(!isEdible);
+            this.start();
+        });
     }
 
     private void loadEdiblePlants() {
@@ -43,7 +63,6 @@ public final class SeedController {
         this.view.addPlantButton(plant.getName(), plant.isDiscovered(), action);
     }
 
-    //Ritorna plantType
     private ActionListener createListener(final PlantType plant) {
         return e -> {
             if (plant.isDiscovered()) {
@@ -57,4 +76,3 @@ public final class SeedController {
         this.view.show();
     }
 }
-
