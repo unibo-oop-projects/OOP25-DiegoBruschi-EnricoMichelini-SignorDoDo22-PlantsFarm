@@ -2,7 +2,7 @@ package it.unibo.plantsfarm.model.items;
 
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 
-public class ItemsExpert implements ItemsFarm {
+public final  class ItemsExpert implements ItemsFarm {
     private int minLevel = StatsItemBase.LEVEL_MAX;
     private int maxLevel = StatsItemBase.LEVEL_MAX;
     private int experience = StatsItemBase.EXPERIENCE_FOR_UPGRADE;

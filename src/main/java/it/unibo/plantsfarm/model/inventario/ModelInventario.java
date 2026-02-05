@@ -3,16 +3,13 @@ package it.unibo.plantsfarm.model.inventario;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import javax.tools.Tool;
-
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 
 /**
  * Model of the inventory: stores the player's tools/items inside a map.
- * The internal map is never exposed as mutable; updates happen only through
- * the model's methods (repair/upgrade/etc.).
+ * Every item can be upgraded ( if the player is baseFarmer).
+ *
  */
 public final class ModelInventario {
 
@@ -65,7 +62,8 @@ public final class ModelInventario {
      * @return true if the item is upgredable or false if it is not
      */
     public boolean isUpgredableItem(Tooltype tool) {
-        if(getItem(tool).getExperience() == getItem(tool).getExperienceForLevel()) {
+        if(getItem(tool).getExperience() == getItem(tool).getExperienceForLevel() &&
+            getItem(tool).getLevel() >= getItem(tool).getMaxLevel()) {
             return true;
         }
         return false;
@@ -99,20 +97,8 @@ public final class ModelInventario {
     }
 
     /**
-     * checks whether the inventory contains the given tool.
-     *
-     * @param type tool type
-     *
-     * @return true if present
-     */
-    public boolean contains(final Tooltype type) {
-        Objects.requireNonNull(type, "type");
-        return inventario.containsKey(type);
-    }
-
-    /**
      * If the item have been used the right way.
-     * the item experience grow.
+     * its experience grow.
      *
      * @param tool  tool action
      */

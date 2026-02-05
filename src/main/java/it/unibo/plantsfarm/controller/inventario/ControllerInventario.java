@@ -1,9 +1,7 @@
 package it.unibo.plantsfarm.controller.inventario;
 
 import java.util.Map;
-
 import it.unibo.plantsfarm.model.GameState;
-import it.unibo.plantsfarm.model.inventario.ModelInventario;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
@@ -21,15 +19,14 @@ public final class ControllerInventario {
         this.abstractPlayer = player;
     }
 
-    public boolean isUpgredable(Tooltype tool){
-        if(abstractPlayer.getInventory().isUpgredableItem(tool)){
-            System.out.println("è VERO");
+    public boolean isUpgredable(final Tooltype tool) {
+        if (abstractPlayer.getInventory().isUpgredableItem(tool)) {
             return true;
         }
         return false;
     }
 
-    public void pressUpgradeItem(Tooltype tool){
+    public void pressUpgradeItem(final Tooltype tool) {
         abstractPlayer.getInventory().upgrade(tool);
         viewItemsInventory.update();
     }
@@ -38,12 +35,12 @@ public final class ControllerInventario {
         return this.viewItemsInventory;
     }
 
-    public void addView(ImplViewGamePanel gamePanel) {
+    public void addView(final ImplViewGamePanel gamePanel) {
         this.viewItemsInventory = new UpgradeItemsView(gamePanel);
         this.viewItemsInventory.setControllerInventory(this);
     }
 
-    public Map<Tooltype,ItemsFarm> getInventoryClone() {
+    public Map<Tooltype, ItemsFarm> getInventoryClone() {
         return this.abstractPlayer.getInventory().getInventorySnapshot();
-     }
+    }
 }
