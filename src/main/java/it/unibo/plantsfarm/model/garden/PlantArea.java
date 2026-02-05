@@ -6,17 +6,32 @@ import java.util.List;
 
 import it.unibo.plantsfarm.model.tiles.Soil;
 
-//Represents a specific area in the garden containing multiple soils.
-//TO DO: ornamentals boost effect of nearby plants.
-public class PlantArea {
-    
+/**
+ * Represents a specific area in the garden containing multiple soils.
+ * TO DO: ornamentals boost effect of nearby plants.
+ */
+public final class PlantArea {
+
     private final Rectangle bounds;
     private final List<Soil> soils = new ArrayList<>();
-    //private Soil centerSoil; 
+    //private Soil centerSoil;
 
-    public PlantArea(Rectangle bounds) {
+    /**
+     * Creates a new PlantArea.
+     * 
+     * @param bounds The rectangle defining the area limits.
+     */
+    public PlantArea(final Rectangle bounds) {
         this.bounds = bounds;
-    }    public void addSoil(Soil soil) {
+    }
+
+    /**
+     * Adds a soil to this area if it is contained.
+     * Find out if the soil is the center of the area.
+     * 
+     * @param soil The soil object to try to add.
+     */
+    public void addSoil(final Soil soil) {
         if (bounds.contains(soil.getCoordinate())) {
             soils.add(soil);
             if (soil.getCoordinate().contains(bounds.getCenterX(), bounds.getCenterY())) {

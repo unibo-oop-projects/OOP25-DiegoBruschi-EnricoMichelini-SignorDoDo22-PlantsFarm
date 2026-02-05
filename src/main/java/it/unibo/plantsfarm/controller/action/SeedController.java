@@ -6,6 +6,9 @@ import it.unibo.plantsfarm.view.map.SeedView;
 
 import java.awt.event.ActionListener;
 
+/**
+ * Controller responsible for managing the seed selection interface.
+ */
 public final class SeedController {
 
     private SeedView view;
@@ -72,6 +75,9 @@ public final class SeedController {
         };
     }
 
+    /**
+     * Makes the seed selection view visible.
+     */
     public void start() {
         this.view.show();
     }

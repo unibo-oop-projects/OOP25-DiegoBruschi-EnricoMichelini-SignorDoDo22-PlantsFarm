@@ -19,7 +19,8 @@ public final class MainScreenController {
     /**
      * Creates the Main Screen Controller.
      *
-     * @param gameState The current game state.
+     * @param gameState         The current game state.
+     * @param gamecontroller    The game panel controller.
      */
     public MainScreenController(final GameState gameState, final ImplControllerGamePanel gamecontroller) {
         //this.gamecontroller = gamecontroller;
