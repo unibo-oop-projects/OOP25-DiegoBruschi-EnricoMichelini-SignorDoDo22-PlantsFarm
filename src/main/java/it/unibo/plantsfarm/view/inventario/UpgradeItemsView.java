@@ -2,30 +2,35 @@ package it.unibo.plantsfarm.view.inventario;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-
 import it.unibo.plantsfarm.controller.inventario.ControllerInventario;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
+
 
 /**
  * Dialog that shows the experience of each item/tool and allows upgrading them.
  */
 public final class UpgradeItemsView extends JDialog {
 
-    private static final long serialVersionUID = 1L;
+    private static final int ICON_SIZE = 48;
 
     private static final int DIALOG_WIDTH = 550;
     private static final int DIALOG_HEIGHT = 350;
@@ -60,6 +65,7 @@ public final class UpgradeItemsView extends JDialog {
     private final JPanel progressItems;
     private final JPanel buttonsActionsItem;
 
+    private final Map<Tooltype,JButton> itemsDisplay = new LinkedHashMap<>();
     private final Map<Tooltype, JProgressBar> progressBarMap = new LinkedHashMap<>();
     private final Map<Tooltype, JButton> progressButtonUpgradeMap = new LinkedHashMap<>();
 
@@ -68,10 +74,11 @@ public final class UpgradeItemsView extends JDialog {
      *
      * @param gamePanel the game panel that will receive focus when this dialog closes
      */
-    public UpgradeItemsView(final ImplViewGamePanel gamePanel) {
+    public UpgradeItemsView(final ImplViewGamePanel gamePanel, final ControllerInventario controllerInventario) {
         super();
         this.setTitle(TITLE);
         this.gamePanel = gamePanel;
+        this.controllerInventario = controllerInventario;
 
         this.setResizable(false);
         this.setSize(DIALOG_WIDTH, DIALOG_HEIGHT);
@@ -124,8 +131,23 @@ public final class UpgradeItemsView extends JDialog {
     public void createItemButton() {
         for (final Tooltype tool : Tooltype.values()) {
             final JButton button = new JButton(" ");
-            button.setText(tool.name());
-            button.setEnabled(false);
+            button.setFocusPainted(false);
+            button.setBorderPainted(false);
+            button.setContentAreaFilled(false);
+            button.setSize(new Dimension(60,60));
+             if (tool == Tooltype.WATERCAN) {
+                button.setIcon(loadScaledIconFromFile("src/main/resources/plantStatus/WaterCan.png"));
+                button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel()));
+            } else if (tool == Tooltype.FERTILIZER) {
+                button.setIcon(loadScaledIconFromFile("src/main/resources/plantStatus/Fertilizer.png"));
+                button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel()));
+            } else {
+                button.setIcon(loadScaledIconFromFile("src/main/resources/plantStatus/Hoe.png"));
+                button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel()));
+            }
+
+            button.setEnabled(true);
+            itemsDisplay.put(tool, button);
             buttonImages.add(button);
         }
     }
@@ -158,15 +180,6 @@ public final class UpgradeItemsView extends JDialog {
     }
 
     /**
-     * Sets the inventory controller used by this view.
-     *
-     * @param controller the inventory controller
-     */
-    public void setControllerInventory(final ControllerInventario controller) {
-        this.controllerInventario = controller;
-    }
-
-    /**
      * Updates progress bars and enables/disables upgrade buttons.
      */
     public void update() {
@@ -181,7 +194,6 @@ public final class UpgradeItemsView extends JDialog {
             bar.setForeground(BAR_FOREGROUND);
             bar.setOpaque(true);
             bar.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
-
             final ItemsFarm item = controllerInventario.getInventoryClone().get(tool);
             bar.setMinimum(0);
             bar.setMaximum(item.getExperienceForLevel());
@@ -192,6 +204,20 @@ public final class UpgradeItemsView extends JDialog {
             final JButton button = progressButtonUpgradeMap.get(tool);
             button.setEnabled(controllerInventario.isUpgredable(tool));
         }
+
+        for (final Tooltype tool : Tooltype.values()) {
+            final JButton jb = itemsDisplay.get(tool);
+            final int item = controllerInventario.getInventoryClone().get(tool).getLevel();
+            jb.setText(Integer.toString(item));
+        }
+
+    }
+
+    private ImageIcon loadScaledIconFromFile(final String path) {
+    final ImageIcon icon = new ImageIcon(path);
+    final Image scaled = icon.getImage()
+            .getScaledInstance(ICON_SIZE, ICON_SIZE, Image.SCALE_SMOOTH);
+    return new ImageIcon(scaled);
     }
 }
 

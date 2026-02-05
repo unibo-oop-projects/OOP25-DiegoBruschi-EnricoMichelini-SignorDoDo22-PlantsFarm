@@ -62,7 +62,7 @@ public final class ModelInventario {
      * @return true if the item is upgredable or false if it is not
      */
     public boolean isUpgredableItem(Tooltype tool) {
-        if(getItem(tool).getExperience() == getItem(tool).getExperienceForLevel() &&
+        if(getItem(tool).getExperience() >= getItem(tool).getExperienceForLevel() &&
             getItem(tool).getLevel() <= getItem(tool).getMaxLevel()) {
             return true;
         }

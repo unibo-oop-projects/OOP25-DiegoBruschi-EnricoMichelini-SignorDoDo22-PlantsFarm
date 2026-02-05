@@ -24,16 +24,14 @@ public final class ItemsFarmBase implements ItemsFarm {
         if (level >= maxLevel || experience < experienceForLevel) {
             return;
         }
-        System.out.println("STO UPGREDANDO level " +  level + " Experience " + experience + "EXPERIENCE FOR LEVEL " + experienceForLevel );
         level++;
-        experience = StatsItemBase.EXPERIENCE_BEGIN;
+        this.experience = experience - StatsItemBase.EXPERIENCE_FOR_UPGRADE;
         experienceForLevel += StatsItemBase.ADD_EXPERIENCE_FOR_UPGRADE;
     }
 
     @Override
     public void useItem() {
         experience += StatsItemBase.EXPERIENCE_FOR_ACTION;
-        System.out.println("EXPERIENCE " + experience);
     }
 
     @Override

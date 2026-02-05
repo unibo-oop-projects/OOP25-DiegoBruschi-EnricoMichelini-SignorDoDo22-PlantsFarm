@@ -36,8 +36,7 @@ public final class ControllerInventario {
     }
 
     public void addView(final ImplViewGamePanel gamePanel) {
-        this.viewItemsInventory = new UpgradeItemsView(gamePanel);
-        this.viewItemsInventory.setControllerInventory(this);
+        this.viewItemsInventory = new UpgradeItemsView(gamePanel, this);
     }
 
     public Map<Tooltype, ItemsFarm> getInventoryClone() {

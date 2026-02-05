@@ -24,9 +24,8 @@ public final  class ItemsExpert implements ItemsFarm {
         if (level >= maxLevel || experience < experienceForLevel) {
             return;
         }
-        System.out.println("level " +  level + "Experience " + experience + "EXPERIENCE FOR LEVEL " + experienceForLevel );
         level++;
-        experience = StatsItemBase.EXPERIENCE_BEGIN;
+        this.experience = experience - StatsItemBase.EXPERIENCE_FOR_UPGRADE;
         experienceForLevel += StatsItemBase.ADD_EXPERIENCE_FOR_UPGRADE;
     }
 
