@@ -1,9 +1,11 @@
 package it.unibo.plantsfarm.model.tiles;
 
 import java.awt.Rectangle;
+import java.io.Serializable;
+
 import it.unibo.plantsfarm.model.plant.Plant;
 
-public final class Soil {
+public final class Soil implements Serializable {
 
     private Rectangle coordinatePod;
     private boolean isPlanted;

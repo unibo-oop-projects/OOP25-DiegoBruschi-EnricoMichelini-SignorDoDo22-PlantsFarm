@@ -1,16 +1,10 @@
 package it.unibo.plantsfarm.model.player.api;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
 
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
-import it.unibo.plantsfarm.model.plant.Plant;
-import it.unibo.plantsfarm.model.plant.PlantType;
-import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.model.tiles.SolidBlock;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
@@ -28,8 +22,6 @@ public abstract class AbstractPlayer {
     /** Movement speed of the player (units per second). */
     protected double speed;
 
-    private final Rectangle solidArea = new Rectangle(8, 32, 32, 16);
-
     private TileMap map = new TileMap();
 
     /** Current X position of the player in world coordinates. */
@@ -38,6 +30,8 @@ public abstract class AbstractPlayer {
     /** Current Y position of the player in world coordinates. */
     private double posY = ImplViewGamePanel.WORLD_HEIGHT / 2;
 
+    private final Rectangle solidArea = new Rectangle(8, 32, 32, 16);
+
     /** Current movement direction of the player. */
     private UserInput direction = UserInput.FERMO;
 
@@ -45,6 +39,7 @@ public abstract class AbstractPlayer {
 
     public AbstractPlayer(final ModelInventario inventory) {
         this.inventory = inventory;
+        this.map.loadMap("/maps/map.txt");
     }
 
 
@@ -124,7 +119,11 @@ public abstract class AbstractPlayer {
         return this.direction;
     }
 
-    public ModelInventario getInventory(){
+    public ModelInventario getInventory() {
         return this.inventory;
+    }
+
+    public final Rectangle getHitBox() {
+        return solidArea;
     }
 }

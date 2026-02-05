@@ -1,11 +1,10 @@
 package it.unibo.plantsfarm.controller.garden;
 
+import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
+
 import java.awt.Rectangle;
 import java.util.List;
 
-//import com.fasterxml.jackson.databind.cfg.ContextAttributes.Impl;
-
-import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
@@ -13,15 +12,11 @@ import it.unibo.plantsfarm.model.garden.GardenModel;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.model.tiles.TileMap;
-import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public class GardenController {
     private GameState gameState;
     private AbstractPlayer player;
     private GardenModel gardenModel;
-    private double posX = ImplViewGamePanel.WORLD_WIDTH / 2;
-    private double posY = ImplViewGamePanel.WORLD_HEIGHT / 2;
-    private PlantType plant = ImplViewGamePanel.selectedPlant; 
     
     private TileMap map = new TileMap();
 
@@ -35,6 +30,8 @@ public class GardenController {
     }
 
     public final void innaffia(final long now) {
+        final double posX = player.getPosx();
+        final double posY = player.getPosy();
         final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
         for (final Soil zolla : map.soilList) {
             if (zolla.getCoordinate().contains(hitbox)) {
@@ -45,36 +42,48 @@ public class GardenController {
             }
         }
     }
-        public final void updateSoil(final Long now) {
+
+    public final void updateSoil(final Long now) {
         for (final Soil zolla : map.soilList) {
             final Plant plant = zolla.getPlant();
             if (plant != null) {
                 plant.updateNeedsWater(now);
                 plant.increaseGrowthStage(now);
-                //System.out.println(plant.toString());
+                System.out.println(plant.toString());
             }
         }
     }
 
     public final void pianta(PlantType plant) {
-        if (plant != null){
+        final double posX = player.getPosx();
+        final double posY = player.getPosy();
+        if (plant != null) {
             Plant pianta = new Plant(plant);
             final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
+            
             for (final Soil zolla : map.soilList) {
-                if (zolla.getCoordinate().contains(hitbox)) {
+                if (zolla.getCoordinate().contains(hitbox) && player.getInventory().getItem(HOE).getLevel() == 0) {
                     if (!zolla.getIsPlanted()) {
                         zolla.setPlanted(pianta);
-                        //System.out.println(zolla.getPlant());
-                        //System.out.println("PLANT TYPE" + zolla.getPlant().currentStageTime);
                     } else {
-                        zolla.getPlant().harvest();
+                        gameState.addHarvest(zolla.getPlant().getType(), zolla.getPlant().harvest());
                     }
                 }
+            
             }
         }
     }
 
-    public final List<Soil> getSoilCoordinate() {
-        return gardenModel.getSoils();
+    public final List<Soil> getSoilList() {
+        return map.soilList;
+    }
+
+    public boolean isPlayerOnSoil(final Rectangle hitbox) {
+        for (Soil soilRect : gardenModel.getSoils()) {
+            if(hitbox.contains(soilRect.getCoordinate())){
+                return true;
+            }         
+        }
+        return false;
     }
 }

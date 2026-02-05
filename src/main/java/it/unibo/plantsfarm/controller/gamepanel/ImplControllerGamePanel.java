@@ -2,17 +2,18 @@ package it.unibo.plantsfarm.controller.gamepanel;
 
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.garden.GardenController;
+import it.unibo.plantsfarm.controller.garden.SaveController;
 import it.unibo.plantsfarm.controller.inventario.ControllerInventario;
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.camera.Camera;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
-import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
-import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
@@ -25,6 +26,8 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private GardenController gardenController;
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
+    private SeedController controllerSeed;
+    private SaveController saver = new SaveController();
     //private final GameState gameState;
     private final ControllerInventario controllerInventario;
 
@@ -44,7 +47,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             final long delta = now - lastTime;
             lastTime = now;
             final UserInput input = queue.poll();
-            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY(), List.copyOf(gardenController.getSoilCoordinate()));
+            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY(), List.copyOf(gardenController.getSoilList()));
 
             try {
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
@@ -54,8 +57,8 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                     case RIGHT -> player.setDirection(input);
                     case UP -> player.setDirection(input);
                     case DOWN -> player.setDirection(input);
-                    case ACTIONHOE -> { }
-                    case ACTIONWATER -> player.getInventory().getItem(Tooltype.WATERCAN).useItem();
+                    case ACTIONHOE -> gardenController.pianta(ImplViewGamePanel.selectedPlant); //Da sistemare il selected plant nella view
+                    case ACTIONWATER -> gardenController.innaffia(now);
                     case FERMO -> player.setDirection(input);
 
                     /**
@@ -81,8 +84,9 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             }
             controllerAnimation.update(System.nanoTime());
             player.updatePlayer(delta);
-            //player.updateSoil(now);
+            gardenController.updateSoil(now);
             camera.followPlayer();
+            saver.saveGame(gardenController.getSoilList(), "savedsoils");
         }
     }
 

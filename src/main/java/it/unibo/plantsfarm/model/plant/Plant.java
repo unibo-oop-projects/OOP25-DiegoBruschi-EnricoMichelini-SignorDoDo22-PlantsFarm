@@ -1,15 +1,17 @@
 package it.unibo.plantsfarm.model.plant;
 
+import java.io.Serializable;
+
 /**
  * Represents a plant in the game.
  * Holds the dynamic state and pick static info from PlantType.
  */
-public class Plant {
+public class Plant implements Serializable {
 
     // Static info
     private static final long WATER_REDUCTION_TIME = 5_000L;
     private static final long WATER_TIME_COOLDOWN = 15_000L;
-    private static final long GROWTH_TIME = 5_000L; //30000
+    private static final long GROWTH_TIME = 30_000L; //30000
     private final PlantType type;
     //private GameState gameState;
 
@@ -21,6 +23,7 @@ public class Plant {
     private boolean isPlanted;
     public long currentStageTime;
     public long lastWateredTime;
+    public static int harvestedQuantity;
 
     /**
      * Creates a new Plant based on a specific type.
@@ -113,12 +116,14 @@ public class Plant {
      *
      * @return a random number between min and max yield, or 0 if ornamental.
      */
-    public final void harvest() {
+    public final int harvest() {
         if (!type.isEdible()) {
             System.out.println("Ornamentale");
+        } if (isMature()) {
+            growthStage = this.type.getResetStage();
+            return type.getHarvestInfo().generateHarvest();
         }
-        growthStage = this.type.getResetStage();
-        //gameState.addHarvest(type, type.getHarvestInfo().generateHarvest());
+        return 0;
     }
 
     /**

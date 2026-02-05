@@ -171,7 +171,6 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
         if (icon != null) {
             final Image image = icon.getImage();
-
             final double scale = 2;
             final int plantSize = (int) (POD_SIZE * scale);
             final int offset = (plantSize - POD_SIZE)/2;
