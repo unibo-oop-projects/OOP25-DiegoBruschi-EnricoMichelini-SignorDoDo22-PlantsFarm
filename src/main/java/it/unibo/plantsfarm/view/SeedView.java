@@ -18,6 +18,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.Font;
+import java.awt.BorderLayout;
 
 /**
  * Represents the view for selecting seeds to plant.
@@ -25,9 +27,10 @@ import java.awt.event.KeyEvent;
  */
 public final class SeedView {
 
-    private static final String TITLE_EDIBLE = "Edible Seeds";
+    private static final String TITLE_EDIBLE = "Edible Plants";
     private static final String TITLE_ORNAMENTAL = "Ornamental Plants";
     private static final Color BG_COLOR = new Color(245, 245, 220);
+    private static final Color ACTIVE_BUTTON = new Color(200, 230, 200);
 
     private static final int GRID_COLS = 3;
     private static final int VISIBLE_ROWS = 3;
@@ -39,6 +42,8 @@ public final class SeedView {
     private final JDialog dialog;
     private final JPanel gridPanel;
     private final int iconSize;
+    private final JButton edibleButton;
+    private final JButton ornamentalButton;
 
     /**
      * Creates a new SeedView.
@@ -57,11 +62,38 @@ public final class SeedView {
         this.dialog.setTitle(isEdible ? TITLE_EDIBLE : TITLE_ORNAMENTAL);
         this.dialog.setModal(true);
         this.dialog.setResizable(false);
+        this.dialog.setLayout(new BorderLayout());
 
         this.dialog.getRootPane().registerKeyboardAction(e -> close(),
             KeyStroke.getKeyStroke(KeyEvent.VK_P, 0),
             JPanel.WHEN_IN_FOCUSED_WINDOW
         );
+
+        final JPanel headerPanel = new JPanel(new GridLayout(1, 2));
+
+        this.edibleButton = new JButton("EDIBLE");
+        this.ornamentalButton = new JButton("ORNAMENTAL");
+
+        final Font btnFont = new Font("Arial", Font.BOLD, (int) (this.iconSize * 0.2));
+        this.edibleButton.setFont(btnFont);
+        this.ornamentalButton.setFont(btnFont);
+        this.edibleButton.setFocusable(false);
+        this.ornamentalButton.setFocusable(false);
+
+        if (isEdible) {
+            this.edibleButton.setBackground(ACTIVE_BUTTON);
+            this.edibleButton.setEnabled(false);
+            this.ornamentalButton.setBackground(Color.WHITE);
+        } else {
+            this.ornamentalButton.setBackground(ACTIVE_BUTTON);
+            this.ornamentalButton.setEnabled(false);
+            this.edibleButton.setBackground(Color.WHITE);
+        }
+
+        headerPanel.add(this.edibleButton);
+        headerPanel.add(this.ornamentalButton);
+
+        this.dialog.add(headerPanel, BorderLayout.NORTH);
 
         this.gridPanel = new JPanel();
         this.gridPanel.setLayout(new GridLayout(0, GRID_COLS, gap, gap));
@@ -88,7 +120,7 @@ public final class SeedView {
 
         scrollPane.setPreferredSize(new Dimension(contentSize + scrollBarWidth, contentSize));
 
-        this.dialog.add(scrollPane);
+        this.dialog.add(scrollPane, BorderLayout.CENTER);
         this.dialog.pack();
         this.dialog.setLocationRelativeTo(null);
     }
@@ -115,6 +147,27 @@ public final class SeedView {
         button.setPreferredSize(new Dimension(this.iconSize, this.iconSize));
         button.addActionListener(listener);
         this.gridPanel.add(button);
+    }
+
+    /**
+     * Attaches a listener to the switch buttons.
+     *
+     * @param listener The action to perform.
+     */
+    public void addSwitchModeListener(final ActionListener listener) {
+
+        if (this.edibleButton.isEnabled()) {
+            this.edibleButton.addActionListener(e -> {
+                close();
+                listener.actionPerformed(e);
+            });
+        }
+        if (this.ornamentalButton.isEnabled()) {
+            this.ornamentalButton.addActionListener(e -> {
+                close();
+                listener.actionPerformed(e);
+            });
+        }
     }
 
     /**

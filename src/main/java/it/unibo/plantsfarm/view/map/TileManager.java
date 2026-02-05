@@ -101,6 +101,7 @@ public final class TileManager {
 
         setupTile(tileIndex, "flowers.png");
         setupTile(++tileIndex, "lessFlowers.png");
+        setupTile(++tileIndex, "dirtOrnamental.png");
     }
 
     private void setupTile(int index, String fileName) {

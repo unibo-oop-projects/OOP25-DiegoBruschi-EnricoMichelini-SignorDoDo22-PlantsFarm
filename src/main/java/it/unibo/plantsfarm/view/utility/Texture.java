@@ -1,10 +1,12 @@
 package it.unibo.plantsfarm.view.utility;
 
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
 import javax.swing.ImageIcon;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 
 /**
  * Utility class for loading game textures.
@@ -156,7 +158,16 @@ public final class Texture {
         }
 
         final ImageIcon original = new ImageIcon(imageURL);
-        final Image scaled = original.getImage().getScaledInstance(width, height, Image.SCALE_REPLICATE);
-        return new ImageIcon(scaled);
+        if (width <= 0 || height <= 0) {
+            return original;
+        }
+
+        final BufferedImage resizedImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g2 = resizedImg.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+        g2.drawImage(original.getImage(), 0, 0, width, height, null);
+        g2.dispose();
+
+        return new ImageIcon(resizedImg);
     }
 }
