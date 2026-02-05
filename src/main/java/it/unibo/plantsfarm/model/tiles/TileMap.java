@@ -97,5 +97,4 @@ public final class TileMap {
         }
         return 0;
     }
-    
 }

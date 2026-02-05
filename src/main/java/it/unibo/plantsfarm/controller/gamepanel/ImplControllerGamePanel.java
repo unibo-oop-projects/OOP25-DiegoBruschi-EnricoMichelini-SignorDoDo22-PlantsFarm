@@ -1,7 +1,9 @@
 package it.unibo.plantsfarm.controller.gamepanel;
 
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
+import it.unibo.plantsfarm.controller.garden.GardenController;
 import it.unibo.plantsfarm.controller.inventario.ControllerInventario;
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.camera.Camera;
@@ -20,9 +22,9 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private final ImplFactoryPlayer factoryPlayer = new ImplFactoryPlayer();
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
     private AbstractPlayer player;
+    private GardenController gardenController;
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
-    private TileMap map = new TileMap();
     //private final GameState gameState;
     private final ControllerInventario controllerInventario;
 
@@ -30,8 +32,8 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         //this.gameState = gameState;
         setPlayer();
         this.player = getPlayer();
-        map.loadMap("/maps/map.txt");
         this.controllerInventario = new ControllerInventario(gameState, this.player);
+        this.gardenController = new GardenController(gameState, this.player);
     }
 
    @Override
@@ -42,7 +44,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             final long delta = now - lastTime;
             lastTime = now;
             final UserInput input = queue.poll();
-            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY(), player.getSoils());
+            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY(), List.copyOf(gardenController.getSoilCoordinate()));
 
             try {
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
@@ -79,7 +81,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             }
             controllerAnimation.update(System.nanoTime());
             player.updatePlayer(delta);
-            player.updateSoil(now);
+            //player.updateSoil(now);
             camera.followPlayer();
         }
     }

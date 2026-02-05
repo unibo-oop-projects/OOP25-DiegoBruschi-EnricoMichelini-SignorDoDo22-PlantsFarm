@@ -28,8 +28,6 @@ public abstract class AbstractPlayer {
     /** Movement speed of the player (units per second). */
     protected double speed;
 
-    private List<Soil> soils = new LinkedList<>(List.of());
-
     private final Rectangle solidArea = new Rectangle(8, 32, 32, 16);
 
     private TileMap map = new TileMap();
@@ -46,10 +44,7 @@ public abstract class AbstractPlayer {
     private final ModelInventario inventory;
 
     public AbstractPlayer(final ModelInventario inventory) {
-        this.map.loadMap("/maps/map.txt");
-        this.soils = this.map.getSoilList();
         this.inventory = inventory;
-
     }
 
 
@@ -69,7 +64,7 @@ public abstract class AbstractPlayer {
             case RIGHT -> nextPosX += delta;
             case UP -> nextPosY -= delta;
             case DOWN -> nextPosY += delta;
-            case ACTIONHOE -> pianta(ImplViewGamePanel.selectedPlant);
+            case ACTIONHOE -> { }
             case ACTIONWATER -> inventory.getItem(WATERCAN).useItem();
             case FERMO -> { }
         }
@@ -127,52 +122,6 @@ public abstract class AbstractPlayer {
      */
     public final UserInput getDirection() {
         return this.direction;
-    }
-
-    public final void pianta(PlantType plant) {
-        //ItemsFarm item = inventory.getItem(Tooltype.HOE);
-        if (plant != null){
-            Plant pianta = new Plant(plant);
-            final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
-            for (final Soil zolla : map.soilList) {
-                if (zolla.getCoordinate().contains(hitbox)) {
-                    if (!zolla.getIsPlanted()) {
-                        zolla.setPlanted(pianta);
-                        //System.out.println(zolla.getPlant());
-                        //System.out.println("PLANT TYPE" + zolla.getPlant().currentStageTime);
-                    } else {
-                        zolla.getPlant().harvest();
-                    }
-                }
-            }
-        }
-    }
-
-    public final void innaffia(final long now) {
-        final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
-        for (final Soil zolla : map.soilList) {
-            if (zolla.getCoordinate().contains(hitbox)) {
-                if (zolla.getIsPlanted()) {
-                    zolla.getPlant().water(now);
-                    break;
-                }
-            }
-        }
-    }
-
-    public final void updateSoil(final Long now) {
-        for (final Soil zolla : map.soilList) {
-            final Plant plant = zolla.getPlant();
-            if (plant != null) {
-                plant.updateNeedsWater(now);
-                plant.increaseGrowthStage(now);
-                //System.out.println(plant.toString());
-            }
-        }
-    }
-
-   public final List<Soil> getSoils() {
-        return this.soils;
     }
 
     public ModelInventario getInventory(){
