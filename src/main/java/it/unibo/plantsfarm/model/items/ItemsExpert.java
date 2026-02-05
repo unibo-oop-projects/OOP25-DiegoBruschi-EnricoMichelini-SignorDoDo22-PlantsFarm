@@ -53,8 +53,7 @@ public final  class ItemsExpert implements ItemsFarm {
         private static final int EXPERIENCE_FOR_ACTION = 5;
         private static final int EXPERIENCE_FOR_UPGRADE = 30;
         private static final int ADD_EXPERIENCE_FOR_UPGRADE = 15;
-        //private static final int EXPERIENCE_BEGIN = 0;
-        private static final int LEVEL_BEGIN = 0; // o 1
+        private static final int LEVEL_BEGIN = 0;
         private static final int LEVEL_MAX = 5;
     }
 

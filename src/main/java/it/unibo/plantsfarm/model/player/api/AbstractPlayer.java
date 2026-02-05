@@ -175,6 +175,10 @@ public abstract class AbstractPlayer {
         return this.soils;
     }
 
+    public final Rectangle getHitBox() {
+        return this.solidArea;
+    }
+
     public ModelInventario getInventory(){
         return this.inventory;
     }
