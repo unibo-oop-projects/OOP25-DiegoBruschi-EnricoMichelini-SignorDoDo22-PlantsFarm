@@ -3,7 +3,7 @@ package it.unibo.plantsfarm.view.gamePanel.api;
 import java.util.List;
 
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
-import it.unibo.plantsfarm.model.Soil;
+import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 
 /**

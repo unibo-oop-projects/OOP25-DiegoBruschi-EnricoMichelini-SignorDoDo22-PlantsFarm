@@ -10,12 +10,12 @@ import it.unibo.plantsfarm.view.inventario.UpgradeItemsView;
 
 public final class ControllerInventario {
 
-    private final GameState gameState;
+    //private final GameState gameState;
     private final AbstractPlayer abstractPlayer;
     private UpgradeItemsView viewItemsInventory;
 
     public ControllerInventario(final GameState gamestate, final AbstractPlayer player) {
-        this.gameState = gamestate;
+        //this.gameState = gamestate;
         this.abstractPlayer = player;
     }
 

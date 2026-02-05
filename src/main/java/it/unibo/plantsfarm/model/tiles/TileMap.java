@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.model;
+package it.unibo.plantsfarm.model.tiles;
 
 import java.awt.Rectangle;
 import java.io.BufferedReader;
@@ -51,7 +51,7 @@ public final class TileMap {
                     final int worldY = row * ImplViewGamePanel.TILE_SIZE;
                     final int size = ImplViewGamePanel.TILE_SIZE;
 
-                    if (num == 2 || (num >= 11 && num <= 19)) {
+                    if (num == 2 || (num >= 11 && num <= 19) || num == 76) {
                         final Rectangle rect = new Rectangle(worldX, worldY, size, size);
                         this.soilList.add(new Soil(rect));
                     }
@@ -89,4 +89,13 @@ public final class TileMap {
     public List<SolidBlock> getSolidBlocks() {
         return this.solidBlocks;
     }
+
+    //TO DO: ornamental
+    public int getTileId(int row, int col) {
+        if (row >= 0 && row < ImplViewGamePanel.MAX_WORLD_ROW && col >= 0 && col < ImplViewGamePanel.MAX_WORLD_COL) {
+            return logicMap1[row][col];
+        }
+        return 0;
+    }
+    
 }

@@ -14,7 +14,7 @@ import it.unibo.plantsfarm.view.MainScreen;
 public final class MainScreenController {
 
     private final MainScreen view;
-    private final ImplControllerGamePanel gamecontroller;
+    //private final ImplControllerGamePanel gamecontroller;
 
     /**
      * Creates the Main Screen Controller.
@@ -22,7 +22,7 @@ public final class MainScreenController {
      * @param gameState The current game state.
      */
     public MainScreenController(final GameState gameState, final ImplControllerGamePanel gamecontroller) {
-        this.gamecontroller = gamecontroller;
+        //this.gamecontroller = gamecontroller;
         this.view = new MainScreen();
         this.view.createMainScreen(gamecontroller.getView());
         setupListeners(gameState);

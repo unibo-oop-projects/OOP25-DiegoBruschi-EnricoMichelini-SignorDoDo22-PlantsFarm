@@ -7,14 +7,12 @@ import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
 
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
-import it.unibo.plantsfarm.model.TileMap;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
-import it.unibo.plantsfarm.model.items.api.ItemsFarm;
-import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
-import it.unibo.plantsfarm.model.Soil;
-import it.unibo.plantsfarm.model.SolidBlock;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
+import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.model.tiles.SolidBlock;
+import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 
@@ -132,7 +130,7 @@ public abstract class AbstractPlayer {
     }
 
     public final void pianta(PlantType plant) {
-        ItemsFarm item = inventory.getItem(Tooltype.HOE);
+        //ItemsFarm item = inventory.getItem(Tooltype.HOE);
         if (plant != null){
             Plant pianta = new Plant(plant);
             final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);

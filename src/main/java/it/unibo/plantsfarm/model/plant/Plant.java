@@ -1,7 +1,5 @@
 package it.unibo.plantsfarm.model.plant;
 
-import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
-import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.plant.PlantType.Rarity;
 
 /**
@@ -21,7 +19,7 @@ public class Plant {
     private int growthStage;
     private boolean needsWater;
     private boolean watered;
-    private boolean fertilized;
+    //private boolean fertilized;
     private boolean isPlanted;
     public long currentStageTime;
     public long lastWateredTime;
@@ -41,9 +39,15 @@ public class Plant {
         //this.gameState = gameState;
     }
 
-    public final void increaseGrowthStage(final long now){
+    //TO DO: multipplier for ornamental
+    public final void increaseGrowthStage(final long now) {
+        this.increaseGrowthStage(now, 1.0);
+    }
+
+    public final void increaseGrowthStage(final long now, final double multiplier){
         if (!isMature()) {
-            if (watered && System.currentTimeMillis() >= currentStageTime + GROWTH_TIME && growthStage < getMaxGrowthStage()) {
+            long requiredTime = (long) (GROWTH_TIME / multiplier);
+            if (watered && System.currentTimeMillis() >= currentStageTime + requiredTime && growthStage < getMaxGrowthStage()) {
                 currentStageTime = now;
                 watered = false;
                 growthStage++;

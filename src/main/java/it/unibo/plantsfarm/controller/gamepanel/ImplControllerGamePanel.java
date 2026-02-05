@@ -4,13 +4,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.inventario.ControllerInventario;
 import it.unibo.plantsfarm.model.GameState;
-import it.unibo.plantsfarm.model.TileMap;
 import it.unibo.plantsfarm.model.camera.Camera;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
+import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
@@ -23,11 +23,11 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
     private TileMap map = new TileMap();
-    private final GameState gameState;
+    //private final GameState gameState;
     private final ControllerInventario controllerInventario;
 
     public ImplControllerGamePanel(final GameState gameState) {
-        this.gameState = gameState;
+        //this.gameState = gameState;
         setPlayer();
         this.player = getPlayer();
         map.loadMap("/maps/map.txt");

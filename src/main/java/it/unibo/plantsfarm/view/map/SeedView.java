@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.view;
+package it.unibo.plantsfarm.view.map;
 
 import it.unibo.plantsfarm.view.utility.Texture;
 import it.unibo.plantsfarm.view.utility.TextureUtils;

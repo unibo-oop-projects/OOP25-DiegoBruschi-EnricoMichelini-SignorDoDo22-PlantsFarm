@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.model;
+package it.unibo.plantsfarm.model.tiles;
 
 import java.awt.Rectangle;
 

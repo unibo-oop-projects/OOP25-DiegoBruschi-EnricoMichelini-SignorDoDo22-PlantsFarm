@@ -2,7 +2,7 @@ package it.unibo.plantsfarm.controller.action;
 
 import it.unibo.plantsfarm.controller.action.api.SeedSelectionListener;
 import it.unibo.plantsfarm.model.plant.PlantType;
-import it.unibo.plantsfarm.view.SeedView;
+import it.unibo.plantsfarm.view.map.SeedView;
 
 import java.awt.event.ActionListener;
 
