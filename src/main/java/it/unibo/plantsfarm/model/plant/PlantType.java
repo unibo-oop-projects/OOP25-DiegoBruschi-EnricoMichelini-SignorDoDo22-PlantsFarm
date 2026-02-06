@@ -30,15 +30,15 @@ public enum PlantType {
     BUDDHAHAND("Buddha's Hand", 7, 4, Rarity.LEGENDARY, new HarvestInfo(100, 3, 6), null),
 
     //ORNAMENTAL PLANTS
-    SNAPDRAGON("SnapDragon", 3, 0, Rarity.COMMON, null, new EffectInfo(PlantEffect.GROWTH_SPEED, 0.10)),
-    BEGONIA("Begonia", 5, 0, Rarity.COMMON, null, new EffectInfo(PlantEffect.BIG_HARVEST, 0.10)),
-    MONSTERA("Monstera", 4, 0, Rarity.RARE, null, new EffectInfo(PlantEffect.GROWTH_SPEED, 0.25)),
-    BLEEDINGHEARTH("BleedingHearth", 4, 0, Rarity.RARE, null, new EffectInfo(PlantEffect.BIG_HARVEST, 0.25)),
-    HIBISCUS("Hibiscus", 4, 0, Rarity.RARE, null, new EffectInfo(PlantEffect.GROWTH_SPEED, 0.25)),
-    STRELITZIA("Strelitzia", 5, 0, Rarity.EPIC, null, new EffectInfo(PlantEffect.BIG_HARVEST, 0.50)),
-    ORCHID("Orchid", 3, 0, Rarity.EPIC, null, new EffectInfo(PlantEffect.GROWTH_SPEED, 0.50)),
-    NEPENTHES("Nepenthes", 4, 0, Rarity.LEGENDARY, null, new EffectInfo(PlantEffect.BIG_HARVEST, 1.0)),
-    RAFFLESIA("Rafflesia", 3, 0, Rarity.LEGENDARY, null, new EffectInfo(PlantEffect.GROWTH_SPEED, 1.0));
+    SNAPDRAGON("SnapDragon", 3, 0, Rarity.COMMON, null, new EffectInfo(PlantEffect.GROWTH_SPEED, 1.50)),
+    BEGONIA("Begonia", 5, 0, Rarity.COMMON, null, new EffectInfo(PlantEffect.BIG_HARVEST, 1.50)),
+    MONSTERA("Monstera", 4, 0, Rarity.RARE, null, new EffectInfo(PlantEffect.GROWTH_SPEED, 1.50)),
+    BLEEDINGHEARTH("BleedingHearth", 4, 0, Rarity.RARE, null, new EffectInfo(PlantEffect.BIG_HARVEST, 1.75)),
+    HIBISCUS("Hibiscus", 4, 0, Rarity.RARE, null, new EffectInfo(PlantEffect.GROWTH_SPEED, 1.75)),
+    STRELITZIA("Strelitzia", 5, 0, Rarity.EPIC, null, new EffectInfo(PlantEffect.BIG_HARVEST, 2.0)),
+    ORCHID("Orchid", 3, 0, Rarity.EPIC, null, new EffectInfo(PlantEffect.GROWTH_SPEED, 2.0)),
+    NEPENTHES("Nepenthes", 4, 0, Rarity.LEGENDARY, null, new EffectInfo(PlantEffect.BIG_HARVEST, 2.5)),
+    RAFFLESIA("Rafflesia", 3, 0, Rarity.LEGENDARY, null, new EffectInfo(PlantEffect.GROWTH_SPEED, 2.5));
 
     private final String name;
     private final int maxGrowthStage;

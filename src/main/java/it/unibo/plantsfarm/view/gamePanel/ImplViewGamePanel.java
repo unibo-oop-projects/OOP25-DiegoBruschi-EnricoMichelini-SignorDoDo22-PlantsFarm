@@ -27,6 +27,7 @@ import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantEffect;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
@@ -183,8 +184,20 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
             ImageIcon statusIcon = null;
 
+            //DA FARE: da spostare in controller
             if (plant.isMature()) {
-                statusIcon = Texture.READY_ICON;
+                if (plant.isEdible()) {
+                    statusIcon = Texture.READY_ICON;
+                } else {
+                    if (plant.getType().getEffectInfo() != null) {
+                        final PlantEffect effectType = plant.getType().getEffectInfo().getType();
+                        if (effectType == PlantEffect.GROWTH_SPEED) {
+                            statusIcon = Texture.SPEED_ICON;
+                        } else if (effectType == PlantEffect.BIG_HARVEST) {
+                            statusIcon = Texture.HARVEST_ICON;
+                        }
+                    }
+                }
             } else if (plant.needsWater()) {
                 statusIcon = Texture.WATER_ICON;
             }
@@ -192,7 +205,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
             if (statusIcon != null) {
                 final int statusSize = Texture.STATUS_ICON_SIZE;
                 final int iconX = (pod.getCoordinate().x - cameraX) - (statusSize / 3);
-                final int iconY = (pod.getCoordinate().y - cameraY) - (statusSize / 3);
+                final int iconY = (pod.getCoordinate().y - cameraY) - (statusSize);
 
                 g2D.drawImage(statusIcon.getImage(), iconX, iconY, statusSize, statusSize, null);
             }

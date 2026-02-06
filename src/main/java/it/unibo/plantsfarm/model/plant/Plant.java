@@ -9,21 +9,21 @@ import java.io.Serializable;
 public class Plant implements Serializable {
 
     // Static info
-    private static final long WATER_REDUCTION_TIME = 5_000L;
+    private static final long WATER_REDUCTION_TIME = 10_000L;
     private static final long WATER_TIME_COOLDOWN = 15_000L;
-    private static final long GROWTH_TIME = 30_000L; //30000
+    private static final long GROWTH_TIME = 30_000L;
     private final PlantType type;
-    //private GameState gameState;
 
     // Dynamic info
     private int growthStage;
     private boolean needsWater;
     private boolean watered;
-    //private boolean fertilized;
     private boolean isPlanted;
-    public long currentStageTime;
+    private long currentStageTime;
     public long lastWateredTime;
     public static int harvestedQuantity;
+    private long lastUpdate;
+    private double harvestMultiplier;
 
     /**
      * Creates a new Plant based on a specific type.
@@ -35,26 +35,29 @@ public class Plant implements Serializable {
         this.growthStage = 0;
         this.needsWater = true;
         this.isPlanted = true;
-        this.currentStageTime = System.currentTimeMillis();
         this.lastWateredTime = System.currentTimeMillis();
-        //this.gameState = gameState;
+        this.lastUpdate = System.currentTimeMillis();
+        this.harvestMultiplier = 1.0;
     }
 
-    //TO DO: multipplier for ornamental
     public final void increaseGrowthStage(final long now) {
         this.increaseGrowthStage(now, 1.0);
     }
 
     public final void increaseGrowthStage(final long now, final double multiplier){
-        if (!isMature()) {
-            long requiredTime = (long) (GROWTH_TIME / multiplier);
-            if (watered && System.currentTimeMillis() >= currentStageTime + requiredTime && growthStage < getMaxGrowthStage()) {
-                currentStageTime = now;
-                watered = false;
-                growthStage++;
-            }
-        } else {
+        long growthTimeFromLastUpdate = now - lastUpdate;
+        lastUpdate = now;
 
+        if (!isMature()) {
+            if (watered && !needsWater) {
+                currentStageTime += (long) (growthTimeFromLastUpdate * multiplier);
+
+                if (currentStageTime >= GROWTH_TIME && growthStage < getMaxGrowthStage()) {
+                    currentStageTime = 0;
+                    watered = false;
+                    growthStage++;
+                }
+            }
         }
     }
 
@@ -68,7 +71,7 @@ public class Plant implements Serializable {
             this.lastWateredTime = System.currentTimeMillis();
             watered = true;
             needsWater = false;
-            currentStageTime -= WATER_REDUCTION_TIME;
+            currentStageTime += WATER_REDUCTION_TIME;
         }
     }
 
@@ -82,6 +85,7 @@ public class Plant implements Serializable {
         if (this.type.getMaxGrowthStage() > this.growthStage) {
             if (now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
                 this.needsWater = true;
+                this.watered = false;
             }
         }
     }
@@ -112,6 +116,15 @@ public class Plant implements Serializable {
     }
 
     /**
+     * Sets the harvest multiplier for this plant.
+     *
+     * @param multiplier The multiplier to set.
+     */
+    public final void setHarvestMultiplier(final double multiplier) {
+        this.harvestMultiplier = multiplier;
+    }
+
+    /**
      * Calculates the amount of items obtained from harvesting this plant.
      *
      * @return a random number between min and max yield, or 0 if ornamental.
@@ -119,9 +132,12 @@ public class Plant implements Serializable {
     public final int harvest() {
         if (!type.isEdible()) {
             System.out.println("Ornamentale");
+            return 0;
         } if (isMature()) {
             growthStage = this.type.getResetStage();
-            return type.getHarvestInfo().generateHarvest();
+            currentStageTime = 0;
+            int baseHarvest = type.getHarvestInfo().generateHarvest();
+            return (int) (baseHarvest * this.harvestMultiplier);
         }
         return 0;
     }

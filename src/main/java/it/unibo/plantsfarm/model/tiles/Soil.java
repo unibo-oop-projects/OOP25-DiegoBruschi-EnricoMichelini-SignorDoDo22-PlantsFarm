@@ -7,12 +7,14 @@ import it.unibo.plantsfarm.model.plant.Plant;
 
 public final class Soil implements Serializable {
 
-    private Rectangle coordinatePod;
+    private final Rectangle coordinatePod;
+    private final int tileId;
     private boolean isPlanted;
     private Plant plant;
 
-    public Soil(final Rectangle coordinatePod) {
+    public Soil(final Rectangle coordinatePod, final int tileId) {
         this.coordinatePod = coordinatePod;
+        this.tileId = tileId;
     }
 
     public Rectangle getCoordinate() {
@@ -30,5 +32,10 @@ public final class Soil implements Serializable {
 
     public Plant getPlant() {
         return this.plant;
+    }
+
+
+    public int getTileId() {
+        return this.tileId;
     }
 }
