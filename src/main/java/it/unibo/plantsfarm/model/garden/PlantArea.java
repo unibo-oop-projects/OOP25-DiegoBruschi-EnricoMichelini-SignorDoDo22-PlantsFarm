@@ -6,6 +6,8 @@ import java.util.List;
 
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.model.plant.EffectInfo;
+import it.unibo.plantsfarm.model.plant.PlantEffect;
 
 /**
  * Represents a specific area in the garden containing multiple soils.
@@ -52,9 +54,13 @@ public final class PlantArea {
 
         if (centerSoil != null && centerSoil.getIsPlanted()) {
             final Plant centerPlant = centerSoil.getPlant();
-            if (!centerPlant.isEdible()) {
-                multiplier = 2.0;
+            final EffectInfo effect = centerPlant.getType().getEffectInfo();
+
+            if (effect != null && effect.getType() == PlantEffect.GROWTH_SPEED && centerPlant.isMature()) {
+                multiplier = effect.getValue();
+                System.out.println("Applying growth speed bonus from center plant: " + multiplier);
             }
+
             centerPlant.increaseGrowthStage(now, 1.0);
             centerPlant.updateNeedsWater(now);
         }

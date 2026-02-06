@@ -57,6 +57,8 @@ public final class Texture {
 
     public static final ImageIcon WATER_ICON = loadStatusIcon("Water.png");
     public static final ImageIcon READY_ICON = loadStatusIcon("Ready.png");
+    public static final ImageIcon SPEED_ICON = loadStatusIcon("SpeedBoost.png");
+    public static final ImageIcon HARVEST_ICON = loadStatusIcon("HarvestBoost.png");
 
     private static final String EXTENSION = ".png";
 
