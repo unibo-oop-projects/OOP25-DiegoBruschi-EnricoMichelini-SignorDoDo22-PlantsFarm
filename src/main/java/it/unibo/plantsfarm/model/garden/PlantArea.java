@@ -50,19 +50,22 @@ public final class PlantArea {
      * @param now Current time in milliseconds.
      */
     public void updateArea(final long now) {
-        double multiplier = 1.0;
-
+        double growthMultiplier = 1.0;
+        double harvestMultiplier = 1.0;
         if (centerSoil != null && centerSoil.getIsPlanted()) {
             final Plant centerPlant = centerSoil.getPlant();
             final EffectInfo effect = centerPlant.getType().getEffectInfo();
-
-            if (effect != null && effect.getType() == PlantEffect.GROWTH_SPEED && centerPlant.isMature()) {
-                multiplier = effect.getValue();
-                System.out.println("Applying growth speed bonus from center plant: " + multiplier);
-            }
-
             centerPlant.increaseGrowthStage(now, 1.0);
             centerPlant.updateNeedsWater(now);
+
+            if (effect != null && centerPlant.isMature()) {
+                
+                if (effect.getType() == PlantEffect.GROWTH_SPEED) {
+                    growthMultiplier = effect.getValue();
+                } else if (effect.getType() == PlantEffect.BIG_HARVEST) {
+                    harvestMultiplier = effect.getValue();
+                }
+            }
         }
 
         for (final Soil soil : soils) {
@@ -72,7 +75,8 @@ public final class PlantArea {
 
             if (soil.getIsPlanted()) {
                 final Plant p = soil.getPlant();
-                p.increaseGrowthStage(now, multiplier);
+                p.increaseGrowthStage(now, growthMultiplier);
+                p.setHarvestMultiplier(harvestMultiplier);
                 p.updateNeedsWater(now);
             }
         }

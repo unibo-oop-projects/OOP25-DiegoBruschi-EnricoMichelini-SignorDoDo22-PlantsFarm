@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Plant implements Serializable {
 
     // Static info
-    private static final long WATER_REDUCTION_TIME = 5_000L;
+    private static final long WATER_REDUCTION_TIME = 10_000L;
     private static final long WATER_TIME_COOLDOWN = 15_000L;
     private static final long GROWTH_TIME = 30_000L;
     private final PlantType type;
@@ -19,10 +19,11 @@ public class Plant implements Serializable {
     private boolean needsWater;
     private boolean watered;
     private boolean isPlanted;
-    private long currentStageTime = 0;
+    private long currentStageTime;
     public long lastWateredTime;
     public static int harvestedQuantity;
     private long lastUpdate;
+    private double harvestMultiplier;
 
     /**
      * Creates a new Plant based on a specific type.
@@ -36,9 +37,9 @@ public class Plant implements Serializable {
         this.isPlanted = true;
         this.lastWateredTime = System.currentTimeMillis();
         this.lastUpdate = System.currentTimeMillis();
+        this.harvestMultiplier = 1.0;
     }
 
-    //TO DO: multipplier for ornamental
     public final void increaseGrowthStage(final long now) {
         this.increaseGrowthStage(now, 1.0);
     }
@@ -84,6 +85,7 @@ public class Plant implements Serializable {
         if (this.type.getMaxGrowthStage() > this.growthStage) {
             if (now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
                 this.needsWater = true;
+                this.watered = false;
             }
         }
     }
@@ -114,6 +116,15 @@ public class Plant implements Serializable {
     }
 
     /**
+     * Sets the harvest multiplier for this plant.
+     *
+     * @param multiplier The multiplier to set.
+     */
+    public final void setHarvestMultiplier(final double multiplier) {
+        this.harvestMultiplier = multiplier;
+    }
+
+    /**
      * Calculates the amount of items obtained from harvesting this plant.
      *
      * @return a random number between min and max yield, or 0 if ornamental.
@@ -125,7 +136,8 @@ public class Plant implements Serializable {
         } if (isMature()) {
             growthStage = this.type.getResetStage();
             currentStageTime = 0;
-            return type.getHarvestInfo().generateHarvest();
+            int baseHarvest = type.getHarvestInfo().generateHarvest();
+            return (int) (baseHarvest * this.harvestMultiplier);
         }
         return 0;
     }
