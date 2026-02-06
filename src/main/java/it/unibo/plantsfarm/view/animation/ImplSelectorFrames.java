@@ -91,13 +91,13 @@ public final class ImplSelectorFrames implements SelectorFrames {
 
     @Override
     public void update(final Long nowNs) {
-    if (currentAnimation != null) {
-        currentImage = currentAnimation.getCurrentFrame(nowNs);
+        if (currentAnimation != null) {
+            currentImage = currentAnimation.getCurrentFrame(nowNs);
 
-        if (!currentAnimation.getisPlaying()) {
-            currentAnimation = null;
-            currentImage = AnimationFrames.BASE;
-        }
+            if (!currentAnimation.getisPlaying()) {
+                currentAnimation = null;
+                currentImage = AnimationFrames.BASE;
+            }
         }
     }
 

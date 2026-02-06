@@ -2,7 +2,6 @@ package it.unibo.plantsfarm.model;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.FERTILIZER;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;

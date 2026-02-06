@@ -1,16 +1,15 @@
 package it.unibo.plantsfarm.controller.gamepanel;
 
-import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.ACTIONWATER;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
-
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.garden.GardenController;
 import it.unibo.plantsfarm.controller.garden.SaveController;
-import it.unibo.plantsfarm.controller.inventario.ControllerInventario;
+import it.unibo.plantsfarm.controller.inventario.ImplControllerInventario;
+import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.camera.Camera;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
@@ -38,7 +37,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         //this.gameState = gameState;
         setPlayer();
         this.player = getPlayer();
-        this.controllerInventario = new ControllerInventario(gameState, this.player);
+        this.controllerInventario = new ImplControllerInventario(this.player);
         this.gardenController = new GardenController(gameState, this.player);
     }
 
@@ -50,8 +49,8 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             final long delta = now - lastTime;
             lastTime = now;
             final UserInput input = queue.poll();
-            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(), camera.getCameraPosY(), List.copyOf(gardenController.getSoilList()));
-
+            view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(),
+            camera.getCameraPosY(), List.copyOf(gardenController.getSoilList()));
             try {
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
                 if (input != null) {

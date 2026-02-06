@@ -1,6 +1,5 @@
 package it.unibo.plantsfarm.model.items.api;
 
-import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.model.plant.Rarity;
 
 /**

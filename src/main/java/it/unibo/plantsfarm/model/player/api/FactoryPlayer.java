@@ -11,7 +11,9 @@ public interface FactoryPlayer {
 
     /**
      * Creates a new Player based on the requested type.
+     *
      * @param request the type of player to create
+     *
      * @return the created Player
      */
     AbstractPlayer createPlayer(PlayersTypes request);

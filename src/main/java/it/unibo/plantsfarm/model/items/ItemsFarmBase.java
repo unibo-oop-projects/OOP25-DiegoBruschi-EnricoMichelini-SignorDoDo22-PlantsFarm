@@ -1,8 +1,5 @@
 package it.unibo.plantsfarm.model.items;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.plant.Rarity;
 

@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Objects;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
-import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.Rarity;
 
 /**

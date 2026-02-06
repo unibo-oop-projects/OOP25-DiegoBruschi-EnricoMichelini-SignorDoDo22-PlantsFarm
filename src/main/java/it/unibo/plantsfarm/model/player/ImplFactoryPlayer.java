@@ -15,11 +15,9 @@ public final class ImplFactoryPlayer implements FactoryPlayer {
     private final InventoryFactory factoryInventory = new InventoryFactory();
 
     /**
-     * Creates a player of the specified type.
-     *
+     * Creates a player of the specified type.*
      * The {@code EXPERTFARMER} type can be used to test the application
      * with all items already upgraded.
-     *
      * The {@code FARMER} type can create a normal Player with base item not
      * upgraded.
      *

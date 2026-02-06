@@ -3,31 +3,31 @@ package it.unibo.plantsfarm.model.camera;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 
 /**
- * 
+ *  The Camera define the visible part of the world game.
  */
 public interface Camera {
     /**
-     * Calculate the position of camera based on player position. 
+     * Calculate the position of camera based on player position.
      */
     void followPlayer();
 
     /**
      * Return Position of the camera on the X axis.
-     * 
+     *
      * @return PositionX of camera
      */
     int getCameraPosX();
 
     /**
      * Return Position of the camera on the Y axis.
-     * 
-     * @return PositionY of camera 
+     *
+     * @return PositionY of camera
      */
     int getCameraPosY();
 
     /**
      * Set the entity to follow.
-     * 
+     *
      * @param player set the current player from the ControllerGamePanel
      */
     void setPlayer(AbstractPlayer player);

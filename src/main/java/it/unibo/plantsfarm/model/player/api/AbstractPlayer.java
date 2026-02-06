@@ -9,7 +9,6 @@ import it.unibo.plantsfarm.model.tiles.SolidBlock;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
-
 /**
  * Abstract base class representing a generic player entity.
  * It stores the player position, movement speed and direction.
@@ -20,6 +19,7 @@ public abstract class AbstractPlayer {
     public static final int EXPERT_FARMER_SPEED = 650;
 
     /** Movement speed of the player (units per second). */
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     protected double speed;
 
     private TileMap map = new TileMap();
@@ -41,7 +41,6 @@ public abstract class AbstractPlayer {
         this.inventory = inventory;
         this.map.loadMap("/maps/map.txt");
     }
-
 
     /**
      * Updates the position of the player based on the elapsed time
@@ -119,10 +118,20 @@ public abstract class AbstractPlayer {
         return this.direction;
     }
 
+    /**
+     * Return the Inventory of the player.
+     *
+     * @return
+     */
     public ModelInventario getInventory() {
         return this.inventory;
     }
 
+    /**
+     * Return the HitBox of the player.
+     *
+     * @return
+     */
     public final Rectangle getHitBox() {
         return solidArea;
     }
