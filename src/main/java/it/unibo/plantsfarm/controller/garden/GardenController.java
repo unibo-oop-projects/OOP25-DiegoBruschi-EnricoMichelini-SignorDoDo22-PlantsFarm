@@ -17,7 +17,7 @@ public class GardenController {
     private GameState gameState;
     private AbstractPlayer player;
     private GardenModel gardenModel;
-    
+
     private TileMap map = new TileMap();
 
 
@@ -60,7 +60,7 @@ public class GardenController {
         if (plant != null) {
             Plant pianta = new Plant(plant);
             final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
-            
+
             for (final Soil zolla : map.soilList) {
                 if (zolla.getCoordinate().contains(hitbox) && player.getInventory().getItem(HOE).getLevel() == 0) {
                     if (!zolla.getIsPlanted()) {
@@ -69,7 +69,7 @@ public class GardenController {
                         gameState.addHarvest(zolla.getPlant().getType(), zolla.getPlant().harvest());
                     }
                 }
-            
+
             }
         }
     }
@@ -82,7 +82,7 @@ public class GardenController {
         for (Soil soilRect : gardenModel.getSoils()) {
             if(hitbox.contains(soilRect.getCoordinate())){
                 return true;
-            }         
+            }
         }
         return false;
     }

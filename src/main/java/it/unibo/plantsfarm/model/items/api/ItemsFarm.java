@@ -1,5 +1,8 @@
 package it.unibo.plantsfarm.model.items.api;
 
+import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
+import it.unibo.plantsfarm.model.plant.Rarity;
+
 /**
  * Interface representing a generic farm item.
  */
@@ -62,6 +65,20 @@ public interface ItemsFarm {
      * @return the minimum level
      */
     int getMinLevel();
+
+    /**
+     * Update the Rarity of item based on the level.
+     *
+     * @param level
+     */
+    public void updateRarity(int level);
+
+    /**
+     * Return the rarity of the item.
+     *
+     * @return return current item's rarity
+     */
+    public Rarity getRarityItem();
 
     /**
      * Enumeration of all supported tool types.

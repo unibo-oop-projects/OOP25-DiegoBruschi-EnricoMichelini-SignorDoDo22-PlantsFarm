@@ -1,8 +1,11 @@
 package it.unibo.plantsfarm.controller.gamepanel;
 
+import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.ACTIONWATER;
+import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
+import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
+
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
-
 import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.garden.GardenController;
@@ -57,26 +60,19 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                     case RIGHT -> player.setDirection(input);
                     case UP -> player.setDirection(input);
                     case DOWN -> player.setDirection(input);
-                    case ACTIONHOE -> gardenController.pianta(ImplViewGamePanel.selectedPlant); //Da sistemare il selected plant nella view
-                    case ACTIONWATER -> gardenController.innaffia(now);
-                    case FERMO -> player.setDirection(input);
-
-                    /**
-                     *
-                     * NOTA PER DIEGO
-                     * - Ho modificato itemsStats ora li dentro devi solo mettere il buff per il concime o innaffiatoio
-                     * - Per accedere a tutte le robe dell'inventario usa player.getInventario
-                     * - Per prendere l'item sta anche la funzione getItem e una per il level
-                     * - Ripeto per piantare una pianta devi avere la hoe livello tot e il concime livello tot
-                     * - la water ha solo funzione di rigenerare la pianta e dare il buff
-                     * - il buff decidilo tu su statsItem
-                     * - COSA IMPORTANTE FAI QUI TUTTE LE COSE RIGUARDO L'AZIONE SPOSTALE DAL PLAYER UPDATE
-                     * - Ho aggiustato molti problemi su gradlew ma bisogna finire
-                     * - Cosa importante fai la roba per le immagini delle piante lagga di brutto
-                     * - Se hai bisogno dw
-                    */
-
+                    case ACTIONHOE -> {
+                        if (player.getInventory().useItem(HOE, ImplViewGamePanel.selectedPlant.getRarity())) {
+                            gardenController.pianta(ImplViewGamePanel.selectedPlant);
                         }
+                    }
+                    case ACTIONWATER -> {
+                        if (player.getInventory().useItem(WATERCAN, ImplViewGamePanel.selectedPlant.getRarity())) {
+                            gardenController.innaffia(now);
+                        }
+                    }
+                    case FERMO -> player.setDirection(input);
+                }
+
                 controllerAnimation.takeInput(input);
             }
             } catch (final InterruptedException e) {
@@ -86,7 +82,6 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             player.updatePlayer(delta);
             gardenController.updateSoil(now);
             camera.followPlayer();
-            saver.saveGame(gardenController.getSoilList(), "savedsoils");
         }
     }
 

@@ -2,7 +2,6 @@ package it.unibo.plantsfarm.model.garden;
 
 import java.util.LinkedList;
 import java.util.List;
-
 import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 

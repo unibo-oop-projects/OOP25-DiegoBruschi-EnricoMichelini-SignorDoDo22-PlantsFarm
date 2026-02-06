@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Objects;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
+import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.Rarity;
 
 /**
  * Model of the inventory: stores the player's tools/items inside a map.
@@ -92,7 +94,7 @@ public final class ModelInventario {
         if (item == null) {
             return false;
         }
-        item.upgrade(); // <-- adatta se il tuo metodo ha un altro nome
+        item.upgrade();
         return true;
     }
 
@@ -102,7 +104,22 @@ public final class ModelInventario {
      *
      * @param tool  tool action
      */
-    public void useItem(final Tooltype tool){
+    public boolean useItem(final Tooltype tool, final Rarity rarityPlant){
+        if ( rarityPlant != null && inventario.get(tool).getRarityItem() == rarityPlant) {
+            this.inventario.get(tool).useItem();
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * If the item have been used the right way.
+     * its experience grow.
+     *
+     * @param tool  tool action
+     */
+    public void useWater(final Tooltype tool){
         this.inventario.get(tool).useItem();
     }
 }
