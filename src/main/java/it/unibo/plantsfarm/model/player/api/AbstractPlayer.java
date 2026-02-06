@@ -119,18 +119,18 @@ public abstract class AbstractPlayer {
     }
 
     /**
-     * Return the Inventory of the player.
+     * Returns the player's inventory.
      *
-     * @return
+     * @return the current ModelInventario
      */
     public ModelInventario getInventory() {
         return this.inventory;
     }
 
     /**
-     * Return the HitBox of the player.
+     * Returns the player's hitbox used for collision detection.
      *
-     * @return
+     * @return the current hitbox in world coordinates
      */
     public final Rectangle getHitBox() {
         return solidArea;

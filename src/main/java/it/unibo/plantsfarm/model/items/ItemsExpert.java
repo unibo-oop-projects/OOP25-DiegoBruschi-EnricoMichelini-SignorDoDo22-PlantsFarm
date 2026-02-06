@@ -3,6 +3,9 @@ package it.unibo.plantsfarm.model.items;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.plant.Rarity;
 
+/**
+ *
+ */
 public final  class ItemsExpert implements ItemsFarm {
     private int minLevel = StatsItemBase.LEVEL_MAX;
     private int maxLevel = StatsItemBase.LEVEL_MAX;
@@ -56,9 +59,8 @@ public final  class ItemsExpert implements ItemsFarm {
         return this.itemRarity;
     }
 
-    public void updateRarity(int level ){
-
-        if (level < StatsItemBase.VAL_RARE){
+    public void updateRarity(int level ) {
+        if (level < StatsItemBase.VAL_RARE) {
             this.itemRarity = Rarity.COMMON;
         } else if (level >= StatsItemBase.VAL_RARE &&  level < StatsItemBase.VAL_EPIC) {
             this.itemRarity = Rarity.RARE;
@@ -67,16 +69,6 @@ public final  class ItemsExpert implements ItemsFarm {
         } else {
             this.itemRarity = Rarity.LEGENDARY;
         }
-    }
-
-    private static final class StatsItemBase {
-        private static final int EXPERIENCE_FOR_ACTION = 5;
-        private static final int EXPERIENCE_FOR_UPGRADE = 30;
-        private static final int ADD_EXPERIENCE_FOR_UPGRADE = 15;
-        private static final int LEVEL_MAX = 10;
-        private static final int VAL_RARE = 3;
-        private static final int VAL_EPIC = 6;
-        private static final int VAL_LEGENDARY = 10;
     }
 
     @Override
@@ -89,4 +81,16 @@ public final  class ItemsExpert implements ItemsFarm {
         return this.experienceForLevel;
     }
 
+    /**
+     * StatsItemBase for the ExpertPlayer
+     */
+    private static final class StatsItemBase {
+        private static final int EXPERIENCE_FOR_ACTION = 5;
+        private static final int EXPERIENCE_FOR_UPGRADE = 30;
+        private static final int ADD_EXPERIENCE_FOR_UPGRADE = 15;
+        private static final int LEVEL_MAX = 10;
+        private static final int VAL_RARE = 3;
+        private static final int VAL_EPIC = 6;
+        private static final int VAL_LEGENDARY = 10;
+    }
 }

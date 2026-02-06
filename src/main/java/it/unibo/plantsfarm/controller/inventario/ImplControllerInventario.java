@@ -17,6 +17,7 @@ public final class ImplControllerInventario implements ControllerInventario {
         this.abstractPlayer = player;
     }
 
+    @Override
     public boolean isUpgredable(final Tooltype tool) {
         if (abstractPlayer.getInventory().isUpgredableItem(tool)) {
             return true;
@@ -24,19 +25,23 @@ public final class ImplControllerInventario implements ControllerInventario {
         return false;
     }
 
+    @Override
     public void pressUpgradeItem(final Tooltype tool) {
         abstractPlayer.getInventory().upgrade(tool);
         viewItemsInventory.update();
     }
 
+    @Override
     public UpgradeItemsView getView() {
         return this.viewItemsInventory;
     }
 
+    @Override
     public void addView(final ImplViewGamePanel gamePanel) {
         this.viewItemsInventory = new UpgradeItemsView(gamePanel, this);
     }
 
+    @Override
     public Map<Tooltype, ItemsFarm> getInventoryClone() {
         return this.abstractPlayer.getInventory().getInventorySnapshot();
     }
