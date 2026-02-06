@@ -139,13 +139,14 @@ public final class UpgradeItemsView extends JDialog {
             button.setContentAreaFilled(false);
             button.setSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
              if (tool == Tooltype.WATERCAN) {
-                button.setIcon(loadScaledIconFromFile("src/main/resources/plantStatus/WaterCan.png"));
+                button.setIcon(loadScaledIconFromFile("/plantStatus/WaterCan.png"));
                 button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel()));
             } else if (tool == Tooltype.FERTILIZER) {
-                button.setIcon(loadScaledIconFromFile("src/main/resources/plantStatus/Fertilizer.png"));
-                button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel()));
+                button.setIcon(loadScaledIconFromFile("/plantStatus/Fertilizer.png"));
+                button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel())
+                + controllerInventario.getInventoryClone().get(tool).getRarityItem().toString());
             } else {
-                button.setIcon(loadScaledIconFromFile("src/main/resources/plantStatus/Hoe.png"));
+                button.setIcon(loadScaledIconFromFile("/plantStatus/Hoe.png"));
                 button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel()));
             }
 
@@ -217,10 +218,15 @@ public final class UpgradeItemsView extends JDialog {
     }
 
     private ImageIcon loadScaledIconFromFile(final String path) {
-    final ImageIcon icon = new ImageIcon(path);
-    final Image scaled = icon.getImage()
-            .getScaledInstance(ICON_SIZE, ICON_SIZE, Image.SCALE_SMOOTH);
-    return new ImageIcon(scaled);
+
+        final var pathTrad = getClass().getResource(path);
+        if (pathTrad == null) {
+            throw new IllegalArgumentException("Resource not found: " + path);
+        }
+        final ImageIcon icon = new ImageIcon(pathTrad);
+        final Image scaled = icon.getImage().getScaledInstance(ICON_SIZE, ICON_SIZE, Image.SCALE_SMOOTH);
+
+        return new ImageIcon(scaled);
     }
 }
 

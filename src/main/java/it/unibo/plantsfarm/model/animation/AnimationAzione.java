@@ -3,6 +3,9 @@ package it.unibo.plantsfarm.model.animation;
 import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.model.animation.api.Animation;
 
+/**
+ *
+ */
 public final class AnimationAzione implements Animation {
     private final BufferedImage[] frames;
     private int frameIndex;
@@ -37,7 +40,7 @@ public final class AnimationAzione implements Animation {
     }
 
     @Override
-    public boolean getisPlaying() {
+    public boolean isPlaying() {
         return playing;
     }
 }

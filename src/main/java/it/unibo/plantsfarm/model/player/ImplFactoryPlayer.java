@@ -27,9 +27,9 @@ public final class ImplFactoryPlayer implements FactoryPlayer {
      */
     @Override
     public AbstractPlayer createPlayer(final PlayersTypes request) {
-        if (request.equals(FARMER)) {
+        if (request == FARMER) {
             return new FarmerPlayer(factoryInventory.createInventory(request));
-        } else if (request.equals(EXPERTFARMER)) {
+        } else if (request == EXPERTFARMER) {
             return new ExpertFarmer(factoryInventory.createInventory(request));
         } else {
             throw new IllegalArgumentException("Player Type: " + request + " NOT FOUND");

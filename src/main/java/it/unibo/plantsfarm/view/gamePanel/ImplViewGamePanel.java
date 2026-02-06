@@ -141,7 +141,6 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
             tileM.drawTile(g2D, cameraX, cameraY);
         }
 
-        if (selector != null) {
             g2D.drawImage(selector.getCurrentImage(),
                 (int) playerPosX - cameraX,
                 (int) playerPosY - cameraY,
@@ -149,7 +148,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
                 PLAYER_SIZE,
                 null
             );
-        }
+
 
         if (soilList != null) {
             for (final Soil pod : soilList) {

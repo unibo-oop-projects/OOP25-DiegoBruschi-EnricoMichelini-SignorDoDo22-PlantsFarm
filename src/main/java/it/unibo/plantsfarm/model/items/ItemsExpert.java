@@ -1,23 +1,33 @@
 package it.unibo.plantsfarm.model.items;
 
+import java.util.Objects;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.plant.Rarity;
 
 /**
- *
+ * Implementation of an expert item: it starts at maximum level and legendary rarity.
  */
-public final  class ItemsExpert implements ItemsFarm {
-    private int minLevel = StatsItemBase.LEVEL_MAX;
-    private int maxLevel = StatsItemBase.LEVEL_MAX;
+public final class ItemsExpert implements ItemsFarm {
+
+    private final int minLevel = StatsItemBase.LEVEL_MAX;
+    private final int maxLevel = StatsItemBase.LEVEL_MAX;
+
     private int experience = StatsItemBase.EXPERIENCE_FOR_UPGRADE;
     private int experienceForLevel = StatsItemBase.EXPERIENCE_FOR_UPGRADE;
     private int level = StatsItemBase.LEVEL_MAX;
-    private final Tooltype type;
-    private  Rarity itemRarity;
 
+    private final Tooltype type;
+    private Rarity itemRarity = Rarity.LEGENDARY;
+
+    /**
+     * Creates an expert item of the given tool type.
+     *
+     * @param type the tool type
+     * @throws NullPointerException if {@code type} is null
+     */
     public ItemsExpert(final Tooltype type) {
-        this.type = type;
-        this.itemRarity = Rarity.LEGENDARY;
+        this.type = Objects.requireNonNull(type, "type cannot be null");
+        updateRarity();
     }
 
     @Override
@@ -27,17 +37,18 @@ public final  class ItemsExpert implements ItemsFarm {
 
     @Override
     public void upgrade() {
-        if (level >= maxLevel || experience < experienceForLevel) {
+        if (this.level >= this.maxLevel || this.experience < this.experienceForLevel) {
             return;
         }
-        level++;
-        this.experience = experience - StatsItemBase.EXPERIENCE_FOR_UPGRADE;
-        experienceForLevel += StatsItemBase.ADD_EXPERIENCE_FOR_UPGRADE;
+        this.level++;
+        this.experience -= StatsItemBase.EXPERIENCE_FOR_UPGRADE;
+        this.experienceForLevel += StatsItemBase.ADD_EXPERIENCE_FOR_UPGRADE;
+        updateRarity();
     }
 
     @Override
     public void useItem() {
-        experience += StatsItemBase.EXPERIENCE_FOR_ACTION;
+        this.experience += StatsItemBase.EXPERIENCE_FOR_ACTION;
     }
 
     @Override
@@ -55,16 +66,18 @@ public final  class ItemsExpert implements ItemsFarm {
         return this.minLevel;
     }
 
+    @Override
     public Rarity getRarityItem() {
         return this.itemRarity;
     }
 
-    public void updateRarity(int level ) {
-        if (level < StatsItemBase.VAL_RARE) {
+    @Override
+    public void updateRarity() {
+        if (this.level < StatsItemBase.VAL_RARE) {
             this.itemRarity = Rarity.COMMON;
-        } else if (level >= StatsItemBase.VAL_RARE &&  level < StatsItemBase.VAL_EPIC) {
+        } else if (this.level < StatsItemBase.VAL_EPIC) {
             this.itemRarity = Rarity.RARE;
-        } else if (level >= StatsItemBase.VAL_EPIC &&  level < StatsItemBase.VAL_LEGENDARY) {
+        } else if (this.level < StatsItemBase.VAL_LEGENDARY) {
             this.itemRarity = Rarity.EPIC;
         } else {
             this.itemRarity = Rarity.LEGENDARY;
@@ -73,7 +86,7 @@ public final  class ItemsExpert implements ItemsFarm {
 
     @Override
     public int getExperience() {
-       return this.experience;
+        return this.experience;
     }
 
     @Override
@@ -82,7 +95,7 @@ public final  class ItemsExpert implements ItemsFarm {
     }
 
     /**
-     * StatsItemBase for the ExpertPlayer
+     * Item constants for expert items.
      */
     private static final class StatsItemBase {
         private static final int EXPERIENCE_FOR_ACTION = 5;
@@ -92,5 +105,6 @@ public final  class ItemsExpert implements ItemsFarm {
         private static final int VAL_RARE = 3;
         private static final int VAL_EPIC = 6;
         private static final int VAL_LEGENDARY = 10;
+
     }
 }

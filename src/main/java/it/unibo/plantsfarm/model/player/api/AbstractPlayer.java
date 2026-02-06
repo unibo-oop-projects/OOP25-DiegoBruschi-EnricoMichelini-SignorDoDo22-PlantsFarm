@@ -19,7 +19,6 @@ public abstract class AbstractPlayer {
     public static final int EXPERT_FARMER_SPEED = 650;
 
     /** Movement speed of the player (units per second). */
-    @SuppressWarnings("checkstyle:VisibilityModifier")
     protected double speed;
 
     private TileMap map = new TileMap();

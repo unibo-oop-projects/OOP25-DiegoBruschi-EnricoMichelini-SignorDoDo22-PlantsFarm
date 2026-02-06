@@ -1,21 +1,63 @@
 package it.unibo.plantsfarm.model.items;
 
+import java.util.Objects;
+
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.plant.Rarity;
 
+/**
+ * Base implementation of an ItemsFarm for the playertype Farmer
+ *
+ * The item gains experience when used and can be upgraded if it has enough experience.
+ *
+ *
+ */
 public final class ItemsFarmBase implements ItemsFarm {
 
-    private int minLevel = StatsItemBase.LEVEL_BEGIN;
-    private int maxLevel = StatsItemBase.LEVEL_MAX;
-    private int experience = StatsItemBase.EXPERIENCE_BEGIN;
-    private int experienceForLevel = StatsItemBase.EXPERIENCE_FOR_UPGRADE;
-    private int level = StatsItemBase.LEVEL_BEGIN;
-    private final Tooltype type;
-    private Rarity itemRarity;
+    /**
+     * Minimum item level.
+     */
+    private final int minLevel = StatsItemBase.LEVEL_BEGIN;
 
+    /**
+     * Maximum item level.
+     */
+    private final int maxLevel = StatsItemBase.LEVEL_MAX;
+
+    /**
+     * Current accumulated experience.
+     */
+    private int experience = StatsItemBase.EXPERIENCE_BEGIN;
+
+    /**
+     * Experience required to perform the next upgrade.
+     */
+    private int experienceForLevel = StatsItemBase.EXPERIENCE_FOR_UPGRADE;
+
+    /**
+     * Current level of the item.
+     */
+    private int level = StatsItemBase.LEVEL_BEGIN;
+
+    /**
+     * Tool type (hoe, watercan, fertilizer...).
+     */
+    private final Tooltype type;
+
+    /**
+     * Current rarity of the item.
+     */
+    private Rarity itemRarity = Rarity.COMMON;
+
+    /**
+     * Creates a base item of the given tool type.
+     *
+     * @param type the tool type
+     * @throws NullPointerException if {@code type} is null
+     */
     public ItemsFarmBase(final Tooltype type) {
-        this.type = type;
-        this.itemRarity = Rarity.COMMON;
+        this.type = Objects.requireNonNull(type, "type cannot be null");
+        updateRarity();
     }
 
     @Override
@@ -23,20 +65,28 @@ public final class ItemsFarmBase implements ItemsFarm {
         return this.type;
     }
 
+    /**
+     *
+     * Upgrades the item if possible:
+     * For Upgrade need with experience to reach  or sorpass the quantity experienceForLevel
+     */
     @Override
     public void upgrade() {
-        if (level >= maxLevel || experience < experienceForLevel) {
+        if (this.level >= this.maxLevel || this.experience < this.experienceForLevel) {
             return;
         }
-        level++;
-
-        this.experience = experience - StatsItemBase.EXPERIENCE_FOR_UPGRADE;
-        experienceForLevel += StatsItemBase.ADD_EXPERIENCE_FOR_UPGRADE;
+        this.level++;
+        this.experience -= StatsItemBase.EXPERIENCE_FOR_UPGRADE;
+        this.experienceForLevel += StatsItemBase.ADD_EXPERIENCE_FOR_UPGRADE;
+        updateRarity();
     }
 
+    /**
+     * Increases experience by a fixed amount when the item is used.
+     */
     @Override
     public void useItem() {
-        experience += StatsItemBase.EXPERIENCE_FOR_ACTION;
+        this.experience += StatsItemBase.EXPERIENCE_FOR_ACTION;
     }
 
     @Override
@@ -56,7 +106,7 @@ public final class ItemsFarmBase implements ItemsFarm {
 
     @Override
     public int getExperience() {
-       return this.experience;
+        return this.experience;
     }
 
     @Override
@@ -64,13 +114,18 @@ public final class ItemsFarmBase implements ItemsFarm {
         return this.experienceForLevel;
     }
 
+    /**
+     * Updates the rarity based on the provided level.
+     *
+     * @param level the level used to compute rarity
+     */
     @Override
-    public void updateRarity(int level ) {
-        if (level < StatsItemBase.VAL_RARE){
+    public void updateRarity() {
+        if (this.level < StatsItemBase.VAL_RARE) {
             this.itemRarity = Rarity.COMMON;
-        } else if (level >= StatsItemBase.VAL_RARE &&  level < StatsItemBase.VAL_EPIC) {
+        } else if (this.level < StatsItemBase.VAL_EPIC) {
             this.itemRarity = Rarity.RARE;
-        } else if (level >= StatsItemBase.VAL_EPIC &&  level < StatsItemBase.VAL_LEGENDARY) {
+        } else if (this.level < StatsItemBase.VAL_LEGENDARY) {
             this.itemRarity = Rarity.EPIC;
         } else {
             this.itemRarity = Rarity.LEGENDARY;
@@ -82,13 +137,18 @@ public final class ItemsFarmBase implements ItemsFarm {
         return this.itemRarity;
     }
 
+    /**
+     * Constants for base items.
+     */
     private static final class StatsItemBase {
         private static final int EXPERIENCE_FOR_ACTION = 5;
         private static final int EXPERIENCE_FOR_UPGRADE = 30;
         private static final int ADD_EXPERIENCE_FOR_UPGRADE = 15;
+
         private static final int EXPERIENCE_BEGIN = 0;
         private static final int LEVEL_BEGIN = 0;
         private static final int LEVEL_MAX = 10;
+
         private static final int VAL_RARE = 3;
         private static final int VAL_EPIC = 6;
         private static final int VAL_LEGENDARY = 10;
