@@ -4,7 +4,6 @@ import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
-import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.garden.GardenController;
 import it.unibo.plantsfarm.controller.garden.SaveController;
@@ -28,7 +27,6 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private GardenController gardenController;
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
-    private SeedController controllerSeed;
     private SaveController saver = new SaveController();
     //private final GameState gameState;
     private final ControllerInventario controllerInventario;

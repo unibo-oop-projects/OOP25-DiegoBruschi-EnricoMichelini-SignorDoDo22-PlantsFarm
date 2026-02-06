@@ -12,8 +12,8 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class TileMap {
 
-    private final int[][] logicMap1; 
-    
+    private final int[][] logicMap1;
+
     public List<Soil> soilList = new LinkedList<>();
     public List<SolidBlock> solidBlocks = new LinkedList<>();
 
@@ -39,7 +39,7 @@ public final class TileMap {
                 final String[] numbers = line.split(" ");
 
                 for (int col = 0; col < ImplViewGamePanel.MAX_WORLD_COL; col++) {
-                    
+
                     if (col >= numbers.length) {
                         break;
                     }
@@ -53,7 +53,8 @@ public final class TileMap {
 
                     if (num == 2 || (num >= 11 && num <= 19) || num == 76) {
                         final Rectangle rect = new Rectangle(worldX, worldY, size, size);
-                        this.soilList.add(new Soil(rect));
+                        //X DIEGO passo l'indice per sapere quale tipo di casella è per la piantagione
+                        this.soilList.add(new Soil(rect, num));
                     }
 
                     if (isSolid(num)) {
@@ -69,15 +70,15 @@ public final class TileMap {
     }
 
     private boolean isSolid(int num) {
-        return num == 3 
-            || num == 4 
-            || num == 6 
+        return num == 3
+            || num == 4
+            || num == 6
             || (num >= 22 && num <= 26)
             || (num >= 31 && num <= 35)
             || (num >= 40 && num <= 45)
             || (num >= 48 && num <= 54)
             || (num >= 58 && num <= 60)
-            || num == 66 
+            || num == 66
             || (num >= 68 && num <= 70)
             || num == 72;
     }
@@ -85,7 +86,7 @@ public final class TileMap {
     public List<Soil> getSoilList() {
         return this.soilList;
     }
-    
+
     public List<SolidBlock> getSolidBlocks() {
         return this.solidBlocks;
     }
