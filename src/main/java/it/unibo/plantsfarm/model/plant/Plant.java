@@ -11,19 +11,18 @@ public class Plant implements Serializable {
     // Static info
     private static final long WATER_REDUCTION_TIME = 5_000L;
     private static final long WATER_TIME_COOLDOWN = 15_000L;
-    private static final long GROWTH_TIME = 30_000L; //30000
+    private static final long GROWTH_TIME = 30_000L;
     private final PlantType type;
-    //private GameState gameState;
 
     // Dynamic info
     private int growthStage;
     private boolean needsWater;
     private boolean watered;
-    //private boolean fertilized;
     private boolean isPlanted;
-    public long currentStageTime;
+    private long currentStageTime = 0;
     public long lastWateredTime;
     public static int harvestedQuantity;
+    private long lastUpdate;
 
     /**
      * Creates a new Plant based on a specific type.
@@ -35,9 +34,8 @@ public class Plant implements Serializable {
         this.growthStage = 0;
         this.needsWater = true;
         this.isPlanted = true;
-        this.currentStageTime = System.currentTimeMillis();
         this.lastWateredTime = System.currentTimeMillis();
-        //this.gameState = gameState;
+        this.lastUpdate = System.currentTimeMillis();
     }
 
     //TO DO: multipplier for ornamental
@@ -46,15 +44,19 @@ public class Plant implements Serializable {
     }
 
     public final void increaseGrowthStage(final long now, final double multiplier){
-        if (!isMature()) {
-            long requiredTime = (long) (GROWTH_TIME / multiplier);
-            if (watered && System.currentTimeMillis() >= currentStageTime + requiredTime && growthStage < getMaxGrowthStage()) {
-                currentStageTime = now;
-                watered = false;
-                growthStage++;
-            }
-        } else {
+        long growthTimeFromLastUpdate = now - lastUpdate;
+        lastUpdate = now;
 
+        if (!isMature()) {
+            if (watered && !needsWater) {
+                currentStageTime += (long) (growthTimeFromLastUpdate * multiplier);
+
+                if (currentStageTime >= GROWTH_TIME && growthStage < getMaxGrowthStage()) {
+                    currentStageTime = 0;
+                    watered = false;
+                    growthStage++;
+                }
+            }
         }
     }
 
@@ -68,7 +70,7 @@ public class Plant implements Serializable {
             this.lastWateredTime = System.currentTimeMillis();
             watered = true;
             needsWater = false;
-            currentStageTime -= WATER_REDUCTION_TIME;
+            currentStageTime += WATER_REDUCTION_TIME;
         }
     }
 
@@ -119,8 +121,10 @@ public class Plant implements Serializable {
     public final int harvest() {
         if (!type.isEdible()) {
             System.out.println("Ornamentale");
+            return 0;
         } if (isMature()) {
             growthStage = this.type.getResetStage();
+            currentStageTime = 0;
             return type.getHarvestInfo().generateHarvest();
         }
         return 0;
