@@ -38,4 +38,9 @@ public final class Soil implements Serializable {
     public int getTileId() {
         return this.tileId;
     }
+
+    public void removePlant() {
+        this.plant = null;
+        this.isPlanted = false;
+    }
 }
