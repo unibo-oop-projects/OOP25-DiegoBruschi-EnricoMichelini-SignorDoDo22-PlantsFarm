@@ -64,6 +64,10 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                             gardenController.innaffia(now);
                         }
                     }
+
+                    case REMOVE_PLANT -> {
+                        if(true){}
+                    }
                 }
 
                 if(input != null)
