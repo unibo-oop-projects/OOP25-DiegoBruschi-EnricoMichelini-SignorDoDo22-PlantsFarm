@@ -4,6 +4,7 @@ import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
 
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
+import it.unibo.plantsfarm.model.garden.CollisionDetector;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
 import it.unibo.plantsfarm.model.tiles.SolidBlock;
 import it.unibo.plantsfarm.model.tiles.TileMap;
@@ -22,13 +23,15 @@ public abstract class AbstractPlayer {
     @SuppressWarnings("checkstyle:VisibilityModifier")
     protected double speed;
 
-    private TileMap map = new TileMap();
-
     /** Current X position of the player in world coordinates. */
     private double posX = ImplViewGamePanel.WORLD_WIDTH / 2;
 
     /** Current Y position of the player in world coordinates. */
     private double posY = ImplViewGamePanel.WORLD_HEIGHT / 2;
+
+    private double nextPosX;
+
+    private double nextPosY;
 
     private final Rectangle solidArea = new Rectangle(8, 32, 32, 16);
 
@@ -36,10 +39,10 @@ public abstract class AbstractPlayer {
     private UserInput direction = UserInput.FERMO;
 
     private final ModelInventario inventory;
+    private final CollisionDetector collisionDetector = new CollisionDetector(this);
 
     public AbstractPlayer(final ModelInventario inventory) {
         this.inventory = inventory;
-        this.map.loadMap("/maps/map.txt");
     }
 
     /**
@@ -50,9 +53,8 @@ public abstract class AbstractPlayer {
      */
     public void updatePlayer(final long time) {
         final double delta = speed * time / 1000.0;
-        double nextPosX = posX;
-        double nextPosY = posY;
-        //System.out.println("Current Player State: " + direction);
+        nextPosX = posX;
+        nextPosY = posY;
         switch (direction) {
             case LEFT -> nextPosX -= delta;
             case RIGHT -> nextPosX += delta;
@@ -63,24 +65,11 @@ public abstract class AbstractPlayer {
             case FERMO -> { }
         }
 
-        final int futureSolidX = (int) (nextPosX + solidArea.x);
-        final int futureSolidY = (int) (nextPosY + solidArea.y);
-        final Rectangle futureHitbox = new Rectangle(futureSolidX, futureSolidY, solidArea.width, solidArea.height);
-
-        boolean collisionDetected = false;
-
-        for (final SolidBlock tile : map.solidBlocks) {
-            if (tile.getCoordinate().intersects(futureHitbox)) {
-                collisionDetected = true;
-                break;
-            }
-        }
-
-        if (!collisionDetected) {
+        if (!collisionDetector.collisionDetection()) {
             posX = nextPosX;
             posY = nextPosY;
         }
-}
+    }
 
     /**
      * Sets the current movement direction of the player.
@@ -109,6 +98,14 @@ public abstract class AbstractPlayer {
         return this.posY;
     }
 
+    public final double getNextPosX() {
+        return this.nextPosX;
+    }
+
+    public final double getNextPosY() {
+        return this.nextPosY;
+    }
+
     /**
      * Returns the current movement direction of the player.
      *
@@ -133,6 +130,6 @@ public abstract class AbstractPlayer {
      * @return
      */
     public final Rectangle getHitBox() {
-        return solidArea;
+        return new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
     }
 }
