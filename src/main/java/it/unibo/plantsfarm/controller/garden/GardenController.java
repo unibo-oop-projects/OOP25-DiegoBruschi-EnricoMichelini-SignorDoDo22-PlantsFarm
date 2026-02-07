@@ -38,11 +38,8 @@ public class GardenController {
      * @param now The current time in milliseconds.
      */
     public final void innaffia(final long now) {
-        final double posX = player.getPosx();
-        final double posY = player.getPosy();
-        final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
         for (final Soil zolla : gardenModel.getSoils()) {
-            if (zolla.getCoordinate().contains(hitbox)) {
+            if (zolla.getCoordinate().contains(player.getHitBox())) {
                 if (zolla.getIsPlanted()) {
                     zolla.getPlant().water(now);
                     break;
@@ -66,16 +63,12 @@ public class GardenController {
      * @param type The plant type selected.
      */
     public final void pianta(PlantType type) {
-        final double posX = player.getPosx();
-        final double posY = player.getPosy();
         if (type != null) {
             Plant pianta = new Plant(type);
-            final Rectangle hitbox = new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
 
             for (final Soil zolla : gardenModel.getSoils()) {
-                if (zolla.getCoordinate().contains(hitbox) && player.getInventory().getItem(HOE).getLevel() == 0) {
+                if (zolla.getCoordinate().contains(player.getHitBox())) {
                     if (!zolla.getIsPlanted()) {
-                        //X DIEGO Controllo se la pianta è ornamentale o edibile e la pianta solo nel terreno giusto
                         if ((zolla.getTileId() == 76 && !type.isEdible()) || (zolla.getTileId() != 76 && type.isEdible())) {
                             zolla.setPlanted(pianta);
                         }
@@ -86,6 +79,7 @@ public class GardenController {
             }
         }
     }
+
 
     /**
      * Give the list of all soil tiles in the garden.
@@ -103,12 +97,12 @@ public class GardenController {
      *
      * @return True if the player is on soil, false otherwise.
      */
-    public boolean isPlayerOnSoil(final Rectangle hitbox) {
+    public Soil isPlayerOnSoil(final Rectangle hitbox) {
         for (Soil soilRect : gardenModel.getSoils()) {
-            if(hitbox.contains(soilRect.getCoordinate())){
-                return true;
+            if(soilRect.getCoordinate().contains(hitbox)){
+                return soilRect;
             }
         }
-        return false;
+        return null;
     }
 }

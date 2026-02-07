@@ -16,26 +16,28 @@ public class CollisionDetector {
         this.player = player;
     }
 
-    public boolean collisionDetection() {
+    public void collisionDetection() {
 
-    double offsetX = player.getNextPosX() - player.getPosx();
-    double offsetY = player.getNextPosY() - player.getPosy();
+        double offsetX = player.getNextPosX() - player.getPosx();
+        double offsetY = player.getNextPosY() - player.getPosy();
 
-    Rectangle currentHitbox = player.getHitBox();
+        Rectangle currentHitbox = player.getHitBox();
 
-    Rectangle futureHitbox = new Rectangle(
-        (int) (currentHitbox.x + offsetX),
-        (int) (currentHitbox.y + offsetY),
-        currentHitbox.width,
-        currentHitbox.height
-    );
+        Rectangle futureHitbox = new Rectangle(
+            (int) (currentHitbox.x + offsetX),
+            (int) (currentHitbox.y + offsetY),
+            currentHitbox.width,
+            currentHitbox.height
+        );
 
-    for (final SolidBlock tile : map.getSolidBlocks()) {
-        if (tile.getCoordinate().intersects(futureHitbox)) {
-            return true;
+        for (final SolidBlock tile : map.getSolidBlocks()) {
+            if (tile.getCoordinate().intersects(futureHitbox)) {
+                return;
+            }
         }
+        player.applyMovement();
     }
-    return false;
-}
+
+    
 }
 

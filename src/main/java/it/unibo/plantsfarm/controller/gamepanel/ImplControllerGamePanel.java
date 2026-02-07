@@ -7,19 +7,23 @@ import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.garden.GardenController;
 import it.unibo.plantsfarm.controller.garden.SaveController;
+import it.unibo.plantsfarm.controller.garden.SpawningBuffsController;
 import it.unibo.plantsfarm.controller.inventario.ImplControllerInventario;
 import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.camera.Camera;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
+import it.unibo.plantsfarm.model.garden.CollisionDetector;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
+import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class ImplControllerGamePanel extends Thread implements ControllerGamePanel {
-    private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
+    private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10; //10
     private ImplViewGamePanel view;
     private final ImplFactoryPlayer factoryPlayer = new ImplFactoryPlayer();
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
@@ -27,16 +31,24 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private GardenController gardenController;
     private ImplSelectorFrames controllerAnimation;
     private Camera camera;
+    private TileMap map;
+    private CollisionDetector collisionDetector;
     private SaveController saver = new SaveController();
+    private SpawningBuffsController spawningBuffsController;
     //private final GameState gameState;
     private final ControllerInventario controllerInventario;
 
     public ImplControllerGamePanel(final GameState gameState) {
         //this.gameState = gameState;
+        this.map = new TileMap();
+        this.map.loadMap("/maps/map.txt");
         setPlayer();
         this.player = getPlayer();
         this.controllerInventario = new ImplControllerInventario(this.player);
         this.gardenController = new GardenController(gameState, this.player);
+        this.collisionDetector = new CollisionDetector(this.player);
+        this.spawningBuffsController = new SpawningBuffsController(map, this.player);
+        this.collisionDetector = new CollisionDetector(player);
     }
 
    @Override
@@ -48,34 +60,46 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             lastTime = now;
             final UserInput input = queue.poll();
             view.show(player.getPosx(), player.getPosy(), camera.getCameraPosX(),
-            camera.getCameraPosY(), List.copyOf(gardenController.getSoilList()));
+            camera.getCameraPosY(), List.copyOf(gardenController.getSoilList()),
+            List.copyOf(spawningBuffsController.getBuffList()));
             try {
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
                 if (input != null) {
                 switch (input) {
-                    case LEFT, RIGHT, DOWN, FERMO, UP -> player.setDirection(input);
+                    case LEFT -> player.setDirection(input);
+                    case RIGHT -> player.setDirection(input);
+                    case UP -> player.setDirection(input);
+                    case DOWN -> player.setDirection(input);
                     case ACTIONHOE -> {
-                        if (player.getInventory().useItem(HOE, ImplViewGamePanel.selectedPlant.getRarity())) {
+                       Soil soil = gardenController.isPlayerOnSoil(player.getHitBox());
+                        if (gardenController.isPlayerOnSoil(player.getHitBox()) != null) {
+                            if(!soil.getIsPlanted() || soil.getPlant().isMature()){
+                            player.getInventory().useItem(HOE, ImplViewGamePanel.selectedPlant.getRarity());
                             gardenController.pianta(ImplViewGamePanel.selectedPlant);
+                            }
                         }
                     }
                     case ACTIONWATER -> {
-                        if (player.getInventory().useItem(WATERCAN, ImplViewGamePanel.selectedPlant.getRarity())) {
+                        Soil soil = gardenController.isPlayerOnSoil(player.getHitBox());
+                        if (gardenController.isPlayerOnSoil(player.getHitBox()) != null) {
+                            if(soil.getPlant() != null && soil.getPlant().needsWater()){
+                            player.getInventory().useItem(WATERCAN, ImplViewGamePanel.selectedPlant.getRarity());
                             gardenController.innaffia(now);
+                            }
                         }
                     }
-
-                    case REMOVE_PLANT -> {
-                        if(true){}
-                    }
+                    case FERMO -> player.setDirection(input);
                 }
 
-                if(input != null)
-                    controllerAnimation.takeInput(input);
+                controllerAnimation.takeInput(input);
             }
             } catch (final InterruptedException e) {
                 break;
             }
+
+            spawningBuffsController.updateUpGrade();
+            spawningBuffsController.playerActionBuff();
+            collisionDetector.collisionDetection();
             controllerAnimation.update(System.nanoTime());
             player.updatePlayer(delta);
             gardenController.updateSoil(now);

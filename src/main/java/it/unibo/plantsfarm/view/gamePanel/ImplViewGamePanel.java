@@ -27,6 +27,8 @@ import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
+import it.unibo.plantsfarm.model.animation.api.AnimationFrames;
+import it.unibo.plantsfarm.model.garden.Buff;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantEffect;
 import it.unibo.plantsfarm.model.plant.PlantType;
@@ -35,6 +37,7 @@ import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePanel;
 import it.unibo.plantsfarm.view.inventario.UpgradeItemsView;
 import it.unibo.plantsfarm.view.map.TileManager;
+import it.unibo.plantsfarm.view.utility.SpriteLoader;
 import it.unibo.plantsfarm.view.utility.Texture;
 
 public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
@@ -78,6 +81,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   private UpgradeItemsView inventoryView;
   private boolean plantWindow = true;
   private List<Soil> soilList = List.of();
+  private List<Buff> buffList = List.of();
   public static PlantType selectedPlant;
 
   public ImplViewGamePanel() {
@@ -123,13 +127,14 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   }
 
     @Override
-    public void show(final double posX, final double posY, final int camX, final int camY, final List<Soil> pods) {
+    public void show(final double posX, final double posY, final int camX, final int camY, final List<Soil> pods, final List<Buff> buffs) {
         SwingUtilities.invokeLater(() -> {
             this.playerPosX = posX;
             this.playerPosY = posY;
             this.cameraX = camX;
             this.cameraY = camY;
             this.soilList = pods;
+            this.buffList = buffs;
             repaint();
         });
     }
@@ -142,6 +147,11 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         if (tileM != null) {
             tileM.drawTile(g2D, cameraX, cameraY);
         }
+
+        for (Buff buff : buffList) {
+            System.out.println(buffList.size());
+            g2D.drawImage( new SpriteLoader("/plantStatus/Hearth.png").getImage(), buff.getBuffPosition().x - cameraX, buff.getBuffPosition().y - cameraY, 64,64, null);
+        }   
 
             g2D.drawImage(selector.getCurrentImage(),
                 (int) playerPosX - cameraX,

@@ -81,7 +81,7 @@ public class Plant implements Serializable {
      * @param now The current time in milliseconds.
      */
     public final void updateNeedsWater(final Long now) {
-        System.out.println("NeedsWater " + needsWater + "  -  Watered " + watered);
+        //System.out.println("NeedsWater " + needsWater + "  -  Watered " + watered);
         if (this.type.getMaxGrowthStage() > this.growthStage) {
             if (now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
                 this.needsWater = true;
