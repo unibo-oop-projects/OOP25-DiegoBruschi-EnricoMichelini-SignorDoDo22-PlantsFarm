@@ -8,6 +8,13 @@ public final class AnimationFrames {
 
     public static final BufferedImage BASE = new SpriteLoader("/Player/tile001.png").getImage();
 
+    public static final BufferedImage[] AXE = {
+        new SpriteLoader("/Player/Actions/RemovePlant/axe1.png").getImage(),
+        new SpriteLoader("/Player/Actions/RemovePlant/axe2.png").getImage(),
+        new SpriteLoader("/Player/Actions/RemovePlant/axe1.png").getImage(),
+        BASE
+    };
+
     public static final BufferedImage[] WALKRIGHT = {
         new SpriteLoader("/Player/tile024.png").getImage(),
         new SpriteLoader("/Player/tile025.png").getImage(),

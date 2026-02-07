@@ -1,12 +1,5 @@
 package it.unibo.plantsfarm.view.animation;
 
-import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.ACTIONHOE;
-import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.ACTIONWATER;
-import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.DOWN;
-import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.FERMO;
-import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.LEFT;
-import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.RIGHT;
-import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.UP;
 import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.animation.AnimationAzione;
@@ -27,58 +20,54 @@ public final class ImplSelectorFrames implements SelectorFrames {
     private final AnimationCorsa animationUp = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.WALKUP);
     private final AnimationCorsa animationDown = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.WALKDOWN);
     private final AnimationCorsa animationRight = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.WALKRIGHT);
+    private final AnimationAzione animationAxe = new AnimationAzione(AnimationTime.FRAME_8_FPS, AnimationFrames.AXE);
     private Animation currentAnimation;
     private BufferedImage currentImage = AnimationFrames.BASE;
 
     @Override
     public void takeInput(final UserInput input) {
+        final long nowNs = System.nanoTime();
 
-        if (input == ACTIONHOE) {
-           final long nowNs = System.nanoTime();
-           animationHoe.start(nowNs);
-           currentAnimation = animationHoe;
-        }
-
-        if (input == ACTIONWATER) {
-           final long nowNs = System.nanoTime();
-           animationWater.start(nowNs);
-           currentAnimation = animationWater;
-        }
-
-        if (input == UP) {
-            final long nowNs = System.nanoTime();
-            currentAnimation = animationUp;
-            animationUp.start(nowNs);
-        }
-
-        if (input == RIGHT) {
-            final long nowNs = System.nanoTime();
-            currentAnimation = animationRight;
-            animationRight.start(nowNs);
-        }
-
-        if (input == DOWN) {
-            final long nowNs = System.nanoTime();
-            currentAnimation = animationDown;
-            animationDown.start(nowNs);
-        }
-
-        if (input == LEFT) {
-            final long nowNs = System.nanoTime();
-            animationLeft.start(nowNs);
-            currentAnimation = animationLeft;
-        }
-
-        if (input == FERMO) {
-            if (animationHoe.equals(currentAnimation) && animationHoe.isPlaying()
-                || (animationWater.equals(currentAnimation) && animationWater.isPlaying())) {
-                return;
+        switch (input) {
+            case ACTIONHOE -> {
+                animationHoe.start(nowNs);
+                currentAnimation = animationHoe;
             }
-
-            currentAnimation = null;
-            currentImage = AnimationFrames.BASE;
+            case ACTIONWATER -> {
+                animationWater.start(nowNs);
+                currentAnimation = animationWater;
+            }
+            case UP -> {
+                animationUp.start(nowNs);
+                currentAnimation = animationUp;
+            }
+            case RIGHT -> {
+                animationRight.start(nowNs);
+                currentAnimation = animationRight;
+            }
+            case DOWN -> {
+                animationDown.start(nowNs);
+                currentAnimation = animationDown;
+            }
+            case LEFT -> {
+                animationLeft.start(nowNs);
+                currentAnimation = animationLeft;
+            }
+            case REMOVE_PLANT -> {
+                animationAxe.start(nowNs);
+                currentAnimation = animationAxe;
+            }
+            case FERMO -> {
+                final boolean hoePlaying = currentAnimation == animationHoe && animationHoe.isPlaying();
+                final boolean waterPlaying = currentAnimation == animationWater && animationWater.isPlaying();
+                if (hoePlaying || waterPlaying) {
+                    return;
+                }
+                currentAnimation = null;
+                currentImage = AnimationFrames.BASE;
+            }
+            default -> { /* se esistono altri input, non fare nulla */ }
         }
-
     }
 
     @Override

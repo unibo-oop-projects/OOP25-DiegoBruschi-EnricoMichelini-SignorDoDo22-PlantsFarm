@@ -15,7 +15,7 @@ public interface ControllerGamePanel {
      * Includes movement, actions and the idle state.
      */
     enum UserInput {
-        LEFT, RIGHT, DOWN, UP, FERMO, ACTIONHOE, ACTIONWATER
+        LEFT, RIGHT, DOWN, UP, FERMO, ACTIONHOE, ACTIONWATER, REMOVE_PLANT
     }
 
     /**

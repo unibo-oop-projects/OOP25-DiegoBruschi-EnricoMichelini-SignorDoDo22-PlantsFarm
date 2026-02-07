@@ -10,9 +10,6 @@ public interface ItemsFarm {
     /**
      * Returns the type of this tool.
      *
-     * The available tool types are:
-     * {@code HOE}, {@code WATERCAN}, and {@code FERTILIZER}.
-     *
      * @return the tool type
      */
     Tooltype getTooltype();
@@ -68,16 +65,15 @@ public interface ItemsFarm {
     /**
      * Update the Rarity of item based on the level.
      *
-     * @param level
      */
-    public void updateRarity();
+    void updateRarity();
 
     /**
      * Return the rarity of the item.
      *
      * @return return current item's rarity
      */
-    public Rarity getRarityItem();
+    Rarity getRarityItem();
 
     /**
      * Enumeration of all supported tool types.

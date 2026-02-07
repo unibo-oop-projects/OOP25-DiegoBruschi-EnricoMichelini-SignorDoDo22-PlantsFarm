@@ -6,23 +6,11 @@ import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.plant.Rarity;
 
 /**
- * Base implementation of an ItemsFarm for the playertype Farmer
- *
+ * Base implementation of an ItemsFarm for the playertype Farmer.
  * The item gains experience when used and can be upgraded if it has enough experience.
- *
  *
  */
 public final class ItemsFarmBase implements ItemsFarm {
-
-    /**
-     * Minimum item level.
-     */
-    private final int minLevel = StatsItemBase.LEVEL_BEGIN;
-
-    /**
-     * Maximum item level.
-     */
-    private final int maxLevel = StatsItemBase.LEVEL_MAX;
 
     /**
      * Current accumulated experience.
@@ -66,13 +54,12 @@ public final class ItemsFarmBase implements ItemsFarm {
     }
 
     /**
-     *
      * Upgrades the item if possible:
      * For Upgrade need with experience to reach  or sorpass the quantity experienceForLevel
      */
     @Override
     public void upgrade() {
-        if (this.level >= this.maxLevel || this.experience < this.experienceForLevel) {
+        if (this.level >= StatsItemBase.LEVEL_MAX || this.experience < this.experienceForLevel) {
             return;
         }
         this.level++;
@@ -96,12 +83,12 @@ public final class ItemsFarmBase implements ItemsFarm {
 
     @Override
     public int getMaxLevel() {
-        return this.maxLevel;
+        return StatsItemBase.LEVEL_MAX;
     }
 
     @Override
     public int getMinLevel() {
-        return this.minLevel;
+        return StatsItemBase.LEVEL_BEGIN;
     }
 
     @Override
@@ -117,7 +104,7 @@ public final class ItemsFarmBase implements ItemsFarm {
     /**
      * Updates the rarity based on the provided level.
      *
-     * @param level the level used to compute rarity
+     * @param level the level used to compute rarity.
      */
     @Override
     public void updateRarity() {

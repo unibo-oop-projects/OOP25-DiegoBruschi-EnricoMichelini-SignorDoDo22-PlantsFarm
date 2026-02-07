@@ -9,13 +9,9 @@ import it.unibo.plantsfarm.model.plant.Rarity;
  */
 public final class ItemsExpert implements ItemsFarm {
 
-    private final int minLevel = StatsItemBase.LEVEL_MAX;
-    private final int maxLevel = StatsItemBase.LEVEL_MAX;
-
     private int experience = StatsItemBase.EXPERIENCE_FOR_UPGRADE;
     private int experienceForLevel = StatsItemBase.EXPERIENCE_FOR_UPGRADE;
     private int level = StatsItemBase.LEVEL_MAX;
-
     private final Tooltype type;
     private Rarity itemRarity = Rarity.LEGENDARY;
 
@@ -23,7 +19,7 @@ public final class ItemsExpert implements ItemsFarm {
      * Creates an expert item of the given tool type.
      *
      * @param type the tool type
-     * @throws NullPointerException if {@code type} is null
+     * @throws NullPointerException type is null
      */
     public ItemsExpert(final Tooltype type) {
         this.type = Objects.requireNonNull(type, "type cannot be null");
@@ -37,7 +33,7 @@ public final class ItemsExpert implements ItemsFarm {
 
     @Override
     public void upgrade() {
-        if (this.level >= this.maxLevel || this.experience < this.experienceForLevel) {
+        if (this.level >= StatsItemBase.LEVEL_MAX || this.experience < this.experienceForLevel) {
             return;
         }
         this.level++;
@@ -58,12 +54,12 @@ public final class ItemsExpert implements ItemsFarm {
 
     @Override
     public int getMaxLevel() {
-        return this.maxLevel;
+        return StatsItemBase.LEVEL_MAX;
     }
 
     @Override
     public int getMinLevel() {
-        return this.minLevel;
+        return StatsItemBase.LEVEL_MAX;
     }
 
     @Override
@@ -91,7 +87,7 @@ public final class ItemsExpert implements ItemsFarm {
 
     @Override
     public int getExperienceForLevel() {
-        return this.experienceForLevel;
+        return StatsItemBase.EXPERIENCE_FOR_UPGRADE;
     }
 
     /**

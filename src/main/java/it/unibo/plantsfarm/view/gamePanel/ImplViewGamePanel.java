@@ -4,6 +4,7 @@ import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.U
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.ACTIONWATER;
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.DOWN;
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.LEFT;
+import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.REMOVE_PLANT;
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.RIGHT;
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.UP;
 
@@ -66,7 +67,8 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         KeyEvent.VK_D, RIGHT,
         KeyEvent.VK_S, DOWN,
         KeyEvent.VK_E, ACTIONWATER,
-        KeyEvent.VK_Q, ACTIONHOE
+        KeyEvent.VK_Q, ACTIONHOE,
+        KeyEvent.VK_R, REMOVE_PLANT
     );
 
   private final TileManager tileM;
