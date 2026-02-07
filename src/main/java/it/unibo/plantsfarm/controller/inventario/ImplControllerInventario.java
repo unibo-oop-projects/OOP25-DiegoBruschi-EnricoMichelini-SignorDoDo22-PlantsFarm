@@ -19,10 +19,7 @@ public final class ImplControllerInventario implements ControllerInventario {
 
     @Override
     public boolean isUpgredable(final Tooltype tool) {
-        if (abstractPlayer.getInventory().isUpgredableItem(tool)) {
-            return true;
-        }
-        return false;
+        return abstractPlayer.getInventory().isUpgredableItem(tool);
     }
 
     @Override

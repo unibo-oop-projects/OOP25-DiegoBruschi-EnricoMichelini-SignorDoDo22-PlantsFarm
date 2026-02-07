@@ -1,13 +1,9 @@
 package it.unibo.plantsfarm.model.player.api;
 
-import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
-
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.garden.CollisionDetector;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
-import it.unibo.plantsfarm.model.tiles.SolidBlock;
-import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 /**
@@ -59,8 +55,7 @@ public abstract class AbstractPlayer {
             case RIGHT -> nextPosX += delta;
             case UP -> nextPosY -= delta;
             case DOWN -> nextPosY += delta;
-            case ACTIONHOE -> { }
-            case ACTIONWATER -> inventory.getItem(WATERCAN).useItem();
+            case ACTIONHOE,ACTIONWATER -> { }
             case FERMO -> { }
         }
 

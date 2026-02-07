@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Utility class responsible for loading sprite images from the classpath.
  * This class loads a  BufferedImage using a resource path and keeps it.
- * It throws a {@link RuntimeException} if the image cannot be found or loaded.
+ * It throws a RuntimeException if the image cannot be found or loaded.
  *
  */
 public final class SpriteLoader {
@@ -30,7 +30,7 @@ public final class SpriteLoader {
             Objects.requireNonNull(SpriteLoader.class.getResourceAsStream(resourcePath),
             " Image not found " + resourcePath));
         } catch (final IOException e) {
-            throw new RuntimeException("Loading Error", e);
+            throw new IllegalArgumentException("Loading Error", e);
         }
     }
 

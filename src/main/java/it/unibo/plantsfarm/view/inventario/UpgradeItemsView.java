@@ -28,6 +28,8 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
  */
 public final class UpgradeItemsView extends JDialog {
 
+    private static final long serialVersionUID = 1L;
+
     private static final int ICON_SIZE = 48;
 
     private static final int DIALOG_WIDTH = 550;
@@ -55,7 +57,7 @@ public final class UpgradeItemsView extends JDialog {
     private static final String UPGRADE_TEXT = " UPGRADE ";
     private static final String FONT_NAME = "Monospaced";
 
-    private ControllerInventario controllerInventario;
+    private final ControllerInventario controllerInventario;
 
     private final LayoutManager layoutButtonImages = new GridLayout(GRID_ROWS, GRID_COLS);
     private final ImplViewGamePanel gamePanel;

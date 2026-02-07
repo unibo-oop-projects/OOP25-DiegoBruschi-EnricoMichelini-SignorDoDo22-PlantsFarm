@@ -1,6 +1,5 @@
 package it.unibo.plantsfarm.model.player;
 
-
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 
