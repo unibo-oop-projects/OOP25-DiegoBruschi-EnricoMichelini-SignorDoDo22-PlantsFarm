@@ -53,7 +53,6 @@ public final class TileMap {
 
                     if (num == 2 || (num >= 11 && num <= 19) || num == 76) {
                         final Rectangle rect = new Rectangle(worldX, worldY, size, size);
-                        //X DIEGO passo l'indice per sapere quale tipo di casella è per la piantagione
                         this.soilList.add(new Soil(rect, num));
                     }
 

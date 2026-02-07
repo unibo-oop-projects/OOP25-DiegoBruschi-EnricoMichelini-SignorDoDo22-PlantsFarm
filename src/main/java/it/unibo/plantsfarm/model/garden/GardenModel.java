@@ -2,6 +2,7 @@ package it.unibo.plantsfarm.model.garden;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.awt.Rectangle;
 
 import it.unibo.plantsfarm.model.tiles.Soil;
@@ -76,4 +77,5 @@ public class GardenModel {
     public final List<Soil> getSoils() {
         return this.soils;
     }
+
 }

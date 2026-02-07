@@ -2,6 +2,7 @@ package it.unibo.plantsfarm.model.player.api;
 
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
 
+import java.util.List;
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.garden.CollisionDetector;
@@ -32,13 +33,11 @@ public abstract class AbstractPlayer {
 
     private double nextPosY;
 
-    private final Rectangle solidArea = new Rectangle(8, 32, 32, 16);
 
     /** Current movement direction of the player. */
     private UserInput direction = UserInput.FERMO;
 
     private final ModelInventario inventory;
-    private final CollisionDetector collisionDetector = new CollisionDetector(this);
 
     public AbstractPlayer(final ModelInventario inventory) {
         this.inventory = inventory;
@@ -62,11 +61,6 @@ public abstract class AbstractPlayer {
             case ACTIONHOE -> { }
             case ACTIONWATER -> inventory.getItem(WATERCAN).useItem();
             case FERMO -> { }
-        }
-
-        if (!collisionDetector.collisionDetection()) {
-            posX = nextPosX;
-            posY = nextPosY;
         }
     }
 
@@ -130,5 +124,10 @@ public abstract class AbstractPlayer {
      */
     public final Rectangle getHitBox() {
         return new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
+    }
+
+    public void applyMovement() {
+        this.posX = nextPosX;
+        this.posY = nextPosY;
     }
 }
