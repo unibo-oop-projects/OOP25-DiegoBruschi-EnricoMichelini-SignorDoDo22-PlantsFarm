@@ -4,6 +4,9 @@ import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.model.animation.api.Animation;
 import it.unibo.plantsfarm.model.animation.api.AnimationFrames;
 
+/**
+ *  Class created for implements all animation about the player movement
+ */
 public final class AnimationCorsa implements Animation {
     private final BufferedImage[] frames;
     private int frameIndex;
@@ -40,7 +43,7 @@ public final class AnimationCorsa implements Animation {
     }
 
     @Override
-    public boolean getisPlaying() {
+    public boolean isPlaying() {
         return playing;
     }
 }

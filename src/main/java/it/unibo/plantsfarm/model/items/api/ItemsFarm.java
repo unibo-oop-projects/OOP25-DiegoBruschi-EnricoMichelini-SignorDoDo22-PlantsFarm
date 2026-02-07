@@ -70,7 +70,7 @@ public interface ItemsFarm {
      *
      * @param level
      */
-    public void updateRarity(int level);
+    public void updateRarity();
 
     /**
      * Return the rarity of the item.

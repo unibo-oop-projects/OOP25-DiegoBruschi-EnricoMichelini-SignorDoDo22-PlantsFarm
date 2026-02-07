@@ -9,8 +9,6 @@ public final class ImplCamera implements Camera {
     private AbstractPlayer player;
     private final int screenWidth;
     private final int screenHeight;
-    private final int worldWidth = ImplViewGamePanel.WORLD_WIDTH;
-    private final int worldHeight = ImplViewGamePanel.WORLD_HEIGHT;
 
     public ImplCamera(final int screenWidth, final int screenHeight) {
         this.screenHeight = screenHeight;
@@ -20,19 +18,19 @@ public final class ImplCamera implements Camera {
     @Override
     public void followPlayer() {
 
-        posX = (int) player.getPosx() - ImplViewGamePanel.SCREEN_WIDTH / 2; 
-        posY = (int) player.getPosy() - ImplViewGamePanel.SCREEN_HEIGHT / 2; 
-        if (posX < 0) { 
+        posX = (int) player.getPosx() - ImplViewGamePanel.SCREEN_WIDTH / 2;
+        posY = (int) player.getPosy() - ImplViewGamePanel.SCREEN_HEIGHT / 2;
+        if (posX < 0) {
             posX = 0;
-        } 
+        }
         if (posY < 0) {
             posY = 0;
-        } 
-        if (posX > worldWidth - screenWidth) { 
-            posX = worldWidth - ImplViewGamePanel.SCREEN_WIDTH;
-        } 
-        if (posY > worldHeight - screenHeight) { 
-            posY = worldHeight - ImplViewGamePanel.SCREEN_HEIGHT;
+        }
+        if (posX > ImplViewGamePanel.WORLD_WIDTH - screenWidth) {
+            posX = ImplViewGamePanel.WORLD_WIDTH - ImplViewGamePanel.SCREEN_WIDTH;
+        }
+        if (posY > ImplViewGamePanel.WORLD_HEIGHT - screenHeight) {
+            posY = ImplViewGamePanel.WORLD_HEIGHT - ImplViewGamePanel.SCREEN_HEIGHT;
         }
     }
 

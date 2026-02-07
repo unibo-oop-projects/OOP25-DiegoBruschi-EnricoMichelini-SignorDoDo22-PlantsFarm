@@ -29,5 +29,5 @@ public interface Animation {
      *
      * @return
      */
-    boolean getisPlaying();
+    boolean isPlaying();
 }

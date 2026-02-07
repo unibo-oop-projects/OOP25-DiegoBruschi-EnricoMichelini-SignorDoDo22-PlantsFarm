@@ -19,7 +19,7 @@ import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class ImplControllerGamePanel extends Thread implements ControllerGamePanel {
-    private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10; //10
+    private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
     private ImplViewGamePanel view;
     private final ImplFactoryPlayer factoryPlayer = new ImplFactoryPlayer();
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
@@ -53,10 +53,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
                 if (input != null) {
                 switch (input) {
-                    case LEFT -> player.setDirection(input);
-                    case RIGHT -> player.setDirection(input);
-                    case UP -> player.setDirection(input);
-                    case DOWN -> player.setDirection(input);
+                    case LEFT, RIGHT, DOWN, FERMO, UP -> player.setDirection(input);
                     case ACTIONHOE -> {
                         if (player.getInventory().useItem(HOE, ImplViewGamePanel.selectedPlant.getRarity())) {
                             gardenController.pianta(ImplViewGamePanel.selectedPlant);
@@ -67,10 +64,10 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                             gardenController.innaffia(now);
                         }
                     }
-                    case FERMO -> player.setDirection(input);
                 }
 
-                controllerAnimation.takeInput(input);
+                if(input != null)
+                    controllerAnimation.takeInput(input);
             }
             } catch (final InterruptedException e) {
                 break;

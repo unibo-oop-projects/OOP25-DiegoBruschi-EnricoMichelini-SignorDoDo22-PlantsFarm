@@ -27,7 +27,6 @@ public final class ImplSelectorFrames implements SelectorFrames {
     private final AnimationCorsa animationUp = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.WALKUP);
     private final AnimationCorsa animationDown = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.WALKDOWN);
     private final AnimationCorsa animationRight = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.WALKRIGHT);
-    private long nowNs;
     private Animation currentAnimation;
     private BufferedImage currentImage = AnimationFrames.BASE;
 
@@ -35,56 +34,49 @@ public final class ImplSelectorFrames implements SelectorFrames {
     public void takeInput(final UserInput input) {
 
         if (input == ACTIONHOE) {
-           nowNs = System.nanoTime();
+           final long nowNs = System.nanoTime();
            animationHoe.start(nowNs);
            currentAnimation = animationHoe;
         }
 
         if (input == ACTIONWATER) {
-           nowNs = System.nanoTime();
+           final long nowNs = System.nanoTime();
            animationWater.start(nowNs);
            currentAnimation = animationWater;
         }
 
         if (input == UP) {
-            nowNs = System.nanoTime();
+            final long nowNs = System.nanoTime();
             currentAnimation = animationUp;
             animationUp.start(nowNs);
         }
 
         if (input == RIGHT) {
-            nowNs = System.nanoTime();
+            final long nowNs = System.nanoTime();
             currentAnimation = animationRight;
             animationRight.start(nowNs);
         }
 
         if (input == DOWN) {
-            nowNs = System.nanoTime();
+            final long nowNs = System.nanoTime();
             currentAnimation = animationDown;
             animationDown.start(nowNs);
         }
 
         if (input == LEFT) {
-            nowNs = System.nanoTime();
+            final long nowNs = System.nanoTime();
             animationLeft.start(nowNs);
             currentAnimation = animationLeft;
         }
 
-        if (input == FERMO
-            && currentAnimation != animationWater
-            && currentAnimation != null
-            && currentAnimation != animationHoe
-        ) {
-            if (currentAnimation.equals(animationHoe)
-                && animationHoe.getisPlaying()
-                || currentAnimation.equals(animationWater)
-                && animationWater.getisPlaying()
-            ) {
+        if (input == FERMO) {
+            if (animationHoe.equals(currentAnimation) && animationHoe.isPlaying()
+                || (animationWater.equals(currentAnimation) && animationWater.isPlaying())) {
                 return;
-            } else {
-                this.currentImage = AnimationFrames.BASE;
-                this.currentAnimation = null;
             }
+
+            currentAnimation = null;
+            currentImage = AnimationFrames.BASE;
         }
 
     }
@@ -94,7 +86,7 @@ public final class ImplSelectorFrames implements SelectorFrames {
         if (currentAnimation != null) {
             currentImage = currentAnimation.getCurrentFrame(nowNs);
 
-            if (!currentAnimation.getisPlaying()) {
+            if (!currentAnimation.isPlaying()) {
                 currentAnimation = null;
                 currentImage = AnimationFrames.BASE;
             }

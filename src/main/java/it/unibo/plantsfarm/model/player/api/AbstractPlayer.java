@@ -20,7 +20,6 @@ public abstract class AbstractPlayer {
     public static final int EXPERT_FARMER_SPEED = 650;
 
     /** Movement speed of the player (units per second). */
-    @SuppressWarnings("checkstyle:VisibilityModifier")
     protected double speed;
 
     /** Current X position of the player in world coordinates. */
@@ -116,18 +115,18 @@ public abstract class AbstractPlayer {
     }
 
     /**
-     * Return the Inventory of the player.
+     * Returns the player's inventory.
      *
-     * @return
+     * @return the current ModelInventario
      */
     public ModelInventario getInventory() {
         return this.inventory;
     }
 
     /**
-     * Return the HitBox of the player.
+     * Returns the player's hitbox used for collision detection.
      *
-     * @return
+     * @return the current hitbox in world coordinates
      */
     public final Rectangle getHitBox() {
         return new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
