@@ -1,12 +1,12 @@
 package it.unibo.plantsfarm.controller.gamepanel;
 
-import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
-import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.garden.GardenController;
 import it.unibo.plantsfarm.controller.garden.SpawningBuffsController;
+import it.unibo.plantsfarm.controller.player.ImplActionHandler;
+import it.unibo.plantsfarm.controller.player.api.ActionHandler;
 import it.unibo.plantsfarm.controller.inventario.ImplControllerInventario;
 import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
 import it.unibo.plantsfarm.model.GameState;
@@ -17,7 +17,6 @@ import it.unibo.plantsfarm.model.garden.SaveController;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
-import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
@@ -33,6 +32,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private Camera camera;
     private TileMap map;
     private CollisionDetector collisionDetector;
+    private ActionHandler actionHandler;
     private SaveController saver = new SaveController();
     private SpawningBuffsController spawningBuffsController;
     //private final GameState gameState;
@@ -44,6 +44,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         this.map.loadMap("/maps/map.txt");
         setPlayer();
         this.player = getPlayer();
+        actionHandler = new ImplActionHandler(player);
         this.controllerInventario = new ImplControllerInventario(this.player);
         this.gardenController = new GardenController(gameState, this.player);
         this.collisionDetector = new CollisionDetector(this.player);
@@ -65,42 +66,20 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             try {
                 Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
                 if (input != null) {
-                switch (input) {
-                    case LEFT -> player.setDirection(input);
-                    case RIGHT -> player.setDirection(input);
-                    case UP -> player.setDirection(input);
-                    case DOWN -> player.setDirection(input);
-                    case ACTIONHOE -> {
-                       Soil soil = gardenController.isPlayerOnSoil(player.getHitBox());
-                        if (gardenController.isPlayerOnSoil(player.getHitBox()) != null) {
-                            if(!soil.getIsPlanted() || soil.getPlant().isMature()){
-                            player.getInventory().useItem(HOE, ImplViewGamePanel.selectedPlant.getRarity());
-                            gardenController.pianta(ImplViewGamePanel.selectedPlant);
-                            saver.saveGame(gardenController.getSoilList(), "./plants");
-                            }
-                        }
-                    }
-                    case ACTIONWATER -> {
-                        Soil soil = gardenController.isPlayerOnSoil(player.getHitBox());
-                        if (gardenController.isPlayerOnSoil(player.getHitBox()) != null) {
-                            if(soil.getPlant() != null && soil.getPlant().needsWater()){
-                            player.getInventory().useItem(WATERCAN, ImplViewGamePanel.selectedPlant.getRarity());
-                            gardenController.innaffia(now);
-                            saver.saveGame(gardenController.getSoilList(), "./plants");
-                            }
-                        }
-                    }
-                    case FERMO -> player.setDirection(input);
+                    switch (input) {
+                    case DOWN, UP, RIGHT, LEFT, FERMO -> actionHandler.updateDirection(input);
+                    case ACTIONHOE -> { actionHandler.handleActionHoe(gardenController); saver.saveGame(gardenController.getSoilList(), "./plants");}
+                    case ACTIONWATER -> { actionHandler.handleWater(gardenController, now); saver.saveGame(gardenController.getSoilList(), "./plants");}
+                    case REMOVE_PLANT ->{ actionHandler.handleAxe(gardenController); saver.saveGame(gardenController.getSoilList(), "./plants");}
                 }
-
-                controllerAnimation.takeInput(input);
-            }
+                    controllerAnimation.takeInput(input);
+                }
             } catch (final InterruptedException e) {
                 break;
             }
 
             spawningBuffsController.updateUpGrade();
-            spawningBuffsController.playerActionBuff();
+            actionHandler.playerActionBuff(spawningBuffsController);
             collisionDetector.collisionDetection();
             controllerAnimation.update(System.nanoTime());
             player.updatePlayer(delta);

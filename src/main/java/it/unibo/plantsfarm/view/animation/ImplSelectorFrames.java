@@ -60,7 +60,8 @@ public final class ImplSelectorFrames implements SelectorFrames {
             case FERMO -> {
                 final boolean hoePlaying = currentAnimation == animationHoe && animationHoe.isPlaying();
                 final boolean waterPlaying = currentAnimation == animationWater && animationWater.isPlaying();
-                if (hoePlaying || waterPlaying) {
+                final boolean axePlaying = currentAnimation == animationAxe && animationAxe.isPlaying();
+                if (hoePlaying || waterPlaying || axePlaying) {
                     return;
                 }
                 currentAnimation = null;

@@ -35,7 +35,7 @@ public class SpawningBuffsController {
 
     public void updateUpGrade() {
         if (activeBuffs.size() < 2 && lastPickUp + SPAWN_COOLDOWN < System.currentTimeMillis()) {
-    
+
             double randomPosX = (int)(Math.random() * ((ImplViewGamePanel.WORLD_WIDTH) + 1));
             double randomPosY = (int)(Math.random() * ((ImplViewGamePanel.WORLD_HEIGHT) + 1));
             if(verifyPosUpgrade(randomPosX, randomPosY)){
@@ -43,16 +43,6 @@ public class SpawningBuffsController {
                 Buff buff = new Buff(buffPosition);
                 activeBuffs.add(buff);
                 lastPickUp = System.currentTimeMillis();
-            }
-        }
-            
-    }
-
-    public void playerActionBuff(){
-
-        for (Buff buff : activeBuffs) {
-            if(player.getHitBox().intersects(buff.getBuffPosition()) || buffPosition.contains(player.getHitBox())){
-                removeBuffFromMap(buff);
             }
         }
 
@@ -69,7 +59,7 @@ public class SpawningBuffsController {
 
     public boolean verifyPosUpgrade(double x, double y){
 
-            
+
         double randomPosX = (int)(Math.random() * ((ImplViewGamePanel.WORLD_WIDTH) + 1));
         double randomPosY = (int)(Math.random() * ((ImplViewGamePanel.WORLD_HEIGHT) + 1));
 
