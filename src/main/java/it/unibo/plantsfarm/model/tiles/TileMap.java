@@ -8,14 +8,13 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
-import it.unibo.plantsfarm.model.garden.SaveController;
+import it.unibo.plantsfarm.model.garden.SoilSaving;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class TileMap {
 
     private final int[][] logicMap1;
-    private final SaveController saveController = new SaveController();
-    private final String SAVE_FILENAME = "plants"; 
+    private final SoilSaving saveController = new SoilSaving();
 
     public List<Soil> soilList = new LinkedList<>();
     public List<SolidBlock> solidBlocks = new LinkedList<>();
@@ -62,7 +61,7 @@ public final class TileMap {
     }
 
     private void applySavedData() {
-        List<Soil> savedProgress = saveController.loadGame(SAVE_FILENAME);
+        List<Soil> savedProgress = saveController.loadGame();
         if (savedProgress == null) return;
 
         for (Soil saved : savedProgress) {

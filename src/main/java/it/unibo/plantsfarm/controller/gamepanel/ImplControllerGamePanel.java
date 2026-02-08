@@ -13,7 +13,7 @@ import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.camera.Camera;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
 import it.unibo.plantsfarm.model.garden.CollisionDetector;
-import it.unibo.plantsfarm.model.garden.SaveController;
+import it.unibo.plantsfarm.model.garden.SoilSaving;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
@@ -33,7 +33,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private TileMap map;
     private CollisionDetector collisionDetector;
     private ActionHandler actionHandler;
-    private SaveController saver = new SaveController();
+    private SoilSaving saver = new SoilSaving();
     private SpawningBuffsController spawningBuffsController;
     //private final GameState gameState;
     private final ControllerInventario controllerInventario;
@@ -68,9 +68,9 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                 if (input != null) {
                     switch (input) {
                     case DOWN, UP, RIGHT, LEFT, FERMO -> actionHandler.updateDirection(input);
-                    case ACTIONHOE -> { actionHandler.handleActionHoe(gardenController); saver.saveGame(gardenController.getSoilList(), "./plants");}
-                    case ACTIONWATER -> { actionHandler.handleWater(gardenController, now); saver.saveGame(gardenController.getSoilList(), "./plants");}
-                    case REMOVE_PLANT ->{ actionHandler.handleAxe(gardenController); saver.saveGame(gardenController.getSoilList(), "./plants");}
+                    case ACTIONHOE -> { actionHandler.handleActionHoe(gardenController); saver.saveGame(gardenController.getSoilList()); }
+                    case ACTIONWATER -> { actionHandler.handleWater(gardenController, now); saver.saveGame(gardenController.getSoilList()); }
+                    case REMOVE_PLANT ->{ actionHandler.handleAxe(gardenController); saver.saveGame(gardenController.getSoilList()); }
                 }
                     controllerAnimation.takeInput(input);
                 }
