@@ -44,7 +44,7 @@ public final class TileMap {
                     int worldY = row * ImplViewGamePanel.TILE_SIZE;
                     int size = ImplViewGamePanel.TILE_SIZE;
 
-                    if (num == 19 || num == 76) {
+                    if (isSoil(num)) {
                         this.soilList.add(new Soil(new Rectangle(worldX, worldY, size, size), num));
                     }
 
@@ -75,7 +75,11 @@ public final class TileMap {
         }
     }
 
-    private boolean isSolid(int num) {
+    public boolean isSoil(int num) {
+        return num == 19 || num == 76;
+    }
+
+    public boolean isSolid(int num) {
         return num == 3 || num == 4 || num == 6
             || (num >= 22 && num <= 26) || (num >= 31 && num <= 35)
             || (num >= 40 && num <= 45) || (num >= 48 && num <= 54)
