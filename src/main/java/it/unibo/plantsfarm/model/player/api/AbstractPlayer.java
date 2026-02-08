@@ -1,11 +1,7 @@
 package it.unibo.plantsfarm.model.player.api;
 
-import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
-
-import java.util.List;
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
-import it.unibo.plantsfarm.model.garden.CollisionDetector;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 

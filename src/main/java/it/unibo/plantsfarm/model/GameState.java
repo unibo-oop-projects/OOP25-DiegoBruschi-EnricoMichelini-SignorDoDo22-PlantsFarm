@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.model;
 
+import it.unibo.plantsfarm.model.garden.SaveController;
 import it.unibo.plantsfarm.model.menu.Coin;
 import it.unibo.plantsfarm.model.menu.Encyclopedia;
 import it.unibo.plantsfarm.model.menu.Storage;
@@ -20,6 +21,7 @@ public final class GameState {
     private final Storage storage;
     private final Shop shop;
     private final Coin wallet;
+    private final SaveController soils;
 
     /**
      * Constructs a new GameState initialized with a list of plants.
@@ -31,6 +33,7 @@ public final class GameState {
         this.storage = new Storage();
         this.shop = new Shop();
         this.wallet = new Coin(INITIAL_COINS);
+        this.soils = new SaveController();
 
         for (final Plant p : plants) {
             this.encyclopedia.addPlant(p);
@@ -145,5 +148,6 @@ public final class GameState {
         this.storage.reset();
         this.wallet.reset();
         this.encyclopedia.reset();
+        this.soils.reset("./plants");
     }
 }

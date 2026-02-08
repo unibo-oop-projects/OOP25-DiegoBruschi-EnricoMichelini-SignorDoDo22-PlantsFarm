@@ -8,11 +8,14 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
+import it.unibo.plantsfarm.model.garden.SaveController;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class TileMap {
 
     private final int[][] logicMap1;
+    private final SaveController saveController = new SaveController();
+    private final String SAVE_FILENAME = "plants"; 
 
     public List<Soil> soilList = new LinkedList<>();
     public List<SolidBlock> solidBlocks = new LinkedList<>();
@@ -22,64 +25,63 @@ public final class TileMap {
     }
 
     public void loadMap(final String filePath) {
-
         this.soilList.clear();
         this.solidBlocks.clear();
 
-        try {
-            final InputStream is = getClass().getResourceAsStream(filePath);
-            final BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        try (InputStream is = getClass().getResourceAsStream(filePath);
+             BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 
             for (int row = 0; row < ImplViewGamePanel.MAX_WORLD_ROW; row++) {
-                final String line = br.readLine();
-                if (line == null) {
-                    break;
-                }
-
-                final String[] numbers = line.split(" ");
+                String line = br.readLine();
+                if (line == null) break;
+                String[] numbers = line.split(" ");
 
                 for (int col = 0; col < ImplViewGamePanel.MAX_WORLD_COL; col++) {
+                    if (col >= numbers.length) break;
 
-                    if (col >= numbers.length) {
-                        break;
-                    }
-
-                    final int num = Integer.parseInt(numbers[col]);
+                    int num = Integer.parseInt(numbers[col]);
                     this.logicMap1[row][col] = num;
+                    int worldX = col * ImplViewGamePanel.TILE_SIZE;
+                    int worldY = row * ImplViewGamePanel.TILE_SIZE;
+                    int size = ImplViewGamePanel.TILE_SIZE;
 
-                    final int worldX = col * ImplViewGamePanel.TILE_SIZE;
-                    final int worldY = row * ImplViewGamePanel.TILE_SIZE;
-                    final int size = ImplViewGamePanel.TILE_SIZE;
-
-                    if (num == 2 || (num >= 11 && num <= 19) || num == 76) {
-                        final Rectangle rect = new Rectangle(worldX, worldY, size, size);
-                        this.soilList.add(new Soil(rect, num));
+                    if (num == 19 || num == 76) {
+                        this.soilList.add(new Soil(new Rectangle(worldX, worldY, size, size), num));
                     }
 
                     if (isSolid(num)) {
-                        final Rectangle rect = new Rectangle(worldX, worldY, size, size);
-                        this.solidBlocks.add(new SolidBlock(rect));
+                        this.solidBlocks.add(new SolidBlock(new Rectangle(worldX, worldY, size, size)));
                     }
                 }
             }
-            br.close();
-        } catch (final IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        applySavedData();
+    }
+
+    private void applySavedData() {
+        List<Soil> savedProgress = saveController.loadGame(SAVE_FILENAME);
+        if (savedProgress == null) return;
+
+        for (Soil saved : savedProgress) {
+            for (int i = 0; i < soilList.size(); i++) {
+                Soil current = soilList.get(i);
+                if (current.getCoordinate().x == saved.getCoordinate().x && current.getCoordinate().y == saved.getCoordinate().y) {
+                    this.soilList.set(i, saved);
+                    break;
+                }
+            }
         }
     }
 
     private boolean isSolid(int num) {
-        return num == 3
-            || num == 4
-            || num == 6
-            || (num >= 22 && num <= 26)
-            || (num >= 31 && num <= 35)
-            || (num >= 40 && num <= 45)
-            || (num >= 48 && num <= 54)
-            || (num >= 58 && num <= 60)
-            || num == 66
-            || (num >= 68 && num <= 70)
-            || num == 72;
+        return num == 3 || num == 4 || num == 6
+            || (num >= 22 && num <= 26) || (num >= 31 && num <= 35)
+            || (num >= 40 && num <= 45) || (num >= 48 && num <= 54)
+            || (num >= 58 && num <= 60) || num == 66
+            || (num >= 68 && num <= 70) || num == 72;
     }
 
     public List<Soil> getSoilList() {

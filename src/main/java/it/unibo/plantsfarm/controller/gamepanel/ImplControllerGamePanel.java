@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.garden.GardenController;
-import it.unibo.plantsfarm.controller.garden.SaveController;
 import it.unibo.plantsfarm.controller.garden.SpawningBuffsController;
 import it.unibo.plantsfarm.controller.inventario.ImplControllerInventario;
 import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
@@ -14,6 +13,7 @@ import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.camera.Camera;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
 import it.unibo.plantsfarm.model.garden.CollisionDetector;
+import it.unibo.plantsfarm.model.garden.SaveController;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
@@ -76,6 +76,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                             if(!soil.getIsPlanted() || soil.getPlant().isMature()){
                             player.getInventory().useItem(HOE, ImplViewGamePanel.selectedPlant.getRarity());
                             gardenController.pianta(ImplViewGamePanel.selectedPlant);
+                            saver.saveGame(gardenController.getSoilList(), "./plants");
                             }
                         }
                     }
@@ -85,6 +86,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                             if(soil.getPlant() != null && soil.getPlant().needsWater()){
                             player.getInventory().useItem(WATERCAN, ImplViewGamePanel.selectedPlant.getRarity());
                             gardenController.innaffia(now);
+                            saver.saveGame(gardenController.getSoilList(), "./plants");
                             }
                         }
                     }

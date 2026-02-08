@@ -1,5 +1,6 @@
-package it.unibo.plantsfarm.controller.garden;
+package it.unibo.plantsfarm.model.garden;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,4 +31,15 @@ public class SaveController {
         }
         return null;
     }
+
+    public void reset(String fileName) {
+    File file = new File(fileName);
+    if (file.exists()) {
+        if (file.delete()) {
+            System.out.println("Salvataggio eliminato con successo.");
+        } else {
+            System.err.println("Impossibile eliminare il file di salvataggio.");
+        }
+    }
+}
 }

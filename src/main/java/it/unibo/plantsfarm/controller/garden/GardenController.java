@@ -99,7 +99,7 @@ public class GardenController {
      */
     public Soil isPlayerOnSoil(final Rectangle hitbox) {
         for (Soil soilRect : gardenModel.getSoils()) {
-            if(soilRect.getCoordinate().contains(hitbox)){
+            if(hitbox.intersects(soilRect.getCoordinate()) || soilRect.getCoordinate().contains(hitbox)){
                 return soilRect;
             }
         }
