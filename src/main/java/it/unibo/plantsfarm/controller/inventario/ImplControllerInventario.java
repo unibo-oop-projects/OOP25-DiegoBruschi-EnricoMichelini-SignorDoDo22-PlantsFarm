@@ -43,4 +43,8 @@ public final class ImplControllerInventario implements ControllerInventario {
     public Map<Tooltype, ItemsFarm> getInventoryClone() {
         return this.abstractPlayer.getInventory().getInventorySnapshot();
     }
+
+    public int getHealPlayer() {
+        return 0;
+    }
 }

@@ -118,4 +118,13 @@ public final class ModelInventario {
     public void useWater(final Tooltype tool){
         this.inventario.get(tool).useItem();
     }
+
+    /**
+     *
+     */
+    public void applyUpgrade(){
+        for (Tooltype tool : Tooltype.values()) {
+            inventario.get(tool).useItem();
+        }
+    }
 }

@@ -1,7 +1,5 @@
 package it.unibo.plantsfarm.controller.gamepanel;
 
-import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
-import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
@@ -19,7 +17,6 @@ import it.unibo.plantsfarm.model.garden.CollisionDetector;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
-import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
@@ -82,7 +79,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             }
 
             spawningBuffsController.updateUpGrade();
-            spawningBuffsController.playerActionBuff();
+            actionHandler.playerActionBuff(spawningBuffsController);
             collisionDetector.collisionDetection();
             controllerAnimation.update(System.nanoTime());
             player.updatePlayer(delta);

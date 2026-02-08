@@ -27,8 +27,10 @@ public abstract class AbstractPlayer {
     /** Current Y position of the player in world coordinates. */
     private double posY = ImplViewGamePanel.WORLD_HEIGHT / 2;
 
+    /** Next Position X after apply Movement. */
     private double nextPosX;
 
+    /** Next Position Y after apply Movement. */
     private double nextPosY;
 
 
@@ -56,7 +58,7 @@ public abstract class AbstractPlayer {
             case RIGHT -> nextPosX += delta;
             case UP -> nextPosY -= delta;
             case DOWN -> nextPosY += delta;
-            case ACTIONHOE,ACTIONWATER -> { }
+            case ACTIONHOE, ACTIONWATER, REMOVE_PLANT -> { }
             case FERMO -> { }
         }
     }
@@ -88,10 +90,18 @@ public abstract class AbstractPlayer {
         return this.posY;
     }
 
+    /**
+     *
+     * @return
+     */
     public final double getNextPosX() {
         return this.nextPosX;
     }
 
+    /**
+     *
+     * @return
+     */
     public final double getNextPosY() {
         return this.nextPosY;
     }
@@ -123,6 +133,9 @@ public abstract class AbstractPlayer {
         return new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
     }
 
+    /**
+     *
+     */
     public void applyMovement() {
         this.posX = nextPosX;
         this.posY = nextPosY;
