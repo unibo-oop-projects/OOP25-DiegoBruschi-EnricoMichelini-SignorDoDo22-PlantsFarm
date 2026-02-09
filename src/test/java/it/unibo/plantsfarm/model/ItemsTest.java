@@ -46,12 +46,8 @@ class ItemsTest {
         final ItemsFarm expertItem = new ItemsExpert(HOE);
 
         final int levelBefore = expertItem.getLevel();
-
         assertEquals(Rarity.LEGENDARY, expertItem.getRarityItem());
-
         expertItem.upgrade();
-
-        // L'item expert non deve salire di livello (è già max)
         assertEquals(levelBefore, expertItem.getLevel());
     }
 }

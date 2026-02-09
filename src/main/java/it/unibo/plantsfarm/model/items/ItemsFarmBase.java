@@ -140,4 +140,9 @@ public final class ItemsFarmBase implements ItemsFarm {
         private static final int VAL_EPIC = 6;
         private static final int VAL_LEGENDARY = 10;
     }
+
+    @Override
+    public void setLevel( int level) {
+        this.level = level;
+    }
 }
