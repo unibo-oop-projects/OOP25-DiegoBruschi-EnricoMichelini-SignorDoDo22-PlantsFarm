@@ -47,9 +47,9 @@ public final class MainScreen {
     /**
      * Creates and displays the main screen window.
      */
-    public void createMainScreen(final ImplViewGamePanel gameViewPanel) {
+    public void createMainScreen(final ImplViewGamePanel gameView) {
         this.frame = new JFrame(TITLE);
-        this.gameViewPanel = gameViewPanel;
+        this.gameViewPanel = gameView;
         this.frame.setLayout(new BorderLayout());
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 

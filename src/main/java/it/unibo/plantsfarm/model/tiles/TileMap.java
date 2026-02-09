@@ -76,11 +76,11 @@ public final class TileMap {
     }
 
     public boolean isSoil(int num) {
-        return num == 19 || num == 76;
+        return num == 2 || num == 11;
     }
 
     public boolean isSolid(int num) {
-        return num == 3 || num == 4 || num == 6
+        return num == 3 || num == 4
             || (num >= 22 && num <= 26) || (num >= 31 && num <= 35)
             || (num >= 40 && num <= 45) || (num >= 48 && num <= 54)
             || (num >= 58 && num <= 60) || num == 66

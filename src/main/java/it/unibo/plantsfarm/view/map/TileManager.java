@@ -17,6 +17,7 @@ public final class TileManager {
     private static final int ASSET_ORIGINAL_TILE_SIZE = 16;
     private static final int ASSET_SCALE = 3;
     private static final int ASSET_ACTUAL_SIZE = ASSET_ORIGINAL_TILE_SIZE * ASSET_SCALE;
+    //private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(TileMap.class);
 
     private final ImplViewGamePanel gp;
     private final Tile[] tile;
@@ -29,32 +30,38 @@ public final class TileManager {
         this.tile = new Tile[TILE_ARRAY_SIZE];
         this.mapTileNum = new int[ImplViewGamePanel.MAX_WORLD_COL][ImplViewGamePanel.MAX_WORLD_ROW];
 
-        getTileImage();
+        setupTileImage();
         loadMap("/maps/map.txt");
     }
 
-    public void getTileImage() {
-        tileIndex = 0;
+    public void setupTileImage() {
         setupTile(tileIndex, "grass.png");
-        setupTile(++tileIndex, "pathVer.png");
-        setupTile(++tileIndex, "dirt.png");
-        setupTile(++tileIndex, "wall.png");
-        setupTile(++tileIndex, "tree.png");
-        setupTile(++tileIndex, "spawn.png");
-        setupTile(++tileIndex, "chest.png");
-        setupTile(++tileIndex, "floor.png");
         tileIndex++;
-        setupTile(++tileIndex, "pathOri.png");
-        setupTile(++tileIndex, "path.png");
-        setupTile(++tileIndex, "dirtUp.png");
-        setupTile(++tileIndex, "dirtDown.png");
-        setupTile(++tileIndex, "dirtLeft.png");
-        setupTile(++tileIndex, "dirtRight.png");
-        setupTile(++tileIndex, "dirtLUpRight.png");
-        setupTile(++tileIndex, "dirtLDownRight.png");
-        setupTile(++tileIndex, "dirtLDownLeft.png");
-        setupTile(++tileIndex, "dirtLUpLeft.png");
-        setupTile(++tileIndex, "dirtContained.png");
+        setupTile(tileIndex, "pathVer.png");
+        tileIndex++;
+        setupTile(tileIndex, "dirtOrnamental.png");
+        tileIndex++;
+        setupTile(tileIndex, "wall.png");
+        tileIndex++;
+        setupTile(tileIndex, "tree.png");
+        tileIndex++;
+        setupTile(tileIndex, "spawn.png");
+        tileIndex++;
+        setupTile(tileIndex, "flowers.png");
+        tileIndex++;
+        setupTile(tileIndex, "floor.png");
+        tileIndex++;
+        setupTile(tileIndex, "lessFlowers.png");
+        tileIndex++;
+        setupTile(tileIndex, "pathOri.png");
+        tileIndex++;
+        setupTile(tileIndex, "path.png");
+        tileIndex++;
+        setupTile(tileIndex, "dirtContained.png");
+        tileIndex = 20;
+        
+        
+        
 
         // Shop slicing and loading
         final int numColonne = 9;
@@ -63,8 +70,6 @@ public final class TileManager {
         final int shopSourceSliceSize = ASSET_ACTUAL_SIZE * 3;
 
         final BufferedImage bigSheet = new SpriteLoader("/icons/tiles/shop.png").getImage();
-
-        tileIndex++;
 
         for (int row = 0; row < numRighe; row++) {
             for (int col = 0; col < numColonne; col++) {
@@ -98,13 +103,9 @@ public final class TileManager {
                 tileIndex++;
             }
         }
-
-        setupTile(tileIndex, "flowers.png");
-        setupTile(++tileIndex, "lessFlowers.png");
-        setupTile(++tileIndex, "dirtOrnamental.png");
     }
 
-    private void setupTile(int index, String fileName) {
+    private void setupTile(final int index, final String fileName) {
         tile[index] = new Tile();
         tile[index].image = new SpriteLoader("/icons/tiles/" + fileName).getImage();
     }
@@ -116,7 +117,9 @@ public final class TileManager {
 
             for (int row = 0; row < ImplViewGamePanel.MAX_WORLD_ROW; row++) {
                 final String line = br.readLine();
-                if (line == null) break;
+                if (line == null) {
+                    break;
+                }
 
                 final String[] numbers = line.split(" ");
                 for (int column = 0; column < ImplViewGamePanel.MAX_WORLD_COL; column++) {
@@ -128,6 +131,7 @@ public final class TileManager {
             }
             br.close();
         } catch (final IOException | NumberFormatException e) {
+            //LOGGER.error("Errore durante il caricamento della mappa", e);
             e.printStackTrace();
         }
     }
