@@ -7,6 +7,8 @@ import it.unibo.plantsfarm.model.plant.Plant;
 
 public final class Soil implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private final Rectangle coordinatePod;
     private final int tileId;
     private boolean isPlanted;
@@ -26,7 +28,7 @@ public final class Soil implements Serializable {
         this.plant = selectedPlant;
     }
 
-    public boolean getIsPlanted() {
+    public boolean isPlanted() {
         return this.isPlanted;
     }
 

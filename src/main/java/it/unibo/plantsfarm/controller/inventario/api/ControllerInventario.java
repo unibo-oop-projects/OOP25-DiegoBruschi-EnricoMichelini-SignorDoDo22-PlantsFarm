@@ -4,7 +4,7 @@ import java.util.Map;
 
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
-import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.inventario.UpgradeItemsView;
 
 /**
@@ -55,6 +55,4 @@ public interface ControllerInventario {
      * @return a snapshot map of tool types to items
      */
     Map<Tooltype, ItemsFarm> getInventoryClone();
-
-
 }

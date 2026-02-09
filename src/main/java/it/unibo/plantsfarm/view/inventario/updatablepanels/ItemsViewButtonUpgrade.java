@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.view.inventario.UpdatablePanels;
+package it.unibo.plantsfarm.view.inventario.updatablepanels;
 
 import java.awt.GridLayout;
 import java.util.LinkedHashMap;
@@ -57,6 +57,7 @@ public final class ItemsViewButtonUpgrade implements UpdatablePanel {
         }
     }
 
+    @Override
     public JPanel getPanel() {
         return this.panel;
     }

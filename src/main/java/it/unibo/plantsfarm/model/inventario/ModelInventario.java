@@ -141,6 +141,4 @@ public final class ModelInventario {
         ItemsFarm itemFarm = inventario.get(tool);
         itemFarm.setLevel(level);
     }
-
-
 }

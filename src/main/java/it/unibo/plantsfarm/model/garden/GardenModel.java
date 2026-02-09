@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 
 import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.model.tiles.TileMap;
-import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
 /**
  * Manages the logic of the garden.
@@ -14,9 +14,9 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 public class GardenModel {
 
     private static final int ORNAMENTAL_SOIL = 2;
-    private static final int GREENHOUSE_AREA = 4;
+    private static final int GREENHOUSE_AREA = 40;
 
-    private List<Soil> soils = new LinkedList<>();
+    private final List<Soil> soils;
     private final List<PlantArea> areas = new LinkedList<>();
     private final TileMap map = new TileMap();
 

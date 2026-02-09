@@ -5,11 +5,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import it.unibo.plantsfarm.model.garden.SoilSaving;
-import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.map.TileManager;
 
 public final class TileMap {
 
@@ -35,8 +39,10 @@ public final class TileMap {
     private static final int END_WELL_SECOND_ROW = 70;
     private static final int WELL_THIRD_ROW = 72;
 
-    private List<Soil> soilList = new LinkedList<>();
-    private List<SolidBlock> solidBlocks = new LinkedList<>();
+    private static final Logger LOGGER = Logger.getLogger(TileManager.class.getName());
+
+    private final List<Soil> soilList = new LinkedList<>();
+    private final List<SolidBlock> solidBlocks = new LinkedList<>();
 
     private final int[][] logicMap1;
     private final SoilSaving saveController = new SoilSaving();
@@ -50,7 +56,7 @@ public final class TileMap {
         this.solidBlocks.clear();
 
         try (InputStream is = getClass().getResourceAsStream(filePath);
-             BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+             BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
 
             for (int row = 0; row < ImplViewGamePanel.MAX_WORLD_ROW; row++) {
                 final String line = br.readLine();
@@ -81,7 +87,7 @@ public final class TileMap {
                 }
             }
         } catch (final IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Errore durante il caricamento della mappa", e);
         }
 
         applySavedData();

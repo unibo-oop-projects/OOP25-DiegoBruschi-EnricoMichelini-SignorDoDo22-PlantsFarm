@@ -8,8 +8,8 @@ import it.unibo.plantsfarm.model.tiles.TileMap;
 
 public final class CollisionDetector {
 
-    private AbstractPlayer player;
-    private TileMap map = new TileMap();
+    private final AbstractPlayer player;
+    private final TileMap map = new TileMap();
 
     public CollisionDetector(final AbstractPlayer player) {
         this.map.loadMap("/maps/map.txt");

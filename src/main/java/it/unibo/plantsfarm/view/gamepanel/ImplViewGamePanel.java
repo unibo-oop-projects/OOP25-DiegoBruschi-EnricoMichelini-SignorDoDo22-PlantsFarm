@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.view.gamePanel;
+package it.unibo.plantsfarm.view.gamepanel;
 
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.ACTIONHOE;
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.ACTIONWATER;
@@ -34,7 +34,7 @@ import it.unibo.plantsfarm.model.plant.PlantEffect;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
-import it.unibo.plantsfarm.view.gamePanel.api.ViewGamePanel;
+import it.unibo.plantsfarm.view.gamepanel.api.ViewGamePanel;
 import it.unibo.plantsfarm.view.inventario.UpgradeItemsView;
 import it.unibo.plantsfarm.view.map.TileManager;
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
@@ -158,7 +158,6 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         }
 
         for (final Buff buff : buffList) {
-            System.out.println(buffList.size());
             g2D.drawImage(new SpriteLoader("/plantStatus/xp.png").getImage(),
                         buff.getBuffPosition().x - cameraX, buff.getBuffPosition().y - cameraY,
                         64, 64, null
@@ -175,7 +174,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
         if (soilList != null) {
             for (final Soil pod : soilList) {
-                if (pod.getIsPlanted()) {
+                if (pod.isPlanted()) {
                     drawPlant(g2D, pod);
                 }
             }

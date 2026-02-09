@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.view.inventario.UpdatablePanels;
+package it.unibo.plantsfarm.view.inventario.updatablepanels;
 
 import javax.swing.JPanel;
 import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;

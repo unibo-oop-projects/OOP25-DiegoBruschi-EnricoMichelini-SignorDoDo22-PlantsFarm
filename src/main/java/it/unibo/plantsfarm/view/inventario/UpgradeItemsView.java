@@ -4,8 +4,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JDialog;
 import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
-import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
-import it.unibo.plantsfarm.view.inventario.UpdatablePanels.MainItemsViewPanel;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.inventario.updatablepanels.MainItemsViewPanel;
 
 /**
  * Dialog that shows the experience of each item/tool and allows upgrading them.

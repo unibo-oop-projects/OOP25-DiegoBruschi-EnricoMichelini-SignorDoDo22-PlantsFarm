@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.view.gamePanel.api;
+package it.unibo.plantsfarm.view.gamepanel.api;
 
 import java.util.List;
 

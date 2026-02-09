@@ -1,7 +1,7 @@
 package it.unibo.plantsfarm.controller.gamepanel.api;
 
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
-import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
 /**
  * Controller for the GamePanel.

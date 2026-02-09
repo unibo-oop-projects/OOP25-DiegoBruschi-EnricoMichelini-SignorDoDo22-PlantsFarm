@@ -19,7 +19,7 @@ import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
-import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
 public final class ImplControllerGamePanel extends Thread implements ControllerGamePanel {
     private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10;

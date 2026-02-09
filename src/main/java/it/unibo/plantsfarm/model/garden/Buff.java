@@ -7,11 +7,11 @@ public final class Buff {
 
     public enum Type { OMNI_BUFF }
 
-    private Type[] types = Type.values();
+    private final Type[] types = Type.values();
     private final Random rand = new Random();
-    private Rectangle area;
-    private Type type;
-    private int index;
+    private final Rectangle area;
+    private final Type type;
+    private final int index;
 
     public Buff(final Rectangle area) {
         this.area = area;

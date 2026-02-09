@@ -8,19 +8,21 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.view.map.TileManager;
 
 public final class SoilSaving {
 
-    private String userPath = System.getProperty("user.home");
-    private String saveDirectory = userPath + File.separator + ".plantsfarm";
-    private String fileName = saveDirectory + File.separator + "plants";
+    private final String fileName = System.getProperty("user.home") + File.separator + ".plantsfarm" + File.separator + "plants";
+    private static final Logger LOGGER = Logger.getLogger(TileManager.class.getName());
 
     public void saveGame(final List<Soil> pod) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(this.fileName))) {
             oos.writeObject(pod);
         } catch (final IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Errore durante il salvataggio dei soils.", e);
         }
     }
 
@@ -29,20 +31,20 @@ public final class SoilSaving {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(this.fileName))) {
             return (List<Soil>) ois.readObject();
         } catch (final FileNotFoundException e) {
-            System.out.println("Nessun salvataggio trovato.");
+            LOGGER.log(Level.INFO, "Nessun file trovato.", e);
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Errore durante il caricamento dei soils.", e);
         }
-        return null;
+        return List.of();
     }
 
     public void reset() {
         final File file = new File(this.fileName);
         if (file.exists()) {
             if (file.delete()) {
-                System.out.println("Salvataggio eliminato con successo.");
+                LOGGER.log(Level.INFO, "Salvataggio eliminato con successo.");
             } else {
-                System.err.println("Impossibile eliminare il file di salvataggio.");
+                LOGGER.log(Level.SEVERE, "Impossibile eliminare il salvataggio.");
             }
         }
     }

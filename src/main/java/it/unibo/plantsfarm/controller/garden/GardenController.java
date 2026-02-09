@@ -16,9 +16,9 @@ import it.unibo.plantsfarm.model.tiles.Soil;
 public class GardenController {
     private static final int ORNAMENTAL_SOIL = 2;
 
-    private GameState gameState;
-    private AbstractPlayer player;
-    private GardenModel gardenModel;
+    private final GameState gameState;
+    private final AbstractPlayer player;
+    private final GardenModel gardenModel;
 
     /**
      * Creates a new GardenController.
@@ -39,11 +39,9 @@ public class GardenController {
      */
     public final void innaffia(final long now) {
         for (final Soil zolla : gardenModel.getSoils()) {
-            if (zolla.getCoordinate().contains(player.getHitBox())) {
-                if (zolla.getIsPlanted()) {
-                    zolla.getPlant().water(now);
-                    break;
-                }
+            if (zolla.getCoordinate().contains(player.getHitBox()) && zolla.isPlanted()) {
+                zolla.getPlant().water(now);
+                break;
             }
         }
     }
@@ -68,12 +66,10 @@ public class GardenController {
 
             for (final Soil zolla : gardenModel.getSoils()) {
                 if (zolla.getCoordinate().contains(player.getHitBox())) {
-                    if (!zolla.getIsPlanted()) {
-                        if (zolla.getTileId() == ORNAMENTAL_SOIL && !type.isEdible()
-                            || zolla.getTileId() != ORNAMENTAL_SOIL && type.isEdible()
-                        ) {
-                            zolla.setPlanted(pianta);
-                        }
+                    if (!zolla.isPlanted() && zolla.getTileId() == ORNAMENTAL_SOIL && !type.isEdible()
+                        || zolla.getTileId() != ORNAMENTAL_SOIL && type.isEdible()
+                    ) {
+                        zolla.setPlanted(pianta);
                     } else {
                         gameState.addHarvest(zolla.getPlant().getType(), zolla.getPlant().harvest());
                     }
@@ -98,7 +94,7 @@ public class GardenController {
      *
      * @return True if the player is on soil, false otherwise.
      */
-    public Soil isPlayerOnSoil(final Rectangle hitbox) {
+    public Soil whichSoilIsPlayerOn(final Rectangle hitbox) {
         for (final Soil soilRect : gardenModel.getSoils()) {
             if (hitbox.intersects(soilRect.getCoordinate()) || soilRect.getCoordinate().contains(hitbox)) {
                 return soilRect;

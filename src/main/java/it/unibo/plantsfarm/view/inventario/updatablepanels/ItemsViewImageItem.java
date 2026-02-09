@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.view.inventario.UpdatablePanels;
+package it.unibo.plantsfarm.view.inventario.updatablepanels;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;

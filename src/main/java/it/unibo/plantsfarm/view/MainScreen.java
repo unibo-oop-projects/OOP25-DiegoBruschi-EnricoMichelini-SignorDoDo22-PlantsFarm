@@ -1,6 +1,6 @@
 package it.unibo.plantsfarm.view;
 
-import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.menu.MenuPanel;
 import it.unibo.plantsfarm.view.music.MusicPlayer;
 import it.unibo.plantsfarm.view.utility.Texture;

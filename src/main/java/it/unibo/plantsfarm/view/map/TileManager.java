@@ -6,9 +6,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-//import ch.qos.logback.classic.Logger;
-import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
+import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
 
 public final class TileManager {
@@ -20,7 +21,7 @@ public final class TileManager {
     private static final int ASSET_ACTUAL_SIZE = ASSET_ORIGINAL_TILE_SIZE * ASSET_SCALE;
 
     private static final int FIRST_SHOP_TILE_INDEX = 20;
-    //private static final Logger LOGGER = Logger.getLogger(TileManager.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(TileManager.class.getName());
 
     private final ImplViewGamePanel gp;
     private final Tile[] tile;
@@ -74,12 +75,12 @@ public final class TileManager {
         for (int row = 0; row < numRighe; row++) {
             for (int col = 0; col < numColonne; col++) {
                 tile[tileIndex] = new Tile();
-                tile[tileIndex].image = bigSheet.getSubimage(
+                tile[tileIndex].setImage(bigSheet.getSubimage(
                     col * shopSourceSliceSize,
                     row * shopSourceSliceSize,
                     shopSourceSliceSize,
                     shopSourceSliceSize
-                );
+                ));
                 tileIndex++;
             }
         }
@@ -94,12 +95,12 @@ public final class TileManager {
         for (int row = 0; row < numRighePozzo; row++) {
             for (int col = 0; col < numColonnePozzo; col++) {
                 tile[tileIndex] = new Tile();
-                tile[tileIndex].image = bigSheetPozzo.getSubimage(
+                tile[tileIndex].setImage(bigSheetPozzo.getSubimage(
                     col * wellSourceSliceSize,
                     row * wellSourceSliceSize,
                     wellSourceSliceSize,
                     wellSourceSliceSize
-                );
+                ));
                 tileIndex++;
             }
         }
@@ -107,13 +108,13 @@ public final class TileManager {
 
     private void setupTile(final int index, final String fileName) {
         tile[index] = new Tile();
-        tile[index].image = new SpriteLoader("/icons/tiles/" + fileName).getImage();
+        tile[index].setImage(new SpriteLoader("/icons/tiles/" + fileName).getImage());
     }
 
     public void loadMap(final String filePath) {
         try {
             final InputStream is = getClass().getResourceAsStream(filePath);
-            final BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            final BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 
             for (int row = 0; row < ImplViewGamePanel.MAX_WORLD_ROW; row++) {
                 final String line = br.readLine();
@@ -131,8 +132,7 @@ public final class TileManager {
             }
             br.close();
         } catch (final IOException | NumberFormatException e) {
-            //LOGGER.error("Errore durante il caricamento della mappa", e);
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Errore durante il caricamento della mappa", e);
         }
     }
 
@@ -156,7 +156,7 @@ public final class TileManager {
                     && screenY + ImplViewGamePanel.TILE_SIZE > 0
                     && screenY < gp.getHeight()) {
 
-                    g2.drawImage(tile[tileNum].image,
+                    g2.drawImage(tile[tileNum].getImage(),
                         screenX,
                         screenY,
                         ImplViewGamePanel.TILE_SIZE,

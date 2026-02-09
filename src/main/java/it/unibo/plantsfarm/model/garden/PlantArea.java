@@ -52,12 +52,11 @@ public final class PlantArea {
     public void updateArea(final long now) {
         double growthMultiplier = 1.0;
         double harvestMultiplier = 1.0;
-        if (centerSoil != null && centerSoil.getIsPlanted()) {
+        if (centerSoil != null && centerSoil.isPlanted()) {
             final Plant centerPlant = centerSoil.getPlant();
             final EffectInfo effect = centerPlant.getType().getEffectInfo();
             centerPlant.increaseGrowthStage(now, 1.0);
             centerPlant.updateNeedsWater(now);
-
             if (effect != null && centerPlant.isMature()) {
                 if (effect.getType() == PlantEffect.GROWTH_SPEED) {
                     growthMultiplier = effect.getValue();
@@ -68,11 +67,11 @@ public final class PlantArea {
         }
 
         for (final Soil soil : soils) {
-            if (soil == centerSoil) {
+            if (soil.equals(centerSoil)) {
                 continue;
             }
 
-            if (soil.getIsPlanted()) {
+            if (soil.isPlanted()) {
                 final Plant p = soil.getPlant();
                 p.increaseGrowthStage(now, growthMultiplier);
                 p.setHarvestMultiplier(harvestMultiplier);

@@ -12,15 +12,17 @@ public class Plant implements Serializable {
     public static final long WATER_TIME_COOLDOWN = 15_000L;
     public static final long GROWTH_TIME = 30_000L;
 
+    private static final long serialVersionUID = 2L;
+
     private final PlantType type;
 
+    private final boolean isPlanted;
     private int harvestedQuantity;
     private long currentStageTime;
     private long lastWateredTime;
     private int growthStage;
     private boolean needsWater;
     private boolean watered;
-    private boolean isPlanted;
     private long lastUpdate;
     private double harvestMultiplier;
 
@@ -47,16 +49,15 @@ public class Plant implements Serializable {
         final long growthTimeFromLastUpdate = now - lastUpdate;
         lastUpdate = now;
 
-        if (!isMature()) {
-            if (watered && !needsWater) {
-                currentStageTime += (long) (growthTimeFromLastUpdate * multiplier);
+        if (!isMature() && watered && !needsWater) {
+            currentStageTime += (long) (growthTimeFromLastUpdate * multiplier);
 
-                if (currentStageTime >= GROWTH_TIME && growthStage < getMaxGrowthStage()) {
-                    currentStageTime = 0;
-                    watered = false;
-                    growthStage++;
-                }
+            if (currentStageTime >= GROWTH_TIME && growthStage < getMaxGrowthStage()) {
+                currentStageTime = 0;
+                watered = false;
+                growthStage++;
             }
+            
         }
     }
 
@@ -80,11 +81,9 @@ public class Plant implements Serializable {
      * @param now The current time in milliseconds.
      */
     public final void updateNeedsWater(final Long now) {
-        if (this.type.getMaxGrowthStage() > this.growthStage) {
-            if (now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
-                this.needsWater = true;
-                this.watered = false;
-            }
+        if (this.type.getMaxGrowthStage() > this.growthStage && now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
+            this.needsWater = true;
+            this.watered = false;
         }
     }
 

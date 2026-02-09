@@ -6,7 +6,7 @@ import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
-import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.inventario.UpgradeItemsView;
 
 public final class ImplControllerInventario implements ControllerInventario {
