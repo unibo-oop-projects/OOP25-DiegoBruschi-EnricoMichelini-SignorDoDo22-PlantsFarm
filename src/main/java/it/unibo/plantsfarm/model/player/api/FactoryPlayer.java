@@ -3,7 +3,6 @@ package it.unibo.plantsfarm.model.player.api;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 
 /**
- *
  * Factory interface used to create different types of Player.
  * Each player type represents a different gameplay style,
  * such as a faster or slower farmer.

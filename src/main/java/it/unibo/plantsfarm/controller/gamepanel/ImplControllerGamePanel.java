@@ -22,7 +22,7 @@ import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class ImplControllerGamePanel extends Thread implements ControllerGamePanel {
-    private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10; //10
+    private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
     private ImplViewGamePanel view;
     private final ImplFactoryPlayer factoryPlayer = new ImplFactoryPlayer();
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
@@ -35,11 +35,9 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private ActionHandler actionHandler;
     private SoilSaving saver = new SoilSaving();
     private SpawningBuffsController spawningBuffsController;
-    //private final GameState gameState;
     private final ControllerInventario controllerInventario;
 
     public ImplControllerGamePanel(final GameState gameState) {
-        //this.gameState = gameState;
         this.map = new TileMap();
         this.map.loadMap("/maps/map.txt");
         setPlayer();
@@ -48,7 +46,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         this.controllerInventario = new ImplControllerInventario(this.player);
         this.gardenController = new GardenController(gameState, this.player);
         this.collisionDetector = new CollisionDetector(this.player);
-        this.spawningBuffsController = new SpawningBuffsController(map, this.player);
+        this.spawningBuffsController = new SpawningBuffsController(map);
         this.collisionDetector = new CollisionDetector(player);
     }
 
@@ -68,9 +66,18 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                 if (input != null) {
                     switch (input) {
                     case DOWN, UP, RIGHT, LEFT, FERMO -> actionHandler.updateDirection(input);
-                    case ACTIONHOE -> { actionHandler.handleActionHoe(gardenController); saver.saveGame(gardenController.getSoilList()); }
-                    case ACTIONWATER -> { actionHandler.handleWater(gardenController, now); saver.saveGame(gardenController.getSoilList()); }
-                    case REMOVE_PLANT ->{ actionHandler.handleAxe(gardenController); saver.saveGame(gardenController.getSoilList()); }
+                    case ACTIONHOE -> {
+                        actionHandler.handleActionHoe(gardenController);
+                        saver.saveGame(gardenController.getSoilList());
+                    }
+                    case ACTIONWATER -> {
+                        actionHandler.handleWater(gardenController, now);
+                        saver.saveGame(gardenController.getSoilList());
+                    }
+                    case REMOVE_PLANT -> {
+                        actionHandler.handleAxe(gardenController);
+                        saver.saveGame(gardenController.getSoilList());
+                    }
                 }
                     controllerAnimation.takeInput(input);
                 }

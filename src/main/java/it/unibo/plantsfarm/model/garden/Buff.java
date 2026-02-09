@@ -3,17 +3,17 @@ package it.unibo.plantsfarm.model.garden;
 import java.awt.Rectangle;
 import java.util.Random;
 
-public class Buff {
-    
-    public static enum Type { OMNI_BUFF };
-    
+public final class Buff {
+
+    public enum Type { OMNI_BUFF }
+
     private Type[] types = Type.values();
     private final Random rand = new Random();
     private Rectangle area;
     private Type type;
     private int index;
 
-    public Buff(Rectangle area) {
+    public Buff(final Rectangle area) {
         this.area = area;
         this.index = rand.nextInt(types.length);
         this.type = types[index];

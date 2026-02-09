@@ -54,8 +54,8 @@ public final class ItemsFarmBase implements ItemsFarm {
     }
 
     /**
-     * Upgrades the item if possible:
-     * For Upgrade need with experience to reach  or sorpass the quantity experienceForLevel
+     * Upgrades the item if possible.
+     * For Upgrade need with experience to reach or sorpass the quantity experienceForLevel
      */
     @Override
     public void upgrade() {

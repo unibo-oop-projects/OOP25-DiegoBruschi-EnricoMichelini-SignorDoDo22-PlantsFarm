@@ -36,8 +36,6 @@ public final class ItemsViewImageItem implements UpdatablePanel {
         update();
     }
 
-
-
     @Override
     public void update() {
         final var inv = controllerInventario.getInventoryClone();
@@ -48,7 +46,7 @@ public final class ItemsViewImageItem implements UpdatablePanel {
     }
 
     /**
-     * Create and inizialize the Immage button with the
+     * Create and inizialize the Immage button with the (DA FINIRE).
      *
      */
     private void createItemButtons() {
@@ -77,10 +75,10 @@ public final class ItemsViewImageItem implements UpdatablePanel {
     }
 
     /**
-     *
-     *
+     * 
+     * 
      * @param path icon's path
-     * @return
+     * @return (DA FINIRE)
      */
     private ImageIcon loadScaledIcon(final String path) {
         final var url = getClass().getResource(path);

@@ -20,6 +20,7 @@ public interface ViewGamePanel {
      * @param cameraX    Camera position X
      * @param cameraY    Camera position Y
      * @param listPod    List of Soil
+     * @param listBuff   List of Buffs
      */
     void show(double playerPosX, double playerPosY, int cameraX, int cameraY, List<Soil> listPod, List<Buff> listBuff);
 

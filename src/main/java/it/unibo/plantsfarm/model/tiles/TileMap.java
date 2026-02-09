@@ -13,11 +13,33 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class TileMap {
 
+    private static final int ORNAMENTAL_SOIL = 2;
+    private static final int NORMAL_SOIL = 11;
+
+    private static final int WALL = 3;
+    private static final int TREE = 4;
+
+    private static final int BEGIN_SHOP_FIRST_ROW = 22;
+    private static final int END_SHOP_FIRST_ROW = 26;
+    private static final int BEGIN_SHOP_SECOND_ROW = 31;
+    private static final int END_SHOP_SECOND_ROW = 35;
+    private static final int BEGIN_SHOP_THIRD_ROW = 40;
+    private static final int END_SHOP_THIRD_ROW = 45;
+    private static final int BEGIN_SHOP_FOURTH_ROW = 48;
+    private static final int END_SHOP_FOURTH_ROW = 54;
+    private static final int BEGIN_SHOP_FIFTH_ROW = 58;
+    private static final int END_SHOP_FIFTH_ROW = 60;
+
+    private static final int WELL_FIRST_ROW = 66;
+    private static final int BEGIN_WELL_SECOND_ROW = 68;
+    private static final int END_WELL_SECOND_ROW = 70;
+    private static final int WELL_THIRD_ROW = 72;
+
+    private List<Soil> soilList = new LinkedList<>();
+    private List<SolidBlock> solidBlocks = new LinkedList<>();
+
     private final int[][] logicMap1;
     private final SoilSaving saveController = new SoilSaving();
-
-    public List<Soil> soilList = new LinkedList<>();
-    public List<SolidBlock> solidBlocks = new LinkedList<>();
 
     public TileMap() {
         this.logicMap1 = new int[ImplViewGamePanel.MAX_WORLD_ROW][ImplViewGamePanel.MAX_WORLD_COL];
@@ -31,18 +53,23 @@ public final class TileMap {
              BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 
             for (int row = 0; row < ImplViewGamePanel.MAX_WORLD_ROW; row++) {
-                String line = br.readLine();
-                if (line == null) break;
-                String[] numbers = line.split(" ");
+                final String line = br.readLine();
+                if (line == null) {
+                    break;
+                }
+
+                final String[] numbers = line.split(" ");
 
                 for (int col = 0; col < ImplViewGamePanel.MAX_WORLD_COL; col++) {
-                    if (col >= numbers.length) break;
+                    if (col >= numbers.length) {
+                        break;
+                    }
 
-                    int num = Integer.parseInt(numbers[col]);
+                    final int num = Integer.parseInt(numbers[col]);
                     this.logicMap1[row][col] = num;
-                    int worldX = col * ImplViewGamePanel.TILE_SIZE;
-                    int worldY = row * ImplViewGamePanel.TILE_SIZE;
-                    int size = ImplViewGamePanel.TILE_SIZE;
+                    final int worldX = col * ImplViewGamePanel.TILE_SIZE;
+                    final int worldY = row * ImplViewGamePanel.TILE_SIZE;
+                    final int size = ImplViewGamePanel.TILE_SIZE;
 
                     if (isSoil(num)) {
                         this.soilList.add(new Soil(new Rectangle(worldX, worldY, size, size), num));
@@ -53,7 +80,7 @@ public final class TileMap {
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
 
@@ -61,13 +88,17 @@ public final class TileMap {
     }
 
     private void applySavedData() {
-        List<Soil> savedProgress = saveController.loadGame();
-        if (savedProgress == null) return;
+        final List<Soil> savedProgress = saveController.loadGame();
+        if (savedProgress == null) {
+            return;
+        }
 
-        for (Soil saved : savedProgress) {
+        for (final Soil saved : savedProgress) {
             for (int i = 0; i < soilList.size(); i++) {
-                Soil current = soilList.get(i);
-                if (current.getCoordinate().x == saved.getCoordinate().x && current.getCoordinate().y == saved.getCoordinate().y) {
+                final Soil current = soilList.get(i);
+                if (current.getCoordinate().x == saved.getCoordinate().x
+                    && current.getCoordinate().y == saved.getCoordinate().y
+                ) {
                     this.soilList.set(i, saved);
                     break;
                 }
@@ -75,16 +106,20 @@ public final class TileMap {
         }
     }
 
-    public boolean isSoil(int num) {
-        return num == 2 || num == 11;
+    public boolean isSoil(final int num) {
+        return num == ORNAMENTAL_SOIL || num == NORMAL_SOIL;
     }
 
-    public boolean isSolid(int num) {
-        return num == 3 || num == 4
-            || (num >= 22 && num <= 26) || (num >= 31 && num <= 35)
-            || (num >= 40 && num <= 45) || (num >= 48 && num <= 54)
-            || (num >= 58 && num <= 60) || num == 66
-            || (num >= 68 && num <= 70) || num == 72;
+    public boolean isSolid(final int num) {
+        return num == WALL || num == TREE
+            || num >= BEGIN_SHOP_FIRST_ROW && num <= END_SHOP_FIRST_ROW 
+            || num >= BEGIN_SHOP_SECOND_ROW && num <= END_SHOP_SECOND_ROW
+            || num >= BEGIN_SHOP_THIRD_ROW && num <= END_SHOP_THIRD_ROW
+            || num >= BEGIN_SHOP_FOURTH_ROW && num <= END_SHOP_FOURTH_ROW
+            || num >= BEGIN_SHOP_FIFTH_ROW && num <= END_SHOP_FIFTH_ROW
+            || num == WELL_FIRST_ROW
+            || num >= BEGIN_WELL_SECOND_ROW && num <= END_WELL_SECOND_ROW
+            || num == WELL_THIRD_ROW;
     }
 
     public List<Soil> getSoilList() {
@@ -96,7 +131,7 @@ public final class TileMap {
     }
 
     //TO DO: ornamental
-    public int getTileId(int row, int col) {
+    public int getTileId(final int row, final int col) {
         if (row >= 0 && row < ImplViewGamePanel.MAX_WORLD_ROW && col >= 0 && col < ImplViewGamePanel.MAX_WORLD_COL) {
             return logicMap1[row][col];
         }

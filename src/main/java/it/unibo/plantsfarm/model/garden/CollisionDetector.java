@@ -6,24 +6,24 @@ import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.model.tiles.SolidBlock;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 
-public class CollisionDetector {
+public final class CollisionDetector {
 
     private AbstractPlayer player;
     private TileMap map = new TileMap();
 
-    public CollisionDetector(AbstractPlayer player) {
+    public CollisionDetector(final AbstractPlayer player) {
         this.map.loadMap("/maps/map.txt");
         this.player = player;
     }
 
     public void collisionDetection() {
 
-        double offsetX = player.getNextPosX() - player.getPosx();
-        double offsetY = player.getNextPosY() - player.getPosy();
+        final double offsetX = player.getNextPosX() - player.getPosx();
+        final double offsetY = player.getNextPosY() - player.getPosy();
 
-        Rectangle currentHitbox = player.getHitBox();
+        final Rectangle currentHitbox = player.getHitBox();
 
-        Rectangle futureHitbox = new Rectangle(
+        final Rectangle futureHitbox = new Rectangle(
             (int) (currentHitbox.x + offsetX),
             (int) (currentHitbox.y + offsetY),
             currentHitbox.width,
@@ -37,7 +37,4 @@ public class CollisionDetector {
         }
         player.applyMovement();
     }
-
-    
 }
-

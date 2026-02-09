@@ -34,7 +34,6 @@ public final class Soil implements Serializable {
         return this.plant;
     }
 
-
     public int getTileId() {
         return this.tileId;
     }

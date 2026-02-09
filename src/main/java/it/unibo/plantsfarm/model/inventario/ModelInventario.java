@@ -109,14 +109,13 @@ public final class ModelInventario {
      *
      * @param tool  tool action
      */
-    public boolean useItem(final Tooltype tool, final Rarity rarityPlant){
-        if ( rarityPlant != null && inventario.get(tool).getRarityItem() == rarityPlant) {
+    public boolean useItem(final Tooltype tool, final Rarity rarityPlant) {
+        if (rarityPlant != null && inventario.get(tool).getRarityItem() == rarityPlant) {
             this.inventario.get(tool).useItem();
             return true;
         }
         return false;
     }
-
 
     /**
      * If the item have been used the right way.
@@ -124,15 +123,15 @@ public final class ModelInventario {
      *
      * @param tool  tool action
      */
-    public void useWater(final Tooltype tool){
+    public void useWater(final Tooltype tool) {
         this.inventario.get(tool).useItem();
     }
 
     /**
      *
      */
-    public void applyUpgrade(){
-        for (Tooltype tool : Tooltype.values()) {
+    public void applyUpgrade() {
+        for (final Tooltype tool : Tooltype.values()) {
             inventario.get(tool).useItem();
         }
     }

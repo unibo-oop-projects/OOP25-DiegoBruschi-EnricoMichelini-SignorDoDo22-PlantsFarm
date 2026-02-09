@@ -12,7 +12,7 @@ public final class AnimationFrames {
         new SpriteLoader("/Player/Actions/RemovePlant/axe1.png").getImage(),
         new SpriteLoader("/Player/Actions/RemovePlant/axe2.png").getImage(),
         new SpriteLoader("/Player/Actions/RemovePlant/axe1.png").getImage(),
-        BASE
+        BASE,
     };
 
     public static final BufferedImage[] WALKRIGHT = {
@@ -63,4 +63,7 @@ public final class AnimationFrames {
         new SpriteLoader("/Player/Actions/Dig/tile012.png").getImage(),
         BASE,
     };
+
+    private AnimationFrames() {
+    }
 }

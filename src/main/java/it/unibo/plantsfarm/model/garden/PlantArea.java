@@ -59,7 +59,6 @@ public final class PlantArea {
             centerPlant.updateNeedsWater(now);
 
             if (effect != null && centerPlant.isMature()) {
-                
                 if (effect.getType() == PlantEffect.GROWTH_SPEED) {
                     growthMultiplier = effect.getValue();
                 } else if (effect.getType() == PlantEffect.BIG_HARVEST) {
