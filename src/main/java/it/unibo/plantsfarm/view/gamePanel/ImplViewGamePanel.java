@@ -27,7 +27,7 @@ import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
-import it.unibo.plantsfarm.model.animation.api.AnimationFrames;
+
 import it.unibo.plantsfarm.model.garden.Buff;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantEffect;
@@ -112,7 +112,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
 
         if(KeyEvent.VK_F == e.getKeyCode()) {
-          inventoryView.update();
+          inventoryView.updateAllItemsPanel();
           inventoryView.setVisible(true);
         }
       }
@@ -151,7 +151,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         for (Buff buff : buffList) {
             System.out.println(buffList.size());
             g2D.drawImage( new SpriteLoader("/plantStatus/xp.png").getImage(), buff.getBuffPosition().x - cameraX, buff.getBuffPosition().y - cameraY, 64,64, null);
-        }   
+        }
 
             g2D.drawImage(selector.getCurrentImage(),
                 (int) playerPosX - cameraX,

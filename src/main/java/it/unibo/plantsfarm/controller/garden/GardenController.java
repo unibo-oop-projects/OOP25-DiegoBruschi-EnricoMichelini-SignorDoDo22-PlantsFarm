@@ -1,7 +1,5 @@
 package it.unibo.plantsfarm.controller.garden;
 
-import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
-
 import java.awt.Rectangle;
 import java.util.List;
 
