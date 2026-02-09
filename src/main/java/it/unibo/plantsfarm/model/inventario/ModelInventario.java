@@ -5,12 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import it.unibo.plantsfarm.controller.player.FileMemory;
 import it.unibo.plantsfarm.controller.player.Memory;
 import it.unibo.plantsfarm.controller.player.SavePlayer;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.model.plant.Rarity;
+import it.unibo.plantsfarm.view.utility.FileMemory;
 
 /**
  * Model of the inventory: stores the player's tools/items inside a map.
