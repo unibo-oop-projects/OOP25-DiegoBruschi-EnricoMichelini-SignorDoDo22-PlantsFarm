@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+//import ch.qos.logback.classic.Logger;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
 
@@ -17,7 +18,7 @@ public final class TileManager {
     private static final int ASSET_ORIGINAL_TILE_SIZE = 16;
     private static final int ASSET_SCALE = 3;
     private static final int ASSET_ACTUAL_SIZE = ASSET_ORIGINAL_TILE_SIZE * ASSET_SCALE;
-    //private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(TileMap.class);
+    //private static final Logger LOGGER = Logger.getLogger(TileManager.class.getName());
 
     private final ImplViewGamePanel gp;
     private final Tile[] tile;
@@ -59,9 +60,6 @@ public final class TileManager {
         tileIndex++;
         setupTile(tileIndex, "dirtContained.png");
         tileIndex = 20;
-        
-        
-        
 
         // Shop slicing and loading
         final int numColonne = 9;

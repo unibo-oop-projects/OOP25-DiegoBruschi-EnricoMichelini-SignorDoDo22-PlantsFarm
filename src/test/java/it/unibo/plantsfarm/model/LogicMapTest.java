@@ -34,9 +34,9 @@ public class LogicMapTest {
         map.loadMap("/maps/map.txt");
         
         assertTrue(!map.isSoil(map.getTileId(0, 0)));
-        assertTrue(map.getTileId(4, 21) == 19);
+        assertTrue(map.getTileId(4, 21) == 11);
         assertTrue(map.isSoil(map.getTileId(4, 21)));
-        assertTrue(map.getTileId(6, 23) == 76);
+        assertTrue(map.getTileId(6, 23) == 2);
         assertTrue(map.isSoil(map.getTileId(6, 23)));
     }
 }
