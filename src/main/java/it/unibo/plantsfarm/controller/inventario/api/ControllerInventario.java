@@ -55,4 +55,6 @@ public interface ControllerInventario {
      * @return a snapshot map of tool types to items
      */
     Map<Tooltype, ItemsFarm> getInventoryClone();
+
+
 }

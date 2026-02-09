@@ -75,6 +75,9 @@ public interface ItemsFarm {
      */
     Rarity getRarityItem();
 
+
+    void setLevel(int level);
+
     /**
      * Enumeration of all supported tool types.
      */

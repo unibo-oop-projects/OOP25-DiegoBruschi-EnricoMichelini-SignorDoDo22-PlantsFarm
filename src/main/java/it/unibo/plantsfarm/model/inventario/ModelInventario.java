@@ -1,8 +1,13 @@
 package it.unibo.plantsfarm.model.inventario;
 
+import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import it.unibo.plantsfarm.controller.player.FileMemory;
+import it.unibo.plantsfarm.controller.player.Memory;
+import it.unibo.plantsfarm.controller.player.SavePlayer;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.model.plant.Rarity;
@@ -15,6 +20,8 @@ import it.unibo.plantsfarm.model.plant.Rarity;
 public final class ModelInventario {
 
     private final Map<Tooltype, ItemsFarm> inventario;
+    Memory memory = new FileMemory(Path.of("saves"));
+    private final SavePlayer palyerSaving =  new SavePlayer(memory, this);
 
     /**
      * Creates an empty inventory.
@@ -32,6 +39,7 @@ public final class ModelInventario {
         this();
         Objects.requireNonNull(initialItems, "initialItems");
         initialItems.forEach(this::putItem);
+        palyerSaving.load();
     }
 
     /**
@@ -91,6 +99,7 @@ public final class ModelInventario {
             return false;
         }
         item.upgrade();
+        palyerSaving.save();
         return true;
     }
 
@@ -127,4 +136,12 @@ public final class ModelInventario {
             inventario.get(tool).useItem();
         }
     }
+
+    public void loadItem(final Tooltype tool, final int level) {
+
+        ItemsFarm itemFarm = inventario.get(tool);
+        itemFarm.setLevel(level);
+    }
+
+
 }
