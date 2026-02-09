@@ -9,9 +9,9 @@ import java.io.Serializable;
 public class Plant implements Serializable {
 
     // Static info
-    private static final long WATER_REDUCTION_TIME = 10_000L;
-    private static final long WATER_TIME_COOLDOWN = 15_000L;
-    private static final long GROWTH_TIME = 30_000L;
+    public static final long WATER_REDUCTION_TIME = 10_000L;
+    public static final long WATER_TIME_COOLDOWN = 15_000L;
+    public static final long GROWTH_TIME = 30_000L;
     private final PlantType type;
 
     // Dynamic info
@@ -19,7 +19,7 @@ public class Plant implements Serializable {
     private boolean needsWater;
     private boolean watered;
     private boolean isPlanted;
-    private long currentStageTime;
+    public long currentStageTime;
     public long lastWateredTime;
     public static int harvestedQuantity;
     private long lastUpdate;
@@ -158,6 +158,10 @@ public class Plant implements Serializable {
      */
     public final int getGrowthStage() {
         return growthStage;
+    }
+
+    public final void setGrowthStage(int stage) {
+        this.growthStage = stage;
     }
 
     /**

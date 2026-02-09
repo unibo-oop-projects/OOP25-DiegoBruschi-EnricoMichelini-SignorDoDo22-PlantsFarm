@@ -150,7 +150,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
         for (Buff buff : buffList) {
             System.out.println(buffList.size());
-            g2D.drawImage( new SpriteLoader("/plantStatus/Hearth.png").getImage(), buff.getBuffPosition().x - cameraX, buff.getBuffPosition().y - cameraY, 64,64, null);
+            g2D.drawImage( new SpriteLoader("/plantStatus/xp.png").getImage(), buff.getBuffPosition().x - cameraX, buff.getBuffPosition().y - cameraY, 64,64, null);
         }
 
             g2D.drawImage(selector.getCurrentImage(),

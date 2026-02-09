@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import it.unibo.plantsfarm.model.garden.Buff;
-import it.unibo.plantsfarm.model.garden.ImplSpawningBuffs;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.model.tiles.SolidBlock;
@@ -22,11 +21,9 @@ public class SpawningBuffsController {
     private boolean forbiddenPosition;
     private List<Soil> soilList;
     private List<SolidBlock> solidBlocks;
-    private ImplSpawningBuffs spawningBuffs;
     private AbstractPlayer player;
 
     public SpawningBuffsController(TileMap map, AbstractPlayer player) {
-        this.spawningBuffs = new ImplSpawningBuffs();
         this.map = map;
         this.player = player;
         this.soilList = map.getSoilList();
@@ -57,13 +54,9 @@ public class SpawningBuffsController {
         return this.activeBuffs;
     }
 
-    public boolean verifyPosUpgrade(double x, double y){
+    public boolean verifyPosUpgrade(double posX, double posY){
 
-
-        double randomPosX = (int)(Math.random() * ((ImplViewGamePanel.WORLD_WIDTH) + 1));
-        double randomPosY = (int)(Math.random() * ((ImplViewGamePanel.WORLD_HEIGHT) + 1));
-
-        this.buffPosition = new Rectangle((int) randomPosX, (int) randomPosY, 48, 48);
+        this.buffPosition = new Rectangle((int) posX, (int) posY, 48, 48);
 
         for (Soil soil : soilList) {
             if (buffPosition.intersects(soil.getCoordinate()) || soil.getCoordinate().contains(buffPosition)) {
@@ -72,7 +65,7 @@ public class SpawningBuffsController {
         }
 
         for (SolidBlock block : solidBlocks) {
-            if (block.getCoordinate().intersects(buffPosition) || block.getCoordinate().contains(buffPosition)) {
+            if (buffPosition.intersects(block.getCoordinate()) || block.getCoordinate().contains(buffPosition)) {
                 return false;
             }
         }

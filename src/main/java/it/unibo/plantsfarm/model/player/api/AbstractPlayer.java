@@ -3,7 +3,6 @@ package it.unibo.plantsfarm.model.player.api;
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
-import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 /**
  * Abstract base class representing a generic player entity.
@@ -16,15 +15,17 @@ public abstract class AbstractPlayer {
     public static final int WIDTH_HITBOX = 16;
     public static final int HEIGH_HITBOX = 16;
     public static final int EXPERT_FARMER_SPEED = 650;
+    public static final int SPAWN_X = 192;
+    public static final int SPAWN_Y = 720;
 
     /** Movement speed of the player (units per second). */
     protected double speed;
 
     /** Current X position of the player in world coordinates. */
-    private double posX = ImplViewGamePanel.WORLD_WIDTH / 2;
+    private double posX = SPAWN_X;
 
     /** Current Y position of the player in world coordinates. */
-    private double posY = ImplViewGamePanel.WORLD_HEIGHT / 2;
+    private double posY = SPAWN_Y;
 
     /** Next Position X after apply Movement. */
     private double nextPosX;

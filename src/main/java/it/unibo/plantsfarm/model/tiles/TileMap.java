@@ -8,14 +8,13 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
-import it.unibo.plantsfarm.model.garden.SaveController;
+import it.unibo.plantsfarm.model.garden.SoilSaving;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 public final class TileMap {
 
     private final int[][] logicMap1;
-    private final SaveController saveController = new SaveController();
-    private final String SAVE_FILENAME = "plants"; 
+    private final SoilSaving saveController = new SoilSaving();
 
     public List<Soil> soilList = new LinkedList<>();
     public List<SolidBlock> solidBlocks = new LinkedList<>();
@@ -45,7 +44,7 @@ public final class TileMap {
                     int worldY = row * ImplViewGamePanel.TILE_SIZE;
                     int size = ImplViewGamePanel.TILE_SIZE;
 
-                    if (num == 19 || num == 76) {
+                    if (isSoil(num)) {
                         this.soilList.add(new Soil(new Rectangle(worldX, worldY, size, size), num));
                     }
 
@@ -62,7 +61,7 @@ public final class TileMap {
     }
 
     private void applySavedData() {
-        List<Soil> savedProgress = saveController.loadGame(SAVE_FILENAME);
+        List<Soil> savedProgress = saveController.loadGame();
         if (savedProgress == null) return;
 
         for (Soil saved : savedProgress) {
@@ -76,7 +75,11 @@ public final class TileMap {
         }
     }
 
-    private boolean isSolid(int num) {
+    public boolean isSoil(int num) {
+        return num == 19 || num == 76;
+    }
+
+    public boolean isSolid(int num) {
         return num == 3 || num == 4 || num == 6
             || (num >= 22 && num <= 26) || (num >= 31 && num <= 35)
             || (num >= 40 && num <= 45) || (num >= 48 && num <= 54)

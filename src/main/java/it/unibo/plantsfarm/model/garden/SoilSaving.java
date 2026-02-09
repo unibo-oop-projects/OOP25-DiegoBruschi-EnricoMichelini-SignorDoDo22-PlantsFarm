@@ -10,10 +10,14 @@ import java.io.ObjectOutputStream;
 import java.util.List;
 import it.unibo.plantsfarm.model.tiles.Soil;
 
-public class SaveController {
+public class SoilSaving {
 
-    public void saveGame(List<Soil> pod, String fileName) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+    private String userPath = System.getProperty("user.home");
+    private String saveDirectory = userPath + File.separator + ".plantsfarm";
+    private String fileName = saveDirectory + File.separator + "plants";
+
+    public void saveGame(List<Soil> pod) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(this.fileName))) {
             oos.writeObject(pod);
         } catch (IOException e) {
             e.printStackTrace();
@@ -21,8 +25,8 @@ public class SaveController {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Soil> loadGame(String fileName) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+    public List<Soil> loadGame() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(this.fileName))) {
             return (List<Soil>) ois.readObject();
         } catch (FileNotFoundException e) {
             System.out.println("Nessun salvataggio trovato.");
@@ -32,8 +36,8 @@ public class SaveController {
         return null;
     }
 
-    public void reset(String fileName) {
-    File file = new File(fileName);
+    public void reset() {
+    File file = new File(this.fileName);
     if (file.exists()) {
         if (file.delete()) {
             System.out.println("Salvataggio eliminato con successo.");
