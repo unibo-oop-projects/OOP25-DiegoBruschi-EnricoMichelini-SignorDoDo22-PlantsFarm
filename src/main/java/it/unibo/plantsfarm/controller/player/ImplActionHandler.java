@@ -20,10 +20,6 @@ public final class ImplActionHandler implements ActionHandler {
         this.player = player;
     }
 
-    @Override
-    public void handleAction(final UserInput input) {
-
-    }
 
     @Override
     public void handleActionHoe(final GardenController controllerGarden) {
