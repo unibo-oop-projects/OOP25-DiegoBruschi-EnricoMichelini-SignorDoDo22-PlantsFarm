@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Buff {
     
-    public static enum Type { HEART , LIGHTNING };
+    public static enum Type { OMNI_BUFF };
     
     private Type[] types = Type.values();
     private final Random rand = new Random();
