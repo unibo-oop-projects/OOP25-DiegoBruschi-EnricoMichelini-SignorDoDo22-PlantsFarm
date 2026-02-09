@@ -8,20 +8,19 @@ import java.io.Serializable;
  */
 public class Plant implements Serializable {
 
-    // Static info
     public static final long WATER_REDUCTION_TIME = 10_000L;
     public static final long WATER_TIME_COOLDOWN = 15_000L;
     public static final long GROWTH_TIME = 30_000L;
+
     private final PlantType type;
 
-    // Dynamic info
+    private int harvestedQuantity;
+    private long currentStageTime;
+    private long lastWateredTime;
     private int growthStage;
     private boolean needsWater;
     private boolean watered;
     private boolean isPlanted;
-    public long currentStageTime;
-    public long lastWateredTime;
-    public static int harvestedQuantity;
     private long lastUpdate;
     private double harvestMultiplier;
 
@@ -44,8 +43,8 @@ public class Plant implements Serializable {
         this.increaseGrowthStage(now, 1.0);
     }
 
-    public final void increaseGrowthStage(final long now, final double multiplier){
-        long growthTimeFromLastUpdate = now - lastUpdate;
+    public final void increaseGrowthStage(final long now, final double multiplier) {
+        final long growthTimeFromLastUpdate = now - lastUpdate;
         lastUpdate = now;
 
         if (!isMature()) {
@@ -81,7 +80,6 @@ public class Plant implements Serializable {
      * @param now The current time in milliseconds.
      */
     public final void updateNeedsWater(final Long now) {
-        //System.out.println("NeedsWater " + needsWater + "  -  Watered " + watered);
         if (this.type.getMaxGrowthStage() > this.growthStage) {
             if (now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
                 this.needsWater = true;
@@ -100,7 +98,7 @@ public class Plant implements Serializable {
      * @return true if mature, false otherwise.
      */
     public final boolean isMature() {
-        return growthStage >= (type.getMaxGrowthStage()-1);
+        return growthStage >= (type.getMaxGrowthStage() - 1);
     }
 
     /**
@@ -133,13 +131,26 @@ public class Plant implements Serializable {
         if (!type.isEdible()) {
             System.out.println("Ornamentale");
             return 0;
-        } if (isMature()) {
+        } 
+        if (isMature()) {
             growthStage = this.type.getResetStage();
             currentStageTime = 0;
-            int baseHarvest = type.getHarvestInfo().generateHarvest();
+            final int baseHarvest = type.getHarvestInfo().generateHarvest();
             return (int) (baseHarvest * this.harvestMultiplier);
         }
         return 0;
+    }
+
+    public final int getHarvestedQuantity() {
+        return this.harvestedQuantity;
+    }
+
+    public final long getCurrentStageTime() {
+        return this.currentStageTime;
+    }
+
+    public final long getLastWateredTime() {
+        return this.lastWateredTime;
     }
 
     /**
@@ -160,7 +171,7 @@ public class Plant implements Serializable {
         return growthStage;
     }
 
-    public final void setGrowthStage(int stage) {
+    public final void setGrowthStage(final int stage) {
         this.growthStage = stage;
     }
 

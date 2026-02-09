@@ -42,14 +42,14 @@ import it.unibo.plantsfarm.view.utility.Texture;
 
 public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
-    private static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
     public static final int SIDEBAR_WIDTH = 222;
 
     public static final int SCREEN_WIDTH = SCREEN_SIZE.width - SIDEBAR_WIDTH;
     public static final int SCREEN_HEIGHT = SCREEN_SIZE.height;
 
-    private static final int VISIBLE_TILES_VERTICAL = 16;//22
+    public static final int VISIBLE_TILES_VERTICAL = 16;
 
     public static final int TILE_SIZE = SCREEN_HEIGHT / VISIBLE_TILES_VERTICAL;
     public static final int POD_SIZE = TILE_SIZE;
@@ -60,6 +60,8 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
     public static final int MAX_WORLD_ROW = 23;
     public static final int WORLD_WIDTH = TILE_SIZE * MAX_WORLD_COL;
     public static final int WORLD_HEIGHT = TILE_SIZE * MAX_WORLD_ROW;
+
+    public static PlantType selectedPlant;
 
     private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER = Map.of(
         KeyEvent.VK_W, UP,
@@ -82,7 +84,6 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   private boolean plantWindow = true;
   private List<Soil> soilList = List.of();
   private List<Buff> buffList = List.of();
-  public static PlantType selectedPlant;
 
   public ImplViewGamePanel() {
     super();
@@ -98,20 +99,23 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
       @Override
       public void keyPressed(final KeyEvent e) {
 
-        if(e.getKeyCode() == KeyEvent.VK_P) {
-          new SeedController(selectedPlant -> {
-          System.out.println("Selected plant: " + selectedPlant.getName());
-          ImplViewGamePanel.selectedPlant = selectedPlant;
+        if (e.getKeyCode() == KeyEvent.VK_P) {
+          new SeedController(plant -> {
+          System.out.println("Selected plant: " + plant.getName());
+          ImplViewGamePanel.selectedPlant = plant;
                     }, plantWindow).start();
                 }
 
                 if (KEY_MAPPER.containsKey(e.getKeyCode())) {
-                    if (controller != null) controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
-                    if (selector != null) selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
+                    if (controller != null) {
+                        controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
+                    }
+                    if (selector != null) {
+                        selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
+                    }
                 }
 
-
-        if(KeyEvent.VK_F == e.getKeyCode()) {
+        if (KeyEvent.VK_F == e.getKeyCode()) {
           inventoryView.updateAllItemsPanel();
           inventoryView.setVisible(true);
         }
@@ -120,14 +124,19 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
       @Override
       public void keyReleased(final KeyEvent e) {
         if (KEY_MAPPER.containsKey(e.getKeyCode())) {
-          if (controller != null) controller.takeInput(UserInput.FERMO);
+          if (controller != null) {
+            controller.takeInput(UserInput.FERMO);
+          }
         }
       }
     });
   }
 
     @Override
-    public void show(final double posX, final double posY, final int camX, final int camY, final List<Soil> pods, final List<Buff> buffs) {
+    public void show(final double posX, final double posY,
+                    final int camX, final int camY,
+                    final List<Soil> pods, final List<Buff> buffs
+                ) {
         SwingUtilities.invokeLater(() -> {
             this.playerPosX = posX;
             this.playerPosY = posY;
@@ -148,9 +157,12 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
             tileM.drawTile(g2D, cameraX, cameraY);
         }
 
-        for (Buff buff : buffList) {
+        for (final Buff buff : buffList) {
             System.out.println(buffList.size());
-            g2D.drawImage( new SpriteLoader("/plantStatus/xp.png").getImage(), buff.getBuffPosition().x - cameraX, buff.getBuffPosition().y - cameraY, 64,64, null);
+            g2D.drawImage(new SpriteLoader("/plantStatus/xp.png").getImage(),
+                        buff.getBuffPosition().x - cameraX, buff.getBuffPosition().y - cameraY,
+                        64, 64, null
+                    );
         }
 
             g2D.drawImage(selector.getCurrentImage(),
@@ -160,7 +172,6 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
                 PLAYER_SIZE,
                 null
             );
-
 
         if (soilList != null) {
             for (final Soil pod : soilList) {
@@ -183,11 +194,11 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
             final Image image = icon.getImage();
             final double scale = 2;
             final int plantSize = (int) (POD_SIZE * scale);
-            final int offset = (plantSize - POD_SIZE)/2;
+            final int offset = (plantSize - POD_SIZE) / 2;
 
             g2D.drawImage(image,
                 pod.getCoordinate().x - cameraX - offset,
-                pod.getCoordinate().y - cameraY - offset*2,
+                pod.getCoordinate().y - cameraY - offset * 2,
                 plantSize,
                 plantSize,
                 null
@@ -216,7 +227,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
             if (statusIcon != null) {
                 final int statusSize = Texture.STATUS_ICON_SIZE;
                 final int iconX = (pod.getCoordinate().x - cameraX) - (statusSize / 3);
-                final int iconY = (pod.getCoordinate().y - cameraY) - (statusSize);
+                final int iconY = (pod.getCoordinate().y - cameraY) - statusSize;
 
                 g2D.drawImage(statusIcon.getImage(), iconX, iconY, statusSize, statusSize, null);
             }
@@ -233,7 +244,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         this.selector = selectorFrames;
     }
 
-    public void setItemsView(final UpgradeItemsView inventoryView) {
-      this.inventoryView = inventoryView;
+    public void setItemsView(final UpgradeItemsView inventory) {
+      this.inventoryView = inventory;
     }
 }

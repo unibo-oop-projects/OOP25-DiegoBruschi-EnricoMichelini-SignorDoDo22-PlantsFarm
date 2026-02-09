@@ -18,6 +18,8 @@ public final class TileManager {
     private static final int ASSET_ORIGINAL_TILE_SIZE = 16;
     private static final int ASSET_SCALE = 3;
     private static final int ASSET_ACTUAL_SIZE = ASSET_ORIGINAL_TILE_SIZE * ASSET_SCALE;
+
+    private static final int FIRST_SHOP_TILE_INDEX = 20;
     //private static final Logger LOGGER = Logger.getLogger(TileManager.class.getName());
 
     private final ImplViewGamePanel gp;
@@ -59,7 +61,7 @@ public final class TileManager {
         setupTile(tileIndex, "path.png");
         tileIndex++;
         setupTile(tileIndex, "dirtContained.png");
-        tileIndex = 20;
+        tileIndex = FIRST_SHOP_TILE_INDEX;
 
         // Shop slicing and loading
         final int numColonne = 9;

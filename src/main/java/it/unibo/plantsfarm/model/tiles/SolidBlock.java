@@ -2,7 +2,7 @@ package it.unibo.plantsfarm.model.tiles;
 
 import java.awt.Rectangle;
 
-public class SolidBlock {
+public final class SolidBlock {
     private Rectangle blockCoordinates;
 
     public SolidBlock(final Rectangle blockCoordinates) {

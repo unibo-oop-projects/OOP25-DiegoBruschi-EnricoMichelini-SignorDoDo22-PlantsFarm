@@ -10,16 +10,16 @@ import java.io.ObjectOutputStream;
 import java.util.List;
 import it.unibo.plantsfarm.model.tiles.Soil;
 
-public class SoilSaving {
+public final class SoilSaving {
 
     private String userPath = System.getProperty("user.home");
     private String saveDirectory = userPath + File.separator + ".plantsfarm";
     private String fileName = saveDirectory + File.separator + "plants";
 
-    public void saveGame(List<Soil> pod) {
+    public void saveGame(final List<Soil> pod) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(this.fileName))) {
             oos.writeObject(pod);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }
@@ -28,7 +28,7 @@ public class SoilSaving {
     public List<Soil> loadGame() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(this.fileName))) {
             return (List<Soil>) ois.readObject();
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             System.out.println("Nessun salvataggio trovato.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -37,13 +37,13 @@ public class SoilSaving {
     }
 
     public void reset() {
-    File file = new File(this.fileName);
-    if (file.exists()) {
-        if (file.delete()) {
-            System.out.println("Salvataggio eliminato con successo.");
-        } else {
-            System.err.println("Impossibile eliminare il file di salvataggio.");
+        final File file = new File(this.fileName);
+        if (file.exists()) {
+            if (file.delete()) {
+                System.out.println("Salvataggio eliminato con successo.");
+            } else {
+                System.err.println("Impossibile eliminare il file di salvataggio.");
+            }
         }
     }
-}
 }

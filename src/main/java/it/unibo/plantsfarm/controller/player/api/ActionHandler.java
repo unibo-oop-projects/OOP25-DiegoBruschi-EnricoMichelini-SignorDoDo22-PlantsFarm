@@ -13,7 +13,7 @@ public interface ActionHandler {
      *
      * @param input
      */
-    void handleAction( UserInput input);
+    void handleAction(UserInput input);
 
     /**
      *

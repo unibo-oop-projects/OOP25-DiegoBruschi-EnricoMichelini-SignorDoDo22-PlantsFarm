@@ -13,6 +13,9 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
  */
 public class GardenModel {
 
+    private static final int ORNAMENTAL_SOIL = 2;
+    private static final int GREENHOUSE_AREA = 4;
+
     private List<Soil> soils = new LinkedList<>();
     private final List<PlantArea> areas = new LinkedList<>();
     private final TileMap map = new TileMap();
@@ -28,7 +31,7 @@ public class GardenModel {
 
     /**
      * Identify area centers and creates 5x5 PlantAreas.
-     * The center of each area is tile 76.
+     * The center of each area is tile 02.
      */
     private void createAreas() {
         final int tileSize = ImplViewGamePanel.TILE_SIZE;
@@ -36,7 +39,7 @@ public class GardenModel {
         for (int row = 0; row < ImplViewGamePanel.MAX_WORLD_ROW; row++) {
             for (int col = 0; col < ImplViewGamePanel.MAX_WORLD_COL; col++) {
 
-                if (map.getTileId(row, col) == 76 && col < 40) { //X DIEGO < 40 è per non creare aree nella parte della "serra"
+                if (map.getTileId(row, col) == ORNAMENTAL_SOIL && col < GREENHOUSE_AREA) {
 
                     final int startX = (col - 2) * tileSize;
                     final int startY = (row - 2) * tileSize;
@@ -76,5 +79,4 @@ public class GardenModel {
     public final List<Soil> getSoils() {
         return this.soils;
     }
-
 }
