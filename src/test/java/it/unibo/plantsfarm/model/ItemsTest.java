@@ -1,7 +1,9 @@
 package it.unibo.plantsfarm.model;
+
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.FERTILIZER;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -10,34 +12,46 @@ import it.unibo.plantsfarm.model.items.ItemsExpert;
 import it.unibo.plantsfarm.model.items.ItemsFarmBase;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.plant.Rarity;
-import it.unibo.plantsfarm.model.player.ExpertFarmer;
 
-
-public class ItemsTest {
+class ItemsTest {
 
     @Test
-    public void upgradeItem() {
+    void testItemCreation() {
+        final ItemsFarm hoe = new ItemsFarmBase(HOE);
+        final ItemsFarm fertilizer = new ItemsFarmBase(FERTILIZER);
+        final ItemsFarm watercan = new ItemsFarmBase(WATERCAN);
 
-        ItemsFarm hoe = new ItemsFarmBase(HOE);
-        assertTrue(HOE == hoe.getTooltype());
-        assertTrue(hoe.getRarityItem() == Rarity.COMMON);
-        ItemsFarm fertilizer = new ItemsFarmBase(FERTILIZER);
-        assertTrue(FERTILIZER == fertilizer.getTooltype());
-        assertTrue(fertilizer.getRarityItem() == Rarity.COMMON);
-        ItemsFarm watercan = new ItemsFarmBase(WATERCAN);
-        assertTrue(WATERCAN == watercan.getTooltype());
-        assertTrue(watercan.getRarityItem() == Rarity.COMMON);
+        assertEquals(HOE, hoe.getTooltype());
+        assertEquals(FERTILIZER, fertilizer.getTooltype());
+        assertEquals(WATERCAN, watercan.getTooltype());
 
-        ItemsFarm item = new ItemsFarmBase(WATERCAN);
-        int experienceBefore = item.getExperience();
+        assertEquals(Rarity.COMMON, hoe.getRarityItem());
+        assertEquals(Rarity.COMMON, fertilizer.getRarityItem());
+        assertEquals(Rarity.COMMON, watercan.getRarityItem());
+    }
+
+    @Test
+    void testUseItemIncreaseExperience() {
+        final ItemsFarm item = new ItemsFarmBase(WATERCAN);
+
+        final int experienceBefore = item.getExperience();
         item.useItem();
-        assertTrue(experienceBefore < item.getExperience());
+        final int experienceAfter = item.getExperience();
 
-        ItemsFarm itemExpert = new ItemsExpert(HOE);
-        int levelBefore = itemExpert.getLevel();
-        assertTrue(itemExpert.getRarityItem() == Rarity.LEGENDARY);
-        itemExpert.upgrade();
-        System.out.println(levelBefore);
-        assertTrue(levelBefore == itemExpert.getLevel());
+        assertTrue(experienceAfter > experienceBefore);
+    }
+
+    @Test
+    void testExpertItemIsLegendaryAndMaxLevel() {
+        final ItemsFarm expertItem = new ItemsExpert(HOE);
+
+        final int levelBefore = expertItem.getLevel();
+
+        assertEquals(Rarity.LEGENDARY, expertItem.getRarityItem());
+
+        expertItem.upgrade();
+
+        // L'item expert non deve salire di livello (è già max)
+        assertEquals(levelBefore, expertItem.getLevel());
     }
 }
