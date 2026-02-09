@@ -16,6 +16,7 @@ import java.util.logging.Logger;
  */
 public class Storage {
 
+    private static final int DEBUG_VALUE = 999;
     private static final String FILE_NAME = "storage.txt";
     private static final String PAIR_SEPARATOR = ";";
     private static final String VALUE_SEPARATOR = ":";
@@ -37,7 +38,7 @@ public class Storage {
                 items.put(type, 0);
             }
         }
-
+        debugFillStorage();
         load();
     }
 
@@ -156,5 +157,15 @@ public class Storage {
      */
     public Map<PlantType, Integer> getAllItems() {
         return Collections.unmodifiableMap(items);
+    }
+
+    /**
+     * DEBUG.
+     */
+    public void debugFillStorage() {
+        for (final PlantType type : items.keySet()) {
+            items.put(type, DEBUG_VALUE);
+        }
+        save();
     }
 }
