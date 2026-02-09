@@ -48,6 +48,7 @@ public final class ItemsViewImageItem implements UpdatablePanel {
     }
 
     /**
+     * Create and inizialize the Immage button with the
      *
      */
     private void createItemButtons() {
@@ -77,7 +78,8 @@ public final class ItemsViewImageItem implements UpdatablePanel {
 
     /**
      *
-     * @param path
+     *
+     * @param path icon's path
      * @return
      */
     private ImageIcon loadScaledIcon(final String path) {

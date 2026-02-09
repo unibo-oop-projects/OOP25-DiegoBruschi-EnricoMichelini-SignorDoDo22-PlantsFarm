@@ -11,6 +11,9 @@ import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.view.inventario.UpdatablePanel;
 
+/**
+ *
+ */
 public final class ItemsViewButtonUpgrade implements UpdatablePanel {
 
     private final ControllerInventario controllerInventario;
@@ -18,6 +21,10 @@ public final class ItemsViewButtonUpgrade implements UpdatablePanel {
     private final Map<Tooltype, JButton> progressButtonUpgradeMap = new LinkedHashMap<>();
     private final JPanel panel;
 
+    /**
+     *
+     * @param controllerInventario
+     */
     public ItemsViewButtonUpgrade(ControllerInventario controllerInventario) {
         this.controllerInventario = controllerInventario;
         this.panel = new JPanel();

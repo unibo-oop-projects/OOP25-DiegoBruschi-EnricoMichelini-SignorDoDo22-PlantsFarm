@@ -34,14 +34,13 @@ public final class MainItemsViewPanel implements UpdatablePanel {
         mainPanel.add(panelItemsUpgradeButtons.getPanel(), BorderLayout.EAST);
         mainPanel.add(panelViewImageItems.getPanel(), BorderLayout.WEST);
         mainPanel.add(panelProgressBar.getPanel(), BorderLayout.CENTER);
-
     }
 
     @Override
     public void update() {
-        for (UpdatablePanel updatablePanel : panelsComposition) {
+        for (final UpdatablePanel updatablePanel : panelsComposition) {
             updatablePanel.update();
-        };
+        }
     }
 
     @Override

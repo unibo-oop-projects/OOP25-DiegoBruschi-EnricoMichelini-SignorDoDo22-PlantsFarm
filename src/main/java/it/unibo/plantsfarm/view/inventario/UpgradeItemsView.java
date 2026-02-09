@@ -7,12 +7,10 @@ import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.inventario.UpdatablePanels.MainItemsViewPanel;
 
-
 /**
  * Dialog that shows the experience of each item/tool and allows upgrading them.
  */
 public final class UpgradeItemsView extends JDialog {
-
     private static final long serialVersionUID = 1L;
     private static final int DIALOG_WIDTH = 550;
     private static final int DIALOG_HEIGHT = 350;
@@ -39,7 +37,6 @@ public final class UpgradeItemsView extends JDialog {
         this.setLocationRelativeTo(gamePanel);
         this.setModal(true);
 
-
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(final WindowEvent e) {
@@ -58,8 +55,10 @@ public final class UpgradeItemsView extends JDialog {
         gamePanel.requestFocusInWindow();
     }
 
-
-    public void updateAllItemsPanel(){
+    /**
+     *
+     */
+    public void updateAllItemsPanel() {
         mainPanel.update();
     }
 }
