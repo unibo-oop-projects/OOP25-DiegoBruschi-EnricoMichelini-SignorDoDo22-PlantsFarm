@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.view.inventario;
+package it.unibo.plantsfarm.view.inventario.UpdatablePanels;
 
 import java.awt.GridLayout;
 import java.util.LinkedHashMap;
@@ -9,8 +9,9 @@ import javax.swing.JPanel;
 
 import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
+import it.unibo.plantsfarm.view.inventario.UpdatablePanel;
 
-public class ItemsViewButtonUpgrade implements UpdatablePanel {
+public final class ItemsViewButtonUpgrade implements UpdatablePanel {
 
     private final ControllerInventario controllerInventario;
     private static final String UPGRADE_TEXT = " UPGRADE ";

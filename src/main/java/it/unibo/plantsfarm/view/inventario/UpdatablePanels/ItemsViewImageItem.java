@@ -1,34 +1,41 @@
-package it.unibo.plantsfarm.view.inventario;
+package it.unibo.plantsfarm.view.inventario.UpdatablePanels;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.EnumMap;
 import java.util.Map;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
 import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
+import it.unibo.plantsfarm.view.inventario.UpdatablePanel;
 
+/**
+ * This Panel show all Image items and their  actual level.
+ *
+ */
 public final class ItemsViewImageItem implements UpdatablePanel {
 
     private static final int BUTTON_SIZE = 60;
     private static final int ICON_SIZE = 48;
-
     private final ControllerInventario controllerInventario;
     private final JPanel root = new JPanel();
-
     private final Map<Tooltype, JButton> itemsDisplay = new EnumMap<>(Tooltype.class);
 
+    /**
+     * Creates and initializes the view with all item image components.
+     *
+     * @param controllerInventario the inventory controller used to retrieve item data
+     */
     public ItemsViewImageItem(final ControllerInventario controllerInventario) {
         this.controllerInventario = controllerInventario;
-        this.root.setLayout(new GridLayout(3,1));
+        this.root.setLayout(new GridLayout(3, 1));
         createItemButtons();
         update();
     }
+
 
 
     @Override
