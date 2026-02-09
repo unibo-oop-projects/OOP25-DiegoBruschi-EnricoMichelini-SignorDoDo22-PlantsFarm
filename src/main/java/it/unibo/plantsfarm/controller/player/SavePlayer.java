@@ -12,9 +12,7 @@ import it.unibo.plantsfarm.model.inventario.ModelInventario;
 public final class SavePlayer {
 
     private static final Logger LOGGER = Logger.getLogger(SavePlayer.class.getName());
-     private String userPath = System.getProperty("user.home");
-    private String saveDirectory = userPath + File.separator + ".plantsfarm";
-    private String fileName = saveDirectory + File.separator + "player.txt";
+    private final String fileName = System.getProperty("user.home") + File.separator + ".plantsfarm" + File.separator + "player.txt";
     private static final String PAIR_SEPARATOR = ";";
     private static final String VALUE_SEPARATOR = "=";
 

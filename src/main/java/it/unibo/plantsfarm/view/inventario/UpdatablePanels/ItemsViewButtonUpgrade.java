@@ -36,7 +36,7 @@ public final class ItemsViewButtonUpgrade implements UpdatablePanel {
      /**
      * Creates the upgrade action buttons for each tool.
      */
-    public void createButtonItemsAction() {
+    private void createButtonItemsAction() {
         for (final Tooltype tool : Tooltype.values()) {
             final JButton upgrade = new JButton(UPGRADE_TEXT);
             upgrade.addActionListener(e -> {
