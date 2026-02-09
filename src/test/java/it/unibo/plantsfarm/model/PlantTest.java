@@ -26,14 +26,14 @@ public class PlantTest {
         long now = System.currentTimeMillis();
         plant.water(now);
         assertTrue(!plant.needsWater());
-        plant.water(plant.lastWateredTime + Plant.WATER_TIME_COOLDOWN);
+        plant.water(plant.getLastWateredTime() + Plant.WATER_TIME_COOLDOWN);
         assertTrue(!plant.needsWater());
     }
 
     @Test
     void testPlantGrowth() {
         Plant plant = new Plant(PlantType.CARROT);
-        plant.currentStageTime += 35_000L;
+        plant.setCurrentStageTime(plant.getCurrentStageTime() + 35_000L);
         plant.increaseGrowthStage(System.currentTimeMillis());
         assertTrue(plant.getGrowthStage() == 0);
         plant.water(System.currentTimeMillis());
@@ -51,6 +51,6 @@ public class PlantTest {
         assertTrue(plant.getGrowthStage() == 3);
         assertTrue(plant.isMature());
         plant.harvest();
-        assertTrue(Plant.harvestedQuantity >= 2 || Plant.harvestedQuantity <= 3);
+        assertTrue(plant.getHarvestedQuantity() >= 2 || plant.getHarvestedQuantity() <= 3);
     }
 }

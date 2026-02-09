@@ -149,8 +149,16 @@ public class Plant implements Serializable {
         return this.currentStageTime;
     }
 
+    public final void setCurrentStageTime(final long newTime) {
+        this.currentStageTime = newTime;
+    }
+
     public final long getLastWateredTime() {
         return this.lastWateredTime;
+    }
+
+    public final void setLastWateredTime(final long newTime) {
+        this.lastWateredTime = newTime;
     }
 
     /**
