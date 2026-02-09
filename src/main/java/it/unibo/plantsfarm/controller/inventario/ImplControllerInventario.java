@@ -26,7 +26,7 @@ public final class ImplControllerInventario implements ControllerInventario {
     @Override
     public void pressUpgradeItem(final Tooltype tool) {
         abstractPlayer.getInventory().upgrade(tool);
-        viewItemsInventory.update();
+        viewItemsInventory.updateAllItemsPanel();
     }
 
     @Override
@@ -42,9 +42,5 @@ public final class ImplControllerInventario implements ControllerInventario {
     @Override
     public Map<Tooltype, ItemsFarm> getInventoryClone() {
         return this.abstractPlayer.getInventory().getInventorySnapshot();
-    }
-
-    public int getHealPlayer() {
-        return 0;
     }
 }

@@ -1,26 +1,13 @@
 package it.unibo.plantsfarm.view.inventario;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.LayoutManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 
 import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
-import it.unibo.plantsfarm.model.items.api.ItemsFarm;
-import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 /**
@@ -29,47 +16,15 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 public final class UpgradeItemsView extends JDialog {
 
     private static final long serialVersionUID = 1L;
-
-    private static final int ICON_SIZE = 48;
-
     private static final int DIALOG_WIDTH = 550;
     private static final int DIALOG_HEIGHT = 350;
-
-    private static final int GRID_ROWS = 3;
-    private static final int GRID_COLS = 1;
-
-    private static final int BUTTON_SIZE = 60;
-
-    private static final int COLOR_R = 30;
-    private static final int COLOR_G = 30;
-    private static final int COLOR_B = 30;
-
-    private static final int BAR_R = 90;
-    private static final int BAR_G = 200;
-    private static final int BAR_B = 120;
-
-    private static final int FONT_SIZE = 12;
-
-    private static final Color COLOR_BAR = new Color(COLOR_R, COLOR_G, COLOR_B);
-    private static final Color BAR_FOREGROUND = new Color(BAR_R, BAR_G, BAR_B);
-
-    private static final String TITLE = " ITEMS EXPERIENCE ";
-    private static final String UPGRADE_TEXT = " UPGRADE ";
-    private static final String FONT_NAME = "Monospaced";
-
+    private static final String TITLE = " ITEMS EXPERIENCE AND STATS PLAYER ";
     private final ControllerInventario controllerInventario;
-
-    private final LayoutManager layoutButtonImages = new GridLayout(GRID_ROWS, GRID_COLS);
+    private final UpdatablePanel panelProgressBar;
+    private final UpdatablePanel panelViewImageItems;
+    private final UpdatablePanel panelItemsUpgradeButtons;
     private final ImplViewGamePanel gamePanel;
-
-    private final JPanel panelIntern;
-    private final JPanel buttonImages;
-    private final JPanel progressItems;
-    private final JPanel buttonsActionsItem;
-
-    private final Map<Tooltype, JButton> itemsDisplay = new LinkedHashMap<>();
-    private final Map<Tooltype, JProgressBar> progressBarMap = new LinkedHashMap<>();
-    private final Map<Tooltype, JButton> progressButtonUpgradeMap = new LinkedHashMap<>();
+    private final List<UpdatablePanel> panelsComposition;
 
     /**
      * Creates a new dialog for items experience.
@@ -82,35 +37,25 @@ public final class UpgradeItemsView extends JDialog {
     public UpgradeItemsView(final ImplViewGamePanel gamePanel, final ControllerInventario controllerInventario) {
         super();
         this.setTitle(TITLE);
+
         this.gamePanel = gamePanel;
         this.controllerInventario = controllerInventario;
+
+        this.panelProgressBar = new ItemsViewBarProgress(controllerInventario);
+        this.panelViewImageItems = new ItemsViewImageItem(controllerInventario) ;
+        this.panelItemsUpgradeButtons = new ItemsViewButtonUpgrade(controllerInventario);
+        this.panelsComposition = new LinkedList<>(List.of(panelItemsUpgradeButtons, panelProgressBar, panelViewImageItems));
+
+        this.setLayout(new BorderLayout());
+        this.add(panelItemsUpgradeButtons.getPanel(), BorderLayout.EAST);
+        this.add(panelViewImageItems.getPanel(), BorderLayout.WEST);
+        this.add(panelProgressBar.getPanel(), BorderLayout.CENTER);
 
         this.setResizable(false);
         this.setSize(DIALOG_WIDTH, DIALOG_HEIGHT);
         this.setLocationRelativeTo(gamePanel);
         this.setModal(true);
 
-        this.panelIntern = new JPanel();
-        this.panelIntern.setLayout(new BorderLayout());
-
-        this.buttonImages = new JPanel();
-        this.buttonImages.setLayout(layoutButtonImages);
-
-        this.progressItems = new JPanel();
-        this.progressItems.setLayout(layoutButtonImages);
-
-        this.buttonsActionsItem = new JPanel();
-        this.buttonsActionsItem.setLayout(layoutButtonImages);
-
-        createProgressBar();
-        createButtonItemsAction();
-        createItemButton();
-
-        this.panelIntern.add(buttonImages, BorderLayout.WEST);
-        this.panelIntern.add(buttonsActionsItem, BorderLayout.EAST);
-        this.panelIntern.add(progressItems, BorderLayout.CENTER);
-
-        this.add(panelIntern);
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -130,105 +75,10 @@ public final class UpgradeItemsView extends JDialog {
         gamePanel.requestFocusInWindow();
     }
 
-    /**
-     * Creates the disabled buttons that display the tool names.
-     */
-    public void createItemButton() {
-        for (final Tooltype tool : Tooltype.values()) {
-            final JButton button = new JButton();
-            button.setFocusPainted(false);
-            button.setBorderPainted(false);
-            button.setContentAreaFilled(false);
-            button.setSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
-             if (tool == Tooltype.WATERCAN) {
-                button.setIcon(loadScaledIconFromFile("/plantStatus/WaterCan.png"));
-                button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel()));
-            } else if (tool == Tooltype.FERTILIZER) {
-                button.setIcon(loadScaledIconFromFile("/plantStatus/Fertilizer.png"));
-                button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel())
-                + controllerInventario.getInventoryClone().get(tool).getRarityItem().toString());
-            } else {
-                button.setIcon(loadScaledIconFromFile("/plantStatus/Hoe.png"));
-                button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel()));
-            }
 
-            button.setEnabled(true);
-            itemsDisplay.put(tool, button);
-            buttonImages.add(button);
+    public void updateAllItemsPanel(){
+        for (UpdatablePanel panelUpdatable : panelsComposition) {
+            panelUpdatable.update();
         }
-    }
-
-    /**
-     * Creates the upgrade action buttons for each tool.
-     */
-    public void createButtonItemsAction() {
-        for (final Tooltype tool : Tooltype.values()) {
-            final JButton upgrade = new JButton(UPGRADE_TEXT);
-            upgrade.addActionListener(e -> {
-                if (controllerInventario.isUpgredable(tool)) {
-                    controllerInventario.pressUpgradeItem(tool);
-                }
-            });
-            progressButtonUpgradeMap.put(tool, upgrade);
-            buttonsActionsItem.add(upgrade);
-        }
-    }
-
-    /**
-     * Creates the progress bars for each tool.
-     */
-    public void createProgressBar() {
-        for (final Tooltype tool : Tooltype.values()) {
-            final JProgressBar progressBar = new JProgressBar();
-            progressBarMap.put(tool, progressBar);
-            progressItems.add(progressBar);
-        }
-    }
-
-    /**
-     * Updates progress bars and enables/disables upgrade buttons.
-     */
-    public void update() {
-        if (controllerInventario == null) {
-            return;
-        }
-
-        for (final Tooltype tool : Tooltype.values()) {
-            final JProgressBar bar = progressBarMap.get(tool);
-
-            bar.setBackground(COLOR_BAR);
-            bar.setForeground(BAR_FOREGROUND);
-            bar.setOpaque(true);
-            bar.setFont(new Font(FONT_NAME, Font.BOLD, FONT_SIZE));
-            final ItemsFarm item = controllerInventario.getInventoryClone().get(tool);
-            bar.setMinimum(0);
-            bar.setMaximum(item.getExperienceForLevel());
-            bar.setValue(item.getExperience());
-        }
-
-        for (final Tooltype tool : Tooltype.values()) {
-            final JButton button = progressButtonUpgradeMap.get(tool);
-            button.setEnabled(controllerInventario.isUpgredable(tool));
-        }
-
-        for (final Tooltype tool : Tooltype.values()) {
-            final JButton jb = itemsDisplay.get(tool);
-            final int item = controllerInventario.getInventoryClone().get(tool).getLevel();
-            jb.setText(Integer.toString(item));
-        }
-
-    }
-
-    private ImageIcon loadScaledIconFromFile(final String path) {
-
-        final var pathTrad = getClass().getResource(path);
-        if (pathTrad == null) {
-            throw new IllegalArgumentException("Resource not found: " + path);
-        }
-        final ImageIcon icon = new ImageIcon(pathTrad);
-        final Image scaled = icon.getImage().getScaledInstance(ICON_SIZE, ICON_SIZE, Image.SCALE_SMOOTH);
-
-        return new ImageIcon(scaled);
     }
 }
-

@@ -12,6 +12,9 @@ import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 public abstract class AbstractPlayer {
 
     public static final int FARMER_SPEED = 400;
+    public static final int OFF_SET_HITBOX = 26;
+    public static final int WIDTH_HITBOX = 16;
+    public static final int HEIGH_HITBOX = 16;
     public static final int EXPERT_FARMER_SPEED = 650;
 
     /** Movement speed of the player (units per second). */
@@ -126,10 +129,12 @@ public abstract class AbstractPlayer {
      * @return the current hitbox in world coordinates
      */
     public final Rectangle getHitBox() {
-        return new Rectangle((int) posX + 26, (int) posY + 26, 16, 16);
+        return new Rectangle((int) posX + OFF_SET_HITBOX, (int) posY + OFF_SET_HITBOX, WIDTH_HITBOX, HEIGH_HITBOX);
     }
 
     /**
+     * Function for move the player to the next calculated position
+     * if the postion is valid.
      *
      */
     public void applyMovement() {

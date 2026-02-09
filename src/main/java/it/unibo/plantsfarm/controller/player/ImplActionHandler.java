@@ -13,7 +13,7 @@ import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.view.gamePanel.ImplViewGamePanel;
 
 
-public class ImplActionHandler implements ActionHandler{
+public final class ImplActionHandler implements ActionHandler{
 
     private final AbstractPlayer player;
 
