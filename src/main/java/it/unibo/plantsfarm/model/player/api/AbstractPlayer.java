@@ -10,7 +10,7 @@ import it.unibo.plantsfarm.model.player.PlayersTypes;
  * Abstract base class representing a generic player entity.
  * It stores the player position, movement speed and direction.
  */
-public abstract class AbstractPlayer {
+public class AbstractPlayer {
 
     public static final int FARMER_SPEED = 400;
     public static final int OFF_SET_HITBOX = 32;
@@ -28,7 +28,7 @@ public abstract class AbstractPlayer {
     private UserInput direction = UserInput.FERMO;
     private final ModelInventario inventory;
     private Plant heldPlant;
-    private PlayersTypes playersType;
+    private final PlayersTypes playersType;
 
     /**
      * Create the player and inventory.
@@ -36,8 +36,10 @@ public abstract class AbstractPlayer {
      * to try normal gameplay select {@link FarmerPlayer}.
      *
      * @param inventory that will be set based on player type.
+     * @param playersTypes set the player type
+     * @throws NullPointerException if {@code inventory} is {@code null}
      */
-    public AbstractPlayer(final ModelInventario inventory, final  PlayersTypes playersTypes) {
+    public AbstractPlayer(final ModelInventario inventory, final PlayersTypes playersTypes) {
         this.inventory = inventory;
         this.playersType = playersTypes;
     }
@@ -127,16 +129,18 @@ public abstract class AbstractPlayer {
     }
 
     /**
+     * Returns the plant currently held by the player, if any.
      *
-     * @return
+     * @return the currently held Plant, or null if no plant is held
      */
     public Plant getHeldPlant() {
         return this.heldPlant;
     }
 
     /**
+     * Sets the plant currently held by the player.
      *
-     * @param plant
+     * @param plant the Plant to be held by the player, or null to indicate no plant is held
      */
     public void setHeldPlant(final Plant plant) {
         this.heldPlant = plant;

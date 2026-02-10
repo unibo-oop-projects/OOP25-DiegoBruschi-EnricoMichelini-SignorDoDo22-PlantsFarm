@@ -81,17 +81,17 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                     case ACTIONHOE -> {
                         actionHandler.handleActionHoe(gardenController);
                         saver.saveGame(gardenController.getSoilList());
-                        managerSavingPlayer.saveManager(player.getInventory(),player);
+                        managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
                     case ACTIONWATER -> {
                         actionHandler.handleWater(gardenController, now);
                         saver.saveGame(gardenController.getSoilList());
-                        managerSavingPlayer.saveManager(player.getInventory(),player);
+                        managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
                     case REMOVE_PLANT -> {
                         actionHandler.handleAxe(gardenController);
                         saver.saveGame(gardenController.getSoilList());
-                        managerSavingPlayer.saveManager(player.getInventory(),player);
+                        managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
                 }
                     controllerAnimation.takeInput(input);
