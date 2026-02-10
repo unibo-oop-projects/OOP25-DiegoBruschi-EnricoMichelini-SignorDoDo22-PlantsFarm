@@ -20,5 +20,6 @@ public final class ExpertFarmer extends AbstractPlayer {
      */
     public ExpertFarmer(final ModelInventario inventory) {
         super(inventory);
+        setSpeed(EXPERT_FARMER_SPEED);
     }
 }

@@ -15,6 +15,6 @@ public final class FarmerPlayer extends AbstractPlayer {
      */
     public FarmerPlayer(final ModelInventario inventory) {
         super(inventory);
+        setSpeed(FARMER_SPEED);
     }
-
 }
