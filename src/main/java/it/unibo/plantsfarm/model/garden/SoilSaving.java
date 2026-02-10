@@ -2,11 +2,11 @@ package it.unibo.plantsfarm.model.garden;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +38,6 @@ public final class SoilSaving {
      *
      * @return A list of Soil objects loaded from the file, or an empty list if loading fails.
      */
-    @SuppressWarnings("unchecked")
     public List<Soil> loadGame() {
         final File file = new File(this.fileName);
 
@@ -46,10 +45,19 @@ public final class SoilSaving {
             LOGGER.log(Level.INFO, "Nessun salvataggio trovato.");
             return List.of();
         }
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(this.fileName))) {
-            return (List<Soil>) ois.readObject();
-        } catch (final FileNotFoundException e) {
-            LOGGER.log(Level.INFO, "Nessun file trovato.", e);
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            final Object obj = ois.readObject();
+
+            if (obj instanceof List<?>) {
+                final List<Soil> checkedList = new LinkedList<>();
+                for (final Object item : (List<?>) obj) {
+                    if (item instanceof Soil) {
+                        checkedList.add((Soil) item);
+                    }
+                }
+                return checkedList;
+            }
         } catch (IOException | ClassNotFoundException e) {
             LOGGER.log(Level.SEVERE, "Errore durante il caricamento dei soils.", e);
         }
