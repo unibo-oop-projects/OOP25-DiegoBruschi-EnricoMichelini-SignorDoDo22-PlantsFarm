@@ -66,12 +66,12 @@ public class GardenController {
 
             for (final Soil zolla : gardenModel.getSoils()) {
                 if (zolla.getCoordinate().contains(player.getHitBox())) {
-                    if (!zolla.isPlanted() && zolla.getTileId() == ORNAMENTAL_SOIL && !type.isEdible()
+                    if (zolla.isPlanted() && zolla.getPlant().isMature()) {
+                        gameState.addHarvest(zolla.getPlant().getType(), zolla.getPlant().harvest());
+                    } else if (!zolla.isPlanted() && zolla.getTileId() == ORNAMENTAL_SOIL && !type.isEdible()
                         || zolla.getTileId() != ORNAMENTAL_SOIL && type.isEdible()
                     ) {
                         zolla.setPlanted(pianta);
-                    } else {
-                        gameState.addHarvest(zolla.getPlant().getType(), zolla.getPlant().harvest());
                     }
                 }
             }
