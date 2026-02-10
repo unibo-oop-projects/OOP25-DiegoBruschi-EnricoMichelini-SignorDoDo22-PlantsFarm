@@ -37,7 +37,6 @@ public class Storage {
                 items.put(type, 0);
             }
         }
-
         load();
     }
 

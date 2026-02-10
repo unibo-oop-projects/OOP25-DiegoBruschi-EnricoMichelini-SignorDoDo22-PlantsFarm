@@ -12,6 +12,10 @@ import java.util.logging.Logger;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
 
+/**
+ * Used to load game map from a file by assigning an index
+ * to every image then used to represent a tile.
+ */
 public final class TileManager {
 
     private static final int TILE_ARRAY_SIZE = 2000;
@@ -28,6 +32,11 @@ public final class TileManager {
     private final int[][] mapTileNum;
     private int tileIndex;
 
+    /**
+     * Creates a new TileManager.
+     * 
+     * @param gp GamePanel passed to then set dimensions and draw tiles.
+     */
     public TileManager(final ImplViewGamePanel gp) {
         this.gp = gp;
 
@@ -38,6 +47,9 @@ public final class TileManager {
         loadMap("/maps/map.txt");
     }
 
+    /**
+     * Assigns every texture in the resources path to and index.
+     */
     public void setupTileImage() {
         setupTile(tileIndex, "grass.png");
         tileIndex++;
@@ -111,6 +123,12 @@ public final class TileManager {
         tile[index].setImage(new SpriteLoader("/icons/tiles/" + fileName).getImage());
     }
 
+    /**
+     * Used to read a file containing the map (made by numbers) and load it by splitting
+     * every tile.
+     * 
+     * @param filePath File passed in input containing the map.
+     */
     public void loadMap(final String filePath) {
         try {
             final InputStream is = getClass().getResourceAsStream(filePath);
@@ -136,6 +154,13 @@ public final class TileManager {
         }
     }
 
+    /**
+     * Used to draw the map by drawing every tile in the right position.
+     * 
+     * @param g2 Graphics2D passed in input to draw the tiles.
+     * @param cameraX X coordinate of the camera.
+     * @param cameraY Y coordinate of the camera.
+     */
     public void drawTile(final Graphics2D g2, final int cameraX, final int cameraY) {
         for (int row = 0; row < ImplViewGamePanel.MAX_WORLD_ROW; row++) {
             for (int col = 0; col < ImplViewGamePanel.MAX_WORLD_COL; col++) {
