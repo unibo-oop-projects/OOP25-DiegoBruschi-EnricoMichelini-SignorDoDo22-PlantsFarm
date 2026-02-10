@@ -35,7 +35,6 @@ import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamepanel.api.ViewGamePanel;
-import it.unibo.plantsfarm.view.inventario.UpgradeItemsView;
 import it.unibo.plantsfarm.view.map.TileManager;
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
 import it.unibo.plantsfarm.view.utility.Texture;
@@ -44,6 +43,10 @@ import it.unibo.plantsfarm.view.utility.Texture;
  * Implementation of the ViewGamePanel interface, responsible for rendering the game state,
  * handling user input, and displaying the game world, player, plants, and buffs.
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+    value = "EI2",
+    justification = "MVC: the View holds a reference to the Controller by design."
+)
 public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
     public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
@@ -87,7 +90,6 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   private double playerPosY;
   private ControllerGamePanel controller;
   private SelectorFrames selector;
-  private UpgradeItemsView inventoryView;
   private final boolean plantWindow = true;
   private List<Soil> soilList = List.of();
   private List<Buff> buffList = List.of();
@@ -125,8 +127,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
                 }
 
         if (KeyEvent.VK_F == e.getKeyCode()) {
-          inventoryView.updateAllItemsPanel();
-          inventoryView.setVisible(true);
+          controller.openInventory();
         }
       }
 
@@ -249,12 +250,4 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         this.selector = selectorFrames;
     }
 
-    /**
-     * Sets the items view for the inventory.
-     * 
-     * @param inventory The view representing the player's inventory items.
-     */
-    public void setItemsView(final UpgradeItemsView inventory) {
-      this.inventoryView = inventory;
-    }
 }

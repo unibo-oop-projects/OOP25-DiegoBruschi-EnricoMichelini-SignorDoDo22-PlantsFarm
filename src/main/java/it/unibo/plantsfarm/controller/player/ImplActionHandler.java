@@ -19,19 +19,8 @@ import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
  */
 public final class ImplActionHandler implements ActionHandler {
 
-    private final AbstractPlayer player;
-
-    /**
-     * Create a new action handler bound to specific player.
-     *
-     * @param player the player will receive and execute input actions
-     */
-    public ImplActionHandler(final AbstractPlayer player) {
-        this.player = player;
-    }
-
     @Override
-    public void handleActionHoe(final GardenController controllerGarden) {
+    public void handleActionHoe(final GardenController controllerGarden, final AbstractPlayer player) {
         if (ImplViewGamePanel.selectedPlant != null) {
             final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
             if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
@@ -49,7 +38,7 @@ public final class ImplActionHandler implements ActionHandler {
     }
 
     @Override
-    public void handleWater(final GardenController controllerGarden, final Long now) {
+    public void handleWater(final GardenController controllerGarden, final Long now, final AbstractPlayer player) {
         if (ImplViewGamePanel.selectedPlant != null) {
             final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
             if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
@@ -61,7 +50,7 @@ public final class ImplActionHandler implements ActionHandler {
     }
 
     @Override
-    public void handleAxe(final GardenController controllerGarden) {
+    public void handleAxe(final GardenController controllerGarden, final AbstractPlayer player) {
         if (ImplViewGamePanel.selectedPlant != null) {
             final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
             if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null && soil.isPlanted()) {
@@ -71,12 +60,12 @@ public final class ImplActionHandler implements ActionHandler {
     }
 
     @Override
-    public void updateDirection(final UserInput input) {
+    public void updateDirection(final UserInput input, final AbstractPlayer player) {
         player.setDirection(input);
     }
 
     @Override
-    public void playerActionBuff(final SpawningBuffsController controllerbuff) {
+    public void playerActionBuff(final SpawningBuffsController controllerbuff, final AbstractPlayer player) {
         for (final Buff buff : controllerbuff.getBuffList()) {
             if (player.getHitBox().intersects(buff.getBuffPosition()) || buff.getBuffPosition().contains(player.getHitBox())) {
                 controllerbuff.removeBuffFromMap(buff);

@@ -11,6 +11,10 @@ import java.util.Objects;
  * It throws a RuntimeException if the image cannot be found or loaded.
  *
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+    value = "EI",
+    justification = "SpriteLoader intentionally exposes the loaded BufferedImage as a shared graphical resource."
+)
 public final class SpriteLoader {
 
     /**

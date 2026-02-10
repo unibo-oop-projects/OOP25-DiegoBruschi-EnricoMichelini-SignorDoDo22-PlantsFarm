@@ -15,6 +15,8 @@ import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
 import it.unibo.plantsfarm.model.garden.CollisionDetector;
 import it.unibo.plantsfarm.model.garden.SoilSaving;
+import it.unibo.plantsfarm.model.inventario.ModelInventario;
+import it.unibo.plantsfarm.model.items.InventoryFactory;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
@@ -42,6 +44,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private final SpawningBuffsController spawningBuffsController;
     private final ControllerInventario controllerInventario;
     private final ManagerSavingPlayer managerSavingPlayer;
+    private ModelInventario modelInventario;
 
     /**
      * Creates a new ImplControllerGamePanel with the specified GameState.
@@ -52,14 +55,14 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         this.map = new TileMap();
         this.map.loadMap("/maps/map.txt");
         setPlayer();
-        this.player = getPlayer();
-        actionHandler = new ImplActionHandler(player);
+        actionHandler = new ImplActionHandler();
         this.controllerInventario = new ImplControllerInventario(this.player);
         this.gardenController = new GardenController(gameState, this.player);
         this.collisionDetector = new CollisionDetector(this.player);
         this.spawningBuffsController = new SpawningBuffsController(map);
         this.managerSavingPlayer = new ManagerSavingPlayer();
-        managerSavingPlayer.loadManager(player.getInventory(), player);
+        setInventario();
+        managerSavingPlayer.loadManager(modelInventario, player);
     }
 
    @Override
@@ -77,19 +80,19 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                 sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
                 if (input != null) {
                     switch (input) {
-                    case DOWN, UP, RIGHT, LEFT, FERMO -> actionHandler.updateDirection(input);
+                    case DOWN, UP, RIGHT, LEFT, FERMO -> actionHandler.updateDirection(input, player);
                     case ACTIONHOE -> {
-                        actionHandler.handleActionHoe(gardenController);
+                        actionHandler.handleActionHoe(gardenController, player);
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
                     case ACTIONWATER -> {
-                        actionHandler.handleWater(gardenController, now);
+                        actionHandler.handleWater(gardenController, now, player);
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
                     case REMOVE_PLANT -> {
-                        actionHandler.handleAxe(gardenController);
+                        actionHandler.handleAxe(gardenController, player);
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
@@ -101,7 +104,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             }
 
             spawningBuffsController.updateUpGrade();
-            actionHandler.playerActionBuff(spawningBuffsController);
+            actionHandler.playerActionBuff(spawningBuffsController, player);
             collisionDetector.collisionDetection();
             controllerAnimation.update(System.nanoTime());
             player.updatePlayer(delta);
@@ -122,7 +125,6 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         this.view = new ImplViewGamePanel();
         this.controllerAnimation = new ImplSelectorFrames();
         this.controllerInventario.addView(this.view);
-        this.view.setItemsView(controllerInventario.getView());
         view.setSelectorFrames(controllerAnimation);
         view.setController(this);
         camera = new ImplCamera(view.getWidth(), view.getHeight());
@@ -140,7 +142,13 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     }
 
     @Override
-    public AbstractPlayer getPlayer() {
-        return this.player;
+    public void openInventory() {
+        this.controllerInventario.getView().setVisible(true);
+    }
+
+    @Override
+    public void setInventario() {
+        InventoryFactory inventoryFact = new InventoryFactory();
+        this.modelInventario = inventoryFact.createInventory(PlayersTypes.FARMER);
     }
 }

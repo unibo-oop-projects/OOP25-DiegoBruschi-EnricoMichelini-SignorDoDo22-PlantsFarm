@@ -33,7 +33,7 @@ final class PlayerTest {
     @Test
     void testMovementRight() {
         final AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
-        final ActionHandler action = new ImplActionHandler(player);
+        final ActionHandler action = new ImplActionHandler();
         final double startX = player.getPosx();
         action.updateDirection(RIGHT);
 

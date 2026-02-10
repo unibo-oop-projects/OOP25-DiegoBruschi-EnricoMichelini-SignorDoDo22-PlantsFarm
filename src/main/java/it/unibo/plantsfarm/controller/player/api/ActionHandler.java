@@ -4,6 +4,7 @@ import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.controller.garden.GardenController;
 import it.unibo.plantsfarm.controller.garden.SpawningBuffsController;
+import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.model.tiles.Soil;
 
 /**
@@ -18,7 +19,7 @@ public interface ActionHandler {
      *
      * @param controllerGarden the garden controller used to verify state soil and player position.
      */
-    void handleActionHoe(GardenController controllerGarden);
+    void handleActionHoe(GardenController controllerGarden, final AbstractPlayer player);
 
     /**
      * The player can use the Water if the {@link Soil} have a plant and the
@@ -27,7 +28,7 @@ public interface ActionHandler {
      * @param controllerGarden for check the soil state and presence of a plant.
      * @param now used for updating plant watering state.
      */
-    void handleWater(GardenController controllerGarden, Long now);
+    void handleWater(GardenController controllerGarden, Long now, AbstractPlayer player);
 
     /**
      * The player can remove a plant if the {@link Soil} have a plant.
@@ -35,7 +36,7 @@ public interface ActionHandler {
      *
      * @param controllerGarden for check the soil state and presence of a plant.
      */
-    void handleAxe(GardenController controllerGarden);
+    void handleAxe(GardenController controllerGarden, AbstractPlayer player);
 
     /**
      * Updates the player's movement direction.
@@ -43,7 +44,7 @@ public interface ActionHandler {
      *
      * @param input the user input representing the next direction
      */
-    void updateDirection(UserInput input);
+    void updateDirection(UserInput input, final AbstractPlayer player);
 
     /**
      * The function is called everytime in the loopGame.
@@ -51,7 +52,7 @@ public interface ActionHandler {
      *
      * @param controllerbuff the controller buff verify if the player is near a upgrade.
      */
-    void playerActionBuff(SpawningBuffsController controllerbuff);
+    void playerActionBuff(SpawningBuffsController controllerbuff, AbstractPlayer player);
 
     /**
      * Set the selected plant.

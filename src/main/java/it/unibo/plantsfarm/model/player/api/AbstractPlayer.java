@@ -4,6 +4,8 @@ import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
 import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.player.ExpertFarmer;
+import it.unibo.plantsfarm.model.player.FarmerPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 
 /**
@@ -119,32 +121,6 @@ public class AbstractPlayer {
         return this.direction;
     }
 
-    /**
-     * Returns the player's inventory.
-     *
-     * @return the current ModelInventario
-     */
-    public ModelInventario getInventory() {
-        return this.inventory;
-    }
-
-    /**
-     * Returns the plant currently held by the player, if any.
-     *
-     * @return the currently held Plant, or null if no plant is held
-     */
-    public Plant getHeldPlant() {
-        return this.heldPlant;
-    }
-
-    /**
-     * Sets the plant currently held by the player.
-     *
-     * @param plant the Plant to be held by the player, or null to indicate no plant is held
-     */
-    public void setHeldPlant(final Plant plant) {
-        this.heldPlant = plant;
-    }
 
     /**
      * Returns the player's hitbox used for collision detection.

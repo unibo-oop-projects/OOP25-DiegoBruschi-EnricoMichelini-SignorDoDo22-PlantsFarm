@@ -1,6 +1,5 @@
 package it.unibo.plantsfarm.controller.gamepanel.api;
 
-import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
 /**
@@ -44,10 +43,7 @@ public interface ControllerGamePanel {
      */
     void setPlayer();
 
-    /**
-     * Returns the player controlled by this controller.
-     *
-     * @return the current player
-     */
-    AbstractPlayer getPlayer();
+    void openInventory();
+
+    void setInventario();
 }
