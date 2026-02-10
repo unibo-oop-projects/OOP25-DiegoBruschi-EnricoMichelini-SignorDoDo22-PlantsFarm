@@ -3,6 +3,7 @@ package it.unibo.plantsfarm.model.player.api;
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
+import it.unibo.plantsfarm.model.plant.Plant;
 
 /**
  * Abstract base class representing a generic player entity.
@@ -18,27 +19,22 @@ public abstract class AbstractPlayer {
     public static final int SPAWN_X = 192;
     public static final int SPAWN_Y = 720;
 
-    /** Movement speed of the player (units per second). */
-    protected double speed;
-
-    /** Current X position of the player in world coordinates. */
+    private double speed;
     private double posX = SPAWN_X;
-
-    /** Current Y position of the player in world coordinates. */
     private double posY = SPAWN_Y;
-
-    /** Next Position X after apply Movement. */
     private double nextPosX;
-
-    /** Next Position Y after apply Movement. */
     private double nextPosY;
-
-
-    /** Current movement direction of the player. */
     private UserInput direction = UserInput.FERMO;
-
     private final ModelInventario inventory;
+    private Plant heldPlant;
 
+    /**
+     * Create the player and inventory.
+     * to try all features select {@link ExpertFarmer}.
+     * to try normal gameplay select {@link FarmerPlayer}.
+     *
+     * @param inventory that will be set based on player type.
+     */
     public AbstractPlayer(final ModelInventario inventory) {
         this.inventory = inventory;
     }
@@ -91,16 +87,19 @@ public abstract class AbstractPlayer {
     }
 
     /**
+     * Return the next possible position for the player
+     * on the X world.
      *
-     * @return
+     * @return the next position player on X world.
      */
     public final double getNextPosX() {
         return this.nextPosX;
     }
 
     /**
+     * Return the next possible position for the player on the Y world.
      *
-     * @return
+     * @return the next position player on Y world.
      */
     public final double getNextPosY() {
         return this.nextPosY;
@@ -124,6 +123,14 @@ public abstract class AbstractPlayer {
         return this.inventory;
     }
 
+    public Plant getHeldPlant() {
+        return this.heldPlant;
+    }
+
+    public void setHeldPlant(final Plant plant) {
+        this.heldPlant = plant;
+    }
+
     /**
      * Returns the player's hitbox used for collision detection.
      *
@@ -136,12 +143,19 @@ public abstract class AbstractPlayer {
     /**
      * Function for move the player to the next calculated position
      * if the postion is valid.
-     *
      */
     public void applyMovement() {
         this.posX = nextPosX;
         this.posY = nextPosY;
     }
 
-    protected abstract void initStats();
+    /**
+     * Set the player's speed based on player type.
+     *
+     * @param speed speed to be set.
+     */
+    protected final void setSpeed(final double speed) {
+        this.speed = speed;
+    }
+
 }

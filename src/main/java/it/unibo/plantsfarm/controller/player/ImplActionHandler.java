@@ -3,6 +3,7 @@ package it.unibo.plantsfarm.controller.player;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
 
+import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.controller.garden.GardenController;
 import it.unibo.plantsfarm.controller.garden.SpawningBuffsController;
@@ -77,13 +78,17 @@ public final class ImplActionHandler implements ActionHandler {
 
     @Override
     public void playerActionBuff(final SpawningBuffsController controllerbuff) {
-
         for (final Buff buff : controllerbuff.getBuffList()) {
             if (player.getHitBox().intersects(buff.getBuffPosition()) || buff.getBuffPosition().contains(player.getHitBox())) {
                 controllerbuff.removeBuffFromMap(buff);
                 player.getInventory().applyUpgrade();
             }
         }
+
+    }
+
+    @Override
+    public void setHeldPlant(SeedController controler) {
 
     }
 }

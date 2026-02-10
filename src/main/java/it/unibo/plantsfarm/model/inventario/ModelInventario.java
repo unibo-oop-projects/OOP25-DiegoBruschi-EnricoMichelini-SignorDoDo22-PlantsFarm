@@ -20,8 +20,7 @@ import it.unibo.plantsfarm.view.utility.FileMemory;
 public final class ModelInventario {
 
     private static final String TYPE = "type";
-    final Path basePath = Path.of(
-    System.getProperty("user.home"),".plantsfarm");
+    final Path basePath = Path.of(System.getProperty("user.home"),".plantsfarm");
     final Memory memory = new FileMemory(basePath);
     private final Map<Tooltype, ItemsFarm> inventario;
     private final SavePlayer palyerSaving = new SavePlayer(memory, this);

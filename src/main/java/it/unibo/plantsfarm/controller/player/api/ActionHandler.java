@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.controller.player.api;
 
+import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.controller.garden.GardenController;
 import it.unibo.plantsfarm.controller.garden.SpawningBuffsController;
@@ -51,4 +52,7 @@ public interface ActionHandler {
      * @param controllerbuff the controller buff verify if the player is near a upgrade.
      */
     void playerActionBuff(SpawningBuffsController controllerbuff);
+
+
+    void setHeldPlant(SeedController controler);
 }
