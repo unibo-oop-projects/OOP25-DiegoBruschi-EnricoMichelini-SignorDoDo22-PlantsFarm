@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 
 import it.unibo.plantsfarm.model.garden.SoilSaving;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
-import it.unibo.plantsfarm.view.map.TileManager;
 
 public final class TileMap {
 
@@ -39,7 +38,7 @@ public final class TileMap {
     private static final int END_WELL_SECOND_ROW = 70;
     private static final int WELL_THIRD_ROW = 72;
 
-    private static final Logger LOGGER = Logger.getLogger(TileManager.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(TileMap.class.getName());
 
     private final List<Soil> soilList = new LinkedList<>();
     private final List<SolidBlock> solidBlocks = new LinkedList<>();

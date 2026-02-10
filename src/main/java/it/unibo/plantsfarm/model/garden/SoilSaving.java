@@ -11,12 +11,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import it.unibo.plantsfarm.model.tiles.Soil;
-import it.unibo.plantsfarm.view.map.TileManager;
 
 public final class SoilSaving {
 
     private final String fileName = System.getProperty("user.home") + File.separator + ".plantsfarm" + File.separator + "plants";
-    private static final Logger LOGGER = Logger.getLogger(TileManager.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SoilSaving.class.getName());
 
     public void saveGame(final List<Soil> pod) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(this.fileName))) {
@@ -28,6 +27,12 @@ public final class SoilSaving {
 
     @SuppressWarnings("unchecked")
     public List<Soil> loadGame() {
+        final File file = new File(this.fileName);
+
+        if (!file.exists()) {
+            LOGGER.log(Level.INFO, "Nessun salvataggio trovato.");
+            return List.of();
+        }
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(this.fileName))) {
             return (List<Soil>) ois.readObject();
         } catch (final FileNotFoundException e) {

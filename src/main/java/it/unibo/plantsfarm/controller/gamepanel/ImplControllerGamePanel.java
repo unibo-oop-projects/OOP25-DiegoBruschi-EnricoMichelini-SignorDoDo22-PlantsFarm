@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.controller.gamepanel;
 
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.garden.GardenController;
@@ -24,7 +25,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
     private ImplViewGamePanel view;
     private final ImplFactoryPlayer factoryPlayer = new ImplFactoryPlayer();
-    private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
     private AbstractPlayer player;
     private final GardenController gardenController;
     private ImplSelectorFrames controllerAnimation;
@@ -60,7 +61,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             camera.getCameraPosY(), List.copyOf(gardenController.getSoilList()),
             List.copyOf(spawningBuffsController.getBuffList()));
             try {
-                Thread.sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
+                sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
                 if (input != null) {
                     switch (input) {
                     case DOWN, UP, RIGHT, LEFT, FERMO -> actionHandler.updateDirection(input);

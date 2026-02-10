@@ -18,7 +18,6 @@ public final class SpawningBuffsController {
     private final List<Buff> activeBuffs = new LinkedList<>(List.of());
     private final TileMap mappa;
     private long lastPickUp = System.currentTimeMillis();
-    private Rectangle buffPosition;
     private final List<Soil> soilList;
     private final List<SolidBlock> solidBlocks;
 
@@ -30,11 +29,12 @@ public final class SpawningBuffsController {
 
     public void updateUpGrade() {
         if (activeBuffs.size() < 2 && lastPickUp + SPAWN_COOLDOWN < System.currentTimeMillis()) {
+            final Rectangle buffPosition;
 
             final double randomPosX = (int) (Math.random() * (ImplViewGamePanel.WORLD_WIDTH + 1));
             final double randomPosY = (int) (Math.random() * (ImplViewGamePanel.WORLD_HEIGHT + 1));
             if (verifyPosUpgrade(randomPosX, randomPosY)) {
-                this.buffPosition = new Rectangle((int) randomPosX, (int) randomPosY, BUFF_SIZE, BUFF_SIZE);
+                buffPosition = new Rectangle((int) randomPosX, (int) randomPosY, BUFF_SIZE, BUFF_SIZE);
                 final Buff buff = new Buff(buffPosition);
                 activeBuffs.add(buff);
                 lastPickUp = System.currentTimeMillis();
@@ -53,8 +53,7 @@ public final class SpawningBuffsController {
     }
 
     public boolean verifyPosUpgrade(final double posX, final double posY) {
-
-        this.buffPosition = new Rectangle((int) posX, (int) posY, BUFF_SIZE, BUFF_SIZE);
+        final Rectangle buffPosition = new Rectangle((int) posX, (int) posY, BUFF_SIZE, BUFF_SIZE);
 
         for (final Soil soil : soilList) {
             if (buffPosition.intersects(soil.getCoordinate()) || soil.getCoordinate().contains(buffPosition)) {
