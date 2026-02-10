@@ -7,7 +7,7 @@ import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.U
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.REMOVE_PLANT;
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.RIGHT;
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.UP;
-import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.SELECT_SEED; // AGGIUNTO
+import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.SELECT_SEED;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,10 +28,10 @@ import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 
-import it.unibo.plantsfarm.model.garden.Buff;
-import it.unibo.plantsfarm.model.plant.Plant;
-import it.unibo.plantsfarm.model.plant.PlantEffect;
-import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.model.garden.Buff; //REMOVE
+import it.unibo.plantsfarm.model.plant.Plant; //REMOVE
+import it.unibo.plantsfarm.model.plant.PlantEffect; //REMOVE
+import it.unibo.plantsfarm.model.tiles.Soil; //REMOVE
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamepanel.api.ViewGamePanel;
 import it.unibo.plantsfarm.view.inventario.UpgradeItemsView;
@@ -203,7 +203,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
             ImageIcon statusIcon = null;
 
-            //DA FARE: da spostare in controller
+            //DA FARE: da spostare in controller INIZIO
             if (plant.isMature()) {
                 if (plant.isEdible()) {
                     statusIcon = Texture.READY_ICON;
@@ -229,6 +229,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
                 g2D.drawImage(statusIcon.getImage(), iconX, iconY, statusSize, statusSize, null);
             }
         }
+        //FINE DA FARE
     }
 
     @Override
