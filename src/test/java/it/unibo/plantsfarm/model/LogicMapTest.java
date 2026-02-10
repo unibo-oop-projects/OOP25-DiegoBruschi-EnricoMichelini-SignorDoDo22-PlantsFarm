@@ -21,12 +21,12 @@ final class LogicMapTest {
     private static final int ORNAMENTAL_SOIL_ROW = 6;
     private static final int ORNAMENTAL_SOIL_ID = 2;
 
-    private final String filePath = "/maps/map.txt";
+    private static final String FILEPATH = "/maps/map.txt";
 
     @Test
     void testMapLoading() {
         final TileMap map = new TileMap();
-        map.loadMap(filePath);
+        map.loadMap(FILEPATH);
 
         assertEquals(map.getSoilList().size(), SOIL_QUANTITY);
         assertEquals(map.getSolidBlocks().size(), SOLID_BLOCK_QUANTITY);
@@ -35,7 +35,7 @@ final class LogicMapTest {
     @Test
     void testSolidBlocks() {
         final TileMap map = new TileMap();
-        map.loadMap(filePath);
+        map.loadMap(FILEPATH);
 
         assertEquals(map.getTileId(0, 0), 4);
         assertTrue(map.isSolid(map.getTileId(0, 0)));
@@ -46,7 +46,7 @@ final class LogicMapTest {
     @Test
     void testSoils() {
         final TileMap map = new TileMap();
-        map.loadMap(filePath);
+        map.loadMap(FILEPATH);
 
         assertFalse(map.isSoil(map.getTileId(0, 0)));
         assertEquals(map.getTileId(NORMAL_SOIL_ROW, NORMAL_SOIL_COLUMN), NORMAL_SOIL_ID);

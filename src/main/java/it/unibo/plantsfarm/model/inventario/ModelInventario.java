@@ -14,14 +14,14 @@ import it.unibo.plantsfarm.view.utility.FileMemory;
 
 /**
  * Model of the inventory: stores the player's tools/items inside a map.
- * Every item can be upgraded ( if the player is baseFarmer).
+ * Every item can be upgraded (if the player is baseFarmer).
  *
  */
 public final class ModelInventario {
 
     private static final String TYPE = "type";
     private final Map<Tooltype, ItemsFarm> inventario;
-    private Memory memory = new FileMemory(Path.of("saves"));
+    private final Memory memory = new FileMemory(Path.of("saves"));
     private final SavePlayer palyerSaving = new SavePlayer(memory, this);
 
     /**
