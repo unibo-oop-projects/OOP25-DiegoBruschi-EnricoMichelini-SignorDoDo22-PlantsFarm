@@ -14,7 +14,7 @@ public final class SolidBlock {
      * @param blockCoordinates The coordinates of the solid block as a Rectangle.
      */
     public SolidBlock(final Rectangle blockCoordinates) {
-        this.blockCoordinates = blockCoordinates;
+        this.blockCoordinates = new Rectangle(blockCoordinates);
     }
 
     /**
@@ -23,6 +23,6 @@ public final class SolidBlock {
      * @return The coordinates of the solid block as a Rectangle.
      */
     public Rectangle getCoordinate() {
-        return this.blockCoordinates;
+        return new Rectangle(this.blockCoordinates);
     }
 }
