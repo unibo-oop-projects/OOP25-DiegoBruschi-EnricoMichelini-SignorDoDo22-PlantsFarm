@@ -7,6 +7,7 @@ import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.garden.GardenController;
 import it.unibo.plantsfarm.controller.garden.SpawningBuffsController;
 import it.unibo.plantsfarm.controller.player.ImplActionHandler;
+import it.unibo.plantsfarm.controller.player.ManagerSavingPlayer;
 import it.unibo.plantsfarm.controller.player.api.ActionHandler;
 import it.unibo.plantsfarm.controller.inventario.ImplControllerInventario;
 import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
@@ -40,6 +41,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private final SoilSaving saver = new SoilSaving();
     private final SpawningBuffsController spawningBuffsController;
     private final ControllerInventario controllerInventario;
+    private final ManagerSavingPlayer managerSavingPlayer;
 
     /**
      * Creates a new ImplControllerGamePanel with the specified GameState.
@@ -56,6 +58,8 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         this.gardenController = new GardenController(gameState, this.player);
         this.collisionDetector = new CollisionDetector(this.player);
         this.spawningBuffsController = new SpawningBuffsController(map);
+        this.managerSavingPlayer = new ManagerSavingPlayer();
+        managerSavingPlayer.loadManager(player.getInventory(), player);
     }
 
    @Override
@@ -77,14 +81,17 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                     case ACTIONHOE -> {
                         actionHandler.handleActionHoe(gardenController);
                         saver.saveGame(gardenController.getSoilList());
+                        managerSavingPlayer.saveManager(player.getInventory(),player);
                     }
                     case ACTIONWATER -> {
                         actionHandler.handleWater(gardenController, now);
                         saver.saveGame(gardenController.getSoilList());
+                        managerSavingPlayer.saveManager(player.getInventory(),player);
                     }
                     case REMOVE_PLANT -> {
                         actionHandler.handleAxe(gardenController);
                         saver.saveGame(gardenController.getSoilList());
+                        managerSavingPlayer.saveManager(player.getInventory(),player);
                     }
                 }
                     controllerAnimation.takeInput(input);

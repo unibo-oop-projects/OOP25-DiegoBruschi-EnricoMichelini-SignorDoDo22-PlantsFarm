@@ -1,16 +1,12 @@
 package it.unibo.plantsfarm.model.inventario;
 
-import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import it.unibo.plantsfarm.controller.player.Memory;
-import it.unibo.plantsfarm.controller.player.SavePlayer;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.model.plant.Rarity;
-import it.unibo.plantsfarm.view.utility.FileMemory;
+
 
 /**
  * Model of the inventory: stores the player's tools/items inside a map.
@@ -20,10 +16,7 @@ import it.unibo.plantsfarm.view.utility.FileMemory;
 public final class ModelInventario {
 
     private static final String TYPE = "type";
-    final Path basePath = Path.of(System.getProperty("user.home"),".plantsfarm");
-    final Memory memory = new FileMemory(basePath);
     private final Map<Tooltype, ItemsFarm> inventario;
-    private final SavePlayer palyerSaving = new SavePlayer(memory, this);
 
     /**
      * Creates an empty inventory.
@@ -41,7 +34,6 @@ public final class ModelInventario {
         this();
         Objects.requireNonNull(initialItems, "initialItems");
         initialItems.forEach(this::putItem);
-        palyerSaving.load();
     }
 
     /**
@@ -100,8 +92,8 @@ public final class ModelInventario {
         if (item == null) {
             return false;
         }
+
         item.upgrade();
-        palyerSaving.save();
         return true;
     }
 

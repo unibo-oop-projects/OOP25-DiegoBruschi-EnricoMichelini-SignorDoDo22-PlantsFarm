@@ -18,8 +18,8 @@ public final class ExpertFarmer extends AbstractPlayer {
      * @param inventory the inventory associated with this player
      * @throws NullPointerException if {@code inventory} is {@code null}
      */
-    public ExpertFarmer(final ModelInventario inventory) {
-        super(inventory);
+    public ExpertFarmer(final ModelInventario inventory, PlayersTypes playersTypes) {
+        super(inventory,playersTypes);
         setSpeed(EXPERT_FARMER_SPEED);
     }
 }

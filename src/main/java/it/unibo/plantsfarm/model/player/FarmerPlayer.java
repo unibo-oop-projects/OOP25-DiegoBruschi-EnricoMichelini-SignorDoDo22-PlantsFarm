@@ -13,8 +13,8 @@ public final class FarmerPlayer extends AbstractPlayer {
      *
      * @param inventory the player inventory model
      */
-    public FarmerPlayer(final ModelInventario inventory) {
-        super(inventory);
+    public FarmerPlayer(final ModelInventario inventory, final PlayersTypes playersTypes) {
+        super(inventory,playersTypes);
         setSpeed(FARMER_SPEED);
     }
 }

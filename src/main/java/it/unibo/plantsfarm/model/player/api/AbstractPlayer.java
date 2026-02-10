@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
 import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.player.PlayersTypes;
 
 /**
  * Abstract base class representing a generic player entity.
@@ -27,6 +28,7 @@ public abstract class AbstractPlayer {
     private UserInput direction = UserInput.FERMO;
     private final ModelInventario inventory;
     private Plant heldPlant;
+    private PlayersTypes playersType;
 
     /**
      * Create the player and inventory.
@@ -35,8 +37,9 @@ public abstract class AbstractPlayer {
      *
      * @param inventory that will be set based on player type.
      */
-    public AbstractPlayer(final ModelInventario inventory) {
+    public AbstractPlayer(final ModelInventario inventory, final  PlayersTypes playersTypes) {
         this.inventory = inventory;
+        this.playersType = playersTypes;
     }
 
     /**
@@ -156,6 +159,10 @@ public abstract class AbstractPlayer {
      */
     protected final void setSpeed(final double speed) {
         this.speed = speed;
+    }
+
+    public PlayersTypes getPlayerType() {
+        return this.playersType;
     }
 
 }
