@@ -134,4 +134,12 @@ public final class Shop {
     public boolean areAllPlantsUnlocked() {
         return Arrays.stream(PlantType.values()).allMatch(PlantType::isDiscovered);
     }
+
+    /**
+     * Resets the current active requests.
+     */
+    public void resetRequests() {
+        this.activeRequests = null;
+    }
 }
+
