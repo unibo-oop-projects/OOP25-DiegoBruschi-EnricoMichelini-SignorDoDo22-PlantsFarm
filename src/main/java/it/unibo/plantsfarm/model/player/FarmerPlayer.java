@@ -12,9 +12,11 @@ public final class FarmerPlayer extends AbstractPlayer {
      * FarmerPlayer inizializzation.
      *
      * @param inventory the player inventory model
+     * @param playersTypes set player type
+     * @throws NullPointerException if {@code inventory} is {@code null}
      */
     public FarmerPlayer(final ModelInventario inventory, final PlayersTypes playersTypes) {
-        super(inventory,playersTypes);
+        super(inventory, playersTypes);
         setSpeed(FARMER_SPEED);
     }
 }

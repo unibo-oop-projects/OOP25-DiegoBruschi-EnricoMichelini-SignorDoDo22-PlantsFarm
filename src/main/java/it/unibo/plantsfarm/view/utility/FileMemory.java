@@ -4,12 +4,18 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import it.unibo.plantsfarm.controller.player.Memory;
-
+/**
+ * This class is used to save player's inventory.
+ */
 public final class FileMemory implements Memory {
 
     private final Path basePath;
 
+    /**
+     * Creates a new FileMemory.
+     *
+     * @param basePath path of file.
+     */
     public FileMemory(final Path basePath) {
         this.basePath = basePath;
     }

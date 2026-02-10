@@ -7,7 +7,6 @@ import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.model.plant.Rarity;
 
-
 /**
  * Model of the inventory: stores the player's tools/items inside a map.
  * Every item can be upgraded (if the player is baseFarmer).

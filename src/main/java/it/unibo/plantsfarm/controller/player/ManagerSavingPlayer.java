@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.view.utility.FileMemory;
+import it.unibo.plantsfarm.view.utility.Memory;
 
 public class ManagerSavingPlayer {
 

@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
+import it.unibo.plantsfarm.view.utility.Memory;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
 
 public final class SavePlayer {

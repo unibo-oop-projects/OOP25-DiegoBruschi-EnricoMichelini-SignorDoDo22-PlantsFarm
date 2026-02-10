@@ -53,6 +53,10 @@ public interface ActionHandler {
      */
     void playerActionBuff(SpawningBuffsController controllerbuff);
 
-
+    /**
+     * Set the selected plant.
+     *
+     * @param controler seedcontroler for take the input plant.
+     */
     void setHeldPlant(SeedController controler);
 }

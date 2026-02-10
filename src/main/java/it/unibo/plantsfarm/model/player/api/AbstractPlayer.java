@@ -126,10 +126,18 @@ public abstract class AbstractPlayer {
         return this.inventory;
     }
 
+    /**
+     *
+     * @return
+     */
     public Plant getHeldPlant() {
         return this.heldPlant;
     }
 
+    /**
+     *
+     * @param plant
+     */
     public void setHeldPlant(final Plant plant) {
         this.heldPlant = plant;
     }
@@ -162,8 +170,9 @@ public abstract class AbstractPlayer {
     }
 
     /**
+     * Return the type of player created.
      *
-     * @return
+     * @return the type player
      */
     public PlayersTypes getPlayerType() {
         return this.playersType;

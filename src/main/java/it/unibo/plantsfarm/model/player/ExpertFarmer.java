@@ -16,10 +16,11 @@ public final class ExpertFarmer extends AbstractPlayer {
      * An expert farmer has enhanced statistics compared to a standard farmer.
      *
      * @param inventory the inventory associated with this player
+     * @param playersTypes set the player type
      * @throws NullPointerException if {@code inventory} is {@code null}
      */
-    public ExpertFarmer(final ModelInventario inventory, PlayersTypes playersTypes) {
-        super(inventory,playersTypes);
+    public ExpertFarmer(final ModelInventario inventory, final PlayersTypes playersTypes) {
+        super(inventory, playersTypes);
         setSpeed(EXPERT_FARMER_SPEED);
     }
 }

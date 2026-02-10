@@ -53,8 +53,7 @@ public final class ImplActionHandler implements ActionHandler {
         if (ImplViewGamePanel.selectedPlant != null) {
             final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
             if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
-                && soil.getPlant() != null && soil.getPlant().needsWater()
-            ) {
+                && soil.getPlant() != null && soil.getPlant().needsWater()) {
                 player.getInventory().useItem(WATERCAN, ImplViewGamePanel.selectedPlant.getRarity());
                 controllerGarden.innaffia(now);
             }
@@ -88,7 +87,6 @@ public final class ImplActionHandler implements ActionHandler {
     }
 
     @Override
-    public void setHeldPlant(SeedController controler) {
-
+    public void setHeldPlant(final SeedController controler) {
     }
 }
