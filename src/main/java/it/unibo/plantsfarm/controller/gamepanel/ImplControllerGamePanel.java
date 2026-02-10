@@ -11,6 +11,7 @@ import it.unibo.plantsfarm.controller.player.ManagerSavingPlayer;
 import it.unibo.plantsfarm.controller.player.api.ActionHandler;
 import it.unibo.plantsfarm.controller.inventario.ImplControllerInventario;
 import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
+import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
 import it.unibo.plantsfarm.model.garden.CollisionDetector;
@@ -19,6 +20,7 @@ import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.model.tiles.TileMap;
+import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
@@ -42,6 +44,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private final SpawningBuffsController spawningBuffsController;
     private final ControllerInventario controllerInventario;
     private final ManagerSavingPlayer managerSavingPlayer;
+    private PlantType currentSelectedPlant;
 
     /**
      * Creates a new ImplControllerGamePanel with the specified GameState.
@@ -78,13 +81,16 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                 if (input != null) {
                     switch (input) {
                     case DOWN, UP, RIGHT, LEFT, FERMO -> actionHandler.updateDirection(input);
+
+                    case SELECT_SEED -> openSeedSelectionMenu();
+
                     case ACTIONHOE -> {
-                        actionHandler.handleActionHoe(gardenController);
+                        actionHandler.handleActionHoe(gardenController, currentSelectedPlant);
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
                     case ACTIONWATER -> {
-                        actionHandler.handleWater(gardenController, now);
+                        actionHandler.handleWater(gardenController, now, currentSelectedPlant);
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
@@ -108,6 +114,16 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             gardenController.updateSoil(now);
             camera.followPlayer();
         }
+    }
+
+    /**
+     * Open the seed selection menu.
+     */
+    private void openSeedSelectionMenu() {
+        
+        new SeedController(plant -> {
+            this.currentSelectedPlant = plant;
+        }, true).start();
     }
 
     @Override

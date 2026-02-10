@@ -7,6 +7,7 @@ import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.U
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.REMOVE_PLANT;
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.RIGHT;
 import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.UP;
+import static it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput.SELECT_SEED; // AGGIUNTO
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,7 +24,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
@@ -31,7 +31,6 @@ import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInpu
 import it.unibo.plantsfarm.model.garden.Buff;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantEffect;
-import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamepanel.api.ViewGamePanel;
@@ -65,7 +64,6 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
     public static final int WORLD_WIDTH = TILE_SIZE * MAX_WORLD_COL;
     public static final int WORLD_HEIGHT = TILE_SIZE * MAX_WORLD_ROW;
 
-    public static PlantType selectedPlant;
 
     private static final long serialVersionUID = 3L;
 
@@ -76,7 +74,8 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         KeyEvent.VK_S, DOWN,
         KeyEvent.VK_E, ACTIONWATER,
         KeyEvent.VK_Q, ACTIONHOE,
-        KeyEvent.VK_R, REMOVE_PLANT
+        KeyEvent.VK_R, REMOVE_PLANT,
+        KeyEvent.VK_P, SELECT_SEED
     );
 
   private final Image buffImage = new SpriteLoader("/plantStatus/xp.png").getImage();
@@ -88,7 +87,6 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   private ControllerGamePanel controller;
   private SelectorFrames selector;
   private UpgradeItemsView inventoryView;
-  private final boolean plantWindow = true;
   private List<Soil> soilList = List.of();
   private List<Buff> buffList = List.of();
 
@@ -109,20 +107,14 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
       @Override
       public void keyPressed(final KeyEvent e) {
 
-        if (e.getKeyCode() == KeyEvent.VK_P) {
-          new SeedController(plant -> {
-          selectedPlant = plant;
-                    }, plantWindow).start();
-                }
-
-                if (KEY_MAPPER.containsKey(e.getKeyCode())) {
-                    if (controller != null) {
-                        controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
-                    }
-                    if (selector != null) {
-                        selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
-                    }
-                }
+        if (KEY_MAPPER.containsKey(e.getKeyCode())) {
+            if (controller != null) {
+                controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
+            }
+            if (selector != null) {
+                selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
+            }
+        }
 
         if (KeyEvent.VK_F == e.getKeyCode()) {
           inventoryView.updateAllItemsPanel();

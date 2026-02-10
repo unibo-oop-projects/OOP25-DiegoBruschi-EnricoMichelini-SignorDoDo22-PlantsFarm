@@ -11,7 +11,7 @@ import it.unibo.plantsfarm.controller.player.api.ActionHandler;
 import it.unibo.plantsfarm.model.garden.Buff;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.model.tiles.Soil;
-import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.model.plant.PlantType;
 
 /**
  * This class translates user input into actions performed by the player,
@@ -31,30 +31,30 @@ public final class ImplActionHandler implements ActionHandler {
     }
 
     @Override
-    public void handleActionHoe(final GardenController controllerGarden) {
-        if (ImplViewGamePanel.selectedPlant != null) {
+    public void handleActionHoe(final GardenController controllerGarden, final PlantType selectedPlant) {
+        if (selectedPlant != null) {
             final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
             if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
                 && !soil.isPlanted()
             ) {
-                player.getInventory().useItem(HOE, ImplViewGamePanel.selectedPlant.getRarity());
-                controllerGarden.pianta(ImplViewGamePanel.selectedPlant);
+                player.getInventory().useItem(HOE, selectedPlant.getRarity());
+                controllerGarden.pianta(selectedPlant);
             } else if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
                 && soil.isPlanted() && soil.getPlant().isMature()
             ) {
-                player.getInventory().useItem(HOE, ImplViewGamePanel.selectedPlant.getRarity());
-                controllerGarden.pianta(ImplViewGamePanel.selectedPlant);
+                player.getInventory().useItem(HOE, selectedPlant.getRarity());
+                controllerGarden.pianta(selectedPlant);
             }
         }
     }
 
     @Override
-    public void handleWater(final GardenController controllerGarden, final Long now) {
-        if (ImplViewGamePanel.selectedPlant != null) {
+    public void handleWater(final GardenController controllerGarden, final Long now, final PlantType selectedPlant) {
+        if (selectedPlant != null) {
             final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
             if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
                 && soil.getPlant() != null && soil.getPlant().needsWater()) {
-                player.getInventory().useItem(WATERCAN, ImplViewGamePanel.selectedPlant.getRarity());
+                player.getInventory().useItem(WATERCAN, selectedPlant.getRarity());
                 controllerGarden.innaffia(now);
             }
         }
@@ -62,11 +62,9 @@ public final class ImplActionHandler implements ActionHandler {
 
     @Override
     public void handleAxe(final GardenController controllerGarden) {
-        if (ImplViewGamePanel.selectedPlant != null) {
-            final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
-            if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null && soil.isPlanted()) {
-                soil.removePlant();
-            }
+        final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
+        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null && soil.isPlanted()) {
+            soil.removePlant();
         }
     }
 

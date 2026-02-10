@@ -4,6 +4,7 @@ import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.controller.garden.GardenController;
 import it.unibo.plantsfarm.controller.garden.SpawningBuffsController;
+import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.tiles.Soil;
 
 /**
@@ -18,7 +19,7 @@ public interface ActionHandler {
      *
      * @param controllerGarden the garden controller used to verify state soil and player position.
      */
-    void handleActionHoe(GardenController controllerGarden);
+    void handleActionHoe(GardenController controllerGarden, final PlantType selectedPlant);
 
     /**
      * The player can use the Water if the {@link Soil} have a plant and the
@@ -27,7 +28,7 @@ public interface ActionHandler {
      * @param controllerGarden for check the soil state and presence of a plant.
      * @param now used for updating plant watering state.
      */
-    void handleWater(GardenController controllerGarden, Long now);
+    void handleWater(GardenController controllerGarden, Long now, final PlantType selectedPlant);
 
     /**
      * The player can remove a plant if the {@link Soil} have a plant.
