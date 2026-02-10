@@ -1,6 +1,8 @@
 package it.unibo.plantsfarm.model.animation;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
+
 import it.unibo.plantsfarm.model.animation.api.Animation;
 import it.unibo.plantsfarm.model.animation.api.AnimationFrames;
 
@@ -8,7 +10,7 @@ import it.unibo.plantsfarm.model.animation.api.AnimationFrames;
  *  Class created for implements all animation about the player movement.
  */
 public final class AnimationCorsa implements Animation {
-    private final BufferedImage[] frames;
+    private final List<BufferedImage> frames;
     private int frameIndex;
     private long lastFrameTimeNs;
     private final long frameDurationNs;
@@ -20,9 +22,9 @@ public final class AnimationCorsa implements Animation {
      * @param frameDurationNs duration animation.
      * @param frames the sequence of frame used for the animation.
      */
-    public AnimationCorsa(final long frameDurationNs, final BufferedImage[] frames) {
+    public AnimationCorsa(final long frameDurationNs, final List<BufferedImage> frames) {
         this.frameDurationNs = frameDurationNs;
-        this.frames = frames.clone();
+        this.frames = List.copyOf(frames);
     }
 
     @Override
@@ -42,14 +44,15 @@ public final class AnimationCorsa implements Animation {
         }
 
         if (nowNs - lastFrameTimeNs >= frameDurationNs) {
-            frameIndex = (frameIndex + 1) % frames.length;
+            frameIndex = (frameIndex + 1) % frames.size();
             lastFrameTimeNs = nowNs;
         }
-        return frames[frameIndex];
+        return frames.get(frameIndex);
     }
 
     @Override
     public boolean isPlaying() {
         return playing;
     }
+
 }

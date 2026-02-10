@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.model.animation;
 
+import java.util.List;
 import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.model.animation.api.Animation;
 
@@ -7,7 +8,7 @@ import it.unibo.plantsfarm.model.animation.api.Animation;
  * The class define the animation for player actions.
  */
 public final class AnimationAzione implements Animation {
-    private final BufferedImage[] frames;
+    private final List<BufferedImage> frames;
     private int frameIndex;
     private long lastFrameTimeNs;
     private final long frameDurationNs;
@@ -20,9 +21,9 @@ public final class AnimationAzione implements Animation {
      * @param frames          the sequence of frames used for the animation.
      *                        The array is defensively copied.
      */
-    public AnimationAzione(final long frameDurationNs, final BufferedImage[] frames) {
+    public AnimationAzione(final long frameDurationNs, final List<BufferedImage> frames) {
         this.frameDurationNs = frameDurationNs;
-        this.frames = frames.clone();
+        this.frames = List.copyOf(frames);
     }
 
     @Override
@@ -38,12 +39,12 @@ public final class AnimationAzione implements Animation {
             frameIndex++;
             lastFrameTimeNs = nowNs;
 
-            if (frameIndex >= frames.length) {
-                frameIndex = frames.length - 1;
+            if (frameIndex >= frames.size()) {
+                frameIndex = frames.size() - 1;
                 playing = false;
             }
         }
-        return frames[frameIndex];
+        return frames.get(frameIndex);
     }
 
     @Override
