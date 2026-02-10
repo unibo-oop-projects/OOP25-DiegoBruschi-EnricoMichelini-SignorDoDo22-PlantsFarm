@@ -24,7 +24,7 @@ public final class Soil implements Serializable {
      * @param tileId The ID of the tile, used to identify the type of soil.
      */
     public Soil(final Rectangle coordinatePod, final int tileId) {
-        this.coordinatePod = coordinatePod;
+        this.coordinatePod = new Rectangle(coordinatePod);
         this.tileId = tileId;
     }
 
@@ -34,7 +34,7 @@ public final class Soil implements Serializable {
      * @return The coordinates of the soil tile as a Rectangle.
      */
     public Rectangle getCoordinate() {
-        return this.coordinatePod;
+        return new Rectangle(this.coordinatePod);
     }
 
     /**

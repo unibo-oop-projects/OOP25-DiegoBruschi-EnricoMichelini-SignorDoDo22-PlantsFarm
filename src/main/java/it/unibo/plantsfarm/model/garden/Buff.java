@@ -13,11 +13,8 @@ public final class Buff {
      */
     public enum Type { OMNI_BUFF }
 
-    private final Type[] types = Type.values();
-    private final Random rand = new Random();
     private final Rectangle area;
     private final Type type;
-    private final int index;
 
     /**
      * Creates a new Buff with the specified position and randomly assigned type.
@@ -25,9 +22,8 @@ public final class Buff {
      * @param area The position of the buff as a Rectangle.
      */
     public Buff(final Rectangle area) {
-        this.area = area;
-        this.index = rand.nextInt(types.length);
-        this.type = types[index];
+        this.area = new Rectangle(area);
+        this.type = Type.OMNI_BUFF;
     }
 
     /**
@@ -45,6 +41,6 @@ public final class Buff {
      * @return The position of the buff as a Rectangle.
      */
     public Rectangle getBuffPosition() {
-        return this.area;
+        return new Rectangle(this.area);
     }
 }

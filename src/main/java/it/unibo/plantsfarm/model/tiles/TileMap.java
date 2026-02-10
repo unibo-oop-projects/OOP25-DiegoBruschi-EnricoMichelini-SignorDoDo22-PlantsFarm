@@ -159,7 +159,7 @@ public final class TileMap {
      * @return The list of soil tiles.
      */
     public List<Soil> getSoilList() {
-        return this.soilList;
+        return List.copyOf(this.soilList);
     }
 
     /**
@@ -168,7 +168,7 @@ public final class TileMap {
      * @return The list of solid blocks.
      */
     public List<SolidBlock> getSolidBlocks() {
-        return this.solidBlocks;
+        return List.copyOf(this.solidBlocks);
     }
 
     /**

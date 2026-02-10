@@ -10,7 +10,7 @@ import it.unibo.plantsfarm.view.utility.SpriteLoader;
  * This class provides predefined {@link BufferedImage} arrays representing the different animation
  * state of the player, such as walking and actions.
  */
-@SuppressFBWarnings( value = "MS_EXPOSE_REP", justification = "BufferedImage is treated as read-only in this context")
+@SuppressFBWarnings(value = "MS_EXPOSE_REP", justification = "BufferedImage is treated as read-only in this context")
 public final class AnimationFrames {
 
     private static final BufferedImage BASE = new SpriteLoader("/Player/tile001.png").getImage();
