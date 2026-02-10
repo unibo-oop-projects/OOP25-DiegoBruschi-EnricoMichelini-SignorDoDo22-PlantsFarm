@@ -28,19 +28,17 @@ public class PlayerTest {
     void testMovementRight() {
         AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
         ActionHandler action = new ImplActionHandler(player);
-        action.updateDirection(RIGHT);
         double startX = player.getPosx();
+        action.updateDirection(RIGHT);
 
-        long t0 = 0;
-        long t1 = 1000;
-
-        player.updatePlayer(t0);
-        player.updatePlayer(t1);
+        player.updatePlayer(2000); // delta simulato
         player.applyMovement();
 
         double endX = player.getPosx();
-        assertTrue(endX > startX);
-    }
+        assertTrue(endX > startX,
+        "Expected player to move right, startX=" + startX + ", endX=" + endX);
+}
+
 
     @Test
     void testMovementLeft() {

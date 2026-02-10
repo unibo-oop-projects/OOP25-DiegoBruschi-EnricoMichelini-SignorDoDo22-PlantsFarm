@@ -19,9 +19,10 @@ import it.unibo.plantsfarm.view.utility.FileMemory;
  */
 public final class ModelInventario {
 
+    private static final String TYPE = "type";
     private final Map<Tooltype, ItemsFarm> inventario;
-    Memory memory = new FileMemory(Path.of("saves"));
-    private final SavePlayer palyerSaving =  new SavePlayer(memory, this);
+    private Memory memory = new FileMemory(Path.of("saves"));
+    private final SavePlayer palyerSaving = new SavePlayer(memory, this);
 
     /**
      * Creates an empty inventory.
@@ -49,7 +50,7 @@ public final class ModelInventario {
      * @param item item instance
      */
     public void putItem(final Tooltype type, final ItemsFarm item) {
-        Objects.requireNonNull(type, "type");
+        Objects.requireNonNull(type, TYPE);
         inventario.put(type, item);
     }
 
@@ -82,7 +83,7 @@ public final class ModelInventario {
      * @return optional item
      */
     public ItemsFarm getItem(final Tooltype type) {
-        Objects.requireNonNull(type, "type");
+        Objects.requireNonNull(type, TYPE);
         return inventario.get(type);
     }
 
@@ -93,7 +94,7 @@ public final class ModelInventario {
      * @return true if the item existed and was upgraded
      */
     public boolean upgrade(final Tooltype type) {
-        Objects.requireNonNull(type, "type");
+        Objects.requireNonNull(type, TYPE);
         final ItemsFarm item = inventario.get(type);
         if (item == null) {
             return false;
@@ -104,10 +105,11 @@ public final class ModelInventario {
     }
 
     /**
-     * If the item have been used the right way.
-     * its experience grow.
+     * Uses the specified tool if its rarity matches the plant rarity.
      *
-     * @param tool  tool action
+     * @param rarityPlant if the iteme has the same level of plant, the item can be used.
+     * @param tool  tool to be  used.
+     * @return {@code true} if the item was successfully used, {@code false} otherwise
      */
     public boolean useItem(final Tooltype tool, final Rarity rarityPlant) {
         if (rarityPlant != null && inventario.get(tool).getRarityItem() == rarityPlant) {
@@ -128,6 +130,7 @@ public final class ModelInventario {
     }
 
     /**
+     * Function for apply an upgrade to the player.
      *
      */
     public void applyUpgrade() {
@@ -136,9 +139,18 @@ public final class ModelInventario {
         }
     }
 
+    /**
+     * Loads the given level into the specified tool item.
+     * This method is typically used when restoring the inventory state
+     * from a saved game.
+     *
+     * @param tool the tool whose level has to be loaded
+     * @param level the level to assign to the tool
+     * @throws IllegalArgumentException if {@code level} is negative
+     * @throws NullPointerException if {@code tool} is {@code null}
+     */
     public void loadItem(final Tooltype tool, final int level) {
-
-        ItemsFarm itemFarm = inventario.get(tool);
+        final ItemsFarm itemFarm = inventario.get(tool);
         itemFarm.setLevel(level);
     }
 }

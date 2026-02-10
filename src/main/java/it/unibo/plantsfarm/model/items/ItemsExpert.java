@@ -90,6 +90,11 @@ public final class ItemsExpert implements ItemsFarm {
         return StatsItemBase.EXPERIENCE_FOR_UPGRADE;
     }
 
+    @Override
+    public void setLevel(final int level) {
+        this.level = level;
+    }
+
     /**
      * Item constants for expert items.
      */
@@ -101,11 +106,5 @@ public final class ItemsExpert implements ItemsFarm {
         private static final int VAL_RARE = 3;
         private static final int VAL_EPIC = 6;
         private static final int VAL_LEGENDARY = 10;
-
-    }
-
-    @Override
-    public void setLevel(int level) {
-        this.level = level;
     }
 }

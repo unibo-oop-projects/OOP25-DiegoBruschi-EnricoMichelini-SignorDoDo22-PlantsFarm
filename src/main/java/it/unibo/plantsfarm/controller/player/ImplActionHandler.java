@@ -12,14 +12,22 @@ import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
+/**
+ * This class translates user input into actions performed by the player,
+ * delegate the actual game logic to the {@link AbstractPlayer}.
+ */
 public final class ImplActionHandler implements ActionHandler {
 
     private final AbstractPlayer player;
 
+    /**
+     * Create a new action handler bound to specific player.
+     *
+     * @param player the player will receive and execute input actions
+     */
     public ImplActionHandler(final AbstractPlayer player) {
         this.player = player;
     }
-
 
     @Override
     public void handleActionHoe(final GardenController controllerGarden) {
