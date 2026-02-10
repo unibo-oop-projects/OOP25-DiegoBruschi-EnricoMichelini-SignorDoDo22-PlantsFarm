@@ -11,8 +11,16 @@ import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
  */
 public final class ExpertFarmer extends AbstractPlayer {
 
+    /**
+     * Creates an {@code ExpertFarmer} with the given inventory.
+     * An expert farmer has enhanced statistics compared to a standard farmer.
+     *
+     * @param inventory the inventory associated with this player
+     * @throws NullPointerException if {@code inventory} is {@code null}
+     */
     public ExpertFarmer(final ModelInventario inventory) {
         super(inventory);
+        initStats();
     }
 
     @Override

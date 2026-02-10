@@ -16,10 +16,11 @@ public final class FarmerPlayer extends AbstractPlayer {
     public FarmerPlayer(final ModelInventario inventory) {
         super(inventory);
         this.speed = FARMER_SPEED;
+        initStats();
     }
 
     @Override
-    public void initStats(){
+    public void initStats() {
         this.speed = FARMER_SPEED;
     }
 }

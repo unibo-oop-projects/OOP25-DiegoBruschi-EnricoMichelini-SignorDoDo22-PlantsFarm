@@ -30,21 +30,19 @@ final class PlayerTest {
 
     @Test
     void testMovementRight() {
-        final AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
-        final ActionHandler action = new ImplActionHandler(player);
+        AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
+        ActionHandler action = new ImplActionHandler(player);
+        double startX = player.getPosx();
         action.updateDirection(RIGHT);
-        final double startX = player.getPosx();
 
-        final long t0 = 0;
-        final long t1 = 1000;
-
-        player.updatePlayer(t0);
-        player.updatePlayer(t1);
+        player.updatePlayer(2000); // delta simulato
         player.applyMovement();
 
-        final double endX = player.getPosx();
-        assertTrue(endX > startX);
-    }
+        double endX = player.getPosx();
+        assertTrue(endX > startX,
+        "Expected player to move right, startX=" + startX + ", endX=" + endX);
+}
+
 
     @Test
     void testMovementLeft() {

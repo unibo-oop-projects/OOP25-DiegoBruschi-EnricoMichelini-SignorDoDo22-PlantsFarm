@@ -13,7 +13,7 @@ import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.view.inventario.UpdatablePanel;
 
 /**
- * This Panel show all Image items and their  actual level.
+ * This Panel show all  items image and their current level.
  *
  */
 public final class ItemsViewImageItem implements UpdatablePanel {
@@ -75,7 +75,7 @@ public final class ItemsViewImageItem implements UpdatablePanel {
     }
 
     /**
-     * Created and
+     * Utility method for load the Icon image for the items.
      *
      * @param path path icon
      * @return ImageIcon

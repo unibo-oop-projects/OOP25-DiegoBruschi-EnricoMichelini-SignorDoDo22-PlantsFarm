@@ -103,8 +103,6 @@ public final class ItemsFarmBase implements ItemsFarm {
 
     /**
      * Updates the rarity based on the provided level.
-     *
-     * @param level the level used to compute rarity.
      */
     @Override
     public void updateRarity() {
@@ -124,6 +122,11 @@ public final class ItemsFarmBase implements ItemsFarm {
         return this.itemRarity;
     }
 
+    @Override
+    public void setLevel(final int level) {
+        this.level = level;
+    }
+
     /**
      * Constants for base items.
      */
@@ -141,8 +144,4 @@ public final class ItemsFarmBase implements ItemsFarm {
         private static final int VAL_LEGENDARY = 10;
     }
 
-    @Override
-    public void setLevel(final int level) {
-        this.level = level;
-    }
 }
