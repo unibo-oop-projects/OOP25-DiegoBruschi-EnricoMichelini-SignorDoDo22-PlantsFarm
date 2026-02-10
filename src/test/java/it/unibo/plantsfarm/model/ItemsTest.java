@@ -42,7 +42,6 @@ class ItemsTest {
     @Test
     void testExpertItemIsLegendaryAndMaxLevel() {
         final ItemsFarm expertItem = new ItemsExpert(HOE);
-
         final int levelBefore = expertItem.getLevel();
         assertEquals(Rarity.LEGENDARY, expertItem.getRarityItem());
         expertItem.upgrade();

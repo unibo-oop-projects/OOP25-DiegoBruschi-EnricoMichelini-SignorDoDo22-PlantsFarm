@@ -35,12 +35,11 @@ final class PlayerTest {
         double startX = player.getPosx();
         action.updateDirection(RIGHT);
 
-        player.updatePlayer(2000); // delta simulato
+        player.updatePlayer(2000);
         player.applyMovement();
 
         double endX = player.getPosx();
-        assertTrue(endX > startX,
-        "Expected player to move right, startX=" + startX + ", endX=" + endX);
+        assertTrue(endX > startX);
 }
 
 

@@ -21,7 +21,7 @@ public final class ModelInventario {
 
     private static final String TYPE = "type";
     private final Map<Tooltype, ItemsFarm> inventario;
-    private Memory memory = new FileMemory(Path.of("saves"));
+    private final Memory memory = new FileMemory(Path.of("saves"));
     private final SavePlayer palyerSaving = new SavePlayer(memory, this);
 
     /**
