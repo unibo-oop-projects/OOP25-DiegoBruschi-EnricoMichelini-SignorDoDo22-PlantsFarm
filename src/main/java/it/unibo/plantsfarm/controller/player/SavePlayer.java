@@ -15,7 +15,6 @@ public final class SavePlayer {
     private final String fileName = System.getProperty("user.home") + File.separator + ".plantsfarm" + File.separator + "player.txt";
     private static final String PAIR_SEPARATOR = ";";
     private static final String VALUE_SEPARATOR = "=";
-
     private final Memory memory;
     private final ModelInventario inventario;
 
