@@ -32,22 +32,27 @@ public final class ImplActionHandler implements ActionHandler {
     @Override
     public void handleActionHoe(final GardenController controllerGarden) {
         final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
-        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null) {
-            if (!soil.isPlanted() || soil.getPlant().isMature()) {
-                player.getInventory().useItem(HOE, ImplViewGamePanel.selectedPlant.getRarity());
-                controllerGarden.pianta(ImplViewGamePanel.selectedPlant);
-            }
+        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
+            && !soil.isPlanted()
+        ) {
+            player.getInventory().useItem(HOE, ImplViewGamePanel.selectedPlant.getRarity());
+            controllerGarden.pianta(ImplViewGamePanel.selectedPlant);
+        } else if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
+            && soil.isPlanted() && soil.getPlant().isMature()
+        ) {
+            player.getInventory().useItem(HOE, ImplViewGamePanel.selectedPlant.getRarity());
+            controllerGarden.pianta(ImplViewGamePanel.selectedPlant);
         }
     }
 
     @Override
     public void handleWater(final GardenController controllerGarden, final Long now) {
         final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
-        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null) {
-            if (soil.getPlant() != null && soil.getPlant().needsWater()) {
-                player.getInventory().useItem(WATERCAN, ImplViewGamePanel.selectedPlant.getRarity());
-                controllerGarden.innaffia(now);
-            }
+        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
+            && soil.getPlant() != null && soil.getPlant().needsWater()
+        ) {
+            player.getInventory().useItem(WATERCAN, ImplViewGamePanel.selectedPlant.getRarity());
+            controllerGarden.innaffia(now);
         }
     }
 
