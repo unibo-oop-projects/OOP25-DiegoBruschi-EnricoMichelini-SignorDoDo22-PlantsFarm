@@ -41,7 +41,7 @@ public final class SpawningBuffsController {
      * if the number of active buffs is below the maximum and the cooldown has passed.
      */
     public void updateUpGrade() {
-        if (activeBuffs.size() < 2 && lastPickUp + SPAWN_COOLDOWN < System.currentTimeMillis()) {
+        if (activeBuffs.size() < MAX_PRESENT_BUFFS && lastPickUp + SPAWN_COOLDOWN < System.currentTimeMillis()) {
             final Rectangle buffPosition;
 
             final double randomPosX = (int) (Math.random() * (ImplViewGamePanel.WORLD_WIDTH + 1));

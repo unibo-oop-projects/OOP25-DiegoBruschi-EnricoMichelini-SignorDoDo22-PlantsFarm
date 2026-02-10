@@ -79,6 +79,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         KeyEvent.VK_R, REMOVE_PLANT
     );
 
+  private final Image buffImage = new SpriteLoader("/plantStatus/xp.png").getImage();
   private final TileManager tileM;
   private int cameraX;
   private int cameraY;
@@ -164,10 +165,9 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         }
 
         for (final Buff buff : buffList) {
-            g2D.drawImage(new SpriteLoader("/plantStatus/xp.png").getImage(),
-                        buff.getBuffPosition().x - cameraX, buff.getBuffPosition().y - cameraY,
-                        64, 64, null
-                    );
+            g2D.drawImage(buffImage, buff.getBuffPosition().x - cameraX,
+                buff.getBuffPosition().y - cameraY, 64, 64, null
+            );
         }
 
             g2D.drawImage(selector.getCurrentImage(),
