@@ -46,6 +46,8 @@ public final class MainScreen {
 
     /**
      * Creates and displays the main screen window.
+     * 
+     * @param gameView The view component for the game panel to be displayed in the main screen.
      */
     public void createMainScreen(final ImplViewGamePanel gameView) {
         this.frame = new JFrame(TITLE);

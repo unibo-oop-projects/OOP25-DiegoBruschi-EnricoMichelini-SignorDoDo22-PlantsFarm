@@ -14,6 +14,9 @@ import java.util.logging.Logger;
 import it.unibo.plantsfarm.model.garden.SoilSaving;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
+/**
+ * Used to load the map from a file and to create the logic map used to manage the game.
+ */
 public final class TileMap {
 
     private static final int ORNAMENTAL_SOIL = 2;
@@ -46,10 +49,18 @@ public final class TileMap {
     private final int[][] logicMap1;
     private final SoilSaving saveController = new SoilSaving();
 
+    /**
+     * Creates a new TileMap.
+     */
     public TileMap() {
         this.logicMap1 = new int[ImplViewGamePanel.MAX_WORLD_ROW][ImplViewGamePanel.MAX_WORLD_COL];
     }
 
+    /**
+     * Loads the map from a file and initializes the logic map.
+     * 
+     * @param filePath The path to the map file.
+     */
     public void loadMap(final String filePath) {
         this.soilList.clear();
         this.solidBlocks.clear();
@@ -92,6 +103,9 @@ public final class TileMap {
         applySavedData();
     }
 
+    /**
+     * Applies the saved data to the current map, updating the soil list with the saved progress.
+     */
     private void applySavedData() {
         final List<Soil> savedProgress = saveController.loadGame();
         if (savedProgress == null) {
@@ -111,10 +125,22 @@ public final class TileMap {
         }
     }
 
+    /**
+     * Checks if the given tile number corresponds to a soil tile.
+     * 
+     * @param num The tile number to check.
+     * @return true if the tile number corresponds to a soil tile, false otherwise.
+     */
     public boolean isSoil(final int num) {
         return num == ORNAMENTAL_SOIL || num == NORMAL_SOIL;
     }
 
+    /**
+     * Checks if the given tile number corresponds to a solid tile.
+     * 
+     * @param num The tile number to check.
+     * @return true if the tile number corresponds to a solid tile, false otherwise.
+     */
     public boolean isSolid(final int num) {
         return num == WALL || num == TREE
             || num >= BEGIN_SHOP_FIRST_ROW && num <= END_SHOP_FIRST_ROW 
@@ -127,15 +153,31 @@ public final class TileMap {
             || num == WELL_THIRD_ROW;
     }
 
+    /**
+     * Gets the list of soil tiles.
+     * 
+     * @return The list of soil tiles.
+     */
     public List<Soil> getSoilList() {
         return this.soilList;
     }
 
+    /**
+     * Gets the list of solid blocks.
+     * 
+     * @return The list of solid blocks.
+     */
     public List<SolidBlock> getSolidBlocks() {
         return this.solidBlocks;
     }
 
-    //TO DO: ornamental
+    /**
+     * Gets the tile ID at the specified row and column in the logic map.
+     * 
+     * @param row The row index of the tile.
+     * @param col The column index of the tile.
+     * @return The tile ID at the specified position, or 0 if the position is out of bounds.
+     */
     public int getTileId(final int row, final int col) {
         if (row >= 0 && row < ImplViewGamePanel.MAX_WORLD_ROW && col >= 0 && col < ImplViewGamePanel.MAX_WORLD_COL) {
             return logicMap1[row][col];

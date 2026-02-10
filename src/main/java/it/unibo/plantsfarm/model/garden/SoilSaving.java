@@ -12,11 +12,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import it.unibo.plantsfarm.model.tiles.Soil;
 
+/**
+ * Handles the saving and loading of soil data for the game.
+ */
 public final class SoilSaving {
 
-    private final String fileName = System.getProperty("user.home") + File.separator + ".plantsfarm" + File.separator + "plants";
     private static final Logger LOGGER = Logger.getLogger(SoilSaving.class.getName());
+    private final String fileName = System.getProperty("user.home") + File.separator + ".plantsfarm" + File.separator + "plants";
 
+    /**
+     * Saves the current state of the soil list to a file.
+     *
+     * @param pod The list of Soil objects to be saved.
+     */
     public void saveGame(final List<Soil> pod) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(this.fileName))) {
             oos.writeObject(pod);
@@ -25,6 +33,11 @@ public final class SoilSaving {
         }
     }
 
+    /**
+     * Loads the state of the soil list from a file.
+     *
+     * @return A list of Soil objects loaded from the file, or an empty list if loading fails.
+     */
     @SuppressWarnings("unchecked")
     public List<Soil> loadGame() {
         final File file = new File(this.fileName);
@@ -43,6 +56,9 @@ public final class SoilSaving {
         return List.of();
     }
 
+    /**
+     * Resets the saved game data by deleting the save file.
+     */
     public void reset() {
         final File file = new File(this.fileName);
         if (file.exists()) {

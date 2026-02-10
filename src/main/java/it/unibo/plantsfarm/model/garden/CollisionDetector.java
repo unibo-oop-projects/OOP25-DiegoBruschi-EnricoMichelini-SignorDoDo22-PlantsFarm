@@ -6,16 +6,29 @@ import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.model.tiles.SolidBlock;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 
+/**
+ * Handles collision detection for the player in the game, preventing movement through solid blocks.
+ */
 public final class CollisionDetector {
 
     private final AbstractPlayer player;
     private final TileMap map = new TileMap();
 
+    /**
+     * Creates a new CollisionDetector for the specified player.
+     *
+     * @param player The player for whom collision detection will be performed.
+     */
     public CollisionDetector(final AbstractPlayer player) {
         this.map.loadMap("/maps/map.txt");
         this.player = player;
     }
 
+    /**
+     * Performs collision detection for the player, preventing movement through solid blocks
+     * by checking the player's future position against the positions of solid blocks in the map.
+     * If a collision is detected, the player's movement is not applied.
+     */
     public void collisionDetection() {
 
         final double offsetX = player.getNextPosX() - player.getPosx();

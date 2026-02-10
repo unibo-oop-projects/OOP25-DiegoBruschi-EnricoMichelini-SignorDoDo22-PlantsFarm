@@ -10,6 +10,10 @@ import it.unibo.plantsfarm.model.tiles.SolidBlock;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
+/**
+ * Controls the spawning of buffs in the game, managing their creation,
+ * removal, and ensuring they do not spawn in invalid locations.
+ */
 public final class SpawningBuffsController {
     public static final int MAX_PRESENT_BUFFS = 3;
     public static final long SPAWN_COOLDOWN = 15_000L;
@@ -21,12 +25,21 @@ public final class SpawningBuffsController {
     private final List<Soil> soilList;
     private final List<SolidBlock> solidBlocks;
 
+    /**
+     * Creates a new SpawningBuffsController with the specified TileMap.
+     *
+     * @param map The TileMap used to determine valid spawning locations for buffs.
+     */
     public SpawningBuffsController(final TileMap map) {
         this.mappa = map;
         this.soilList = mappa.getSoilList();
         this.solidBlocks = mappa.getSolidBlocks();
     }
 
+    /**
+     * Updates the spawning of buffs in the game, adding new buffs
+     * if the number of active buffs is below the maximum and the cooldown has passed.
+     */
     public void updateUpGrade() {
         if (activeBuffs.size() < 2 && lastPickUp + SPAWN_COOLDOWN < System.currentTimeMillis()) {
             final Rectangle buffPosition;
@@ -42,15 +55,32 @@ public final class SpawningBuffsController {
         }
     }
 
+    /**
+     * Removes a buff from the active buffs list and updates the last pickup time.
+     *
+     * @param buff The buff to be removed from the active buffs list.
+     */
     public void removeBuffFromMap(final Buff buff) {
         activeBuffs.remove(buff);
         lastPickUp = System.currentTimeMillis();
     }
 
+    /**
+     * Gets the list of active buffs currently present in the game.
+     * 
+     * @return A list of Buff objects representing the active buffs in the game.
+     */
     public List<Buff> getBuffList() {
         return this.activeBuffs;
     }
 
+    /**
+     * Verifies if the specified position is valid for spawning a buff.
+     *
+     * @param posX The x-coordinate of the position to be verified.
+     * @param posY The y-coordinate of the position to be verified.
+     * @return true if the position is valid for spawning a buff, false otherwise.
+     */
     public boolean verifyPosUpgrade(final double posX, final double posY) {
         final Rectangle buffPosition = new Rectangle((int) posX, (int) posY, BUFF_SIZE, BUFF_SIZE);
 

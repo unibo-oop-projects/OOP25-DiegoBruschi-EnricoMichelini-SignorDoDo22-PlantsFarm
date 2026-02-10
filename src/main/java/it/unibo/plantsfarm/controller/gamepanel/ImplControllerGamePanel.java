@@ -21,6 +21,10 @@ import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
+/**
+ * Implementation of the ControllerGamePanel interface, responsible for managing the game loop,
+ * handling user input, and coordinating interactions between the model and view components.
+ */
 public final class ImplControllerGamePanel extends Thread implements ControllerGamePanel {
     private static final int SLEEPING_PERIOD_IN_MILLISECONDS = 10;
     private ImplViewGamePanel view;
@@ -37,6 +41,11 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private final SpawningBuffsController spawningBuffsController;
     private final ControllerInventario controllerInventario;
 
+    /**
+     * Creates a new ImplControllerGamePanel with the specified GameState.
+     *
+     * @param gameState The initial state of the game.
+     */
     public ImplControllerGamePanel(final GameState gameState) {
         this.map = new TileMap();
         this.map.loadMap("/maps/map.txt");

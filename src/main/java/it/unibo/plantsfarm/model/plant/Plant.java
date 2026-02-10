@@ -41,10 +41,21 @@ public class Plant implements Serializable {
         this.harvestMultiplier = 1.0;
     }
 
+    /**
+     * Increases the growth stage of the plant based on time status.
+     *
+     * @param now The current time in milliseconds.
+     */
     public final void increaseGrowthStage(final long now) {
         this.increaseGrowthStage(now, 1.0);
     }
 
+    /**
+     * Increases the growth stage of the plant based on time status, water status and a multiplier.
+     *
+     * @param now The current time in milliseconds.
+     * @param multiplier A multiplier to speed up growth.
+     */
     public final void increaseGrowthStage(final long now, final double multiplier) {
         final long growthTimeFromLastUpdate = now - lastUpdate;
         lastUpdate = now;
@@ -57,12 +68,11 @@ public class Plant implements Serializable {
                 watered = false;
                 growthStage++;
             }
-            
         }
     }
 
     /**
-     * Waters the plant, upgrade its growth stage if possible.
+     * Waters the plant and changes plant's water status.
      *
      *  @param now The current time in milliseconds.
      */
@@ -87,6 +97,11 @@ public class Plant implements Serializable {
         }
     }
 
+    /**
+     * Checks if the plant is ready to be harvested.
+     *
+     * @return true if harvestable, false otherwise.
+     */
     public final boolean isHarvestable() {
         return isMature();
     }
@@ -139,22 +154,47 @@ public class Plant implements Serializable {
         return 0;
     }
 
+    /**
+     * Gets the quantity harvested from the last harvest action.
+     *
+     * @return the harvested quantity.
+     */
     public final int getHarvestedQuantity() {
         return this.harvestedQuantity;
     }
 
+    /**
+     * Gets the current stage time of the plant.
+     *
+     * @return the current stage time in milliseconds.
+     */
     public final long getCurrentStageTime() {
         return this.currentStageTime;
     }
 
+    /**
+     * Sets the current stage time of the plant.
+     *
+     * @param newTime The new stage time in milliseconds.
+     */
     public final void setCurrentStageTime(final long newTime) {
         this.currentStageTime = newTime;
     }
 
+    /**
+     * Gets the last watered time of the plant.
+     *
+     * @return the last watered time in milliseconds.
+     */
     public final long getLastWateredTime() {
         return this.lastWateredTime;
     }
 
+    /**
+     * Sets the last watered time of the plant.
+     *
+     * @param newTime The new last watered time in milliseconds.
+     */
     public final void setLastWateredTime(final long newTime) {
         this.lastWateredTime = newTime;
     }
@@ -177,6 +217,11 @@ public class Plant implements Serializable {
         return growthStage;
     }
 
+    /**
+     * Sets the growth stage of the plant.
+     *
+     * @param stage The new growth stage to set.
+     */
     public final void setGrowthStage(final int stage) {
         this.growthStage = stage;
     }
