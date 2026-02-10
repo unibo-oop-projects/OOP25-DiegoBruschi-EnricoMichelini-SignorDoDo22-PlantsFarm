@@ -40,7 +40,6 @@ public final class SpawningBuffsController {
                 lastPickUp = System.currentTimeMillis();
             }
         }
-
     }
 
     public void removeBuffFromMap(final Buff buff) {
