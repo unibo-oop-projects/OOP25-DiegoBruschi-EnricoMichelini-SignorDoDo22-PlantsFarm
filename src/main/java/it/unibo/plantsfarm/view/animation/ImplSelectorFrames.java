@@ -58,16 +58,15 @@ public final class ImplSelectorFrames implements SelectorFrames {
                 currentAnimation = animationAxe;
             }
             case FERMO -> {
-                final boolean hoePlaying = currentAnimation == animationHoe && animationHoe.isPlaying();
-                final boolean waterPlaying = currentAnimation == animationWater && animationWater.isPlaying();
-                final boolean axePlaying = currentAnimation == animationAxe && animationAxe.isPlaying();
+                final boolean hoePlaying = currentAnimation.equals(animationHoe) && animationHoe.isPlaying();
+                final boolean waterPlaying = currentAnimation.equals(animationWater) && animationWater.isPlaying();
+                final boolean axePlaying = currentAnimation.equals(animationAxe) && animationAxe.isPlaying();
                 if (hoePlaying || waterPlaying || axePlaying) {
                     return;
                 }
                 currentAnimation = null;
                 currentImage = AnimationFrames.BASE;
             }
-            default -> { /* se esistono altri input, non fare nulla */ }
         }
     }
 

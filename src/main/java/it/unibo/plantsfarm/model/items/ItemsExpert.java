@@ -105,7 +105,7 @@ public final class ItemsExpert implements ItemsFarm {
     }
 
     @Override
-    public void setLevel(int level) {
+    public void setLevel(final int level) {
         this.level = level;
     }
 }

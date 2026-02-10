@@ -143,5 +143,5 @@ public abstract class AbstractPlayer {
         this.posY = nextPosY;
     }
 
-    abstract protected void initStats();
+    protected abstract void initStats();
 }

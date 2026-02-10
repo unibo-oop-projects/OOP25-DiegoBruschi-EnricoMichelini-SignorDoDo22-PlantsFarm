@@ -4,39 +4,54 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.plantsfarm.model.tiles.TileMap;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class LogicMapTest {
-    
+final class LogicMapTest {
+
+    private static final int SOIL_QUANTITY = 64;
+    private static final int SOLID_BLOCK_QUANTITY = 384;
+
+    private static final int NORMAL_SOIL_COLUMN = 21;
+    private static final int NORMAL_SOIL_ROW = 4;
+    private static final int NORMAL_SOIL_ID = 11;
+
+    private static final int ORNAMENTAL_SOIL_COLUMN = 23;
+    private static final int ORNAMENTAL_SOIL_ROW = 6;
+    private static final int ORNAMENTAL_SOIL_ID = 2;
+
+    private final String filePath = "/maps/map.txt";
+
     @Test
     void testMapLoading() {
-        TileMap map = new TileMap();
-        map.loadMap("/maps/map.txt");
+        final TileMap map = new TileMap();
+        map.loadMap(filePath);
 
-        assertTrue(map.getSoilList().size() == 64);
-        assertTrue(map.getSolidBlocks().size() == 384);
+        assertEquals(map.getSoilList().size(), SOIL_QUANTITY);
+        assertEquals(map.getSolidBlocks().size(), SOLID_BLOCK_QUANTITY);
     }
 
     @Test
     void testSolidBlocks() {
-        TileMap map = new TileMap();
-        map.loadMap("/maps/map.txt");
+        final TileMap map = new TileMap();
+        map.loadMap(filePath);
 
-        assertTrue(map.getTileId(0, 0) == 4);
+        assertEquals(map.getTileId(0, 0), 4);
         assertTrue(map.isSolid(map.getTileId(0, 0)));
-        assertTrue(map.getTileId(10, 10) == 0);
-        assertTrue(!map.isSolid(map.getTileId(10, 10)));
+        assertEquals(map.getTileId(10, 10), 0);
+        assertFalse(map.isSolid(map.getTileId(10, 10)));
     }
 
     @Test
     void testSoils() {
-        TileMap map = new TileMap();
-        map.loadMap("/maps/map.txt");
-        
-        assertTrue(!map.isSoil(map.getTileId(0, 0)));
-        assertTrue(map.getTileId(4, 21) == 11);
-        assertTrue(map.isSoil(map.getTileId(4, 21)));
-        assertTrue(map.getTileId(6, 23) == 2);
-        assertTrue(map.isSoil(map.getTileId(6, 23)));
+        final TileMap map = new TileMap();
+        map.loadMap(filePath);
+
+        assertFalse(map.isSoil(map.getTileId(0, 0)));
+        assertEquals(map.getTileId(NORMAL_SOIL_ROW, NORMAL_SOIL_COLUMN), NORMAL_SOIL_ID);
+        assertTrue(map.isSoil(map.getTileId(NORMAL_SOIL_ROW, NORMAL_SOIL_COLUMN)));
+        assertEquals(map.getTileId(ORNAMENTAL_SOIL_ROW, ORNAMENTAL_SOIL_COLUMN), ORNAMENTAL_SOIL_ID);
+        assertTrue(map.isSoil(map.getTileId(ORNAMENTAL_SOIL_ROW, ORNAMENTAL_SOIL_COLUMN)));
     }
 }

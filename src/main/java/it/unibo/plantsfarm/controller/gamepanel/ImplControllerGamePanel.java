@@ -26,14 +26,14 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private final ImplFactoryPlayer factoryPlayer = new ImplFactoryPlayer();
     private final LinkedBlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
     private AbstractPlayer player;
-    private GardenController gardenController;
+    private final GardenController gardenController;
     private ImplSelectorFrames controllerAnimation;
     private ImplCamera camera;
-    private TileMap map;
-    private CollisionDetector collisionDetector;
-    private ActionHandler actionHandler;
-    private SoilSaving saver = new SoilSaving();
-    private SpawningBuffsController spawningBuffsController;
+    private final TileMap map;
+    private final CollisionDetector collisionDetector;
+    private final ActionHandler actionHandler;
+    private final SoilSaving saver = new SoilSaving();
+    private final SpawningBuffsController spawningBuffsController;
     private final ControllerInventario controllerInventario;
 
     public ImplControllerGamePanel(final GameState gameState) {
@@ -46,7 +46,6 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         this.gardenController = new GardenController(gameState, this.player);
         this.collisionDetector = new CollisionDetector(this.player);
         this.spawningBuffsController = new SpawningBuffsController(map);
-        this.collisionDetector = new CollisionDetector(player);
     }
 
    @Override

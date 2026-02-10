@@ -138,7 +138,7 @@ public final class ModelInventario {
 
     public void loadItem(final Tooltype tool, final int level) {
 
-        ItemsFarm itemFarm = inventario.get(tool);
+        final ItemsFarm itemFarm = inventario.get(tool);
         itemFarm.setLevel(level);
     }
 }

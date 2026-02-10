@@ -63,6 +63,8 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
     public static PlantType selectedPlant;
 
+    private static final long serialVersionUID = 3L;
+
     private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER = Map.of(
         KeyEvent.VK_W, UP,
         KeyEvent.VK_A, LEFT,
@@ -81,7 +83,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   private ControllerGamePanel controller;
   private SelectorFrames selector;
   private UpgradeItemsView inventoryView;
-  private boolean plantWindow = true;
+  private final boolean plantWindow = true;
   private List<Soil> soilList = List.of();
   private List<Buff> buffList = List.of();
 
@@ -101,8 +103,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
         if (e.getKeyCode() == KeyEvent.VK_P) {
           new SeedController(plant -> {
-          System.out.println("Selected plant: " + plant.getName());
-          ImplViewGamePanel.selectedPlant = plant;
+          selectedPlant = plant;
                     }, plantWindow).start();
                 }
 
@@ -123,10 +124,8 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
       @Override
       public void keyReleased(final KeyEvent e) {
-        if (KEY_MAPPER.containsKey(e.getKeyCode())) {
-          if (controller != null) {
+        if (KEY_MAPPER.containsKey(e.getKeyCode()) && controller != null) {
             controller.takeInput(UserInput.FERMO);
-          }
         }
       }
     });
@@ -225,8 +224,8 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
             if (statusIcon != null) {
                 final int statusSize = Texture.STATUS_ICON_SIZE;
-                final int iconX = (pod.getCoordinate().x - cameraX) - (statusSize / 3);
-                final int iconY = (pod.getCoordinate().y - cameraY) - statusSize;
+                final int iconX = pod.getCoordinate().x - cameraX - (statusSize / 3);
+                final int iconY = pod.getCoordinate().y - cameraY - statusSize;
 
                 g2D.drawImage(statusIcon.getImage(), iconX, iconY, statusSize, statusSize, null);
             }
