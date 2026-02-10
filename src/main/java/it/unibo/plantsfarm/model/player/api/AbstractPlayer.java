@@ -13,9 +13,9 @@ import it.unibo.plantsfarm.model.player.PlayersTypes;
 public abstract class AbstractPlayer {
 
     public static final int FARMER_SPEED = 400;
-    public static final int OFF_SET_HITBOX = 26;
-    public static final int WIDTH_HITBOX = 16;
-    public static final int HEIGH_HITBOX = 16;
+    public static final int OFF_SET_HITBOX = 32;
+    public static final int WIDTH_HITBOX = 32;
+    public static final int HEIGH_HITBOX = 32;
     public static final int EXPERT_FARMER_SPEED = 650;
     public static final int SPAWN_X = 192;
     public static final int SPAWN_Y = 720;
@@ -161,6 +161,10 @@ public abstract class AbstractPlayer {
         this.speed = speed;
     }
 
+    /**
+     *
+     * @return
+     */
     public PlayersTypes getPlayerType() {
         return this.playersType;
     }
