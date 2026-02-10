@@ -18,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 final class PlayerTest {
 
+    private static final int SIMULATED_DELTA = 2000;
+
     private final FactoryPlayer factory = new ImplFactoryPlayer();
 
     @Test
@@ -30,18 +32,17 @@ final class PlayerTest {
 
     @Test
     void testMovementRight() {
-        AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
-        ActionHandler action = new ImplActionHandler(player);
-        double startX = player.getPosx();
+        final AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
+        final ActionHandler action = new ImplActionHandler(player);
+        final double startX = player.getPosx();
         action.updateDirection(RIGHT);
 
-        player.updatePlayer(2000);
+        player.updatePlayer(SIMULATED_DELTA);
         player.applyMovement();
 
-        double endX = player.getPosx();
+        final double endX = player.getPosx();
         assertTrue(endX > startX);
-}
-
+    }
 
     @Test
     void testMovementLeft() {

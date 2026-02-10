@@ -13,14 +13,14 @@ import it.unibo.plantsfarm.model.garden.Buff;
 import it.unibo.plantsfarm.model.garden.Buff.Type;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 
-public class BuffTest {
+final class BuffTest {
 
     private static final int BUFF_SIZE = 48;
     private static final int LEGAL_POSITION_X = 144;
     private static final int LEGAL_POSITION_Y = 144;
 
-    private final String filePath = "/maps/map.txt";
-    
+    private static final String FILEPATH = "/maps/map.txt";
+
     @Test
     void testCreateBuff() {
         final Rectangle position = new Rectangle(0, 0, BUFF_SIZE, BUFF_SIZE);
@@ -32,7 +32,7 @@ public class BuffTest {
     @Test
     void testCheckPosition() {
         final TileMap map = new TileMap();
-        map.loadMap(filePath);
+        map.loadMap(FILEPATH);
 
         final SpawningBuffsController buffsController = new SpawningBuffsController(map);
 
@@ -46,11 +46,11 @@ public class BuffTest {
     @Test
     void testCheckBuffList() {
         final TileMap map = new TileMap();
-        map.loadMap(filePath);
+        map.loadMap(FILEPATH);
 
         final SpawningBuffsController buffsController = new SpawningBuffsController(map);
-        final Buff buff = new Buff (new Rectangle(LEGAL_POSITION_X, LEGAL_POSITION_Y, BUFF_SIZE, BUFF_SIZE));
-        
+        final Buff buff = new Buff(new Rectangle(LEGAL_POSITION_X, LEGAL_POSITION_Y, BUFF_SIZE, BUFF_SIZE));
+
         buffsController.getBuffList().add(buff);
         assertEquals(buffsController.getBuffList().size(), 1);
 
