@@ -20,12 +20,5 @@ public final class ExpertFarmer extends AbstractPlayer {
      */
     public ExpertFarmer(final ModelInventario inventory) {
         super(inventory);
-        initStats();
     }
-
-    @Override
-    public void initStats() {
-        this.speed = EXPERT_FARMER_SPEED;
-    }
-
 }
