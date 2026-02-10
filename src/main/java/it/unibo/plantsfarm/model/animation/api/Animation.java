@@ -24,10 +24,9 @@ public interface Animation {
 
     /**
      * Returns the current the state of the animation.
-     * If is not finished, then it will return true.
-     * if is finished, it will return false
      *
-     * @return
+     * @return {@code true} if the player is in action. Return {@code false} if the player is not in action.
+     *
      */
     boolean isPlaying();
 }

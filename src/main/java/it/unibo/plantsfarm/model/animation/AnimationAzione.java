@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.model.animation.api.Animation;
 
 /**
- *
+ * The class define the animation for player actions.
  */
 public final class AnimationAzione implements Animation {
     private final BufferedImage[] frames;
@@ -13,6 +13,13 @@ public final class AnimationAzione implements Animation {
     private final long frameDurationNs;
     private boolean playing;
 
+    /**
+     * Creates a new action animation.
+     *
+     * @param frameDurationNs the duration of each frame in nanoseconds
+     * @param frames          the sequence of frames used for the animation.
+     *                        The array is defensively copied.
+     */
     public AnimationAzione(final long frameDurationNs, final BufferedImage[] frames) {
         this.frameDurationNs = frameDurationNs;
         this.frames = frames.clone();

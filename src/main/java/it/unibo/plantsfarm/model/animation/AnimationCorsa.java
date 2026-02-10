@@ -14,6 +14,12 @@ public final class AnimationCorsa implements Animation {
     private final long frameDurationNs;
     private boolean playing;
 
+    /**
+     * Create a movement animation for the player.
+     *
+     * @param frameDurationNs duration animation.
+     * @param frames the sequence of frame used for the animation.
+     */
     public AnimationCorsa(final long frameDurationNs, final BufferedImage[] frames) {
         this.frameDurationNs = frameDurationNs;
         this.frames = frames.clone();

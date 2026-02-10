@@ -9,11 +9,19 @@ import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.inventario.UpgradeItemsView;
 
+/**
+ * Implementation of Inventory model.
+ */
 public final class ImplControllerInventario implements ControllerInventario {
 
     private final AbstractPlayer abstractPlayer;
     private UpgradeItemsView viewItemsInventory;
 
+    /**
+     * Creates a new inventory controller for the given player.
+     *
+     * @param player the player whose inventory will be managed
+     */
     public ImplControllerInventario(final AbstractPlayer player) {
         this.abstractPlayer = player;
     }

@@ -4,25 +4,42 @@ import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
 /**
+ * Represents the game camera.
+ * The camera defines the portion of the game world currently visible on screen
+ * and follows the player within the world boundaries.
  *
  */
-public final class ImplCamera implements Camera {
+public final class ImplCamera {
+
     private int posX;
     private int posY;
     private AbstractPlayer player;
     private final int screenWidth;
+
     private final int screenHeight;
 
+    /**
+     * Creates a new camera with the given screen dimensions.
+     *
+     * @param screenWidth  the width of the visible screen
+     * @param screenHeight the height of the visible screen
+     */
     public ImplCamera(final int screenWidth, final int screenHeight) {
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
     }
 
-    @Override
+    /**
+     * Updates the camera position by centering it on the player.
+     * The camera position is clamped so that it does not move outside
+     * the world boundaries, ensuring the player remains visible.
+     *
+     */
     public void followPlayer() {
 
         posX = (int) player.getPosx() - ImplViewGamePanel.SCREEN_WIDTH / 2;
         posY = (int) player.getPosy() - ImplViewGamePanel.SCREEN_HEIGHT / 2;
+
         if (posX < 0) {
             posX = 0;
         }
@@ -37,17 +54,29 @@ public final class ImplCamera implements Camera {
         }
     }
 
-    @Override
+    /**
+     * Returns the X coordinate of the camera.
+     *
+     * @return the camera X position in world space
+     */
     public int getCameraPosX() {
         return this.posX;
     }
 
-    @Override
+    /**
+     * Returns the Y coordinate of the camera.
+     *
+     * @return the camera Y position in world space
+     */
     public int getCameraPosY() {
         return this.posY;
     }
 
-    @Override
+    /**
+     * Sets the entity to be followed by the camera.
+     *
+     * @param player the player entity to follow
+     */
     public void setPlayer(final AbstractPlayer player) {
         this.player = player;
     }

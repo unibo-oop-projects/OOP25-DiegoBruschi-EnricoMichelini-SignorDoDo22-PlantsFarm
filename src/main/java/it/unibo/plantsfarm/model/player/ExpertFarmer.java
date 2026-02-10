@@ -1,10 +1,6 @@
 package it.unibo.plantsfarm.model.player;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
-import it.unibo.plantsfarm.model.items.api.ItemsFarm;
-import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 
 /**
@@ -15,10 +11,12 @@ import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
  */
 public final class ExpertFarmer extends AbstractPlayer {
 
-    final Map<Tooltype, ItemsFarm> inventory = new LinkedHashMap<>();
-
     public ExpertFarmer(final ModelInventario inventory) {
         super(inventory);
+    }
+
+    @Override
+    public void initStats() {
         this.speed = EXPERT_FARMER_SPEED;
     }
 

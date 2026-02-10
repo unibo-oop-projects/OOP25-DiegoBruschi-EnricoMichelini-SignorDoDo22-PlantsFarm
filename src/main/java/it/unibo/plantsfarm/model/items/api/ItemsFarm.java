@@ -75,7 +75,11 @@ public interface ItemsFarm {
      */
     Rarity getRarityItem();
 
-
+    /**
+     * For loading the level of each items.
+     *
+     * @param level level saved.
+     */
     void setLevel(int level);
 
     /**

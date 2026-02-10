@@ -12,6 +12,7 @@ import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.view.inventario.UpdatablePanel;
 
 /**
+ * This class display the button for upgrade the items of inventory.
  *
  */
 public final class ItemsViewButtonUpgrade implements UpdatablePanel {
@@ -22,8 +23,9 @@ public final class ItemsViewButtonUpgrade implements UpdatablePanel {
     private final JPanel panel;
 
     /**
+     * Creates the upgrade buttons panel.
      *
-     * @param controllerInventario
+     * @param controllerInventario the inventory controller used to manage upgrades
      */
     public ItemsViewButtonUpgrade(final ControllerInventario controllerInventario) {
         this.controllerInventario = controllerInventario;

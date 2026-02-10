@@ -6,7 +6,7 @@ import it.unibo.plantsfarm.controller.garden.SpawningBuffsController;
 import it.unibo.plantsfarm.model.tiles.Soil;
 
 /**
- * this class is used for take input from {@param ImplControllerGamePanel}
+ * this class is used for take input from {@param ImplControllerGamePanel} .
  *
  */
 public interface ActionHandler {
@@ -23,22 +23,21 @@ public interface ActionHandler {
      * The player can use the Water if the {@link Soil} have a plant and the
      * plant is ready to be watered. I
      *
-     * @param controllerGarden
-     * @param now
+     * @param controllerGarden for check the soil state and presence of a plant.
+     * @param now used for updating plant watering state.
      */
     void handleWater(GardenController controllerGarden, Long now);
 
     /**
      * The player can remove a plant if the {@link Soil} have a plant.
-     * The axe don't have a level.
+     * The axe dose't has a level.
      *
-     * @param controllerGarden
+     * @param controllerGarden for check the soil state and presence of a plant.
      */
     void handleAxe(GardenController controllerGarden);
 
     /**
      * Updates the player's movement direction.
-     *
      * The direction is determined by the given {@link UserInput}.
      *
      * @param input the user input representing the next direction

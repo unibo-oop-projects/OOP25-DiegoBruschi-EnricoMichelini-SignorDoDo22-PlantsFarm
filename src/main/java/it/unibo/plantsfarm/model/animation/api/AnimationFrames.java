@@ -1,9 +1,13 @@
 package it.unibo.plantsfarm.model.animation.api;
 
 import java.awt.image.BufferedImage;
-
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
 
+/**
+ * The class AnimationFrames contains the sprite frames used for player animations.
+ * This class provides predefined {@link BufferedImage} arrays representing the different animation
+ * state of the player, such as walking and actions.
+ */
 public final class AnimationFrames {
 
     public static final BufferedImage BASE = new SpriteLoader("/Player/tile001.png").getImage();

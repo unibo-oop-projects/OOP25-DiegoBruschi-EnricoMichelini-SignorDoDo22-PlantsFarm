@@ -75,10 +75,10 @@ public final class ItemsViewImageItem implements UpdatablePanel {
     }
 
     /**
-     * 
-     * 
-     * @param path icon's path
-     * @return (DA FINIRE)
+     * Created and
+     *
+     * @param path path icon
+     * @return ImageIcon
      */
     private ImageIcon loadScaledIcon(final String path) {
         final var url = getClass().getResource(path);

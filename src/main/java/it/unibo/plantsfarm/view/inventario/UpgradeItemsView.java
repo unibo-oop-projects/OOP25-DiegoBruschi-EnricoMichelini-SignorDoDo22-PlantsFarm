@@ -56,6 +56,7 @@ public final class UpgradeItemsView extends JDialog {
     }
 
     /**
+     * Calls the mainPanel and after the main panel update all its child panels.
      *
      */
     public void updateAllItemsPanel() {
