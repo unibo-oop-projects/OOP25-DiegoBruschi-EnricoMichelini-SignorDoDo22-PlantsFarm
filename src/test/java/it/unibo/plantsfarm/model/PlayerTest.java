@@ -35,7 +35,7 @@ final class PlayerTest {
         final AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
         final ActionHandler action = new ImplActionHandler();
         final double startX = player.getPosx();
-        action.updateDirection(RIGHT);
+        action.updateDirection(RIGHT, player);
 
         player.updatePlayer(SIMULATED_DELTA);
         player.applyMovement();
@@ -47,8 +47,8 @@ final class PlayerTest {
     @Test
     void testMovementLeft() {
         final AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
-        final ActionHandler action = new ImplActionHandler(player);
-        action.updateDirection(LEFT);
+        final ActionHandler action = new ImplActionHandler();
+        action.updateDirection(LEFT, player);
         final double startX = player.getPosx();
 
         final long t0 = 0;
@@ -66,8 +66,8 @@ final class PlayerTest {
     @Test
     void testMovementUp() {
         final AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
-        final ActionHandler action = new ImplActionHandler(player);
-        action.updateDirection(UP);
+        final ActionHandler action = new ImplActionHandler();
+        action.updateDirection(UP, player);
         final double startY = player.getPosy();
 
         final long t0 = 0;
@@ -85,8 +85,8 @@ final class PlayerTest {
     @Test
     void testMovementDown() {
         final AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
-        final ActionHandler action = new ImplActionHandler(player);
-        action.updateDirection(DOWN);
+        final ActionHandler action = new ImplActionHandler();
+        action.updateDirection(DOWN, player);
         final double startY = player.getPosy();
         final long t0 = 0;
         final long t1 = 1000;

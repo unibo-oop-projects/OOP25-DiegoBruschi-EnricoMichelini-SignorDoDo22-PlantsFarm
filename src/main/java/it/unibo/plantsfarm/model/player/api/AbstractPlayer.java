@@ -121,6 +121,9 @@ public class AbstractPlayer {
         return this.direction;
     }
 
+    public final ModelInventario getInventory(){
+        return this.inventory;
+    }
 
     /**
      * Returns the player's hitbox used for collision detection.

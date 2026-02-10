@@ -1,4 +1,4 @@
-    package it.unibo.plantsfarm;
+package it.unibo.plantsfarm;
 
 import it.unibo.plantsfarm.controller.loader.GameLoader;
 
