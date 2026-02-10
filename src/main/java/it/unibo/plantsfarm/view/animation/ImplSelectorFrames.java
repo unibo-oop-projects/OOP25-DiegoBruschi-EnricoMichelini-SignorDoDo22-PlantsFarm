@@ -14,15 +14,15 @@ import it.unibo.plantsfarm.view.utility.AnimationTime;
  */
 public final class ImplSelectorFrames implements SelectorFrames {
 
-    private final AnimationAzione animationWater = new AnimationAzione(AnimationTime.FRAME_8_FPS, AnimationFrames.WATER);
-    private final AnimationAzione animationHoe = new AnimationAzione(AnimationTime.FRAME_8_FPS, AnimationFrames.DIG);
-    private final AnimationCorsa animationLeft = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.WALKLEFT);
-    private final AnimationCorsa animationUp = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.WALKUP);
-    private final AnimationCorsa animationDown = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.WALKDOWN);
-    private final AnimationCorsa animationRight = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.WALKRIGHT);
-    private final AnimationAzione animationAxe = new AnimationAzione(AnimationTime.FRAME_8_FPS, AnimationFrames.AXE);
+    private final AnimationAzione animationWater = new AnimationAzione(AnimationTime.FRAME_8_FPS, AnimationFrames.water());
+    private final AnimationAzione animationHoe = new AnimationAzione(AnimationTime.FRAME_8_FPS, AnimationFrames.dig());
+    private final AnimationCorsa animationLeft = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.walkLeft());
+    private final AnimationCorsa animationUp = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.walkUp());
+    private final AnimationCorsa animationDown = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.walkDown());
+    private final AnimationCorsa animationRight = new AnimationCorsa(AnimationTime.FRAME_8_FPS, AnimationFrames.walkRight());
+    private final AnimationAzione animationAxe = new AnimationAzione(AnimationTime.FRAME_8_FPS, AnimationFrames.axe());
     private Animation currentAnimation;
-    private BufferedImage currentImage = AnimationFrames.BASE;
+    private BufferedImage currentImage = AnimationFrames.base();
 
     @Override
     public void takeInput(final UserInput input) {
@@ -65,7 +65,7 @@ public final class ImplSelectorFrames implements SelectorFrames {
                     return;
                 }
                 currentAnimation = null;
-                currentImage = AnimationFrames.BASE;
+                currentImage = AnimationFrames.base();
             }
         }
     }
@@ -77,7 +77,7 @@ public final class ImplSelectorFrames implements SelectorFrames {
 
             if (!currentAnimation.isPlaying()) {
                 currentAnimation = null;
-                currentImage = AnimationFrames.BASE;
+                currentImage = AnimationFrames.base();
             }
         }
     }

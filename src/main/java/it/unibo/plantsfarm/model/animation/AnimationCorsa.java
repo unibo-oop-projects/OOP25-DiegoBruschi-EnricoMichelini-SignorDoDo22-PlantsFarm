@@ -38,7 +38,7 @@ public final class AnimationCorsa implements Animation {
     @Override
     public BufferedImage getCurrentFrame(final long nowNs) {
         if (!playing) {
-            return AnimationFrames.BASE;
+            return AnimationFrames.base();
         }
 
         if (nowNs - lastFrameTimeNs >= frameDurationNs) {
