@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.controller.menu;
 
 import it.unibo.plantsfarm.model.GameState;
+import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.view.menu.MysteryBox;
 import it.unibo.plantsfarm.view.menu.ShopScreen;
@@ -9,16 +10,26 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.util.Map;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.List;
 
 /**
  * Controller for the Shop feature.
  */
 public final class ShopController {
 
-    private static final int DEFAULT_COST = 250;
+    private static final int COST_STANDARD = 750;
+    private static final int COST_EDIBLE = 500;
+    private static final int COST_ORNAMENTAL = 1000;
+    private static final int COST_REFRESH = 50;
+
+    private static final String INSUFFICIENT_FUNDS = "Insufficient Funds";
+    private static final String YOU_NEED = "You need ";
 
     private final ShopScreen view;
     private final Runnable onTransactionListener;
+    private final Random random = new Random();
 
     /**
      * Creates a new ShopController.
@@ -81,7 +92,7 @@ public final class ShopController {
     }
 
     private void buyItem(final GameState gameState, final ActionEvent e) {
-        int cost = DEFAULT_COST;
+        int cost = COST_STANDARD;
 
         if (e.getSource() instanceof JButton) {
             final JButton button = (JButton) e.getSource();
@@ -92,12 +103,89 @@ public final class ShopController {
             }
         }
 
-        final PlantType unlockedPlant = gameState.getShop().buyMysteryBox(gameState, cost);
+        switch (cost) {
+            case COST_STANDARD:
+                buyMysteryBoxStandard(gameState, cost);
+                break;
+            case COST_EDIBLE:
+                buySpecificBox(gameState, cost, true);
+                break;
+            case COST_ORNAMENTAL:
+                buySpecificBox(gameState, cost, false);
+                break;
+            case COST_REFRESH:
+                performRefreshAction(gameState, cost);
+                break;
+            default:
+                break;
+        }
+    }
 
+    private void buyMysteryBoxStandard(final GameState gameState, final int cost) {
+        final PlantType unlockedPlant = gameState.getShop().buyMysteryBox(gameState, cost);
+        handlePurchaseResult(gameState, unlockedPlant, cost);
+    }
+
+    private void buySpecificBox(final GameState gameState, final int cost, final boolean onlyEdible) {
+        if (gameState.getWallet() < cost) {
+            showMessage(INSUFFICIENT_FUNDS, YOU_NEED + cost + " coins to buy this!");
+            return;
+        }
+
+        final List<Plant> candidates = gameState.getAllPlants().stream()
+                .filter(p -> !p.isDiscovered())
+                .filter(p -> p.isEdible() == onlyEdible)
+                .collect(Collectors.toList());
+
+        if (candidates.isEmpty()) {
+            showMessage("Sold Out", "You have unlocked all " + (onlyEdible ? "edible" : "ornamental") + " plants!");
+            return;
+        }
+
+        if (gameState.spendCoins(cost)) {
+            final Plant selectedPlant = candidates.get(random.nextInt(candidates.size()));
+
+            selectedPlant.getType().unlock();
+            gameState.saveEncyclopedia();
+
+            this.view.playMisteryBoxSound();
+            new MysteryBox(selectedPlant.getType()).start();
+
+            if (this.onTransactionListener != null) {
+                this.onTransactionListener.run();
+            }
+            refreshRequests(gameState);
+        }
+    }
+
+    /**
+     * Logic for the Refresh button.
+     * 
+     * @param gameState The current game state.
+     * @param cost      The cost to refresh.
+     */
+    private void performRefreshAction(final GameState gameState, final int cost) {
+        if (gameState.getWallet() < cost) {
+            showMessage(INSUFFICIENT_FUNDS, YOU_NEED + cost + " coins to refresh!");
+            return;
+        }
+
+        gameState.spendCoins(cost);
+        this.view.playCoinSound();
+        gameState.getShop().resetRequests();
+        refreshRequests(gameState);
+
+        if (this.onTransactionListener != null) {
+            this.onTransactionListener.run();
+        }
+
+        showMessage("Refreshed", "Merchant requests have been updated!");
+    }
+
+    private void handlePurchaseResult(final GameState gameState, final PlantType unlockedPlant, final int cost) {
         if (unlockedPlant != null) {
             gameState.saveEncyclopedia();
             this.view.playMisteryBoxSound();
-            //showMessage("New Discovery!", "You unlocked: " + unlockedPlant.getName() + "!");
             new MysteryBox(unlockedPlant).start();
 
             if (this.onTransactionListener != null) {
@@ -107,9 +195,8 @@ public final class ShopController {
         } else {
             if (gameState.getShop().areAllPlantsUnlocked()) {
                 showMessage("Shop Empty", "You have already unlocked all plants!");
-                refreshRequests(gameState);
             } else {
-                showMessage("Insufficient Funds", "You need " + cost + " coins to buy this!");
+                showMessage(INSUFFICIENT_FUNDS, YOU_NEED + cost + " coins to buy this!");
             }
         }
     }

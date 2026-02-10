@@ -30,14 +30,16 @@ public final class ShopScreen {
 
     private static final String TITLE = "Shop";
     private static final String FONT_FAMILY = "Arial";
-    private static final int BUY_COST = 250;
 
     private static final int LEFT_GRID_ROWS = 3;
     private static final int LEFT_GRID_COLS = 1;
     private static final int RIGHT_GRID_ROWS = 2;
     private static final int RIGHT_GRID_COLS = 2;
 
-    private static final int BUY_BTN_COUNT = 4;
+    private static final int COST_RANDOM = 750;
+    private static final int COST_EDIBLE = 500;
+    private static final int COST_ORNAMENTAL = 1000;
+    private static final int COST_REFRESH = 50;
 
     private static final double FONT_RATIO = 0.017;
     private static final double PADDING_RATIO = 0.02;
@@ -183,26 +185,21 @@ public final class ShopScreen {
     public void setBuyButtons(final ActionListener listener) {
         this.rightBoxPanel.removeAll();
 
-        final ImageIcon[] giftIcons = {
-            Texture.GIFT_ICON,
-            Texture.RARE_GIFT_ICON,
-            Texture.EPIC_GIFT_ICON,
-            Texture.LEGENDARY_GIFT_ICON,
-        };
+        addButton("Random (750)", COST_RANDOM, Texture.GIFT_ICON, listener);
+        addButton("Edible (500)", COST_EDIBLE, Texture.RARE_GIFT_ICON, listener);
+        addButton("Ornamental (1000)", COST_ORNAMENTAL, Texture.EPIC_GIFT_ICON, listener);
+        addButton("Refresh (50)", COST_REFRESH, Texture.RESET_ICON, listener);
+    }
 
-        for (int i = 0; i < BUY_BTN_COUNT; i++) {
-            final int cost = (i + 1) * BUY_COST;
-            final JButton buyButton = ButtonFactory.createButton("Buy (" + cost + ")");
-
-            buyButton.putClientProperty("itemCost", cost);
-
-            buyButton.setIcon(giftIcons[i]);
-            buyButton.setVerticalTextPosition(SwingConstants.BOTTOM);
-            buyButton.setHorizontalTextPosition(SwingConstants.CENTER);
-            buyButton.setIconTextGap(this.gap / 2);
-            buyButton.addActionListener(listener);
-            this.rightBoxPanel.add(buyButton);
-        }
+    private void addButton(final String text, final int cost, final ImageIcon icon, final ActionListener listener) {
+        final JButton button = ButtonFactory.createButton(text);
+        button.putClientProperty("itemCost", cost);
+        button.setIcon(icon);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setIconTextGap(this.gap);
+        button.addActionListener(listener);
+        this.rightBoxPanel.add(button);
     }
 
     /**
