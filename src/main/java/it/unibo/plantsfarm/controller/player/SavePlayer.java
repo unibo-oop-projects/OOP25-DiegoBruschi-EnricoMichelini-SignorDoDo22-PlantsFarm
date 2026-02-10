@@ -10,18 +10,23 @@ import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.view.utility.Memory;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
 
+/**
+ * Handles the saving and loading of player inventory data for the game.
+ */
 public final class SavePlayer {
 
     private static final Logger LOGGER = Logger.getLogger(SavePlayer.class.getName());
+    private static final String PAIR_SEPARATOR = ";";
+    private static final String VALUE_SEPARATOR = "=";
     private final String fileName = System.getProperty("user.home")
             + File.separator + ".plantsfarm"
             + File.separator + "player.txt";
 
-    private static final String PAIR_SEPARATOR = ";";
-    private static final String VALUE_SEPARATOR = "=";
-
     /**
-     * Save inventory items.
+     * Saves the player's inventory data using the provided Memory implementation.
+     *
+     * @param memory the Memory implementation to use for saving data
+     * @param inventario the player's inventory model containing the items to be saved
      */
     public void save(final Memory memory, final ModelInventario inventario) {
         final StringBuilder sb = new StringBuilder();
@@ -45,7 +50,10 @@ public final class SavePlayer {
     }
 
     /**
-     * Load inventory items.
+     * Loads the player's inventory data using the provided Memory implementation and updates the given inventory model.
+     *
+     * @param memory the Memory implementation to use for loading data
+     * @param inventario the player's inventory model to be updated with the loaded items
      */
     public void load(final Memory memory, final ModelInventario inventario) {
         try {
