@@ -71,7 +71,7 @@ public final class SpawningBuffsController {
      * @return A list of Buff objects representing the active buffs in the game.
      */
     public List<Buff> getBuffList() {
-        return this.activeBuffs;
+        return List.copyOf(activeBuffs);
     }
 
     /**

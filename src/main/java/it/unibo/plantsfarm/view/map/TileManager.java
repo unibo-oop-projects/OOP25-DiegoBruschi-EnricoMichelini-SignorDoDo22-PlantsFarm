@@ -27,7 +27,7 @@ public final class TileManager {
     private static final int FIRST_SHOP_TILE_INDEX = 20;
     private static final Logger LOGGER = Logger.getLogger(TileManager.class.getName());
 
-    private final ImplViewGamePanel gp;
+    private ImplViewGamePanel gp;
     private final Tile[] tile;
     private final int[][] mapTileNum;
     private int tileIndex;
@@ -38,8 +38,7 @@ public final class TileManager {
      * @param gp GamePanel passed to then set dimensions and draw tiles.
      */
     public TileManager(final ImplViewGamePanel gp) {
-        this.gp = gp;
-
+        setGp(gp);
         this.tile = new Tile[TILE_ARRAY_SIZE];
         this.mapTileNum = new int[ImplViewGamePanel.MAX_WORLD_COL][ImplViewGamePanel.MAX_WORLD_ROW];
 
@@ -191,5 +190,9 @@ public final class TileManager {
                 }
             }
         }
+    }
+
+    private void setGp(final ImplViewGamePanel gamePanel) {
+        this.gp = gamePanel;
     }
 }

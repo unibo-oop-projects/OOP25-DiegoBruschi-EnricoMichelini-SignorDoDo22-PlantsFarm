@@ -16,9 +16,9 @@ import it.unibo.plantsfarm.model.tiles.Soil;
 public class GardenController {
     private static final int ORNAMENTAL_SOIL = 2;
 
-    private final GameState gameState;
-    private final Player player;
-    private final GardenModel gardenModel;
+    private GameState gameState;
+    private Player player;
+    private GardenModel gardenModel;
 
     /**
      * Creates a new GardenController.
@@ -27,9 +27,9 @@ public class GardenController {
      * @param player    The player.
      */
     public GardenController(final GameState gameState, final Player player) {
-        this.gameState = gameState;
-        this.player = player;
-        this.gardenModel = new GardenModel();
+        setGameState(gameState);
+        setPlayer(player);
+        setGardenModel();
     }
 
     /**
@@ -101,5 +101,17 @@ public class GardenController {
             }
         }
         return null;
+    }
+    
+    private void setGameState(final GameState givenGameState) {
+        this.gameState = givenGameState;
+    }
+
+    private void setPlayer(final Player givenPlayer) {
+        this.player = givenPlayer;
+    }
+
+    private void setGardenModel() {
+        this.gardenModel = new GardenModel();
     }
 }

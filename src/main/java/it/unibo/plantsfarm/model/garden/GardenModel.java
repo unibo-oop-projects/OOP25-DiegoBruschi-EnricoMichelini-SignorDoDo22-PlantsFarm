@@ -77,6 +77,6 @@ public class GardenModel {
      * @return The list of Soil objects.
      */
     public final List<Soil> getSoils() {
-        return this.soils;
+        return List.copyOf(soils);
     }
 }
