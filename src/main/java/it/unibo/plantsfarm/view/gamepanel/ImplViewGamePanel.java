@@ -27,10 +27,10 @@ import javax.swing.SwingUtilities;
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
+import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.PlantStatus;
 
 import it.unibo.plantsfarm.model.garden.Buff; //REMOVE
 import it.unibo.plantsfarm.model.plant.Plant; //REMOVE
-import it.unibo.plantsfarm.model.plant.PlantEffect; //REMOVE
 import it.unibo.plantsfarm.model.tiles.Soil; //REMOVE
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamepanel.api.ViewGamePanel;
@@ -202,24 +202,17 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
                 null
             );
 
+            final PlantStatus status = controller.getPlantStatus(plant);
             ImageIcon statusIcon = null;
 
-            //DA FARE: da spostare in controller INIZIO
-            if (plant.isMature()) {
-                if (plant.isEdible()) {
-                    statusIcon = Texture.READY_ICON;
-                } else {
-                    if (plant.getType().getEffectInfo() != null) {
-                        final PlantEffect effectType = plant.getType().getEffectInfo().getType();
-                        if (effectType == PlantEffect.GROWTH_SPEED) {
-                            statusIcon = Texture.SPEED_ICON;
-                        } else if (effectType == PlantEffect.BIG_HARVEST) {
-                            statusIcon = Texture.HARVEST_ICON;
-                        }
-                    }
+            if (status != null) {
+                switch (status) {
+                    case READY_TO_HARVEST -> statusIcon = Texture.READY_ICON;
+                    case EFFECT_SPEED -> statusIcon = Texture.SPEED_ICON;
+                    case EFFECT_HARVEST -> statusIcon = Texture.HARVEST_ICON;
+                    case NEEDS_WATER -> statusIcon = Texture.WATER_ICON;
+                    default -> { }
                 }
-            } else if (plant.needsWater()) {
-                statusIcon = Texture.WATER_ICON;
             }
 
             if (statusIcon != null) {
@@ -230,7 +223,6 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
                 g2D.drawImage(statusIcon.getImage(), iconX, iconY, statusSize, statusSize, null);
             }
         }
-        //FINE DA FARE
     }
 
     @Override
