@@ -81,16 +81,16 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         KeyEvent.VK_P, SELECT_SEED
     );
 
-  private final Image buffImage = new SpriteLoader("/plantStatus/xp.png").getImage();
-  private final TileManager tileM;
+  private final transient Image buffImage = new SpriteLoader("/plantStatus/xp.png").getImage();
+  private final transient TileManager tileM;
   private int cameraX;
   private int cameraY;
   private double playerPosX;
   private double playerPosY;
-  private ControllerGamePanel controller;
-  private SelectorFrames selector;
+  private transient ControllerGamePanel controller;
+  private transient SelectorFrames selector;
   private List<Soil> soilList = List.of();
-  private List<Buff> buffList = List.of();
+  private transient List<Buff> buffList = List.of();
 
   /**
    * Creates a new ImplViewGamePanel, initializing the layout, size, and key listeners for user input.

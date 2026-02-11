@@ -11,7 +11,7 @@ import it.unibo.plantsfarm.model.tiles.TileMap;
  */
 public final class CollisionDetector {
 
-    private final Player player;
+    private Player player;
     private final TileMap map = new TileMap();
 
     /**
@@ -21,7 +21,7 @@ public final class CollisionDetector {
      */
     public CollisionDetector(final Player player) {
         this.map.loadMap("/maps/map.txt");
-        this.player = player;
+        setPlayer(player);
     }
 
     /**
@@ -49,5 +49,9 @@ public final class CollisionDetector {
             }
         }
         player.applyMovement();
+    }
+
+    private void setPlayer(final Player givenPlayer) {
+        this.player = givenPlayer;
     }
 }

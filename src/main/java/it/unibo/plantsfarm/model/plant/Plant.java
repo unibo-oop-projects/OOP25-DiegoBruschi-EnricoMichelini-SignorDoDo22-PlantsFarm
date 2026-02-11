@@ -149,7 +149,8 @@ public class Plant implements Serializable {
             growthStage = this.type.getResetStage();
             currentStageTime = 0;
             final int baseHarvest = type.getHarvestInfo().generateHarvest();
-            return (int) (baseHarvest * this.harvestMultiplier);
+            this.harvestedQuantity = (int) (baseHarvest * this.harvestMultiplier);
+            return this.harvestedQuantity;
         }
         return 0;
     }
