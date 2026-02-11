@@ -4,7 +4,8 @@ import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.view.menu.MysteryBox;
-import it.unibo.plantsfarm.view.menu.ShopScreen;
+import it.unibo.plantsfarm.view.menu.api.ShopScreen;
+import it.unibo.plantsfarm.view.menu.impl.ShopScreenImpl;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -38,7 +39,7 @@ public final class ShopController {
      * @param onTransactionListener The action to run when coins change.
      */
     public ShopController(final GameState gameState, final Runnable onTransactionListener) {
-        this.view = new ShopScreen();
+        this.view = new ShopScreenImpl();
         this.onTransactionListener = onTransactionListener;
         setupListeners(gameState);
         refreshRequests(gameState);

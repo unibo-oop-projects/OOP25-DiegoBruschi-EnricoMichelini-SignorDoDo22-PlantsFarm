@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.view.utility;
 
-import it.unibo.plantsfarm.view.music.MusicPlayer;
+import it.unibo.plantsfarm.view.music.api.MusicPlayer;
+import it.unibo.plantsfarm.view.music.impl.MusicPlayerImpl;
 
 import java.awt.Font;
 import javax.swing.ImageIcon;
@@ -17,7 +18,7 @@ public final class ButtonFactory {
     private static final int FONT_SIZE = (int) (SCREEN_HEIGHT * FONT_SCALE_RATIO);
 
     private static final Font MAIN_FONT = new Font("Arial", Font.BOLD, FONT_SIZE);
-    private static final MusicPlayer AUDIO = new MusicPlayer();
+    private static final MusicPlayer AUDIO = new MusicPlayerImpl();
 
     private ButtonFactory() {
     }

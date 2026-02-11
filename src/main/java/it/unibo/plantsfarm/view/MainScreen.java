@@ -2,7 +2,8 @@ package it.unibo.plantsfarm.view;
 
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.menu.MenuPanel;
-import it.unibo.plantsfarm.view.music.MusicPlayer;
+import it.unibo.plantsfarm.view.music.api.MusicPlayer;
+import it.unibo.plantsfarm.view.music.impl.MusicPlayerImpl;
 import it.unibo.plantsfarm.view.utility.Texture;
 
 import java.awt.BorderLayout;
@@ -41,7 +42,7 @@ public final class MainScreen {
     public MainScreen() {
         this.menuPanel = new MenuPanel();
         this.menuPanel.setFocusable(false);
-        this.musicPlayer = new MusicPlayer();
+        this.musicPlayer = new MusicPlayerImpl();
     }
 
     /**

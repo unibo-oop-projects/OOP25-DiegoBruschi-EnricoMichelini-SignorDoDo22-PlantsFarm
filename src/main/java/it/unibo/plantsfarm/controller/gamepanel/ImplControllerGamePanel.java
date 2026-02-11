@@ -25,7 +25,8 @@ import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantEffect;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
-
+import it.unibo.plantsfarm.view.music.api.MusicPlayer;
+import it.unibo.plantsfarm.view.music.impl.MusicPlayerImpl;
 
 /**
  * Implementation of the ControllerGamePanel interface, responsible for managing the game loop,
@@ -48,7 +49,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private final ControllerInventario controllerInventario;
     private final ManagerSavingPlayer managerSavingPlayer;
     private PlantType currentSelectedPlant;
-
+    private final MusicPlayer musicPlayer = new MusicPlayerImpl();
     /**
      * Creates a new ImplControllerGamePanel with the specified GameState.
      *
@@ -84,20 +85,28 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                 if (input != null) {
                     switch (input) {
                     case DOWN, UP, RIGHT, LEFT, FERMO -> actionHandler.updateDirection(input, player);
-                    case SELECT_SEED -> openSeedSelectionMenu();
+
+                    case SELECT_SEED -> {
+                        musicPlayer.playEffect("music/gameSound/seedSelect.wav");
+                        openSeedSelectionMenu();
+                    }
+
                     case ACTIONHOE -> {
+                        musicPlayer.playEffect("music/gameSound/plant.wav");
                         actionHandler.handleActionHoe(gardenController, currentSelectedPlant, player);
                         controllerInventario.updateInventory();
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
                     case ACTIONWATER -> {
+                        musicPlayer.playEffect("music/gameSound/watering.wav");
                         actionHandler.handleWater(gardenController, now, currentSelectedPlant, player);
                         controllerInventario.updateInventory();
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
                     case REMOVE_PLANT -> {
+                        musicPlayer.playEffect("music/gameSound/plant.wav");
                         actionHandler.handleAxe(gardenController, player);
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);

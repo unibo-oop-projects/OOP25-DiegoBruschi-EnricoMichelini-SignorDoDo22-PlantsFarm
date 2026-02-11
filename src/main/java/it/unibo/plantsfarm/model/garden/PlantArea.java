@@ -26,7 +26,7 @@ public final class PlantArea {
      * @param bounds The rectangle defining the area limits.
      */
     public PlantArea(final Rectangle bounds) {
-        this.bounds = bounds;
+        this.bounds = new Rectangle(bounds);
     }
 
     /**
@@ -35,6 +35,10 @@ public final class PlantArea {
      *
      * @param soil The soil object to try to add.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+        value = "EI2",
+        justification = "The PlantArea needs to hold the reference to the actual Soil object to update the game state."
+    )
     public void addSoil(final Soil soil) {
         if (bounds.contains(soil.getCoordinate())) {
             soils.add(soil);

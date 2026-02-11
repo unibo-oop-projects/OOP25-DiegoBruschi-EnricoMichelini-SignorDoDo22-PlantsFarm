@@ -1,5 +1,6 @@
-package it.unibo.plantsfarm.view.menu;
+package it.unibo.plantsfarm.view.menu.impl;
 
+import it.unibo.plantsfarm.view.menu.api.StorageScreen;
 import it.unibo.plantsfarm.view.utility.ButtonFactory;
 import it.unibo.plantsfarm.view.utility.Texture;
 import it.unibo.plantsfarm.view.utility.WindowFactory;
@@ -21,7 +22,7 @@ import java.awt.Dimension;
 /**
  * Manages the view for the Storage feature.
  */
-public final class StorageScreen {
+public final class StorageScreenImpl implements StorageScreen {
 
     private static final String TITLE = "Storage";
     private static final double GAP_RATIO = 0.005;
@@ -37,7 +38,7 @@ public final class StorageScreen {
     /**
      * Creates a new StorageScreen using WindowFactory.
      */
-    public StorageScreen() {
+    public StorageScreenImpl() {
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         final int gap = (int) (screenSize.height * GAP_RATIO);
         final int padding = (int) (screenSize.height * PADDING_RATIO);
@@ -59,6 +60,7 @@ public final class StorageScreen {
      *
      * @param plantName The name of the plant.
      */
+    @Override
     public void createStorageSlot(final String plantName) {
         if (itemButtons.containsKey(plantName)) {
             return;
@@ -88,6 +90,7 @@ public final class StorageScreen {
      * @param plantName   The name of the plant.
      * @param newQuantity The new quantity to display.
      */
+    @Override
     public void updateItemQuantity(final String plantName, final int newQuantity) {
         final JButton button = itemButtons.get(plantName);
         if (button != null) {
@@ -99,6 +102,7 @@ public final class StorageScreen {
     /**
      * Shows the storage screen.
      */
+    @Override
     public void show() {
         dialog.setVisible(true);
     }

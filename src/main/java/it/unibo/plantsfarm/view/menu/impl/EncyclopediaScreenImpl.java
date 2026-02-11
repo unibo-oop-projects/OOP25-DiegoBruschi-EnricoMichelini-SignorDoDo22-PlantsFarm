@@ -1,5 +1,6 @@
-package it.unibo.plantsfarm.view.menu;
+package it.unibo.plantsfarm.view.menu.impl;
 
+import it.unibo.plantsfarm.view.menu.api.EncyclopediaScreen;
 import it.unibo.plantsfarm.view.utility.ButtonFactory;
 import it.unibo.plantsfarm.view.utility.Texture;
 import it.unibo.plantsfarm.view.utility.TextureUtils;
@@ -26,7 +27,7 @@ import java.awt.Dimension;
 /**
  * Manages the view for the Encyclopedia feature.
  */
-public final class EncyclopediaScreen {
+public final class EncyclopediaScreenImpl implements EncyclopediaScreen {
 
     private static final String TITLE = "Encyclopedia";
     private static final String FONT_NAME = "Arial";
@@ -60,7 +61,7 @@ public final class EncyclopediaScreen {
     /**
      * Initializes the screen.
      */
-    public EncyclopediaScreen() {
+    public EncyclopediaScreenImpl() {
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         final int screenHeight = screenSize.height;
 
@@ -121,6 +122,7 @@ public final class EncyclopediaScreen {
      *
      * @param rarity the name of the rarity.
      */
+    @Override
     public void setRarity(final String rarity) {
         this.nameLabel.setForeground(Color.WHITE);
         switch (rarity) {
@@ -156,6 +158,7 @@ public final class EncyclopediaScreen {
      * @param listener controller listener.
      * @param stageCommand the stage command.
      */
+    @Override
     public void show(final List<String> names, final List<Boolean> unlocked,
         final ActionListener listener, final String stageCommand) {
 
@@ -193,6 +196,7 @@ public final class EncyclopediaScreen {
      * @param stage stage index.
      * @return true if icon was found, false otherwise.
      */
+    @Override
     public boolean updateStageImage(final String name, final int stage) {
         final ImageIcon icon = Texture.getPlantStageIcon(name, stage);
         if (icon != null) {
@@ -208,6 +212,7 @@ public final class EncyclopediaScreen {
      * @param name plant name.
      * @param description plant description.
      */
+    @Override
     public void updateDetails(final String name, final String description) {
         this.nameLabel.setText(name);
         this.plantDescriptionArea.setText(description);

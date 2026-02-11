@@ -2,10 +2,14 @@ package it.unibo.plantsfarm.model;
 
 import it.unibo.plantsfarm.controller.player.ManagerSavingPlayer;
 import it.unibo.plantsfarm.model.garden.SoilSaving;
-import it.unibo.plantsfarm.model.menu.Coin;
-import it.unibo.plantsfarm.model.menu.Encyclopedia;
-import it.unibo.plantsfarm.model.menu.Storage;
-import it.unibo.plantsfarm.model.menu.Shop;
+import it.unibo.plantsfarm.model.menu.api.Coin;
+import it.unibo.plantsfarm.model.menu.api.Encyclopedia;
+import it.unibo.plantsfarm.model.menu.api.Shop;
+import it.unibo.plantsfarm.model.menu.api.Storage;
+import it.unibo.plantsfarm.model.menu.impl.CoinImpl;
+import it.unibo.plantsfarm.model.menu.impl.EncyclopediaImpl;
+import it.unibo.plantsfarm.model.menu.impl.ShopImpl;
+import it.unibo.plantsfarm.model.menu.impl.StorageImpl;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import java.util.List;
@@ -31,12 +35,12 @@ public final class GameState {
      * @param plants The list of plants to load into the internal encyclopedia.
      */
     public GameState(final List<Plant> plants) {
-        this.encyclopedia = new Encyclopedia();
-        this.storage = new Storage();
-        this.shop = new Shop();
-        this.wallet = new Coin(INITIAL_COINS);
         this.soils = new SoilSaving();
         this.managerSavingPlayer = new ManagerSavingPlayer();
+        this.encyclopedia = new EncyclopediaImpl();
+        this.storage = new StorageImpl();
+        this.shop = new ShopImpl();
+        this.wallet = new CoinImpl(INITIAL_COINS);
 
         for (final Plant p : plants) {
             this.encyclopedia.addPlant(p);
