@@ -16,12 +16,11 @@ import it.unibo.plantsfarm.view.inventario.UpdatablePanel;
  * This Panel show all  items image and their current level.
  *
  */
-public final class ItemsViewImageItem implements UpdatablePanel {
+public final class ItemsViewImageItem extends JPanel implements UpdatablePanel {
 
     private static final int BUTTON_SIZE = 60;
     private static final int ICON_SIZE = 48;
     private final ControllerInventario controllerInventario;
-    private final JPanel root = new JPanel();
     private final Map<Tooltype, JButton> itemsDisplay = new EnumMap<>(Tooltype.class);
 
     /**
@@ -31,7 +30,7 @@ public final class ItemsViewImageItem implements UpdatablePanel {
      */
     public ItemsViewImageItem(final ControllerInventario controllerInventario) {
         this.controllerInventario = controllerInventario;
-        this.root.setLayout(new GridLayout(3, 1));
+        this.setLayout(new GridLayout(3, 1));
         createItemButtons();
         update();
     }
@@ -70,7 +69,7 @@ public final class ItemsViewImageItem implements UpdatablePanel {
 
             button.setEnabled(true);
             itemsDisplay.put(tool, button);
-            root.add(button);
+            this.add(button);
         }
     }
 
@@ -88,10 +87,5 @@ public final class ItemsViewImageItem implements UpdatablePanel {
         final ImageIcon icon = new ImageIcon(url);
         final Image scaled = icon.getImage().getScaledInstance(ICON_SIZE, ICON_SIZE, Image.SCALE_SMOOTH);
         return new ImageIcon(scaled);
-    }
-
-    @Override
-    public JPanel getPanel() {
-        return this.root;
     }
 }

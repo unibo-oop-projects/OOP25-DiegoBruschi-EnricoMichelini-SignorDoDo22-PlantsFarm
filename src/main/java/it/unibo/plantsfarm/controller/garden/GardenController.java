@@ -7,7 +7,7 @@ import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.garden.GardenModel;
-import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
+import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.model.tiles.Soil;
 
 /**
@@ -17,7 +17,7 @@ public class GardenController {
     private static final int ORNAMENTAL_SOIL = 2;
 
     private final GameState gameState;
-    private final AbstractPlayer player;
+    private final Player player;
     private final GardenModel gardenModel;
 
     /**
@@ -26,7 +26,7 @@ public class GardenController {
      * @param gameState The game state.
      * @param player    The player.
      */
-    public GardenController(final GameState gameState, final AbstractPlayer player) {
+    public GardenController(final GameState gameState, final Player player) {
         this.gameState = gameState;
         this.player = player;
         this.gardenModel = new GardenModel();

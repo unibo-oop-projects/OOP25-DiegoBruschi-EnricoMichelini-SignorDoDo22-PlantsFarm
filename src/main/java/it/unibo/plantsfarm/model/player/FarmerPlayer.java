@@ -1,12 +1,12 @@
 package it.unibo.plantsfarm.model.player;
 
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
-import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
+import it.unibo.plantsfarm.model.player.api.Player;
 
 /**
  * Standard player.
  */
-public final class FarmerPlayer extends AbstractPlayer {
+public final class FarmerPlayer extends Player {
 
     /**
      * FarmerPlayer inizializzation.

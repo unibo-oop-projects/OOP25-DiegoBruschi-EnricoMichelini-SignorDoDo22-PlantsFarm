@@ -6,7 +6,7 @@ import it.unibo.plantsfarm.model.player.ExpertFarmer;
 import it.unibo.plantsfarm.model.player.FarmerPlayer;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
-import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
+import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.model.player.api.FactoryPlayer;
 import it.unibo.plantsfarm.controller.player.ImplActionHandler;
 import it.unibo.plantsfarm.controller.player.api.ActionHandler;
@@ -24,15 +24,15 @@ final class PlayerTest {
 
     @Test
     void testCreationPlayer() {
-        final AbstractPlayer player = factory.createPlayer(PlayersTypes.FARMER);
+        final Player player = factory.createPlayer(PlayersTypes.FARMER);
         assertTrue(player instanceof FarmerPlayer);
-        final AbstractPlayer playerExpert = factory.createPlayer(PlayersTypes.EXPERTFARMER);
+        final Player playerExpert = factory.createPlayer(PlayersTypes.EXPERTFARMER);
         assertTrue(playerExpert instanceof ExpertFarmer);
     }
 
     @Test
     void testMovementRight() {
-        final AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
+        final Player player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
         final ActionHandler action = new ImplActionHandler();
         final double startX = player.getPosx();
         action.updateDirection(RIGHT, player);
@@ -46,7 +46,7 @@ final class PlayerTest {
 
     @Test
     void testMovementLeft() {
-        final AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
+        final Player player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
         final ActionHandler action = new ImplActionHandler();
         action.updateDirection(LEFT, player);
         final double startX = player.getPosx();
@@ -65,7 +65,7 @@ final class PlayerTest {
 
     @Test
     void testMovementUp() {
-        final AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
+        final Player player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
         final ActionHandler action = new ImplActionHandler();
         action.updateDirection(UP, player);
         final double startY = player.getPosy();
@@ -84,7 +84,7 @@ final class PlayerTest {
 
     @Test
     void testMovementDown() {
-        final AbstractPlayer player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
+        final Player player = factory.createPlayer(PlayersTypes.EXPERTFARMER);
         final ActionHandler action = new ImplActionHandler();
         action.updateDirection(DOWN, player);
         final double startY = player.getPosy();

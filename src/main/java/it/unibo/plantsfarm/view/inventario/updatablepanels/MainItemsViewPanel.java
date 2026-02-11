@@ -12,8 +12,7 @@ import it.unibo.plantsfarm.view.inventario.UpdatablePanel;
  * This panel is responsible for updating all its child panels.
  * Thanks to the the interface UpdatablePanel each panel can be easily replaced with onother implementation.
  */
-public final class MainItemsViewPanel implements UpdatablePanel {
-    private final JPanel mainPanel;
+public final class MainItemsViewPanel extends JPanel implements UpdatablePanel {
     private final List<UpdatablePanel> panelsComposition;
     private final UpdatablePanel panelProgressBar;
     private final UpdatablePanel panelViewImageItems;
@@ -25,15 +24,14 @@ public final class MainItemsViewPanel implements UpdatablePanel {
      * @param controllerInventario is passed to all the panel children.
      */
     public MainItemsViewPanel(final ControllerInventario controllerInventario) {
-        this.mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout());
         this.panelItemsUpgradeButtons = new ItemsViewButtonUpgrade(controllerInventario);
         this.panelViewImageItems = new ItemsViewImageItem(controllerInventario);
         this.panelProgressBar = new ItemsViewBarProgress(controllerInventario);
         this.panelsComposition = new LinkedList<>(List.of(panelItemsUpgradeButtons, panelProgressBar, panelViewImageItems));
-        mainPanel.add(panelItemsUpgradeButtons.getPanel(), BorderLayout.EAST);
-        mainPanel.add(panelViewImageItems.getPanel(), BorderLayout.WEST);
-        mainPanel.add(panelProgressBar.getPanel(), BorderLayout.CENTER);
+        this.add((JPanel) panelItemsUpgradeButtons, BorderLayout.EAST);
+        this.add((JPanel) panelViewImageItems, BorderLayout.WEST);
+        this.add((JPanel) panelProgressBar, BorderLayout.CENTER);
     }
 
     @Override
@@ -41,11 +39,6 @@ public final class MainItemsViewPanel implements UpdatablePanel {
         for (final UpdatablePanel updatablePanel : panelsComposition) {
             updatablePanel.update();
         }
-    }
-
-    @Override
-    public JPanel getPanel() {
-       return this.mainPanel;
     }
 
 }

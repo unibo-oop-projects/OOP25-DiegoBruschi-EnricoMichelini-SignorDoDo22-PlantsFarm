@@ -18,7 +18,7 @@ import it.unibo.plantsfarm.model.garden.CollisionDetector;
 import it.unibo.plantsfarm.model.garden.SoilSaving;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
-import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
+import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.plant.Plant;
@@ -36,7 +36,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private ImplViewGamePanel view;
     private final ImplFactoryPlayer factoryPlayer = new ImplFactoryPlayer();
     private final BlockingQueue<UserInput> queue = new LinkedBlockingQueue<>();
-    private AbstractPlayer player;
+    private Player player;
     private final GardenController gardenController;
     private ImplSelectorFrames controllerAnimation;
     private ImplCamera camera;

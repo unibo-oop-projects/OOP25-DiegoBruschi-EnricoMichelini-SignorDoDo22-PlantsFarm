@@ -1,7 +1,7 @@
 package it.unibo.plantsfarm.model.player;
 
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
-import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
+import it.unibo.plantsfarm.model.player.api.Player;
 
 /**
  * This class create The ExpertFarmer. It can be used for try everything in the game.
@@ -9,7 +9,7 @@ import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
  * The movement is faster than the Farmer.
  * It can be used for test the game.
  */
-public final class ExpertFarmer extends AbstractPlayer {
+public final class ExpertFarmer extends Player {
 
     /**
      * Creates an {@code ExpertFarmer} with the given inventory.

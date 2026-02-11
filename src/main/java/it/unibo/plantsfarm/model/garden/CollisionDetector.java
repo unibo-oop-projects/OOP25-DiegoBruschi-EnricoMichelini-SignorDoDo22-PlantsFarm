@@ -2,7 +2,7 @@ package it.unibo.plantsfarm.model.garden;
 
 import java.awt.Rectangle;
 
-import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
+import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.model.tiles.SolidBlock;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 
@@ -11,7 +11,7 @@ import it.unibo.plantsfarm.model.tiles.TileMap;
  */
 public final class CollisionDetector {
 
-    private final AbstractPlayer player;
+    private final Player player;
     private final TileMap map = new TileMap();
 
     /**
@@ -19,7 +19,7 @@ public final class CollisionDetector {
      *
      * @param player The player for whom collision detection will be performed.
      */
-    public CollisionDetector(final AbstractPlayer player) {
+    public CollisionDetector(final Player player) {
         this.map.loadMap("/maps/map.txt");
         this.player = player;
     }

@@ -3,6 +3,8 @@ package it.unibo.plantsfarm.view.inventario;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JDialog;
+import javax.swing.JPanel;
+
 import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.inventario.updatablepanels.MainItemsViewPanel;
@@ -31,7 +33,7 @@ public final class UpgradeItemsView extends JDialog {
         this.setTitle(TITLE);
         this.gamePanel = gamePanel;
         this.mainPanel = new MainItemsViewPanel(controllerInventario);
-        this.add(mainPanel.getPanel());
+        this.add((JPanel)mainPanel);
         this.setResizable(false);
         this.setSize(DIALOG_WIDTH, DIALOG_HEIGHT);
         this.setLocationRelativeTo(gamePanel);

@@ -4,7 +4,7 @@ import static it.unibo.plantsfarm.model.player.PlayersTypes.EXPERTFARMER;
 import static it.unibo.plantsfarm.model.player.PlayersTypes.FARMER;
 
 import it.unibo.plantsfarm.model.items.InventoryFactory;
-import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
+import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.model.player.api.FactoryPlayer;
 
 /**
@@ -26,7 +26,7 @@ public final class ImplFactoryPlayer implements FactoryPlayer {
      * @throws IllegalArgumentException if the player type is not supported
      */
     @Override
-    public AbstractPlayer createPlayer(final PlayersTypes request) {
+    public Player createPlayer(final PlayersTypes request) {
         if (request == FARMER) {
             return new FarmerPlayer(factoryInventory.createInventory(request), request);
         } else if (request == EXPERTFARMER) {

@@ -1,6 +1,5 @@
 package it.unibo.plantsfarm.model.camera;
 
-import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
 /**

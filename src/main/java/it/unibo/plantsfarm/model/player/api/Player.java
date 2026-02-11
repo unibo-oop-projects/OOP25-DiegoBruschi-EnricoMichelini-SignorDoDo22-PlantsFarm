@@ -11,7 +11,7 @@ import it.unibo.plantsfarm.model.player.PlayersTypes;
  * Abstract base class representing a generic player entity.
  * It stores the player position, movement speed and direction.
  */
-public class AbstractPlayer {
+public class Player {
 
     public static final int FARMER_SPEED = 400;
     public static final int OFF_SET_HITBOX = 32;
@@ -39,7 +39,7 @@ public class AbstractPlayer {
      * @param playersTypes set the player type
      * @throws NullPointerException if {@code inventory} is {@code null}
      */
-    public AbstractPlayer(final ModelInventario inventory, final PlayersTypes playersTypes) {
+    public Player(final ModelInventario inventory, final PlayersTypes playersTypes) {
         this.inventory = inventory;
         this.playersType = playersTypes;
     }

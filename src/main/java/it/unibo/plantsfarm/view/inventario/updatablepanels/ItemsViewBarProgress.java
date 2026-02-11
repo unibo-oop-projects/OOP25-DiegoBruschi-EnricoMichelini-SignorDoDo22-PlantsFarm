@@ -19,7 +19,7 @@ import it.unibo.plantsfarm.view.inventario.UpdatablePanel;
 /**
  * Display all the progress bar for each item in inventory.
  */
-public final class ItemsViewBarProgress implements UpdatablePanel {
+public final class ItemsViewBarProgress extends JPanel implements UpdatablePanel {
 
     private static final int GRID_ROWS = 3;
     private static final int GRID_COLS = 1;
@@ -35,7 +35,6 @@ public final class ItemsViewBarProgress implements UpdatablePanel {
     private final Map<Tooltype, JProgressBar> progressBarMap = new EnumMap<>(Tooltype.class);
 
     private final ControllerInventario controllerInventario;
-    private final JPanel panel = new JPanel();
 
     /**
      * Creates a new view that displays the progress bars of the inventory items.
@@ -44,7 +43,7 @@ public final class ItemsViewBarProgress implements UpdatablePanel {
      */
     public ItemsViewBarProgress(final ControllerInventario controllerInventario) {
         this.controllerInventario = Objects.requireNonNull(controllerInventario);
-        panel.setLayout(layout);
+        this.setLayout(layout);
         createProgressBars();
     }
 
@@ -58,7 +57,7 @@ public final class ItemsViewBarProgress implements UpdatablePanel {
             bar.setMinimum(0);
 
             progressBarMap.put(tool, bar);
-            panel.add(bar);
+            this.add(bar);
         }
     }
 
@@ -72,10 +71,5 @@ public final class ItemsViewBarProgress implements UpdatablePanel {
             bar.setMaximum(item.getExperienceForLevel());
             bar.setValue(item.getExperience());
         }
-    }
-
-    @Override
-    public JPanel getPanel() {
-        return panel;
     }
 }
