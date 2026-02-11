@@ -18,7 +18,7 @@ import it.unibo.plantsfarm.model.plant.PlantType;
 
 final class ShopTest {
 
-    private static final int INITIAL_COINS = 250;
+    private static final int INITIAL_COINS = 500;
     private static final int CARROTS_QUANTITY_TO_ADD = 50;
     private static final int CARROT_QUANTITY_TO_SELL = 10;
     private static final int MYSTERY_BOX_COST = 50;
