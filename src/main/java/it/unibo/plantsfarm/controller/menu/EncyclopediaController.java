@@ -3,7 +3,8 @@ package it.unibo.plantsfarm.controller.menu;
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.menu.Encyclopedia;
 import it.unibo.plantsfarm.model.plant.Plant;
-import it.unibo.plantsfarm.view.menu.EncyclopediaScreen;
+import it.unibo.plantsfarm.view.menu.api.EncyclopediaScreen;
+import it.unibo.plantsfarm.view.menu.impl.EncyclopediaScreenImpl;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +26,7 @@ public final class EncyclopediaController {
      * Creates the controller.
      */
     public EncyclopediaController() {
-        this.encyclopediaScreen = new EncyclopediaScreen();
+        this.encyclopediaScreen = new EncyclopediaScreenImpl();
         this.encyclopedia = new Encyclopedia();
     }
 
