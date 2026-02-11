@@ -20,20 +20,20 @@ public final class InventoryFactory {
      * Farmer offer the standard game with slower progression.
      *
      * @param typePlayer the type of player for which the inventory is created
-     * @return a fully initialized ModellIventario
+     * @return a fully initialized ModelInventario
      * @throws IllegalArgumentException if the player type is not supported
      */
     public ModelInventario createInventory(final PlayersTypes typePlayer) {
         if (typePlayer == EXPERTFARMER) {
             final Map<Tooltype, ItemsFarm> items = new LinkedHashMap<>();
-            items.put(Tooltype.FERTILIZER, new ItemsExpert(Tooltype.FERTILIZER));
+            items.put(Tooltype.AXE, new ItemsExpert(Tooltype.AXE));
             items.put(Tooltype.WATERCAN, new ItemsExpert(Tooltype.WATERCAN));
             items.put(Tooltype.HOE, new ItemsExpert(Tooltype.HOE));
             return new ModelInventario(items);
 
         } else if (typePlayer == FARMER) {
             final Map<Tooltype, ItemsFarm> items = new LinkedHashMap<>();
-            items.put(Tooltype.FERTILIZER, new ItemsFarmBase(Tooltype.FERTILIZER));
+            items.put(Tooltype.AXE, new ItemsFarmBase(Tooltype.AXE));
             items.put(Tooltype.WATERCAN, new ItemsFarmBase(Tooltype.WATERCAN));
             items.put(Tooltype.HOE, new ItemsFarmBase(Tooltype.HOE));
             return new ModelInventario(items);
