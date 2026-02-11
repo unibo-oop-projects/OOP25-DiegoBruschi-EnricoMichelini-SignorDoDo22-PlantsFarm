@@ -21,6 +21,8 @@ import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.AbstractPlayer;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.model.plant.PlantType;
+import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantEffect;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
@@ -121,7 +123,6 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
      * Open the seed selection menu.
      */
     private void openSeedSelectionMenu() {
-
         new SeedController(plant -> {
             this.currentSelectedPlant = plant;
         }, true).start();
@@ -165,4 +166,24 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         throw new UnsupportedOperationException("Unimplemented method 'setInventario'");
     }
 
+    @Override
+    public PlantStatus getPlantStatus(final Plant plant) {
+        if (plant.isMature()) {
+            if (plant.isEdible()) {
+                return PlantStatus.READY_TO_HARVEST;
+            } else {
+                if (plant.getType().getEffectInfo() != null) {
+                    final PlantEffect effectType = plant.getType().getEffectInfo().getType();
+                    if (effectType == PlantEffect.GROWTH_SPEED) {
+                        return PlantStatus.EFFECT_SPEED;
+                    } else if (effectType == PlantEffect.BIG_HARVEST) {
+                        return PlantStatus.EFFECT_HARVEST;
+                    }
+                }
+            }
+        } else if (plant.needsWater()) {
+            return PlantStatus.NEEDS_WATER;
+        }
+        return PlantStatus.GROWING;
+    }
 }

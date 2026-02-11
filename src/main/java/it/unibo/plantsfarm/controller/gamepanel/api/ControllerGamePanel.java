@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.controller.gamepanel.api;
 
+import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
 /**
@@ -15,6 +16,18 @@ public interface ControllerGamePanel {
      */
     enum UserInput {
         LEFT, RIGHT, DOWN, UP, FERMO, ACTIONHOE, ACTIONWATER, REMOVE_PLANT, SELECT_SEED
+    }
+
+    /**
+     * Represents the visual state of a plant.
+     * Used by the View to determine which icon to draw.
+     */
+    enum PlantStatus {
+        READY_TO_HARVEST,
+        EFFECT_SPEED,
+        EFFECT_HARVEST,
+        NEEDS_WATER,
+        GROWING
     }
 
     /**
@@ -46,4 +59,12 @@ public interface ControllerGamePanel {
     void openInventory();
 
     void setInventario();
+
+    /**
+     * Determines the status of a plant.
+     *
+     * @param plant the plant to check
+     * @return the status of the plant
+     */
+    PlantStatus getPlantStatus(Plant plant);
 }
