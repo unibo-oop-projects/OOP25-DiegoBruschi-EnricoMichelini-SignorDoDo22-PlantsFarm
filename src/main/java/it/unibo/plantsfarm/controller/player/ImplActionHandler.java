@@ -21,15 +21,17 @@ public final class ImplActionHandler implements ActionHandler {
 
     @Override
     public void handleActionHoe(final GardenController controllerGarden, final PlantType selectedPlant, final Player player) {
+
+        final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
+
+        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
+            && soil.isPlanted() && soil.getPlant().isMature() && player.getInventory().useItem(HOE, soil.getPlant().getRarity())) {
+            controllerGarden.pianta(selectedPlant);
+        }
+
         if (selectedPlant != null) {
-            final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
             if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
                 && !soil.isPlanted() && player.getInventory().useItem(HOE, selectedPlant.getRarity())
-            ) {
-                player.useItem(HOE, selectedPlant.getRarity());
-                controllerGarden.pianta(selectedPlant);
-            } else if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
-                && soil.isPlanted() && soil.getPlant().isMature()
             ) {
                 controllerGarden.pianta(selectedPlant);
             }

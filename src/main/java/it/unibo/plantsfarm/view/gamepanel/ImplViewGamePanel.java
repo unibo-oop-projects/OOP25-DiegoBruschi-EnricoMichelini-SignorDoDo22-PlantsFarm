@@ -87,14 +87,14 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   private transient ControllerGamePanel controller;
   private transient SelectorFrames selector;
   private List<Soil> soilList = List.of();
-  @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED", 
-        justification = "The list is transient because it is populated by the Controller " 
+  @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
+        justification = "The list is transient because it is populated by the Controller "
                       + "via the show() method at every frame; it doesn't need to be persisted.")
   private transient List<Buff> buffList = List.of();
 
   /**
    * Creates a new ImplViewGamePanel, initializing the layout, size, and key listeners for user input.
-   * 
+   *
    * @param controllerGamePanel The controller that will handle user input and game logic.
    * @param selectorFrames The animation selector for rendering player animations.
    */

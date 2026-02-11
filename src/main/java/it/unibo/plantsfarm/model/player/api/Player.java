@@ -184,4 +184,11 @@ public class Player {
     public final void useItem(final Tooltype tool, final Rarity plant) {
         inventory.useItem(tool, plant);
     }
+
+
+    public final void upgradeItemRarityFromPlayer(final Tooltype tool) {
+        inventory.upgrade(tool);
+    }
+
+
 }

@@ -67,6 +67,7 @@ public class GardenController {
             for (final Soil zolla : gardenModel.getSoils()) {
                 if (zolla.getCoordinate().contains(player.getHitBox())) {
                     if (zolla.isPlanted() && zolla.getPlant().isMature()) {
+                        System.out.println("è matura ");
                         gameState.addHarvest(zolla.getPlant().getType(), zolla.getPlant().harvest());
                     } else if (!zolla.isPlanted() && zolla.getTileId() == ORNAMENTAL_SOIL && !type.isEdible()
                         || zolla.getTileId() != ORNAMENTAL_SOIL && type.isEdible()

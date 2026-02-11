@@ -144,7 +144,7 @@ public class Plant implements Serializable {
     public final int harvest() {
         if (!type.isEdible()) {
             return 0;
-        } 
+        }
         if (isMature()) {
             growthStage = this.type.getResetStage();
             currentStageTime = 0;

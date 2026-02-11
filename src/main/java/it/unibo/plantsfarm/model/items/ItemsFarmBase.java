@@ -1,5 +1,7 @@
 package it.unibo.plantsfarm.model.items;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
@@ -74,6 +76,7 @@ public final class ItemsFarmBase implements ItemsFarm {
     @Override
     public void useItem() {
         this.experience += StatsItemBase.EXPERIENCE_FOR_ACTION;
+        System.out.println("Rarity item" + itemRarity);
     }
 
     @Override
@@ -123,6 +126,16 @@ public final class ItemsFarmBase implements ItemsFarm {
     }
 
     @Override
+    public boolean verifyRarity(Rarity plantrarity) {
+        if(level < StatsItemBase.mapRarity.get(plantrarity)) {
+            System.out.println(level + " Rarity " + getRarityItem().toString());
+            return false;
+        }
+        System.out.println(level + " è possibile utilizzarlo " + itemRarity.toString());
+        return true;
+    }
+
+    @Override
     public void setLevel(final int level) {
         this.level = level;
     }
@@ -142,6 +155,9 @@ public final class ItemsFarmBase implements ItemsFarm {
         private static final int VAL_RARE = 3;
         private static final int VAL_EPIC = 6;
         private static final int VAL_LEGENDARY = 10;
+
+        private static final Map<Rarity, Integer> mapRarity = new LinkedHashMap<>(Map.of(Rarity.COMMON , 0, Rarity.RARE, 3
+            , Rarity.EPIC, 6, Rarity.LEGENDARY, 10));
     }
 
 }

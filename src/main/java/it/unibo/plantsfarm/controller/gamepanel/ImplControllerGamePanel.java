@@ -155,7 +155,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
 
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
-        value = "EI_EXPOSE_REP", 
+        value = "EI_EXPOSE_REP",
         justification = "The View is a complex Swing component and cannot be deeply cloned. "
                       + "The Controller must provide the actual instance to the main application frame."
     )
@@ -171,8 +171,8 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     @Override
     public void openInventory() {
         if (controllerInventario != null) {
-            this.controllerInventario.openViewInv();
             this.controllerInventario.updateInventory();
+            this.controllerInventario.openViewInv();
         }
     }
 

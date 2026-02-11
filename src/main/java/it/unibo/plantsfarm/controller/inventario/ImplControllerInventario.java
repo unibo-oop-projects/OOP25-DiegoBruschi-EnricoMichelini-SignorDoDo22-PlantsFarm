@@ -32,7 +32,7 @@ public final class ImplControllerInventario implements ControllerInventario {
 
     @Override
     public void pressUpgradeItem(final Tooltype tool) {
-        abstractPlayer.getInventory().upgrade(tool);
+        abstractPlayer.upgradeItemRarityFromPlayer(tool);
         viewItemsInventory.updateAllItemsPanel();
     }
 

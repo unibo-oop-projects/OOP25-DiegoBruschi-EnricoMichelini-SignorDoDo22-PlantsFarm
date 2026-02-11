@@ -57,7 +57,6 @@ public final class ItemsViewBarProgress extends JPanel implements UpdatablePanel
             bar.setOpaque(true);
             bar.setFont(BAR_FONT);
             bar.setMinimum(0);
-
             progressBarMap.put(tool, bar);
             this.add(bar);
         }

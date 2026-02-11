@@ -93,6 +93,7 @@ public final class ModelInventario {
         }
 
         item.upgrade();
+        System.out.println("Rarity, dell'oggetto " + inventario.get(type).getRarityItem().toString());
         return true;
     }
 
@@ -104,10 +105,11 @@ public final class ModelInventario {
      * @return {@code true} if the item was successfully used, {@code false} otherwise
      */
     public boolean useItem(final Tooltype tool, final Rarity rarityPlant) {
-        if (rarityPlant != null && inventario.get(tool).getRarityItem() == rarityPlant) {
+        if (rarityPlant != null && inventario.get(tool).verifyRarity(rarityPlant)) {
             this.inventario.get(tool).useItem();
             return true;
         }
+        System.out.println("NON è vero non puoi utilizare " + tool.toString());
         return false;
     }
 
