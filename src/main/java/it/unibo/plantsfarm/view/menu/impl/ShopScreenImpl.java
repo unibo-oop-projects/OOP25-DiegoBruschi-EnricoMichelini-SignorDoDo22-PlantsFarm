@@ -1,5 +1,6 @@
-package it.unibo.plantsfarm.view.menu;
+package it.unibo.plantsfarm.view.menu.impl;
 
+import it.unibo.plantsfarm.view.menu.api.ShopScreen;
 import it.unibo.plantsfarm.view.music.MusicPlayer;
 import it.unibo.plantsfarm.view.utility.ButtonFactory;
 import it.unibo.plantsfarm.view.utility.Texture;
@@ -26,7 +27,7 @@ import java.awt.Toolkit;
 /**
  * View for the Shop.
  */
-public final class ShopScreen {
+public final class ShopScreenImpl implements ShopScreen {
 
     private static final String TITLE = "Shop";
     private static final String FONT_FAMILY = "Arial";
@@ -69,7 +70,7 @@ public final class ShopScreen {
     /**
      * Creates the Shop Screen.
      */
-    public ShopScreen() {
+    public ShopScreenImpl() {
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         final int screenHeight = screenSize.height;
         final int screenWidth = screenSize.width;
@@ -133,6 +134,7 @@ public final class ShopScreen {
      * @param quantity  The quantity to sell.
      * @param price     The total price.
      */
+    @Override
     public void addSellItem(final String plantName, final int quantity, final int price) {
         final ImageIcon icon = Texture.getShopPlantIcon(plantName);
         final String text = plantName + " x" + quantity + " (" + price + " Coins)";
@@ -155,6 +157,7 @@ public final class ShopScreen {
     /**
      * Clears the current request items to allow refresh.
      */
+    @Override
     public void resetRequestsPanel() {
         this.plantRequests.setVisible(false);
         this.plantRequests.removeAll();
@@ -167,6 +170,7 @@ public final class ShopScreen {
      *
      * @param listener The action to perform.
      */
+    @Override
     public void setSellButton(final ActionListener listener) {
         final JButton sellButton = ButtonFactory.createButton("SELL");
         sellButton.addActionListener(listener);
@@ -182,6 +186,7 @@ public final class ShopScreen {
      *
      * @param listener Action when clicked.
      */
+    @Override
     public void setBuyButtons(final ActionListener listener) {
         this.rightBoxPanel.removeAll();
 
@@ -207,6 +212,7 @@ public final class ShopScreen {
      *
      * @param enabled True to enable, false to disable.
      */
+    @Override
     public void setBuyButtonsEnabled(final boolean enabled) {
         for (final Component comp : this.rightBoxPanel.getComponents()) {
             if (comp instanceof JButton) {
@@ -218,6 +224,7 @@ public final class ShopScreen {
     /**
      * Plays the coin sound.
      */
+    @Override
     public void playCoinSound() {
         this.soundSystem.playEffect("music/menuSound/coin.wav");
     }
@@ -225,6 +232,7 @@ public final class ShopScreen {
     /**
      * Plays the mystery box sound.
      */
+    @Override
     public void playMisteryBoxSound() {
         this.soundSystem.playEffect("music/menuSound/box.wav");
     }
@@ -232,6 +240,7 @@ public final class ShopScreen {
     /**
      * Shows the dialog.
      */
+    @Override
     public void show() {
         this.screen.setVisible(true);
     }
@@ -239,6 +248,7 @@ public final class ShopScreen {
     /**
      * Closes the dialog.
      */
+    @Override
     public void close() {
         this.screen.dispose();
     }

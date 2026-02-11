@@ -42,4 +42,5 @@ public interface EncyclopediaScreen {
      * @param description plant description.
      */
     void updateDetails(String name, String description);
+
 }
