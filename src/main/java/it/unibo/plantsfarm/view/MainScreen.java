@@ -19,6 +19,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import com.fasterxml.jackson.databind.cfg.ContextAttributes.Impl;
+
 /**
  * Manages the main screen window.
  */
@@ -52,7 +54,7 @@ public final class MainScreen {
      */
     public void createMainScreen(final ImplViewGamePanel gameView) {
         this.frame = new JFrame(TITLE);
-        this.gameViewPanel = gameView;
+        setGameView(gameView);
         this.frame.setLayout(new BorderLayout());
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -165,5 +167,9 @@ public final class MainScreen {
             this.frame.dispose();
         }
         this.musicPlayer.stop();
+    }
+
+    private void setGameView(final ImplViewGamePanel givenGameView) {
+        this.gameViewPanel = givenGameView;
     }
 }
