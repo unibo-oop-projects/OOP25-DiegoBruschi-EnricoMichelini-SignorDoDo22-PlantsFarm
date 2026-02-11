@@ -1,7 +1,6 @@
 package it.unibo.plantsfarm.model.garden;
 
 import java.awt.Rectangle;
-import java.util.Random;
 
 /**
  * Represents a buff in the game, which provides xp to the player's items when collected.

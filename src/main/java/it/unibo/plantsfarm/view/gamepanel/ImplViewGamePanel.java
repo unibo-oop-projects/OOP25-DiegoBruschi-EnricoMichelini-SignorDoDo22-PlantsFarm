@@ -229,9 +229,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         this.controller = controllerGamePanel;
     }
 
-
     private void setSelectorFrames(final SelectorFrames selectorFrames) {
         this.selector = selectorFrames;
     }
-
 }
