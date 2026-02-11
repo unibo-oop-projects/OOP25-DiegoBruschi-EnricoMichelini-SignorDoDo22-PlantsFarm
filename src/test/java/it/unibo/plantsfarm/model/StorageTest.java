@@ -7,7 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.plantsfarm.model.menu.Storage;
+import it.unibo.plantsfarm.model.menu.api.Storage;
+import it.unibo.plantsfarm.model.menu.impl.StorageImpl;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
 /**
@@ -23,7 +24,7 @@ final class StorageTest {
     private static final int Q5 = 5000;
     private static final int Q6 = 100;
 
-    private final Storage storage = new Storage();
+    private final Storage storage = new StorageImpl();
 
     /**
      * Test initialization logic: edible plants start with items, ornamental do not.
