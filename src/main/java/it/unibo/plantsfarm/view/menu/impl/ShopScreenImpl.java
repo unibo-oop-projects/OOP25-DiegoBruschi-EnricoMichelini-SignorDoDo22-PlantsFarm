@@ -1,7 +1,8 @@
 package it.unibo.plantsfarm.view.menu.impl;
 
 import it.unibo.plantsfarm.view.menu.api.ShopScreen;
-import it.unibo.plantsfarm.view.music.MusicPlayer;
+import it.unibo.plantsfarm.view.music.api.MusicPlayer;
+import it.unibo.plantsfarm.view.music.impl.MusicPlayerImpl;
 import it.unibo.plantsfarm.view.utility.ButtonFactory;
 import it.unibo.plantsfarm.view.utility.Texture;
 import it.unibo.plantsfarm.view.utility.WindowFactory;
@@ -82,7 +83,7 @@ public final class ShopScreenImpl implements ShopScreen {
         this.itemHeight = (int) (screenHeight * ITEM_HEIGHT_RATIO);
         this.font = new Font(FONT_FAMILY, Font.BOLD, fontSize);
 
-        this.soundSystem = new MusicPlayer();
+        this.soundSystem = new MusicPlayerImpl();
         this.screen = WindowFactory.createMenuWindow(TITLE);
 
         final JPanel mainPanel = new JPanel();
