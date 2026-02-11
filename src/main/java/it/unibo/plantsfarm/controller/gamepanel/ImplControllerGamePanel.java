@@ -25,7 +25,8 @@ import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantEffect;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
-import it.unibo.plantsfarm.view.music.MusicPlayer;
+import it.unibo.plantsfarm.view.music.api.MusicPlayer;
+import it.unibo.plantsfarm.view.music.impl.MusicPlayerImpl;
 
 /**
  * Implementation of the ControllerGamePanel interface, responsible for managing the game loop,
@@ -48,7 +49,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private final ControllerInventario controllerInventario;
     private final ManagerSavingPlayer managerSavingPlayer;
     private PlantType currentSelectedPlant;
-    private final MusicPlayer musicPlayer = new MusicPlayer();
+    private final MusicPlayer musicPlayer = new MusicPlayerImpl();
     /**
      * Creates a new ImplControllerGamePanel with the specified GameState.
      *
