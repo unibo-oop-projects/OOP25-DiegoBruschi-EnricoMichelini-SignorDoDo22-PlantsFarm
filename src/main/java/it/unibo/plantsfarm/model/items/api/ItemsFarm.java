@@ -82,9 +82,13 @@ public interface ItemsFarm {
      */
     void setLevel(int level);
 
-
-    boolean verifyRarity(Rarity planRarity);
-
+    /**
+     * Checks whether this item can be used on a plant with the given rarity.
+     *
+     * @param plantRarity the plant rarity requirement
+     * @return {@code true} if this item can be used, otherwise {@code false}
+     */
+    boolean canBeUsed(Rarity plantRarity);
 
     /**
      * Enumeration of all supported tool types.

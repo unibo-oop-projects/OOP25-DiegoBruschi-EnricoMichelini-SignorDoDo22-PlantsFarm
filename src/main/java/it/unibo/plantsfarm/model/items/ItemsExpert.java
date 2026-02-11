@@ -1,7 +1,5 @@
 package it.unibo.plantsfarm.model.items;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Objects;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.plant.Rarity;
@@ -97,7 +95,8 @@ public final class ItemsExpert implements ItemsFarm {
         this.level = level;
     }
 
-    public boolean verifyRarity(Rarity plantrarity) {
+    @Override
+    public boolean canBeUsed(final Rarity plantrarity) {
         return true;
     }
 

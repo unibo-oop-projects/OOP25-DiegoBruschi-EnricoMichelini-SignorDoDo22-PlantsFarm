@@ -185,10 +185,12 @@ public class Player {
         inventory.useItem(tool, plant);
     }
 
-
+    /**
+     * Upgrade the item {@code tool}, if has the right experience level.
+     *
+     * @param tool  tool in input.
+     */
     public final void upgradeItemRarityFromPlayer(final Tooltype tool) {
         inventory.upgrade(tool);
     }
-
-
 }
