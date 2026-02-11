@@ -44,7 +44,7 @@ public final class Soil implements Serializable {
      */
     public void setPlanted(final Plant selectedPlant) {
         this.isPlanted = true;
-        this.plant = selectedPlant;
+        this.plant = new Plant(selectedPlant.getType());
     }
 
     /**

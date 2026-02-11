@@ -222,6 +222,10 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2", 
+        justification = "MVC pattern: View requires the original Controller reference to delegate user inputs."
+    )
     public void setController(final ImplControllerGamePanel controller) {
         this.controller = controller;
     }
