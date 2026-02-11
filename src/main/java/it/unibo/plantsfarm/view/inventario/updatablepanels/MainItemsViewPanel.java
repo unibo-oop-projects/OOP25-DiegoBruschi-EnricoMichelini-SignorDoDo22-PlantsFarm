@@ -13,6 +13,9 @@ import it.unibo.plantsfarm.view.inventario.UpdatablePanel;
  * Thanks to the the interface UpdatablePanel each panel can be easily replaced with onother implementation.
  */
 public final class MainItemsViewPanel extends JPanel implements UpdatablePanel {
+
+    private static final long serialVersionUID = 8L;
+
     private final List<UpdatablePanel> panelsComposition;
     private final UpdatablePanel panelProgressBar;
     private final UpdatablePanel panelViewImageItems;

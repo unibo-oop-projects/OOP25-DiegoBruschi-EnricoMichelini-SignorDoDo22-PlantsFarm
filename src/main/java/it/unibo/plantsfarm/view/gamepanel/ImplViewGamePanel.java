@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
@@ -64,7 +65,6 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
     public static final int WORLD_WIDTH = TILE_SIZE * MAX_WORLD_COL;
     public static final int WORLD_HEIGHT = TILE_SIZE * MAX_WORLD_ROW;
 
-
     private static final long serialVersionUID = 3L;
 
     private static final Map<Integer, ControllerGamePanel.UserInput> KEY_MAPPER = Map.of(
@@ -87,10 +87,16 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   private transient ControllerGamePanel controller;
   private transient SelectorFrames selector;
   private List<Soil> soilList = List.of();
+  @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED", 
+        justification = "The list is transient because it is populated by the Controller " 
+                      + "via the show() method at every frame; it doesn't need to be persisted.")
   private transient List<Buff> buffList = List.of();
 
   /**
    * Creates a new ImplViewGamePanel, initializing the layout, size, and key listeners for user input.
+   * 
+   * @param controllerGamePanel The controller that will handle user input and game logic.
+   * @param selectorFrames The animation selector for rendering player animations.
    */
   public ImplViewGamePanel(final ImplControllerGamePanel controllerGamePanel, final ImplSelectorFrames selectorFrames) {
     super();
@@ -217,7 +223,6 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
             }
         }
     }
-
 
     private void setController(final ImplControllerGamePanel controllerGamePanel) {
         this.controller = controllerGamePanel;

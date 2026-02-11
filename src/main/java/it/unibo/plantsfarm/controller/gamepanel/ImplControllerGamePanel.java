@@ -50,6 +50,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private final ManagerSavingPlayer managerSavingPlayer;
     private PlantType currentSelectedPlant;
     private final MusicPlayer musicPlayer = new MusicPlayerImpl();
+
     /**
      * Creates a new ImplControllerGamePanel with the specified GameState.
      *
@@ -118,7 +119,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                 break;
             }
 
-            spawningBuffsController.updateUpGrade();
+            spawningBuffsController.updateUpGrade(now);
             actionHandler.playerActionBuff(spawningBuffsController, player);
             collisionDetector.collisionDetection();
             controllerAnimation.update(System.nanoTime());
@@ -147,12 +148,17 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     @Override
     public void addView() {
         this.controllerAnimation = new ImplSelectorFrames();
-        this.view = new ImplViewGamePanel(this,controllerAnimation);
+        this.view = new ImplViewGamePanel(this, controllerAnimation);
         this.controllerInventario.addView(this.view);
         camera = new ImplCamera(view.getWidth(), view.getHeight());
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+        value = "EI_EXPOSE_REP", 
+        justification = "The View is a complex Swing component and cannot be deeply cloned. "
+                      + "The Controller must provide the actual instance to the main application frame."
+    )
     public ImplViewGamePanel getView() {
         return this.view;
     }
@@ -164,7 +170,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
 
     @Override
     public void openInventory() {
-        if(controllerInventario != null){
+        if (controllerInventario != null) {
             this.controllerInventario.openViewInv();
             this.controllerInventario.updateInventory();
         }

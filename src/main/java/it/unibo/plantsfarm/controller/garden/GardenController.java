@@ -102,7 +102,7 @@ public class GardenController {
         }
         return null;
     }
-    
+
     private void setGameState(final GameState givenGameState) {
         this.gameState = givenGameState;
     }

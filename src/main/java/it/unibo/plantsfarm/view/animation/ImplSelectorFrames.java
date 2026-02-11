@@ -88,7 +88,9 @@ public final class ImplSelectorFrames implements SelectorFrames {
     }
 
     @Override
-    public void render(Graphics2D g2d, double posPlayerx, double posPlayery, int camerax, int cameray) {
+    public void render(final Graphics2D g2d, final double posPlayerx,
+        final double posPlayery, final int camerax, final int cameray
+    ) {
         g2d.drawImage(currentImage,
                 (int) posPlayerx - camerax,
                 (int) posPlayery - cameray,

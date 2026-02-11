@@ -18,9 +18,11 @@ import it.unibo.plantsfarm.view.inventario.UpdatablePanel;
  */
 public final class ItemsViewImageItem extends JPanel implements UpdatablePanel {
 
+    private static final long serialVersionUID = 7L;
+
     private static final int BUTTON_SIZE = 60;
     private static final int ICON_SIZE = 48;
-    private ControllerInventario controllerInventario;
+    private transient ControllerInventario controllerInventario;
     private final Map<Tooltype, JButton> itemsDisplay = new EnumMap<>(Tooltype.class);
 
     /**

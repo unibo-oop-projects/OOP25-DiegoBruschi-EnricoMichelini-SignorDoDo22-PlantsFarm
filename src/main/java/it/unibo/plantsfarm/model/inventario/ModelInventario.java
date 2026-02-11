@@ -106,7 +106,6 @@ public final class ModelInventario {
     public boolean useItem(final Tooltype tool, final Rarity rarityPlant) {
         if (rarityPlant != null && inventario.get(tool).getRarityItem() == rarityPlant) {
             this.inventario.get(tool).useItem();
-            System.out.println();
             return true;
         }
         return false;

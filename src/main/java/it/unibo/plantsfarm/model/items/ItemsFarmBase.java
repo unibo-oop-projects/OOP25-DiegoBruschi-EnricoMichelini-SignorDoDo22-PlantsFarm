@@ -74,7 +74,6 @@ public final class ItemsFarmBase implements ItemsFarm {
     @Override
     public void useItem() {
         this.experience += StatsItemBase.EXPERIENCE_FOR_ACTION;
-        System.out.println("Experience item " + experience);
     }
 
     @Override

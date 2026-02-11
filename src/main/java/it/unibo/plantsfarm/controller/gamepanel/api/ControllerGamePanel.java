@@ -56,8 +56,11 @@ public interface ControllerGamePanel {
      */
     void setPlayer();
 
+    /**
+     * Opens the inventory view, allowing the player to see and manage their items.
+     * This method should ensure that the inventory view is properly initialized and displayed.
+     */
     void openInventory();
-
 
     /**
      * Determines the status of a plant.

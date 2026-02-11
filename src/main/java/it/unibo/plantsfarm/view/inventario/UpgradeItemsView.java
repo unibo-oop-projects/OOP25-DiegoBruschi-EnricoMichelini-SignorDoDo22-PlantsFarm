@@ -33,7 +33,7 @@ public final class UpgradeItemsView extends JDialog {
         this.setTitle(TITLE);
         setImplViewGamePanel(gamePanel);
         this.mainPanel = new MainItemsViewPanel(controllerInventario);
-        this.add((JPanel)mainPanel);
+        this.add((JPanel) mainPanel);
         this.setResizable(false);
         this.setSize(DIALOG_WIDTH, DIALOG_HEIGHT);
         this.setLocationRelativeTo(gamePanel);
@@ -65,7 +65,7 @@ public final class UpgradeItemsView extends JDialog {
         mainPanel.update();
     }
 
-    private void setImplViewGamePanel(final ImplViewGamePanel gamePanel) {
-        this.gamePanel = java.util.Objects.requireNonNull(gamePanel);
+    private void setImplViewGamePanel(final ImplViewGamePanel givenGamePanel) {
+        this.gamePanel = java.util.Objects.requireNonNull(givenGamePanel);
     }
 }

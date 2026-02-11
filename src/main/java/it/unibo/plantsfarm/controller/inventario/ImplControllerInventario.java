@@ -36,7 +36,6 @@ public final class ImplControllerInventario implements ControllerInventario {
         viewItemsInventory.updateAllItemsPanel();
     }
 
-
     @Override
     public void addView(final ImplViewGamePanel gamePanel) {
         this.viewItemsInventory = new UpgradeItemsView(gamePanel, this);
@@ -44,14 +43,14 @@ public final class ImplControllerInventario implements ControllerInventario {
 
     @Override
     public void openViewInv() {
-         if(viewItemsInventory != null){
+         if (viewItemsInventory != null) {
             this.viewItemsInventory.setVisible(true);
         }
     }
 
     @Override
     public void updateInventory() {
-        if(viewItemsInventory != null){
+        if (viewItemsInventory != null) {
             this.viewItemsInventory.updateAllItemsPanel();
         }
     }
@@ -61,7 +60,7 @@ public final class ImplControllerInventario implements ControllerInventario {
         return this.abstractPlayer.getInventory().getInventorySnapshot();
     }
 
-    private void setPlayer(Player entryPlayer) {
+    private void setPlayer(final Player entryPlayer) {
         this.abstractPlayer = entryPlayer;
     }
 }

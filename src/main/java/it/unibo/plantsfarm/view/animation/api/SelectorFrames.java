@@ -23,6 +23,14 @@ public interface SelectorFrames {
      */
     void update(Long now);
 
+    /**
+     * Render the current frame of the animation.
+     *
+     * @param g2d Graphics2D object to draw on
+     * @param posPlayerx X position of the player
+     * @param posPlayery Y position of the player
+     * @param camerax X position of the camera
+     * @param cameray Y position of the camera
+     */
     void render(Graphics2D g2d, double posPlayerx, double posPlayery, int camerax, int cameray);
-
 }

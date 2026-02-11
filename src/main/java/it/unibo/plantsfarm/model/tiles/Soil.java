@@ -61,6 +61,11 @@ public final class Soil implements Serializable {
      * 
      * @return The plant planted in the soil tile, or null if none.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+        value = "EI_EXPOSE_REP", 
+        justification = "The controller needs the original reference to update the plant's "
+                      + "growth and water status in real-time."
+    )
     public Plant getPlant() {
         return this.plant;
     }

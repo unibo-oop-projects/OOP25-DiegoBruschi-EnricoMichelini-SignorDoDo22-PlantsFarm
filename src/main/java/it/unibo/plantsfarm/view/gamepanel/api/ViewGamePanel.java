@@ -8,6 +8,7 @@ import it.unibo.plantsfarm.model.tiles.Soil;
  * ViewGamePanel interface.
  *
  */
+@FunctionalInterface
 public interface ViewGamePanel {
     /**
      * Show the GamePanel.

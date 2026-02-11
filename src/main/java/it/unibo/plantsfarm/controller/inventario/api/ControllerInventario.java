@@ -48,9 +48,17 @@ public interface ControllerInventario {
      */
     Map<Tooltype, ItemsFarm> getInventoryClone();
 
-
+    /**
+     * Opens the inventory view, making it visible to the player.
+     * If the view has not been initialized, this method should handle that case gracefully.
+     */
     void openViewInv();
 
+    /**
+     * Updates the inventory view to reflect any changes in the inventory state.
+     * This method should be called after any operation that modifies the inventory
+     * to ensure the UI remains consistent with the underlying data.
+     */
     void updateInventory();
 
 }

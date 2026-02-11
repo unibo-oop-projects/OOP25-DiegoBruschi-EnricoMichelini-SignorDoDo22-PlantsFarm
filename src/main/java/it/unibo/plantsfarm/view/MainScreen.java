@@ -19,8 +19,6 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import com.fasterxml.jackson.databind.cfg.ContextAttributes.Impl;
-
 /**
  * Manages the main screen window.
  */
@@ -31,6 +29,7 @@ public final class MainScreen {
 
     private static final double FONT_SCALE_RATIO = 0.025;
     private static final double GAP_RATIO = 0.015;
+    private static final int COIN_LABEL_RATIO = 6;
 
     private final MenuPanel menuPanel;
     private ImplViewGamePanel gameViewPanel;
@@ -79,7 +78,7 @@ public final class MainScreen {
         final JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, hGap, vGap));
         topPanel.setOpaque(false);
         topPanel.setFocusable(false);
-        topPanel.setBounds(0, 0, screenSize.width, screenSize.height / 6);
+        topPanel.setBounds(0, 0, screenSize.width, screenSize.height / COIN_LABEL_RATIO);
 
         this.coinLabel = new JLabel(" 0 ");
         this.coinLabel.setIcon(Texture.COIN_ICON);

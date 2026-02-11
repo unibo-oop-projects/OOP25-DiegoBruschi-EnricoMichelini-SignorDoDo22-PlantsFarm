@@ -121,7 +121,12 @@ public class Player {
         return this.direction;
     }
 
-    public final ModelInventario getInventory(){
+    /**
+     * Returns a snapshot of the player's inventory.
+     *
+     * @return a ModelInventario object representing the player's inventory
+     */
+    public final ModelInventario getInventory() {
         return new ModelInventario(inventory.getInventorySnapshot());
     }
 
@@ -161,12 +166,22 @@ public class Player {
         return this.playersType;
     }
 
-    private void setIventario(final ModelInventario inventory) {
-        this.inventory = inventory;
+    /**
+     * Sets the player's inventory to the specified ModelInventario.
+     *
+     * @param givenInventory the ModelInventario to be set as the player's inventory
+     */
+    private void setIventario(final ModelInventario givenInventory) {
+        this.inventory = givenInventory;
     }
 
-    public void useItem(final Tooltype tool, final Rarity plant) {
+    /**
+     * Uses an item from the player's inventory based on the specified tool type and plant rarity.
+     *
+     * @param tool the type of tool to be used
+     * @param plant the rarity of the plant associated with the item to be used
+     */
+    public final void useItem(final Tooltype tool, final Rarity plant) {
         inventory.useItem(tool, plant);
     }
-
 }

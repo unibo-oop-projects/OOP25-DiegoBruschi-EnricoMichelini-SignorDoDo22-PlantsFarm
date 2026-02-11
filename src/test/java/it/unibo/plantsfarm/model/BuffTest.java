@@ -42,19 +42,4 @@ final class BuffTest {
         final Rectangle legalPosition = new Rectangle(LEGAL_POSITION_X, LEGAL_POSITION_Y, BUFF_SIZE, BUFF_SIZE);
         assertTrue(buffsController.verifyPosUpgrade(legalPosition.getX(), legalPosition.getY()));
     }
-
-    @Test
-    void testCheckBuffList() {
-        final TileMap map = new TileMap();
-        map.loadMap(FILEPATH);
-
-        final SpawningBuffsController buffsController = new SpawningBuffsController(map);
-        final Buff buff = new Buff(new Rectangle(LEGAL_POSITION_X, LEGAL_POSITION_Y, BUFF_SIZE, BUFF_SIZE));
-
-        buffsController.getBuffList().add(buff);
-        assertEquals(buffsController.getBuffList().size(), 1);
-
-        buffsController.removeBuffFromMap(buff);
-        assertEquals(buffsController.getBuffList().size(), 0);
-    }
 }

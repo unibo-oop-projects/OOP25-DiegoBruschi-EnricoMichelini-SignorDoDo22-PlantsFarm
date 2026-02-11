@@ -9,7 +9,7 @@ import it.unibo.plantsfarm.view.utility.SpriteLoader;
 /**
  * Contains sprite frames used for player animations.
  */
-@SuppressFBWarnings(value = "MS_EXPOSE_REP",justification = "Animation frames are treated as immutable assets"
+@SuppressFBWarnings(value = "MS_EXPOSE_REP", justification = "Animation frames are treated as immutable assets"
 )
 public final class AnimationFrames {
 
@@ -75,36 +75,74 @@ public final class AnimationFrames {
 
     private AnimationFrames() { }
 
-    /* ===== Getters ===== */
-
+    /**
+     * Returns the base image for the player.
+     *
+     * @return the base BufferedImage for the player
+     */
     public static BufferedImage base() {
         return BASE;
     }
 
+    /**
+     * Returns the frames for the axe animation.
+     *
+     * @return a list of BufferedImages representing the axe animation
+     */
     public static List<BufferedImage> axe() {
         return AXE;
     }
 
+    /**
+     * Returns the frames for the walking right animation.
+     *
+     * @return a list of BufferedImages representing the walking right animation
+     */
     public static List<BufferedImage> walkRight() {
         return WALKRIGHT;
     }
 
+    /**
+     * Returns the frames for the walking left animation.
+     *
+     * @return a list of BufferedImages representing the walking left animation
+     */
     public static List<BufferedImage> walkLeft() {
         return WALKLEFT;
     }
 
+    /**
+     * Returns the frames for the walking down animation.
+     *
+     * @return a list of BufferedImages representing the walking down animation
+     */
     public static List<BufferedImage> walkDown() {
         return WALKDOWN;
     }
 
+    /**
+     * Returns the frames for the walking up animation.
+     *
+     * @return a list of BufferedImages representing the walking up animation
+     */
     public static List<BufferedImage> walkUp() {
         return WALKUP;
     }
 
+    /**
+     * Returns the frames for the watering animation.
+     *
+     * @return a list of BufferedImages representing the watering animation
+     */
     public static List<BufferedImage> water() {
         return WATER;
     }
 
+    /**
+     * Returns the frames for the digging animation.
+     *
+     * @return a list of BufferedImages representing the digging animation
+     */
     public static List<BufferedImage> dig() {
         return DIG;
     }

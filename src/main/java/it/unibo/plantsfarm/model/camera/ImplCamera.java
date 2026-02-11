@@ -32,11 +32,13 @@ public final class ImplCamera {
      * The camera position is clamped so that it does not move outside
      * the world boundaries, ensuring the player remains visible.
      *
+     * @param playerPosX the X coordinate of the player's position in world space
+     * @param playerPosY the Y coordinate of the player's position in world space
      */
     public void followPlayer(final int playerPosX, final int playerPosY) {
 
-        posX = (int) playerPosX - ImplViewGamePanel.SCREEN_WIDTH / 2;
-        posY = (int) playerPosY - ImplViewGamePanel.SCREEN_HEIGHT / 2;
+        posX = playerPosX - ImplViewGamePanel.SCREEN_WIDTH / 2;
+        posY = playerPosY - ImplViewGamePanel.SCREEN_HEIGHT / 2;
 
         if (posX < 0) {
             posX = 0;

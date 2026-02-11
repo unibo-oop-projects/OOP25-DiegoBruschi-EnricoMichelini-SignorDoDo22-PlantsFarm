@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.controller.player;
 
+import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.FERTILIZER;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
 
@@ -23,35 +24,37 @@ public final class ImplActionHandler implements ActionHandler {
         if (selectedPlant != null) {
             final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
             if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
-                && !soil.isPlanted()
+                && !soil.isPlanted() && player.getInventory().useItem(HOE, selectedPlant.getRarity())
             ) {
                 player.useItem(HOE, selectedPlant.getRarity());
                 controllerGarden.pianta(selectedPlant);
             } else if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
                 && soil.isPlanted() && soil.getPlant().isMature()
             ) {
-                player.getInventory().useItem(HOE, selectedPlant.getRarity());
                 controllerGarden.pianta(selectedPlant);
             }
         }
     }
 
     @Override
-    public void handleWater(final GardenController controllerGarden, final Long now, final PlantType selectedPlant, final Player player) {
-        if (selectedPlant != null) {
-            final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
-            if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
-                && soil.getPlant() != null && soil.getPlant().needsWater()) {
-                player.useItem(WATERCAN, selectedPlant.getRarity());
-                controllerGarden.innaffia(now);
-            }
+    public void handleWater(final GardenController controllerGarden, final Long now,
+        final PlantType selectedPlant, final Player player
+    ) {
+        final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
+        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
+            && soil.getPlant() != null && soil.getPlant().needsWater()
+            && player.getInventory().useItem(WATERCAN, soil.getPlant().getRarity())
+        ) {
+            controllerGarden.innaffia(now);
         }
     }
 
     @Override
     public void handleAxe(final GardenController controllerGarden, final Player player) {
         final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
-        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null && soil.isPlanted()) {
+        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null && soil.isPlanted()
+        && player.getInventory().useItem(FERTILIZER, soil.getPlant().getRarity())
+        ) {
             soil.removePlant();
         }
     }

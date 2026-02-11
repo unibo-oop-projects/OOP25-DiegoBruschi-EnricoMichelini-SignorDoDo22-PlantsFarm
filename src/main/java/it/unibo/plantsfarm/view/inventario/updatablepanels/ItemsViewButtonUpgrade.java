@@ -17,8 +17,10 @@ import it.unibo.plantsfarm.view.inventario.UpdatablePanel;
  */
 public final class ItemsViewButtonUpgrade extends JPanel implements UpdatablePanel {
 
+    private static final long serialVersionUID = 6L;
+
     private static final String UPGRADE_TEXT = " UPGRADE ";
-    private ControllerInventario controllerInventario;
+    private transient ControllerInventario controllerInventario;
     private final Map<Tooltype, JButton> progressButtonUpgradeMap = new LinkedHashMap<>();
 
     /**
@@ -57,7 +59,7 @@ public final class ItemsViewButtonUpgrade extends JPanel implements UpdatablePan
         }
     }
 
-    private void setControllerInventory(final ControllerInventario controllerInventario){
-        this.controllerInventario = controllerInventario;
+    private void setControllerInventory(final ControllerInventario givenControllerInventario) {
+        this.controllerInventario = givenControllerInventario;
     }
 }

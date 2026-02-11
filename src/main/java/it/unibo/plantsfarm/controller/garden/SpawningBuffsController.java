@@ -39,9 +39,11 @@ public final class SpawningBuffsController {
     /**
      * Updates the spawning of buffs in the game, adding new buffs
      * if the number of active buffs is below the maximum and the cooldown has passed.
+     * 
+     * @param now The current time in milliseconds, used to determine if a new buff can be spawned based on the cooldown.
      */
-    public void updateUpGrade() {
-        if (activeBuffs.size() < MAX_PRESENT_BUFFS && lastPickUp + SPAWN_COOLDOWN < System.currentTimeMillis()) {
+    public void updateUpGrade(final long now) {
+        if (activeBuffs.size() < MAX_PRESENT_BUFFS && lastPickUp + SPAWN_COOLDOWN < now) {
             final Rectangle buffPosition;
 
             final double randomPosX = (int) (Math.random() * (ImplViewGamePanel.WORLD_WIDTH + 1));

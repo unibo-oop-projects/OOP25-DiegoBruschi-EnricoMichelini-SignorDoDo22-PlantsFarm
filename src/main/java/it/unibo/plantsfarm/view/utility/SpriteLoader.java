@@ -48,7 +48,6 @@ public final class SpriteLoader {
     }
 }
 
-
     /**
      * Returns the loaded sprite image.
      *

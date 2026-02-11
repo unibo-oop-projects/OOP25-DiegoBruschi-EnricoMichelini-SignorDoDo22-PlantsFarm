@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.view.map;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -35,7 +36,7 @@ public class Tile {
                 newImage.getHeight(), 
                 newImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : newImage.getType()
             );
-            java.awt.Graphics2D g2 = this.image.createGraphics();
+            final Graphics2D g2 = this.image.createGraphics();
             g2.drawImage(newImage, 0, 0, null);
             g2.dispose();
         }
