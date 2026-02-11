@@ -1,5 +1,6 @@
-package it.unibo.plantsfarm.view.menu;
+package it.unibo.plantsfarm.view.menu.impl;
 
+import it.unibo.plantsfarm.view.menu.api.PauseMenuScreen;
 import it.unibo.plantsfarm.view.utility.ButtonFactory;
 import it.unibo.plantsfarm.view.utility.Texture;
 import it.unibo.plantsfarm.view.utility.WindowFactory;
@@ -18,7 +19,7 @@ import java.awt.event.ActionListener;
 /**
  * View for the Pause Menu.
  */
-public final class PauseMenuScreen {
+public final class PauseMenuScreenImpl implements PauseMenuScreen {
 
     private static final String TITLE = "Pause Menu";
     private static final Color BG_COLOR = new Color(245, 245, 220);
@@ -39,7 +40,7 @@ public final class PauseMenuScreen {
     /**
      * Creates the Pause Menu Screen.
      */
-    public PauseMenuScreen() {
+    public PauseMenuScreenImpl() {
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         final int gap = (int) (screenSize.height * GAP_RATIO);
         final int padding = (int) (screenSize.height * PADDING_RATIO);
@@ -69,6 +70,7 @@ public final class PauseMenuScreen {
      *
      * @param listener The action listener.
      */
+    @Override
     public void setResumeButton(final ActionListener listener) {
         addButton("RESUME", Texture.RESUME_ICON, listener);
     }
@@ -78,6 +80,7 @@ public final class PauseMenuScreen {
      *
      * @param listener The action listener.
      */
+    @Override
     public void setCommandsButton(final ActionListener listener) {
         addButton("COMMANDS", Texture.COMMANDS_ICON, listener);
     }
@@ -87,6 +90,7 @@ public final class PauseMenuScreen {
      *
      * @param listener The action listener.
      */
+    @Override
     public void setResetButton(final ActionListener listener) {
         addButton("RESET DATA", Texture.RESET_ICON, listener);
     }
@@ -96,6 +100,7 @@ public final class PauseMenuScreen {
      *
      * @param listener The action listener.
      */
+    @Override
     public void setExtraButton(final ActionListener listener) {
         addButton("EXTRA", Texture.EXTRA_ICON, listener);
     }
@@ -105,6 +110,7 @@ public final class PauseMenuScreen {
      *
      * @param listener The action listener.
      */
+    @Override
     public void setCreditsButton(final ActionListener listener) {
         addButton("CREDITS", Texture.CREDITS_ICON, listener);
     }
@@ -114,6 +120,7 @@ public final class PauseMenuScreen {
      *
      * @param listener The action listener.
      */
+    @Override
     public void setExitButton(final ActionListener listener) {
         addButton("EXIT GAME", Texture.EXIT_ICON, listener);
     }
@@ -121,6 +128,7 @@ public final class PauseMenuScreen {
     /**
      * Shows the pause menu window.
      */
+    @Override
     public void show() {
         this.screen.setVisible(true);
     }
@@ -128,6 +136,7 @@ public final class PauseMenuScreen {
     /**
      * Closes the pause menu window.
      */
+    @Override
     public void close() {
         this.screen.dispose();
     }

@@ -2,7 +2,8 @@ package it.unibo.plantsfarm.controller.menu;
 
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.plant.PlantType;
-import it.unibo.plantsfarm.view.menu.StorageScreen;
+import it.unibo.plantsfarm.view.menu.api.StorageScreen;
+import it.unibo.plantsfarm.view.menu.impl.StorageScreenImpl;
 
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public final class StorageController {
      * @param gameState The current state of the game.
      */
     public StorageController(final GameState gameState) {
-        this.view = new StorageScreen();
+        this.view = new StorageScreenImpl();
         final Map<PlantType, Integer> storage = gameState.getStorageContents();
 
         setupView(storage);

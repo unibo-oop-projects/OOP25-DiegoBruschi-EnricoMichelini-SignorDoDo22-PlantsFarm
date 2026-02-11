@@ -3,7 +3,8 @@ package it.unibo.plantsfarm.controller.menu;
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.menu.Encyclopedia;
 import it.unibo.plantsfarm.model.plant.Plant;
-import it.unibo.plantsfarm.view.menu.EncyclopediaScreen;
+import it.unibo.plantsfarm.view.menu.api.EncyclopediaScreen;
+import it.unibo.plantsfarm.view.menu.impl.EncyclopediaScreenImpl;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +17,7 @@ import java.util.List;
 public final class EncyclopediaController {
 
     private static final String NEXT_STAGE_COMMAND = "NEXT_STAGE";
-    private final EncyclopediaScreen encyclopediaScreen;
+    private final EncyclopediaScreen view;
     private final Encyclopedia encyclopedia;
     private Plant selectedPlant;
     private int currentStageIndex;
@@ -25,7 +26,7 @@ public final class EncyclopediaController {
      * Creates the controller.
      */
     public EncyclopediaController() {
-        this.encyclopediaScreen = new EncyclopediaScreen();
+        this.view = new EncyclopediaScreenImpl();
         this.encyclopedia = new Encyclopedia();
     }
 
@@ -52,7 +53,7 @@ public final class EncyclopediaController {
             }
         };
 
-        this.encyclopediaScreen.show(names, unlockedStatus, listener, NEXT_STAGE_COMMAND);
+        this.view.show(names, unlockedStatus, listener, NEXT_STAGE_COMMAND);
     }
 
     private void selection(final String name, final GameState gameState) {
@@ -62,9 +63,9 @@ public final class EncyclopediaController {
                 this.currentStageIndex = plant.getType().getMaxGrowthStage();
                 final String description = this.encyclopedia.getPlantDescription(plant.getType());
 
-                this.encyclopediaScreen.updateDetails(plant.getName(), description);
-                this.encyclopediaScreen.setRarity(plant.getType().getRarity().name());
-                this.encyclopediaScreen.updateStageImage(plant.getName(), this.currentStageIndex);
+                this.view.updateDetails(plant.getName(), description);
+                this.view.setRarity(plant.getType().getRarity().name());
+                this.view.updateStageImage(plant.getName(), this.currentStageIndex);
                 break;
             }
         }
@@ -73,11 +74,11 @@ public final class EncyclopediaController {
     private void nextStage() {
         if (this.selectedPlant != null) {
             this.currentStageIndex++;
-            final boolean exists = this.encyclopediaScreen.updateStageImage(this.selectedPlant.getName(), this.currentStageIndex);
+            final boolean exists = this.view.updateStageImage(this.selectedPlant.getName(), this.currentStageIndex);
 
             if (!exists) {
                 this.currentStageIndex = 1;
-                this.encyclopediaScreen.updateStageImage(this.selectedPlant.getName(), this.currentStageIndex);
+                this.view.updateStageImage(this.selectedPlant.getName(), this.currentStageIndex);
             }
         }
     }

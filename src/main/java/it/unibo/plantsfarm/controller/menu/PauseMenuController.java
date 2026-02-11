@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.controller.menu;
 
-import it.unibo.plantsfarm.view.menu.PauseMenuScreen;
+import it.unibo.plantsfarm.view.menu.api.PauseMenuScreen;
+import it.unibo.plantsfarm.view.menu.impl.PauseMenuScreenImpl;
 
 import javax.swing.JOptionPane;
 import java.io.BufferedReader;
@@ -31,7 +32,7 @@ public final class PauseMenuController {
      * @param onGameReset       The action to run when the player confirms a reset.
      */
     public PauseMenuController(final Runnable onCloseMainScreen, final Runnable onGameReset) {
-        this.view = new PauseMenuScreen();
+        this.view = new PauseMenuScreenImpl();
         this.onCloseMainScreen = onCloseMainScreen;
         this.onGameReset = onGameReset;
         setupListeners();
