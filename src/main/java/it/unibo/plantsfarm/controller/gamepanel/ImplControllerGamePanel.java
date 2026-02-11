@@ -173,12 +173,6 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     }
 
     @Override
-    public void setInventario() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setInventario'");
-    }
-
-    @Override
     public PlantStatus getPlantStatus(final Plant plant) {
         if (plant.isMature()) {
             if (plant.isEdible()) {

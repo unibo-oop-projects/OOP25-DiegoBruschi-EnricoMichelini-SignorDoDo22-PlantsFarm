@@ -13,7 +13,7 @@ import it.unibo.plantsfarm.view.inventario.UpgradeItemsView;
  */
 public final class ImplControllerInventario implements ControllerInventario {
 
-    private final Player abstractPlayer;
+    private Player abstractPlayer;
     private UpgradeItemsView viewItemsInventory;
 
     /**
@@ -22,7 +22,7 @@ public final class ImplControllerInventario implements ControllerInventario {
      * @param player the player whose inventory will be managed
      */
     public ImplControllerInventario(final Player player) {
-        this.abstractPlayer = player;
+        setPlayer(player);
     }
 
     @Override
@@ -59,5 +59,9 @@ public final class ImplControllerInventario implements ControllerInventario {
     @Override
     public Map<Tooltype, ItemsFarm> getInventoryClone() {
         return this.abstractPlayer.getInventory().getInventorySnapshot();
+    }
+
+    private void setPlayer(Player entryPlayer) {
+        this.abstractPlayer = entryPlayer;
     }
 }

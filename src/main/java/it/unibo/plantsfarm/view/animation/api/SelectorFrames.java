@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.view.animation.api;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 
@@ -29,5 +30,7 @@ public interface SelectorFrames {
      * @return CurrentFrame
      */
     BufferedImage getCurrentImage();
+
+    void render(Graphics2D g2d, double posPlayerx, double posPlayery, int camerax, int cameray);
 
 }

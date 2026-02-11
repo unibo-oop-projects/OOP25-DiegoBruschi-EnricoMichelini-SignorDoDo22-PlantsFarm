@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.view.animation;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.animation.AnimationAzione;
@@ -88,5 +89,17 @@ public final class ImplSelectorFrames implements SelectorFrames {
     @Override
     public BufferedImage getCurrentImage() {
         return this.currentImage;
+    }
+
+    @Override
+    public void render(Graphics2D g2d, double posPlayerx, double posPlayery, int camerax, int cameray) {
+
+        g2d.drawImage(currentImage,
+                (int) posPlayerx - camerax,
+                (int) posPlayery - cameray,
+                64,
+                64,
+                null
+            );
     }
 }

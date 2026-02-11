@@ -89,7 +89,7 @@ public final class ItemsViewImageItem extends JPanel implements UpdatablePanel {
         return new ImageIcon(scaled);
     }
 
-    private void setControllerInventory(final ControllerInventario controllerInventario){
-        this.controllerInventario = controllerInventario;
+    private void setControllerInventory(final ControllerInventario entryControllerInventario) {
+        this.controllerInventario = entryControllerInventario;
     }
 }

@@ -58,7 +58,6 @@ public interface ControllerGamePanel {
 
     void openInventory();
 
-    void setInventario();
 
     /**
      * Determines the status of a plant.

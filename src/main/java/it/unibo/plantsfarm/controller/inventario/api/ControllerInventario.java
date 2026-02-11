@@ -52,4 +52,5 @@ public interface ControllerInventario {
     void openViewInv();
 
     void updateInventory();
+
 }

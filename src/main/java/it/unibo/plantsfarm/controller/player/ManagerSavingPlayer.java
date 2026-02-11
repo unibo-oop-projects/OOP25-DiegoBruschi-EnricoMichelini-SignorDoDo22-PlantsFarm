@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.controller.player;
 
+import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
 import static it.unibo.plantsfarm.model.player.PlayersTypes.FARMER;
 
 import java.nio.file.Path;
@@ -32,8 +33,11 @@ public class ManagerSavingPlayer {
         final ModelInventario inventario = inventarioPlayer;
         final SavePlayer savePlayer = new SavePlayer();
         if (player.getPlayerType() == FARMER) {
+            System.out.println("Livello hoe" + player.getInventory().getInventorySnapshot().get(HOE).getLevel());
             savePlayer.load(memory, inventario);
         }
+
+
     }
 
     /**
@@ -47,6 +51,7 @@ public class ManagerSavingPlayer {
         final ModelInventario inventario = inventarioPlayer;
         final SavePlayer savePlayer = new SavePlayer();
         if (player.getPlayerType() == FARMER) {
+            System.out.println("Livello hoe" + inventarioPlayer.getItem(HOE).getLevel());
             savePlayer.save(memory, inventario);
         }
     }

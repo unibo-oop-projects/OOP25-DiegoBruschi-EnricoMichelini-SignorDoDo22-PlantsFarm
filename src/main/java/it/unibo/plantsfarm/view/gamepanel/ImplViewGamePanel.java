@@ -42,10 +42,6 @@ import it.unibo.plantsfarm.view.utility.Texture;
  * Implementation of the ViewGamePanel interface, responsible for rendering the game state,
  * handling user input, and displaying the game world, player, plants, and buffs.
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
-    value = "EI2",
-    justification = "MVC: the View holds a reference to the Controller by design."
-)
 public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
     public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();

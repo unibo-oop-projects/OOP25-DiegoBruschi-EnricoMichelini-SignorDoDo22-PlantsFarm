@@ -3,7 +3,6 @@ package it.unibo.plantsfarm.view.utility;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * Utility class responsible for loading sprite images from the classpath.
@@ -29,14 +28,26 @@ public final class SpriteLoader {
      * @throws RuntimeException if the resource is not found or cannot be loaded
      */
     public SpriteLoader(final String resourcePath) {
-        try {
-            this.image = ImageIO.read(
-            Objects.requireNonNull(SpriteLoader.class.getResourceAsStream(resourcePath),
-            " Image not found " + resourcePath));
-        } catch (final IOException e) {
-            throw new IllegalArgumentException("Loading Error", e);
+        final var stream = SpriteLoader.class.getResourceAsStream(resourcePath);
+
+        if (stream == null) {
+            throw new IllegalArgumentException("Image not found: " + resourcePath);
         }
+
+        try (stream) {
+            final BufferedImage img = ImageIO.read(stream);
+
+            if (img == null) {
+                throw new IllegalArgumentException("Unsupported image format: " + resourcePath);
+            }
+
+            this.image = img;
+
+        } catch (final IOException e) {
+            throw new IllegalArgumentException("Loading error: " + resourcePath, e);
     }
+}
+
 
     /**
      * Returns the loaded sprite image.
