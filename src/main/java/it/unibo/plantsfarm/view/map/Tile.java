@@ -2,6 +2,8 @@ package it.unibo.plantsfarm.view.map;
 
 import java.awt.image.BufferedImage;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Represents a tile in the game map, used to draw the map by assigning an image to it.
  */
@@ -13,6 +15,8 @@ public class Tile {
      * 
      * @return The image of the tile.
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", 
+        justification = "Returning a copy of BufferedImage would cause significant performance lag in the rendering loop.")
     public final BufferedImage getImage() {
         return this.image;
     }
