@@ -1,11 +1,8 @@
 package it.unibo.plantsfarm.view.gamepanel.api;
 
 import java.util.List;
-
-import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.model.garden.Buff;
 import it.unibo.plantsfarm.model.tiles.Soil;
-import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 
 /**
  * ViewGamePanel interface.

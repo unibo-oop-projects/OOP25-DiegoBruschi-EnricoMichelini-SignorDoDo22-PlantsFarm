@@ -8,6 +8,7 @@ import it.unibo.plantsfarm.model.animation.AnimationCorsa;
 import it.unibo.plantsfarm.model.animation.api.Animation;
 import it.unibo.plantsfarm.model.animation.api.AnimationFrames;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.utility.AnimationTime;
 
 /**
@@ -87,18 +88,12 @@ public final class ImplSelectorFrames implements SelectorFrames {
     }
 
     @Override
-    public BufferedImage getCurrentImage() {
-        return this.currentImage;
-    }
-
-    @Override
     public void render(Graphics2D g2d, double posPlayerx, double posPlayery, int camerax, int cameray) {
-
         g2d.drawImage(currentImage,
                 (int) posPlayerx - camerax,
                 (int) posPlayery - cameray,
-                64,
-                64,
+                ImplViewGamePanel.PLAYER_SIZE,
+                ImplViewGamePanel.PLAYER_SIZE,
                 null
             );
     }

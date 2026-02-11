@@ -162,13 +162,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
             );
         }
 
-            g2D.drawImage(selector.getCurrentImage(),
-                (int) playerPosX - cameraX,
-                (int) playerPosY - cameraY,
-                PLAYER_SIZE,
-                PLAYER_SIZE,
-                null
-            );
+           selector.render(g2D, playerPosX, playerPosY, cameraX, cameraY);
 
         if (soilList != null) {
             for (final Soil pod : soilList) {
