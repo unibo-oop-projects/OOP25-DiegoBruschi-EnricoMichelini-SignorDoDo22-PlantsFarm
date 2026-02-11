@@ -1,6 +1,7 @@
-package it.unibo.plantsfarm.model.menu;
+package it.unibo.plantsfarm.model.menu.impl;
 
 import it.unibo.plantsfarm.model.GameState;
+import it.unibo.plantsfarm.model.menu.api.Shop;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Manages the business logic for the Shop.
  */
-public final class Shop {
+public final class ShopImpl implements Shop {
 
     private static final int MAX_REQUESTS = 3;
     private static final int MIN_MULTIPLIER = 3;
@@ -28,7 +29,7 @@ public final class Shop {
     /**
      * Creates a new Shop.
      */
-    public Shop() {
+    public ShopImpl() {
         this.random = new Random();
     }
 
@@ -38,6 +39,7 @@ public final class Shop {
      * @param gameState The current state of the game.
      * @return A map of PlantType and the requested quantity.
      */
+    @Override
     public Map<PlantType, Integer> generateRequests(final GameState gameState) {
         if (this.activeRequests != null && !this.activeRequests.isEmpty()) {
             return Collections.unmodifiableMap(this.activeRequests);
@@ -73,6 +75,7 @@ public final class Shop {
      * @param requests The map of plants and quantities requested.
      * @return The amount of coins earned, or 0 if the transaction failed.
      */
+    @Override
     public int sellProducts(final GameState gameState, final Map<PlantType, Integer> requests) {
         final Map<PlantType, Integer> storage = gameState.getStorageContents();
 
@@ -107,6 +110,7 @@ public final class Shop {
      * @param cost      The cost of the item.
      * @return The unlocked PlantType, or null if transaction failed.
      */
+    @Override
     public PlantType buyMysteryBox(final GameState gameState, final int cost) {
         final List<PlantType> lockedPlants = Arrays.stream(PlantType.values())
             .filter(p -> !p.isDiscovered())
@@ -131,6 +135,7 @@ public final class Shop {
      *
      * @return True if there are no locked plants left.
      */
+    @Override
     public boolean areAllPlantsUnlocked() {
         return Arrays.stream(PlantType.values()).allMatch(PlantType::isDiscovered);
     }
@@ -138,6 +143,7 @@ public final class Shop {
     /**
      * Resets the current active requests.
      */
+    @Override
     public void resetRequests() {
         this.activeRequests = null;
     }

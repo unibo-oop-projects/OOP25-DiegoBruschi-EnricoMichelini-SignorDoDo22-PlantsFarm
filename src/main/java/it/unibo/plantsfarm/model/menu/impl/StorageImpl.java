@@ -1,7 +1,8 @@
-package it.unibo.plantsfarm.model.menu;
+package it.unibo.plantsfarm.model.menu.impl;
 
 import it.unibo.plantsfarm.controller.memory.api.DataMemory;
 import it.unibo.plantsfarm.controller.memory.impl.DataMemoryImpl;
+import it.unibo.plantsfarm.model.menu.api.Storage;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
 import java.io.IOException;
@@ -14,12 +15,12 @@ import java.util.logging.Logger;
 /**
  * Manages the storage of harvested plants.
  */
-public class Storage {
+public class StorageImpl implements Storage {
 
     private static final String FILE_NAME = "storage.txt";
     private static final String PAIR_SEPARATOR = ";";
     private static final String VALUE_SEPARATOR = ":";
-    private static final Logger LOGGER = Logger.getLogger(Storage.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(StorageImpl.class.getName());
 
     private final Map<PlantType, Integer> items;
     private final DataMemory memory;
@@ -28,7 +29,7 @@ public class Storage {
      * Creates a new empty Storage.
      * Initializes slots only for edible plants.
      */
-    public Storage() {
+    public StorageImpl() {
         this.memory = new DataMemoryImpl();
         this.items = new EnumMap<>(PlantType.class);
 
@@ -46,6 +47,7 @@ public class Storage {
      * @param type   The plant type.
      * @param amount The amount to add.
      */
+    @Override
     public void addItem(final PlantType type, final int amount) {
         if (type == null || !type.isEdible() || amount <= 0) {
             return;
@@ -64,6 +66,7 @@ public class Storage {
      * @param amount The amount to remove.
      * @return True if successful, false otherwise.
      */
+    @Override
     public boolean removeItem(final PlantType type, final int amount) {
         if (type == null || amount <= 0) {
             return false;
@@ -81,6 +84,7 @@ public class Storage {
     /**
      * Resets the storage to zero and updates the save file.
      */
+    @Override
     public void reset() {
         for (final PlantType type : items.keySet()) {
             items.put(type, 0);
@@ -144,6 +148,7 @@ public class Storage {
      * @param type The plant type.
      * @return The quantity stored.
      */
+    @Override
     public int getQuantity(final PlantType type) {
         return items.getOrDefault(type, 0);
     }
@@ -153,6 +158,7 @@ public class Storage {
      *
      * @return The items map.
      */
+    @Override
     public Map<PlantType, Integer> getAllItems() {
         return Collections.unmodifiableMap(items);
     }
