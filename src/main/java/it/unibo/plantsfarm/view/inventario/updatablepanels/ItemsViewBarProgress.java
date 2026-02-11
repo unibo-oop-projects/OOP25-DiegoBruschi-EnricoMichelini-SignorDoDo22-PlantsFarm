@@ -6,7 +6,6 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -34,7 +33,7 @@ public final class ItemsViewBarProgress extends JPanel implements UpdatablePanel
     private final LayoutManager layout = new GridLayout(GRID_ROWS, GRID_COLS);
     private final Map<Tooltype, JProgressBar> progressBarMap = new EnumMap<>(Tooltype.class);
 
-    private final ControllerInventario controllerInventario;
+    private ControllerInventario controllerInventario;
 
     /**
      * Creates a new view that displays the progress bars of the inventory items.
@@ -42,9 +41,10 @@ public final class ItemsViewBarProgress extends JPanel implements UpdatablePanel
      * @param controllerInventario the inventory controller used to retrieve item data
      */
     public ItemsViewBarProgress(final ControllerInventario controllerInventario) {
-        this.controllerInventario = Objects.requireNonNull(controllerInventario);
+        setControllerInventory(controllerInventario);
         this.setLayout(layout);
         createProgressBars();
+        update();
     }
 
     private void createProgressBars() {
@@ -67,9 +67,14 @@ public final class ItemsViewBarProgress extends JPanel implements UpdatablePanel
         for (final Tooltype tool : Tooltype.values()) {
             final JProgressBar bar = progressBarMap.get(tool);
             final ItemsFarm item = inv.get(tool);
-
+            System.out.println("BARRA MAX " + item.getExperienceForLevel());
+            System.out.println("EXPERIENCE " + item.getExperience());
             bar.setMaximum(item.getExperienceForLevel());
             bar.setValue(item.getExperience());
         }
+    }
+
+    private void setControllerInventory(final ControllerInventario controllerInventario){
+        this.controllerInventario = controllerInventario;
     }
 }

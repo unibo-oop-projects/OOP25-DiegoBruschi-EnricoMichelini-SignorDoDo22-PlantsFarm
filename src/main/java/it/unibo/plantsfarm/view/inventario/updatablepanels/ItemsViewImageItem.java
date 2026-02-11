@@ -20,7 +20,7 @@ public final class ItemsViewImageItem extends JPanel implements UpdatablePanel {
 
     private static final int BUTTON_SIZE = 60;
     private static final int ICON_SIZE = 48;
-    private final ControllerInventario controllerInventario;
+    private ControllerInventario controllerInventario;
     private final Map<Tooltype, JButton> itemsDisplay = new EnumMap<>(Tooltype.class);
 
     /**
@@ -29,7 +29,7 @@ public final class ItemsViewImageItem extends JPanel implements UpdatablePanel {
      * @param controllerInventario the inventory controller used to retrieve item data
      */
     public ItemsViewImageItem(final ControllerInventario controllerInventario) {
-        this.controllerInventario = controllerInventario;
+        setControllerInventory(controllerInventario);
         this.setLayout(new GridLayout(3, 1));
         createItemButtons();
         update();
@@ -87,5 +87,9 @@ public final class ItemsViewImageItem extends JPanel implements UpdatablePanel {
         final ImageIcon icon = new ImageIcon(url);
         final Image scaled = icon.getImage().getScaledInstance(ICON_SIZE, ICON_SIZE, Image.SCALE_SMOOTH);
         return new ImageIcon(scaled);
+    }
+
+    private void setControllerInventory(final ControllerInventario controllerInventario){
+        this.controllerInventario = controllerInventario;
     }
 }

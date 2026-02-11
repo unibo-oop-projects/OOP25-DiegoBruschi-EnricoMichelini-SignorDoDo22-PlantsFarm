@@ -3,6 +3,8 @@ package it.unibo.plantsfarm.model.player.api;
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
+import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
+import it.unibo.plantsfarm.model.plant.Rarity;
 import it.unibo.plantsfarm.model.player.ExpertFarmer;
 import it.unibo.plantsfarm.model.player.FarmerPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
@@ -27,7 +29,7 @@ public class Player {
     private double nextPosX;
     private double nextPosY;
     private UserInput direction = UserInput.FERMO;
-    private final ModelInventario inventory;
+    private ModelInventario inventory;
     private final PlayersTypes playersType;
 
     /**
@@ -40,7 +42,7 @@ public class Player {
      * @throws NullPointerException if {@code inventory} is {@code null}
      */
     public Player(final ModelInventario inventory, final PlayersTypes playersTypes) {
-        this.inventory = inventory;
+        setIventario(inventory);
         this.playersType = playersTypes;
     }
 
@@ -120,8 +122,7 @@ public class Player {
     }
 
     public final ModelInventario getInventory(){
-        ModelInventario modelInventario = new ModelInventario(inventory.getInventorySnapshot());
-        return modelInventario;
+        return new ModelInventario(inventory.getInventorySnapshot());
     }
 
     /**
@@ -158,6 +159,14 @@ public class Player {
      */
     public PlayersTypes getPlayerType() {
         return this.playersType;
+    }
+
+    private void setIventario(final ModelInventario inventory) {
+        this.inventory = inventory;
+    }
+
+    public void useItem(final Tooltype tool, final Rarity plant) {
+        inventory.useItem(tool, plant);
     }
 
 }

@@ -84,16 +84,16 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                 if (input != null) {
                     switch (input) {
                     case DOWN, UP, RIGHT, LEFT, FERMO -> actionHandler.updateDirection(input, player);
-
                     case SELECT_SEED -> openSeedSelectionMenu();
-
                     case ACTIONHOE -> {
                         actionHandler.handleActionHoe(gardenController, currentSelectedPlant, player);
+                        controllerInventario.updateInventory();
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
                     case ACTIONWATER -> {
                         actionHandler.handleWater(gardenController, now, currentSelectedPlant, player);
+                        controllerInventario.updateInventory();
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
@@ -157,7 +157,10 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
 
     @Override
     public void openInventory() {
-        this.controllerInventario.getView().setVisible(true);;
+        if(controllerInventario != null){
+            this.controllerInventario.openViewInv();
+            this.controllerInventario.updateInventory();
+        }
     }
 
     @Override

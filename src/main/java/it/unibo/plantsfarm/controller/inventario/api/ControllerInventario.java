@@ -5,7 +5,6 @@ import java.util.Map;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm;
 import it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
-import it.unibo.plantsfarm.view.inventario.UpgradeItemsView;
 
 /**
  * Controller interface for the inventory upgrade system.
@@ -34,13 +33,6 @@ public interface ControllerInventario {
     void pressUpgradeItem(Tooltype tool);
 
     /**
-     * Returns the current inventory view instance managed by this controller.
-     *
-     * @return the inventory view, or null if the view has not been created yet
-     */
-    UpgradeItemsView getView();
-
-    /**
      * Creates and registers the inventory view using the provided game panel
      * as the owner/context for focus handling and positioning.
      *
@@ -55,4 +47,9 @@ public interface ControllerInventario {
      * @return a snapshot map of tool types to items
      */
     Map<Tooltype, ItemsFarm> getInventoryClone();
+
+
+    void openViewInv();
+
+    void updateInventory();
 }

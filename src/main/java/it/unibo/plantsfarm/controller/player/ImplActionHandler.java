@@ -25,7 +25,7 @@ public final class ImplActionHandler implements ActionHandler {
             if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
                 && !soil.isPlanted()
             ) {
-                player.getInventory().useItem(HOE, selectedPlant.getRarity());
+                player.useItem(HOE, selectedPlant.getRarity());
                 controllerGarden.pianta(selectedPlant);
             } else if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
                 && soil.isPlanted() && soil.getPlant().isMature()
@@ -42,7 +42,7 @@ public final class ImplActionHandler implements ActionHandler {
             final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
             if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
                 && soil.getPlant() != null && soil.getPlant().needsWater()) {
-                player.getInventory().useItem(WATERCAN, selectedPlant.getRarity());
+                player.useItem(WATERCAN, selectedPlant.getRarity());
                 controllerGarden.innaffia(now);
             }
         }

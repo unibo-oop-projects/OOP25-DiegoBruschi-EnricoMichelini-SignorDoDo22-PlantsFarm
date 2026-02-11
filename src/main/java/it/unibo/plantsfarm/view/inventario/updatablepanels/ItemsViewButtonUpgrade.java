@@ -18,7 +18,7 @@ import it.unibo.plantsfarm.view.inventario.UpdatablePanel;
 public final class ItemsViewButtonUpgrade extends JPanel implements UpdatablePanel {
 
     private static final String UPGRADE_TEXT = " UPGRADE ";
-    private final ControllerInventario controllerInventario;
+    private ControllerInventario controllerInventario;
     private final Map<Tooltype, JButton> progressButtonUpgradeMap = new LinkedHashMap<>();
 
     /**
@@ -27,7 +27,7 @@ public final class ItemsViewButtonUpgrade extends JPanel implements UpdatablePan
      * @param controllerInventario the inventory controller used to manage upgrades
      */
     public ItemsViewButtonUpgrade(final ControllerInventario controllerInventario) {
-        this.controllerInventario = controllerInventario;
+        setControllerInventory(controllerInventario);
         this.setLayout(new GridLayout(3, 1));
         createButtonItemsAction();
         update();
@@ -55,5 +55,9 @@ public final class ItemsViewButtonUpgrade extends JPanel implements UpdatablePan
             final JButton button = progressButtonUpgradeMap.get(tool);
             button.setEnabled(controllerInventario.isUpgredable(tool));
         }
+    }
+
+    private void setControllerInventory(final ControllerInventario controllerInventario){
+        this.controllerInventario = controllerInventario;
     }
 }

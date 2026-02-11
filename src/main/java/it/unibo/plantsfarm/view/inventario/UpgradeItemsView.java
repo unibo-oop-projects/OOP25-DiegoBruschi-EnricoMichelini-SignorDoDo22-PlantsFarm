@@ -18,7 +18,7 @@ public final class UpgradeItemsView extends JDialog {
     private static final int DIALOG_HEIGHT = 350;
     private static final String TITLE = " ITEMS EXPERIENCE AND STATS PLAYER ";
     private final UpdatablePanel mainPanel;
-    private final ImplViewGamePanel gamePanel;
+    private ImplViewGamePanel gamePanel;
 
     /**
      * Creates a new dialog for items experience.
@@ -31,14 +31,14 @@ public final class UpgradeItemsView extends JDialog {
     public UpgradeItemsView(final ImplViewGamePanel gamePanel, final ControllerInventario controllerInventario) {
         super();
         this.setTitle(TITLE);
-        this.gamePanel = gamePanel;
+        setImplViewGamePanel(gamePanel);
         this.mainPanel = new MainItemsViewPanel(controllerInventario);
         this.add((JPanel)mainPanel);
         this.setResizable(false);
         this.setSize(DIALOG_WIDTH, DIALOG_HEIGHT);
         this.setLocationRelativeTo(gamePanel);
         this.setModal(true);
-
+        updateAllItemsPanel();
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(final WindowEvent e) {
@@ -63,5 +63,9 @@ public final class UpgradeItemsView extends JDialog {
      */
     public void updateAllItemsPanel() {
         mainPanel.update();
+    }
+
+    private void setImplViewGamePanel(final ImplViewGamePanel gamePanel) {
+        this.gamePanel = java.util.Objects.requireNonNull(gamePanel);
     }
 }

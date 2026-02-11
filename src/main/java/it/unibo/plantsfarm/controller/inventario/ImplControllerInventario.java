@@ -36,14 +36,24 @@ public final class ImplControllerInventario implements ControllerInventario {
         viewItemsInventory.updateAllItemsPanel();
     }
 
-    @Override
-    public UpgradeItemsView getView() {
-        return viewItemsInventory;
-    }
 
     @Override
     public void addView(final ImplViewGamePanel gamePanel) {
         this.viewItemsInventory = new UpgradeItemsView(gamePanel, this);
+    }
+
+    @Override
+    public void openViewInv() {
+         if(viewItemsInventory != null){
+            this.viewItemsInventory.setVisible(true);
+        }
+    }
+
+    @Override
+    public void updateInventory() {
+        if(viewItemsInventory != null){
+            this.viewItemsInventory.updateAllItemsPanel();
+        }
     }
 
     @Override
