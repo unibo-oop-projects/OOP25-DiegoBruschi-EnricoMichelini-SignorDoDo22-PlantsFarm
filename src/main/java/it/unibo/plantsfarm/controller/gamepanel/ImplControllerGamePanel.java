@@ -146,11 +146,9 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
 
     @Override
     public void addView() {
-        this.view = new ImplViewGamePanel();
         this.controllerAnimation = new ImplSelectorFrames();
+        this.view = new ImplViewGamePanel(this,controllerAnimation);
         this.controllerInventario.addView(this.view);
-        view.setSelectorFrames(controllerAnimation);
-        view.setController(this);
         camera = new ImplCamera(view.getWidth(), view.getHeight());
     }
 

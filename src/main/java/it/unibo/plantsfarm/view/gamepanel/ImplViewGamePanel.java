@@ -32,6 +32,7 @@ import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.PlantSta
 import it.unibo.plantsfarm.model.garden.Buff; //REMOVE
 import it.unibo.plantsfarm.model.plant.Plant; //REMOVE
 import it.unibo.plantsfarm.model.tiles.Soil; //REMOVE
+import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamepanel.api.ViewGamePanel;
 import it.unibo.plantsfarm.view.map.TileManager;
@@ -91,8 +92,10 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   /**
    * Creates a new ImplViewGamePanel, initializing the layout, size, and key listeners for user input.
    */
-  public ImplViewGamePanel() {
+  public ImplViewGamePanel(final ImplControllerGamePanel controllerGamePanel, final ImplSelectorFrames selectorFrames) {
     super();
+    setController(controllerGamePanel);
+    setSelectorFrames(selectorFrames);
     this.setLayout(null);
     this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
     this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -221,13 +224,13 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         }
     }
 
-    @Override
-    public void setController(final ImplControllerGamePanel controller) {
-        this.controller = controller;
+
+    private void setController(final ImplControllerGamePanel controllerGamePanel) {
+        this.controller = controllerGamePanel;
     }
 
-    @Override
-    public void setSelectorFrames(final SelectorFrames selectorFrames) {
+
+    private void setSelectorFrames(final SelectorFrames selectorFrames) {
         this.selector = selectorFrames;
     }
 
