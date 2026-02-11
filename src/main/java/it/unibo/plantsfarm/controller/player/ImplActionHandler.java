@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.controller.player;
 
+import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.AXE;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
 
@@ -37,22 +38,20 @@ public final class ImplActionHandler implements ActionHandler {
     }
 
     @Override
-    public void handleWater(final GardenController controllerGarden, final Long now, final PlantType selectedPlant, final Player player) {
-        if (selectedPlant != null) {
-            final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
-            if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
-                && soil.getPlant() != null && soil.getPlant().needsWater()) {
-                player.useItem(WATERCAN, selectedPlant.getRarity());
-                controllerGarden.innaffia(now);
-            }
+    public void handleWater(final GardenController controllerGarden, final Long now, final Player player) {
+        final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
+        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
+            && soil.getPlant() != null && soil.getPlant().needsWater()) {
+            player.useItem(WATERCAN, soil.getPlant().getRarity());
+            controllerGarden.innaffia(now);
         }
     }
 
     @Override
     public void handleAxe(final GardenController controllerGarden, final Player player) {
         final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
-        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null && soil.isPlanted()) {
-            soil.removePlant();
+        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null) {
+            player.useItem(AXE, soil.getPlant().getRarity());
         }
     }
 

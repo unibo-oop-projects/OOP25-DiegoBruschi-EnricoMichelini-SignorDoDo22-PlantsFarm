@@ -1,8 +1,8 @@
 package it.unibo.plantsfarm.model;
 
-import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.FERTILIZER;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
+import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.AXE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
@@ -16,11 +16,11 @@ class ItemsTest {
     @Test
     void testItemCreation() {
         final ItemsFarm hoe = new ItemsFarmBase(HOE);
-        final ItemsFarm fertilizer = new ItemsFarmBase(FERTILIZER);
+        final ItemsFarm fertilizer = new ItemsFarmBase(AXE);
         final ItemsFarm watercan = new ItemsFarmBase(WATERCAN);
 
         assertEquals(HOE, hoe.getTooltype());
-        assertEquals(FERTILIZER, fertilizer.getTooltype());
+        assertEquals(AXE, fertilizer.getTooltype());
         assertEquals(WATERCAN, watercan.getTooltype());
 
         assertEquals(Rarity.COMMON, hoe.getRarityItem());

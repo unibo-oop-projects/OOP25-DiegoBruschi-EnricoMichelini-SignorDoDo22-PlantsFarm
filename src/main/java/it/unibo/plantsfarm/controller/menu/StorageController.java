@@ -22,7 +22,6 @@ public final class StorageController {
     public StorageController(final GameState gameState) {
         this.view = new StorageScreenImpl();
         final Map<PlantType, Integer> storage = gameState.getStorageContents();
-
         setupView(storage);
     }
 
