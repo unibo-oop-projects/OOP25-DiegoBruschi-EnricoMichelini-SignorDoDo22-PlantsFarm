@@ -6,13 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.plantsfarm.model.menu.Encyclopedia;
+import it.unibo.plantsfarm.model.menu.api.Encyclopedia;
+import it.unibo.plantsfarm.model.menu.impl.EncyclopediaImpl;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
 final class EncyclopediaTest {
 
-    private final Encyclopedia encyclopedia = new Encyclopedia();
+    private final Encyclopedia encyclopedia = new EncyclopediaImpl();
     private final Plant carrotInstance = new Plant(PlantType.CARROT);
     private final Plant begoniaInstance = new Plant(PlantType.BEGONIA);
 

@@ -1,7 +1,8 @@
 package it.unibo.plantsfarm.controller.menu;
 
 import it.unibo.plantsfarm.model.GameState;
-import it.unibo.plantsfarm.model.menu.Encyclopedia;
+import it.unibo.plantsfarm.model.menu.api.Encyclopedia;
+import it.unibo.plantsfarm.model.menu.impl.EncyclopediaImpl;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.view.menu.api.EncyclopediaScreen;
 import it.unibo.plantsfarm.view.menu.impl.EncyclopediaScreenImpl;
@@ -27,7 +28,7 @@ public final class EncyclopediaController {
      */
     public EncyclopediaController() {
         this.view = new EncyclopediaScreenImpl();
-        this.encyclopedia = new Encyclopedia();
+        this.encyclopedia = new EncyclopediaImpl();
     }
 
     /**

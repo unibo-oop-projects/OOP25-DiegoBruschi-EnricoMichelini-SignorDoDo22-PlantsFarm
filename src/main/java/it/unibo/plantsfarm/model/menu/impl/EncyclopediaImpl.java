@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.model.menu;
+package it.unibo.plantsfarm.model.menu.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 import it.unibo.plantsfarm.controller.memory.api.DataMemory;
 import it.unibo.plantsfarm.controller.memory.impl.DataMemoryImpl;
+import it.unibo.plantsfarm.model.menu.api.Encyclopedia;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
@@ -21,11 +22,11 @@ import it.unibo.plantsfarm.model.plant.PlantType;
  * Represents the encyclopedia containing information about all plants in the game.
  * It shows only unlocked plants by the player.
  */
-public final class Encyclopedia {
+public final class EncyclopediaImpl implements Encyclopedia {
 
     private static final String FILE_NAME = "encyclopedia.txt";
     private static final String SEPARATOR = ":";
-    private static final Logger LOGGER = Logger.getLogger(Encyclopedia.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(EncyclopediaImpl.class.getName());
 
     private final List<Plant> plants;
     private final DataMemory memory;
@@ -33,7 +34,7 @@ public final class Encyclopedia {
     /**
      * Creates a new empty Encyclopedia.
      */
-    public Encyclopedia() {
+    public EncyclopediaImpl() {
         this.plants = new ArrayList<>();
         this.memory = new DataMemoryImpl();
     }
@@ -41,6 +42,7 @@ public final class Encyclopedia {
     /**
      * Saves the current unlocked plants list to file.
      */
+    @Override
     public void save() {
         final StringBuilder sb = new StringBuilder();
         for (final PlantType type : PlantType.values()) {
@@ -58,6 +60,7 @@ public final class Encyclopedia {
     /**
      * Resets encyclopedia.
      */
+    @Override
     public void reset() {
         for (final PlantType type : PlantType.values()) {
             type.lock();
@@ -71,6 +74,7 @@ public final class Encyclopedia {
      *
      * @return unmodifiable list of plants
      */
+    @Override
     public List<Plant> getPlants() {
         return Collections.unmodifiableList(plants);
     }
@@ -80,6 +84,7 @@ public final class Encyclopedia {
      *
      * @param plant The plant to add.
      */
+    @Override
     public void addPlant(final Plant plant) {
         if (!plants.contains(plant)) {
             plants.add(plant);
@@ -91,6 +96,7 @@ public final class Encyclopedia {
      *
      * @return The number of plants.
      */
+    @Override
     public int numberPlants() {
         return plants.size();
     }
@@ -98,6 +104,7 @@ public final class Encyclopedia {
     /**
      * Unlocks all plants in the encyclopedia.
      */
+    @Override
     public void unlockAll() {
         for (final Plant plant : plants) {
             plant.getType().unlock();
@@ -110,6 +117,7 @@ public final class Encyclopedia {
      *
      * @return A list of unlocked edible plants.
      */
+    @Override
     public List<Plant> getUnlockedEdiblePlants() {
         final List<Plant> unlockedEdiblePlantsList = new ArrayList<>();
         for (final Plant plant : plants) {
@@ -125,6 +133,7 @@ public final class Encyclopedia {
      *
      * @return The number of discovered edible plants.
      */
+    @Override
     public int getNumberUnlockedEdiblePlants() {
         int total = 0;
         for (final Plant plant : plants) {
@@ -142,6 +151,7 @@ public final class Encyclopedia {
      * 
      * @return The description string or a default message if not found.
      */
+    @Override
     public String getPlantDescription(final PlantType type) {
 
         final String path = "encyclopediaFiles/" + type.name() + ".txt";
@@ -159,12 +169,4 @@ public final class Encyclopedia {
         }
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder stringBuilder = new StringBuilder("=== Encyclopedia ===\n");
-        for (final Plant p : plants) {
-            stringBuilder.append(p.getName()).append('\n');
-        }
-        return stringBuilder.toString();
-    }
 }

@@ -1,9 +1,10 @@
 package it.unibo.plantsfarm.model;
 
 import it.unibo.plantsfarm.model.menu.Coin;
-import it.unibo.plantsfarm.model.menu.Encyclopedia;
 import it.unibo.plantsfarm.model.menu.Shop;
+import it.unibo.plantsfarm.model.menu.api.Encyclopedia;
 import it.unibo.plantsfarm.model.menu.api.Storage;
+import it.unibo.plantsfarm.model.menu.impl.EncyclopediaImpl;
 import it.unibo.plantsfarm.model.menu.impl.StorageImpl;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
@@ -29,7 +30,7 @@ public final class GameState {
      * @param plants The list of plants to load into the internal encyclopedia.
      */
     public GameState(final List<Plant> plants) {
-        this.encyclopedia = new Encyclopedia();
+        this.encyclopedia = new EncyclopediaImpl();
         this.storage = new StorageImpl();
         this.shop = new Shop();
         this.wallet = new Coin(INITIAL_COINS);
