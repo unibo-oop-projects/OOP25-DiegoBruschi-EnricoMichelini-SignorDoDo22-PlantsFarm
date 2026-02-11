@@ -11,7 +11,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.plantsfarm.model.menu.Shop;
+import it.unibo.plantsfarm.model.menu.api.Shop;
+import it.unibo.plantsfarm.model.menu.impl.ShopImpl;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
@@ -24,7 +25,7 @@ final class ShopTest {
     private static final int STORAGE_DEFAULT = 0;
     private static final int BIG_QUANTITY = 5000;
 
-    private final Shop shop = new Shop();
+    private final Shop shop = new ShopImpl();
     private final Plant carrot = new Plant(PlantType.CARROT);
     private final GameState gameState = new GameState(List.of(carrot));
 

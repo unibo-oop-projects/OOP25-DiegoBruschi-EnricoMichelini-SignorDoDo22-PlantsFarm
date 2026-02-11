@@ -1,10 +1,11 @@
 package it.unibo.plantsfarm.model;
 
 import it.unibo.plantsfarm.model.menu.Coin;
-import it.unibo.plantsfarm.model.menu.Shop;
 import it.unibo.plantsfarm.model.menu.api.Encyclopedia;
+import it.unibo.plantsfarm.model.menu.api.Shop;
 import it.unibo.plantsfarm.model.menu.api.Storage;
 import it.unibo.plantsfarm.model.menu.impl.EncyclopediaImpl;
+import it.unibo.plantsfarm.model.menu.impl.ShopImpl;
 import it.unibo.plantsfarm.model.menu.impl.StorageImpl;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
@@ -32,7 +33,7 @@ public final class GameState {
     public GameState(final List<Plant> plants) {
         this.encyclopedia = new EncyclopediaImpl();
         this.storage = new StorageImpl();
-        this.shop = new Shop();
+        this.shop = new ShopImpl();
         this.wallet = new Coin(INITIAL_COINS);
 
         for (final Plant p : plants) {
