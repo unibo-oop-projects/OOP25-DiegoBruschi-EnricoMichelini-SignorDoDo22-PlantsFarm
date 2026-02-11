@@ -1,6 +1,6 @@
 package it.unibo.plantsfarm.controller.player;
 
-import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.FERTILIZER;
+import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.AXE;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.HOE;
 import static it.unibo.plantsfarm.model.items.api.ItemsFarm.Tooltype.WATERCAN;
 
@@ -53,7 +53,7 @@ public final class ImplActionHandler implements ActionHandler {
     public void handleAxe(final GardenController controllerGarden, final Player player) {
         final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
         if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null && soil.isPlanted()
-        && player.getInventory().useItem(FERTILIZER, soil.getPlant().getRarity())
+        && player.getInventory().useItem(AXE, soil.getPlant().getRarity())
         ) {
             soil.removePlant();
         }

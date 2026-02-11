@@ -60,7 +60,7 @@ public final class ItemsViewImageItem extends JPanel implements UpdatablePanel {
              if (tool == Tooltype.WATERCAN) {
                 button.setIcon(loadScaledIcon("/plantStatus/WaterCan.png"));
                 button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel()));
-            } else if (tool == Tooltype.FERTILIZER) {
+            } else if (tool == Tooltype.AXE) {
                 button.setIcon(loadScaledIcon("/plantStatus/Fertilizer.png"));
                 button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel())
                 + controllerInventario.getInventoryClone().get(tool).getRarityItem().toString());

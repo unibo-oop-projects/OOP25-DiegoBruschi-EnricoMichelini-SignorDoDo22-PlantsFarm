@@ -88,6 +88,6 @@ public interface ItemsFarm {
     enum Tooltype {
         HOE,
         WATERCAN,
-        FERTILIZER
+        AXE
     }
 }
