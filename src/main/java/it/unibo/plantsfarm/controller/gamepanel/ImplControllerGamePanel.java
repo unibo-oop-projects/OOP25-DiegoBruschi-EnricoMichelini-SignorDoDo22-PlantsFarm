@@ -24,6 +24,7 @@ import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
+
 /**
  * Implementation of the ControllerGamePanel interface, responsible for managing the game loop,
  * handling user input, and coordinating interactions between the model and view components.
@@ -57,6 +58,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         setPlayer();
         actionHandler = new ImplActionHandler();
         this.controllerInventario = new ImplControllerInventario(this.player);
+
         this.gardenController = new GardenController(gameState, this.player);
         this.collisionDetector = new CollisionDetector(this.player);
         this.spawningBuffsController = new SpawningBuffsController(map);
@@ -111,7 +113,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             controllerAnimation.update(System.nanoTime());
             player.updatePlayer(delta);
             gardenController.updateSoil(now);
-            camera.followPlayer();
+            camera.followPlayer((int) player.getPosx(), (int) player.getPosy());
         }
     }
 
@@ -140,7 +142,6 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         view.setSelectorFrames(controllerAnimation);
         view.setController(this);
         camera = new ImplCamera(view.getWidth(), view.getHeight());
-        camera.setPlayer(player);
     }
 
     @Override

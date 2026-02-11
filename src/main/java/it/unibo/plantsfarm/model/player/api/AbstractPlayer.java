@@ -3,7 +3,6 @@ package it.unibo.plantsfarm.model.player.api;
 import java.awt.Rectangle;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
-import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.player.ExpertFarmer;
 import it.unibo.plantsfarm.model.player.FarmerPlayer;
 import it.unibo.plantsfarm.model.player.PlayersTypes;
@@ -29,7 +28,6 @@ public class AbstractPlayer {
     private double nextPosY;
     private UserInput direction = UserInput.FERMO;
     private final ModelInventario inventory;
-    private Plant heldPlant;
     private final PlayersTypes playersType;
 
     /**
@@ -61,7 +59,7 @@ public class AbstractPlayer {
             case RIGHT -> nextPosX += delta;
             case UP -> nextPosY -= delta;
             case DOWN -> nextPosY += delta;
-            case ACTIONHOE, ACTIONWATER, REMOVE_PLANT -> { }
+            case ACTIONHOE, ACTIONWATER, REMOVE_PLANT, SELECT_SEED -> { }
             case FERMO -> { }
         }
     }
@@ -122,7 +120,8 @@ public class AbstractPlayer {
     }
 
     public final ModelInventario getInventory(){
-        return this.inventory;
+        ModelInventario modelInventario = new ModelInventario(inventory.getInventorySnapshot());
+        return modelInventario;
     }
 
     /**

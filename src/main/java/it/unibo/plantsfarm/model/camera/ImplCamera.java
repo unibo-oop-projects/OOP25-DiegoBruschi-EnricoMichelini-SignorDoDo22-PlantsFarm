@@ -13,7 +13,6 @@ public final class ImplCamera {
 
     private int posX;
     private int posY;
-    private AbstractPlayer player;
     private final int screenWidth;
 
     private final int screenHeight;
@@ -35,10 +34,10 @@ public final class ImplCamera {
      * the world boundaries, ensuring the player remains visible.
      *
      */
-    public void followPlayer() {
+    public void followPlayer(final int playerPosX, final int playerPosY) {
 
-        posX = (int) player.getPosx() - ImplViewGamePanel.SCREEN_WIDTH / 2;
-        posY = (int) player.getPosy() - ImplViewGamePanel.SCREEN_HEIGHT / 2;
+        posX = (int) playerPosX - ImplViewGamePanel.SCREEN_WIDTH / 2;
+        posY = (int) playerPosY - ImplViewGamePanel.SCREEN_HEIGHT / 2;
 
         if (posX < 0) {
             posX = 0;
@@ -72,12 +71,4 @@ public final class ImplCamera {
         return this.posY;
     }
 
-    /**
-     * Sets the entity to be followed by the camera.
-     *
-     * @param player the player entity to follow
-     */
-    public void setPlayer(final AbstractPlayer player) {
-        this.player = player;
-    }
 }

@@ -57,6 +57,9 @@ public final class ImplSelectorFrames implements SelectorFrames {
                 animationAxe.start(nowNs);
                 currentAnimation = animationAxe;
             }
+
+            case SELECT_SEED -> { }
+
             case FERMO -> {
                 final boolean hoePlaying = animationHoe.equals(currentAnimation) && animationHoe.isPlaying();
                 final boolean waterPlaying = animationWater.equals(currentAnimation) && animationWater.isPlaying();
