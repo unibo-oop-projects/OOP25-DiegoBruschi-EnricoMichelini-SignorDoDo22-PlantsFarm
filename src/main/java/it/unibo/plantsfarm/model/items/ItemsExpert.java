@@ -95,11 +95,6 @@ public final class ItemsExpert implements ItemsFarm {
         this.level = level;
     }
 
-    @Override
-    public boolean canBeUsed(final Rarity plantrarity) {
-        return true;
-    }
-
     /**
      * Item constants for expert items.
      */
@@ -107,9 +102,15 @@ public final class ItemsExpert implements ItemsFarm {
         private static final int EXPERIENCE_FOR_ACTION = 5;
         private static final int EXPERIENCE_FOR_UPGRADE = 30;
         private static final int ADD_EXPERIENCE_FOR_UPGRADE = 15;
+        private static final int GLOBAL_VAL_PLANT = 0;
         private static final int LEVEL_MAX = 10;
         private static final int VAL_RARE = 3;
         private static final int VAL_EPIC = 6;
         private static final int VAL_LEGENDARY = 10;
+    }
+
+    @Override
+    public int getLevelBaseOnRarity(Rarity plantrarity) {
+        return StatsItemBase.GLOBAL_VAL_PLANT;
     }
 }

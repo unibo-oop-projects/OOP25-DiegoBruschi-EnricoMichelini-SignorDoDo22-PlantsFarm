@@ -47,7 +47,7 @@ public final class ItemsViewImageItem extends JPanel implements UpdatablePanel {
     }
 
     /**
-     * Create and inizialize the Immage button with the (DA FINIRE).
+     * Create and inizialize the Immage button with the respective immages for each items.
      *
      */
     private void createItemButtons() {

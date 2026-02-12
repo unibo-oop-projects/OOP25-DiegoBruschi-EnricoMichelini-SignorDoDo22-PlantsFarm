@@ -104,7 +104,7 @@ public final class ModelInventario {
      * @return {@code true} if the item was successfully used, {@code false} otherwise
      */
     public boolean useItem(final Tooltype tool, final Rarity rarityPlant) {
-        if (rarityPlant != null && inventario.get(tool).canBeUsed(rarityPlant)) {
+        if (rarityPlant != null && canBeUsed(tool, rarityPlant)) {
             this.inventario.get(tool).useItem();
             return true;
         }
@@ -144,5 +144,9 @@ public final class ModelInventario {
     public void loadItem(final Tooltype tool, final int level) {
         final ItemsFarm itemFarm = inventario.get(tool);
         itemFarm.setLevel(level);
+    }
+
+    private boolean canBeUsed(final Tooltype tool, final Rarity planRarity) {
+        return inventario.get(tool).getLevelBaseOnRarity(planRarity) <= inventario.get(tool).getLevel();
     }
 }
