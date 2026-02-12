@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.view.menu;
 
+import it.unibo.plantsfarm.model.plant.PlantRegistry;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.view.utility.ButtonFactory;
 import it.unibo.plantsfarm.view.utility.Texture;
@@ -161,10 +162,10 @@ public final class MysteryBox {
 
     private List<PlantType> generateFramesList() {
         final List<PlantType> sequence = new ArrayList<>();
-        final PlantType[] allPlants = PlantType.values();
+        final List<PlantType> allPlants = PlantRegistry.getAll();
 
         for (int i = 0; i < FRAMES; i++) {
-            sequence.add(allPlants[this.random.nextInt(allPlants.length)]);
+            sequence.add(allPlants.get(this.random.nextInt(allPlants.size())));
         }
         sequence.add(this.unlockedPlant);
         return sequence;

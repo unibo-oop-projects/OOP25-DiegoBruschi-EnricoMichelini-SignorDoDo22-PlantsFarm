@@ -4,11 +4,11 @@ import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.menu.api.Shop;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
+import it.unibo.plantsfarm.model.plant.PlantRegistry;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -46,7 +46,7 @@ public final class ShopImpl implements Shop {
         }
 
         final List<Plant> unlocked = gameState.getAllUnlockedEdiblePlants();
-        final Map<PlantType, Integer> requests = new EnumMap<>(PlantType.class);
+        final Map<PlantType, Integer> requests = new HashMap<>();
 
         if (unlocked.isEmpty()) {
             return requests;
@@ -57,7 +57,7 @@ public final class ShopImpl implements Shop {
         final List<Plant> selected = shuffled.subList(0, Math.min(MAX_REQUESTS, shuffled.size()));
 
         for (final Plant plant : selected) {
-            final int baseHarvest = plant.getType().getHarvestInfo().generateHarvest();
+            final int baseHarvest = plant.getType().generateHarvest();
             final int multiplier = MIN_MULTIPLIER + random.nextInt(MAX_MULTIPLIER - MIN_MULTIPLIER + 1);
             final int totalQuantity = baseHarvest * multiplier;
 
@@ -94,7 +94,7 @@ public final class ShopImpl implements Shop {
             final int quantity = entry.getValue();
 
             gameState.removeHarvest(type, quantity);
-            totalEarnings += type.getHarvestInfo().getSellPrice() * quantity;
+            totalEarnings += type.getSellPrice() * quantity;
         }
 
         gameState.addCoins(totalEarnings);
@@ -112,7 +112,7 @@ public final class ShopImpl implements Shop {
      */
     @Override
     public PlantType buyMysteryBox(final GameState gameState, final int cost) {
-        final List<PlantType> lockedPlants = Arrays.stream(PlantType.values())
+        final List<PlantType> lockedPlants = PlantRegistry.getAll().stream()
             .filter(p -> !p.isDiscovered())
             .collect(Collectors.toList());
 
@@ -137,7 +137,7 @@ public final class ShopImpl implements Shop {
      */
     @Override
     public boolean areAllPlantsUnlocked() {
-        return Arrays.stream(PlantType.values()).allMatch(PlantType::isDiscovered);
+        return PlantRegistry.getAll().stream().allMatch(PlantType::isDiscovered);
     }
 
     /**

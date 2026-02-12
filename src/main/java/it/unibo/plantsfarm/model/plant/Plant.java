@@ -63,10 +63,7 @@ public class Plant {
      * @return the value in coins, or 0 if ornamental.
      */
     public final int getSellValue() {
-        if (!type.isEdible()) {
-            return 0;
-        }
-        return type.getHarvestInfo().getSellPrice();
+        return type.getSellPrice();
     }
 
     /**
@@ -75,10 +72,7 @@ public class Plant {
      * @return a random number between min and max yield, or 0 if ornamental.
      */
     public final int harvest() {
-        if (!type.isEdible()) {
-            return 0;
-        }
-        return type.getHarvestInfo().generateHarvest();
+        return type.generateHarvest();
     }
 
     /**
