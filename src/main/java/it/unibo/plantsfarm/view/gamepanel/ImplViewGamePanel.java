@@ -32,9 +32,9 @@ import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.PlantStatus;
 
-import it.unibo.plantsfarm.model.garden.Buff; //REMOVE
-import it.unibo.plantsfarm.model.plant.Plant; //REMOVE
-import it.unibo.plantsfarm.model.tiles.Soil; //REMOVE
+import it.unibo.plantsfarm.model.garden.Buff;
+import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.tiles.Soil;
 import it.unibo.plantsfarm.view.gamepanel.api.ViewGamePanel;
 import it.unibo.plantsfarm.view.map.TileManager;
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
