@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.plantsfarm.model.menu.api.Storage;
 import it.unibo.plantsfarm.model.menu.impl.StorageImpl;
-import it.unibo.plantsfarm.model.plant.PlantType;
+import it.unibo.plantsfarm.model.plant.PlantRegistry;
 
 /**
  * Test for Storage implementation.
@@ -33,11 +33,11 @@ final class StorageTest {
     void testInitialization() {
         storage.reset();
 
-        assertEquals(INITIAL_QUANTITY, storage.getQuantity(PlantType.CARROT));
-        assertEquals(INITIAL_QUANTITY, storage.getQuantity(PlantType.TOMATO));
+        assertEquals(INITIAL_QUANTITY, storage.getQuantity(PlantRegistry.CARROT));
+        assertEquals(INITIAL_QUANTITY, storage.getQuantity(PlantRegistry.TOMATO));
 
-        assertEquals(0, storage.getQuantity(PlantType.BEGONIA));
-        assertEquals(0, storage.getQuantity(PlantType.MONSTERA));
+        assertEquals(0, storage.getQuantity(PlantRegistry.BEGONIA));
+        assertEquals(0, storage.getQuantity(PlantRegistry.MONSTERA));
     }
 
     /**
@@ -47,14 +47,14 @@ final class StorageTest {
     void testAddItem() {
         storage.reset();
 
-        storage.addItem(PlantType.CARROT, Q1);
-        assertEquals(INITIAL_QUANTITY + Q1, storage.getQuantity(PlantType.CARROT));
+        storage.addItem(PlantRegistry.CARROT, Q1);
+        assertEquals(INITIAL_QUANTITY + Q1, storage.getQuantity(PlantRegistry.CARROT));
 
-        storage.addItem(PlantType.BEGONIA, Q2);
-        assertEquals(0, storage.getQuantity(PlantType.BEGONIA));
+        storage.addItem(PlantRegistry.BEGONIA, Q2);
+        assertEquals(0, storage.getQuantity(PlantRegistry.BEGONIA));
 
-        storage.addItem(PlantType.CARROT, Q3);
-        assertEquals(INITIAL_QUANTITY + Q1, storage.getQuantity(PlantType.CARROT));
+        storage.addItem(PlantRegistry.CARROT, Q3);
+        assertEquals(INITIAL_QUANTITY + Q1, storage.getQuantity(PlantRegistry.CARROT));
     }
 
     /**
@@ -64,15 +64,15 @@ final class StorageTest {
     void testRemoveItem() {
         storage.reset();
 
-        storage.addItem(PlantType.POTATO, Q6);
+        storage.addItem(PlantRegistry.POTATO, Q6);
 
-        assertTrue(storage.removeItem(PlantType.POTATO, Q4));
-        assertEquals(Q6 - Q4, storage.getQuantity(PlantType.POTATO));
+        assertTrue(storage.removeItem(PlantRegistry.POTATO, Q4));
+        assertEquals(Q6 - Q4, storage.getQuantity(PlantRegistry.POTATO));
 
-        assertFalse(storage.removeItem(PlantType.POTATO, Q5));
-        assertEquals(Q6 - Q4, storage.getQuantity(PlantType.POTATO));
+        assertFalse(storage.removeItem(PlantRegistry.POTATO, Q5));
+        assertEquals(Q6 - Q4, storage.getQuantity(PlantRegistry.POTATO));
 
-        assertFalse(storage.removeItem(PlantType.BEGONIA, 1));
+        assertFalse(storage.removeItem(PlantRegistry.BEGONIA, 1));
     }
 
     /**
@@ -82,7 +82,7 @@ final class StorageTest {
     void testUnmodifiableMap() {
         final var items = storage.getAllItems();
         assertThrows(UnsupportedOperationException.class, () -> {
-            items.put(PlantType.CARROT, 0);
+            items.put(PlantRegistry.CARROT, 0);
         });
     }
 }
