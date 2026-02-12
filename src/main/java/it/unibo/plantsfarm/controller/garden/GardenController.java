@@ -38,11 +38,9 @@ public class GardenController {
      * @param now The current time in milliseconds.
      */
     public final void innaffia(final long now) {
-        for (final Soil zolla : gardenModel.getSoils()) {
-            if (zolla.getCoordinate().contains(player.getHitBox()) && zolla.isPlanted()) {
-                zolla.getPlant().water(now);
-                break;
-            }
+        final Soil soil = whichSoilIsPlayerOn(player.getHitBox());
+        if (soil.isPlanted()) {
+            soil.getPlant().water(now);
         }
     }
 
@@ -63,14 +61,14 @@ public class GardenController {
     public final void pianta(final PlantType type) {
         if (type != null) {
             final Plant pianta = new Plant(type);
-
-            for (final Soil zolla : gardenModel.getSoils()) {
-                if (zolla.getCoordinate().contains(player.getHitBox()) && !zolla.isPlanted()
-                    && zolla.getTileId() == ORNAMENTAL_SOIL && !type.isEdible()
-                    || zolla.getTileId() != ORNAMENTAL_SOIL && type.isEdible()
-                ) {
-                    zolla.setPlanted(pianta);
-                }
+            final Soil soil = whichSoilIsPlayerOn(player.getHitBox());
+            if (!soil.isPlanted()
+                && soil.getTileId() == ORNAMENTAL_SOIL
+                && !type.isEdible()
+                || soil.getTileId() != ORNAMENTAL_SOIL
+                && type.isEdible()
+            ) {
+                soil.setPlanted(pianta);
             }
         }
     }
@@ -79,11 +77,10 @@ public class GardenController {
      * Harvest the plant if it's mature.
      */
     public final void harvest() {
-        for (final Soil zolla : gardenModel.getSoils()) {
-            if (zolla.getCoordinate().contains(player.getHitBox()) && zolla.isPlanted() && zolla.getPlant().isMature()) {
-                gameState.addHarvest(zolla.getPlant().getType(), zolla.getPlant().harvest());
-                break;
-            }
+        final Soil soil = whichSoilIsPlayerOn(player.getHitBox());
+        if (soil.isPlanted()
+            && soil.getPlant().isMature()) {
+            gameState.addHarvest(soil.getPlant().getType(), soil.getPlant().harvest());
         }
     }
 
