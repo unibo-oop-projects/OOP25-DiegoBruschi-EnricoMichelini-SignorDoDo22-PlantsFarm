@@ -95,6 +95,11 @@ public final class ItemsExpert implements ItemsFarm {
         this.level = level;
     }
 
+    @Override
+    public int getLevelBaseOnRarity(final Rarity plantrarity) {
+        return StatsItemBase.GLOBAL_VAL_PLANT;
+    }
+
     /**
      * Item constants for expert items.
      */
@@ -107,10 +112,5 @@ public final class ItemsExpert implements ItemsFarm {
         private static final int VAL_RARE = 3;
         private static final int VAL_EPIC = 6;
         private static final int VAL_LEGENDARY = 10;
-    }
-
-    @Override
-    public int getLevelBaseOnRarity(Rarity plantrarity) {
-        return StatsItemBase.GLOBAL_VAL_PLANT;
     }
 }
