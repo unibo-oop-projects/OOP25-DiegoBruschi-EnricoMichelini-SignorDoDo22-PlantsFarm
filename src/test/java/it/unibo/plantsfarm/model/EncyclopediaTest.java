@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 import it.unibo.plantsfarm.model.menu.api.Encyclopedia;
 import it.unibo.plantsfarm.model.menu.impl.EncyclopediaImpl;
 import it.unibo.plantsfarm.model.plant.Plant;
-import it.unibo.plantsfarm.model.plant.PlantType;
+import it.unibo.plantsfarm.model.plant.PlantRegistry;
 
 final class EncyclopediaTest {
 
     private final Encyclopedia encyclopedia = new EncyclopediaImpl();
-    private final Plant carrotInstance = new Plant(PlantType.CARROT);
-    private final Plant begoniaInstance = new Plant(PlantType.BEGONIA);
+    private final Plant carrotInstance = new Plant(PlantRegistry.CARROT);
+    private final Plant begoniaInstance = new Plant(PlantRegistry.BEGONIA);
 
     /**
      * Basic Test: adding plants and avoiding object duplicates.
@@ -41,6 +41,8 @@ final class EncyclopediaTest {
      */
     @Test
     void testFilters() {
+        PlantRegistry.CARROT.lock(); 
+        PlantRegistry.BEGONIA.lock();
         encyclopedia.addPlant(carrotInstance);
         encyclopedia.addPlant(begoniaInstance);
 
@@ -59,8 +61,10 @@ final class EncyclopediaTest {
      */
     @Test
     void testUnlockAll() {
-        final Plant onion = new Plant(PlantType.ONION);
-        final Plant monstera = new Plant(PlantType.MONSTERA);
+        final Plant onion = new Plant(PlantRegistry.ONION);
+        final Plant monstera = new Plant(PlantRegistry.MONSTERA);
+        onion.getType().lock();
+        monstera.getType().lock();
 
         encyclopedia.addPlant(onion);
         encyclopedia.addPlant(monstera);

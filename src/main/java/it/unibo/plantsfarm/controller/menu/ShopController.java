@@ -64,7 +64,7 @@ public final class ShopController {
         for (final Map.Entry<PlantType, Integer> entry : requests.entrySet()) {
             final PlantType type = entry.getKey();
             final int quantity = entry.getValue();
-            final int unitPrice = type.getHarvestInfo().getSellPrice();
+            final int unitPrice = type.getSellPrice();
             final int totalPrice = unitPrice * quantity;
             final String displayName = type.getName();
 
@@ -161,7 +161,7 @@ public final class ShopController {
 
     /**
      * Logic for the Refresh button.
-     * 
+     *
      * @param gameState The current game state.
      * @param cost      The cost to refresh.
      */

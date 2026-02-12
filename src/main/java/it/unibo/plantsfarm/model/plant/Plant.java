@@ -74,7 +74,7 @@ public class Plant implements Serializable {
     /**
      * Waters the plant and changes plant's water status.
      *
-     *  @param now The current time in milliseconds.
+     * @param now The current time in milliseconds.
      */
     public final void water(final Long now) {
         if (growthStage < type.getMaxGrowthStage() && needsWater) {
@@ -121,10 +121,7 @@ public class Plant implements Serializable {
      * @return the value in coins, or 0 if ornamental.
      */
     public final int getSellValue() {
-        if (!type.isEdible()) {
-            return 0;
-        }
-        return type.getHarvestInfo().getSellPrice();
+        return type.getSellPrice();
     }
 
     /**
@@ -148,7 +145,7 @@ public class Plant implements Serializable {
         if (isMature()) {
             growthStage = this.type.getResetStage();
             currentStageTime = 0;
-            final int baseHarvest = type.getHarvestInfo().generateHarvest();
+            final int baseHarvest = type.generateHarvest();
             this.harvestedQuantity = (int) (baseHarvest * this.harvestMultiplier);
             return this.harvestedQuantity;
         }
@@ -203,7 +200,7 @@ public class Plant implements Serializable {
     /**
      * Returns the type of this plant.
      *
-     * @return The PlantType enum.
+     * @return The PlantType object.
      */
     public final PlantType getType() {
         return type;

@@ -4,6 +4,7 @@ import it.unibo.plantsfarm.controller.memory.api.DataMemory;
 import it.unibo.plantsfarm.controller.memory.impl.DataMemoryImpl;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
+import it.unibo.plantsfarm.model.plant.PlantRegistry;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,34 +44,39 @@ public class PlantLoader {
         }
 
         final List<Plant> plants = new ArrayList<>();
-        for (final PlantType type : PlantType.values()) {
+        for (final PlantType type : PlantRegistry.getAll()) {
             plants.add(new Plant(type));
         }
 
         return plants;
     }
 
-    private void loadFromSave(final String data) {
+private void loadFromSave(final String data) {
         final String[] unlockedNames = data.split(SEPARATOR);
         for (final String name : unlockedNames) {
-            try {
-                final PlantType type = PlantType.valueOf(name);
-                type.unlock();
-            } catch (final IllegalArgumentException e) {
-                LOGGER.log(Level.WARNING, "Invalid plant name: " + name, e);
+            boolean found = false;
+            for (final PlantType type : PlantRegistry.getAll()) {
+                if (type.getName().equals(name)) {
+                    type.unlock();
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                LOGGER.log(Level.WARNING, "Invalid plant name: " + name);
             }
         }
     }
 
     private void loadDefaults() {
-        PlantType.CARROT.unlock();
+        PlantRegistry.CARROT.unlock();
     }
 
     private void saveCurrentState(final DataMemory memory) {
         final StringBuilder sb = new StringBuilder();
-        for (final PlantType type : PlantType.values()) {
+        for (final PlantType type : PlantRegistry.getAll()) {
             if (type.isDiscovered()) {
-                sb.append(type.name()).append(SEPARATOR);
+                sb.append(type.getName()).append(SEPARATOR);
             }
         }
         try {

@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import it.unibo.plantsfarm.model.menu.api.Shop;
 import it.unibo.plantsfarm.model.menu.impl.ShopImpl;
 import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantRegistry;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
 final class ShopTest {
@@ -25,7 +26,7 @@ final class ShopTest {
     private static final int BIG_QUANTITY = 5000;
 
     private final Shop shop = new ShopImpl();
-    private final Plant carrot = new Plant(PlantType.CARROT);
+    private final Plant carrot = new Plant(PlantRegistry.CARROT); 
     private final GameState gameState = new GameState(List.of(carrot));
 
     /**
@@ -35,13 +36,13 @@ final class ShopTest {
     void testGenerateRequests() {
         gameState.resetGame();
 
-        carrot.getType().unlock();
+        PlantRegistry.CARROT.unlock();
 
         final Map<PlantType, Integer> requests = shop.generateRequests(gameState);
 
         assertNotNull(requests);
         assertFalse(requests.isEmpty());
-        assertTrue(requests.containsKey(PlantType.CARROT));
+        assertTrue(requests.containsKey(PlantRegistry.CARROT));
     }
 
     /**
@@ -51,14 +52,14 @@ final class ShopTest {
     void testSellProductsSuccess() {
         gameState.resetGame();
 
-        carrot.getType().unlock();
-        gameState.addHarvest(PlantType.CARROT, CARROTS_QUANTITY_TO_ADD);
+        PlantRegistry.CARROT.unlock();
+        gameState.addHarvest(PlantRegistry.CARROT, CARROTS_QUANTITY_TO_ADD);
 
-        final Map<PlantType, Integer> request = new EnumMap<>(PlantType.class);
-        request.put(PlantType.CARROT, CARROT_QUANTITY_TO_SELL);
+        final Map<PlantType, Integer> request = new HashMap<>();
+        request.put(PlantRegistry.CARROT, CARROT_QUANTITY_TO_SELL);
 
         final int earnings = shop.sellProducts(gameState, request);
-        final int expectedEarnings = CARROT_QUANTITY_TO_SELL * PlantType.CARROT.getHarvestInfo().getSellPrice();
+        final int expectedEarnings = CARROT_QUANTITY_TO_SELL * PlantRegistry.CARROT.getSellPrice();
 
         assertTrue(earnings > 0);
         assertEquals(expectedEarnings, earnings);
@@ -66,7 +67,7 @@ final class ShopTest {
         assertEquals(INITIAL_COINS + expectedEarnings, gameState.getWallet());
 
         final int expectedQuantity = STORAGE_DEFAULT + CARROTS_QUANTITY_TO_ADD - CARROT_QUANTITY_TO_SELL;
-        assertEquals(expectedQuantity, gameState.getStorageContents().get(PlantType.CARROT));
+        assertEquals(expectedQuantity, gameState.getStorageContents().get(PlantRegistry.CARROT));
     }
 
     /**
@@ -76,9 +77,9 @@ final class ShopTest {
     void testSellProductsNotEnoughItems() {
         gameState.resetGame();
 
-        carrot.getType().unlock();
-        final Map<PlantType, Integer> request = new EnumMap<>(PlantType.class);
-        request.put(PlantType.CARROT, STORAGE_DEFAULT + BIG_QUANTITY);
+        PlantRegistry.CARROT.unlock();
+        final Map<PlantType, Integer> request = new HashMap<>();
+        request.put(PlantRegistry.CARROT, STORAGE_DEFAULT + BIG_QUANTITY);
 
         final int earnings = shop.sellProducts(gameState, request);
 
