@@ -6,8 +6,8 @@ import java.util.List;
 
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.tiles.Soil;
-import it.unibo.plantsfarm.model.plant.EffectInfo;
 import it.unibo.plantsfarm.model.plant.PlantEffect;
+import it.unibo.plantsfarm.model.plant.OrnamentalBehavior;
 
 /**
  * Represents a specific area in the garden containing multiple soils.
@@ -58,14 +58,17 @@ public final class PlantArea {
         double harvestMultiplier = 1.0;
         if (centerSoil != null && centerSoil.isPlanted()) {
             final Plant centerPlant = centerSoil.getPlant();
-            final EffectInfo effect = centerPlant.getType().getEffectInfo();
-            centerPlant.increaseGrowthStage(now, 1.0);
+
+            centerPlant.increaseGrowthStage(now);
             centerPlant.updateNeedsWater(now);
-            if (effect != null && centerPlant.isMature()) {
-                if (effect.getType() == PlantEffect.GROWTH_SPEED) {
-                    growthMultiplier = effect.getValue();
-                } else if (effect.getType() == PlantEffect.BIG_HARVEST) {
-                    harvestMultiplier = effect.getValue();
+
+            if (centerPlant.isMature() && centerPlant.getType().getBehavior() instanceof OrnamentalBehavior) {
+                final OrnamentalBehavior behavior = (OrnamentalBehavior) centerPlant.getType().getBehavior();
+
+                if (behavior.getEffect() == PlantEffect.GROWTH_SPEED) {
+                    growthMultiplier = behavior.getValue();
+                } else if (behavior.getEffect() == PlantEffect.BIG_HARVEST) {
+                    harvestMultiplier = behavior.getValue();
                 }
             }
         }

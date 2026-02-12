@@ -1,45 +1,47 @@
 package it.unibo.plantsfarm.model.plant;
 
-/**
- * Encapsulates the economic and harvest data for a edible plant.
- */
-public class HarvestInfo {
+import java.util.Random;
 
+/**
+ * Strategy implementation for edible plants.
+ */
+public final class EdibleBehavior implements PlantBehavior {
+
+    private static final long serialVersionUID = 1L;
     private final int sellPrice;
     private final int minItem;
     private final int maxItem;
+    private final Random random;
 
     /**
-     * Creates a new HarvestInfo profile.
+     * Creates a new EdibleBehavior.
      *
      * @param sellPrice The value in coins of a single item of this plant.
      * @param minItem  The minimum quantity obtained when harvesting.
      * @param maxItem  The maximum quantity obtained when harvesting.
      */
-    public HarvestInfo(final int sellPrice, final int minItem, final int maxItem) {
+    public EdibleBehavior(final int sellPrice, final int minItem, final int maxItem) {
         this.sellPrice = sellPrice;
         this.minItem = minItem;
         this.maxItem = maxItem;
+        this.random = new Random();
     }
 
-    /**
-     * Gets the selling price of the plant item.
-     *
-     * @return the price in coins.
-     */
+    @Override
+    public boolean isEdible() {
+        return true;
+    }
+
+    @Override
     public int getSellPrice() {
-        return sellPrice;
+        return this.sellPrice;
     }
 
-    /**
-     * Generates a random number of items harvested between min and max.
-     *
-     * @return the number of items harvested.
-     */
+    @Override
     public int generateHarvest() {
         if (minItem >= maxItem) {
             return minItem;
         }
-        return minItem + (int) (Math.random() * (maxItem - minItem + 1));
+        return minItem + random.nextInt(maxItem - minItem + 1);
     }
 }

@@ -4,10 +4,11 @@ import it.unibo.plantsfarm.controller.memory.api.DataMemory;
 import it.unibo.plantsfarm.controller.memory.impl.DataMemoryImpl;
 import it.unibo.plantsfarm.model.menu.api.Storage;
 import it.unibo.plantsfarm.model.plant.PlantType;
+import it.unibo.plantsfarm.model.plant.PlantRegistry;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,9 +32,9 @@ public class StorageImpl implements Storage {
      */
     public StorageImpl() {
         this.memory = new DataMemoryImpl();
-        this.items = new EnumMap<>(PlantType.class);
+        this.items = new HashMap<>();
 
-        for (final PlantType type : PlantType.values()) {
+        for (final PlantType type : PlantRegistry.getAll()) {
             if (type.isEdible()) {
                 items.put(type, 0);
             }
@@ -108,12 +109,19 @@ public class StorageImpl implements Storage {
                 if (pair.contains(VALUE_SEPARATOR)) {
                     final String[] parts = pair.split(VALUE_SEPARATOR);
                     try {
-                        final PlantType type = PlantType.valueOf(parts[0]);
+                        final String typeName = parts[0];
                         final int quantity = Integer.parseInt(parts[1]);
-                        if (items.containsKey(type)) {
-                            items.put(type, quantity);
+
+                        for (final PlantType type : PlantRegistry.getAll()) {
+                            if (type.getName().equals(typeName)) {
+                                if (items.containsKey(type)) {
+                                    items.put(type, quantity);
+                                }
+                                break;
+                            }
                         }
-                    } catch (final IllegalArgumentException e) {
+
+                    } catch (final NumberFormatException e) {
                         LOGGER.log(Level.WARNING, "Invalid storage data: " + pair, e);
                     }
                 }
@@ -129,7 +137,7 @@ public class StorageImpl implements Storage {
     private void save() {
         final StringBuilder sb = new StringBuilder();
         for (final Map.Entry<PlantType, Integer> entry : items.entrySet()) {
-            sb.append(entry.getKey().name())
+            sb.append(entry.getKey().getName())
               .append(VALUE_SEPARATOR)
               .append(entry.getValue())
               .append(PAIR_SEPARATOR);

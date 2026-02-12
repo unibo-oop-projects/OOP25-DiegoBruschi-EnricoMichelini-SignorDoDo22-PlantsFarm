@@ -114,10 +114,8 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
       @Override
       public void keyPressed(final KeyEvent e) {
 
-        if (KEY_MAPPER.containsKey(e.getKeyCode())) {
-            if (controller != null) {
-                controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
-            }
+        if (KEY_MAPPER.containsKey(e.getKeyCode()) && controller != null) {
+            controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
         }
 
         if (KeyEvent.VK_F == e.getKeyCode()) {

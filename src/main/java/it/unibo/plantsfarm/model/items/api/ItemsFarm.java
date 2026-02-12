@@ -82,7 +82,12 @@ public interface ItemsFarm {
      */
     void setLevel(int level);
 
-
+    /**
+     * Returns the base level of the item based on the rarity of the plant.
+     *
+     * @param plantrarity the rarity of the plant
+     * @return the base level for the item
+     */
     int getLevelBaseOnRarity(Rarity plantrarity);
 
     /**

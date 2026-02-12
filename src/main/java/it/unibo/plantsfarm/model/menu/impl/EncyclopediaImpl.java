@@ -17,6 +17,7 @@ import it.unibo.plantsfarm.controller.memory.impl.DataMemoryImpl;
 import it.unibo.plantsfarm.model.menu.api.Encyclopedia;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantType;
+import it.unibo.plantsfarm.model.plant.PlantRegistry;
 
 /**
  * Represents the encyclopedia containing information about all plants in the game.
@@ -45,9 +46,9 @@ public final class EncyclopediaImpl implements Encyclopedia {
     @Override
     public void save() {
         final StringBuilder sb = new StringBuilder();
-        for (final PlantType type : PlantType.values()) {
+        for (final PlantType type : PlantRegistry.getAll()) {
             if (type.isDiscovered()) {
-                sb.append(type.name()).append(SEPARATOR);
+                sb.append(type.getName()).append(SEPARATOR);
             }
         }
         try {
@@ -62,10 +63,10 @@ public final class EncyclopediaImpl implements Encyclopedia {
      */
     @Override
     public void reset() {
-        for (final PlantType type : PlantType.values()) {
+        for (final PlantType type : PlantRegistry.getAll()) {
             type.lock();
         }
-        PlantType.CARROT.unlock();
+        PlantRegistry.CARROT.unlock();
         save();
     }
 
@@ -106,8 +107,8 @@ public final class EncyclopediaImpl implements Encyclopedia {
      */
     @Override
     public void unlockAll() {
-        for (final Plant plant : plants) {
-            plant.getType().unlock();
+        for (final PlantType type : PlantRegistry.getAll()) {
+            type.unlock();
         }
         save();
     }
@@ -146,15 +147,14 @@ public final class EncyclopediaImpl implements Encyclopedia {
 
     /**
      * Reads the description of a plant from a resource file.
-     * 
+     *
      * @param type The type of the plant.
-     * 
+     *
      * @return The description string or a default message if not found.
      */
     @Override
     public String getPlantDescription(final PlantType type) {
-
-        final String path = "encyclopediaFiles/" + type.name() + ".txt";
+        final String path = "encyclopediaFiles/" + type.getName() + ".txt";
         final InputStream inputStream = ClassLoader.getSystemResourceAsStream(path);
 
         if (inputStream == null) {

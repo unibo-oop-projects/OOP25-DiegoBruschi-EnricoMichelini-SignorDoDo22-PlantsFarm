@@ -1,6 +1,7 @@
 package it.unibo.plantsfarm.controller.action;
 
 import it.unibo.plantsfarm.controller.action.api.SeedSelectionListener;
+import it.unibo.plantsfarm.model.plant.PlantRegistry;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.view.map.SeedView;
 
@@ -46,7 +47,7 @@ public final class SeedController {
     }
 
     private void loadEdiblePlants() {
-        for (final PlantType plant : PlantType.values()) {
+        for (final PlantType plant : PlantRegistry.getAll()) {
             if (plant.isEdible()) {
                 addToView(plant);
             }
@@ -54,7 +55,7 @@ public final class SeedController {
     }
 
     private void loadOrnamentalPlants() {
-        for (final PlantType plant : PlantType.values()) {
+        for (final PlantType plant : PlantRegistry.getAll()) {
             if (!plant.isEdible()) {
                 addToView(plant);
             }

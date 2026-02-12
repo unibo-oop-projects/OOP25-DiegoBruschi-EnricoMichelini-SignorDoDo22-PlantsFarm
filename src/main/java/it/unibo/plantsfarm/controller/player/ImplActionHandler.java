@@ -23,19 +23,18 @@ public final class ImplActionHandler implements ActionHandler {
     public void handleActionHoe(final GardenController controllerGarden, final PlantType selectedPlant, final Player player) {
 
         final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
-        if (selectedPlant != null) {
-            if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
-                && soil.isPlanted()
-                && soil.getPlant().isMature()
-                && player.getInventory().useItem(HOE, soil.getPlant().getRarity())) {
-                controllerGarden.pianta(selectedPlant);
-            }
-
-                if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
-                && !soil.isPlanted() && player.getInventory().useItem(HOE, selectedPlant.getRarity())
-                ) {
-                    controllerGarden.pianta(selectedPlant);
-                }
+        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
+            && soil.isPlanted()
+            && soil.getPlant().isMature()
+            && player.getInventory().useItem(HOE, soil.getPlant().getRarity())
+        ) {
+            controllerGarden.harvest();
+        } else if (selectedPlant != null
+            && controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
+            && !soil.isPlanted()
+            && player.getInventory().useItem(HOE, selectedPlant.getRarity())
+        ) {
+            controllerGarden.pianta(selectedPlant);
         }
     }
 
@@ -45,7 +44,8 @@ public final class ImplActionHandler implements ActionHandler {
     ) {
         final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
         if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
-            && soil.getPlant() != null && soil.getPlant().needsWater()
+            && soil.getPlant() != null
+            && soil.getPlant().needsWater()
             && player.getInventory().useItem(WATERCAN, soil.getPlant().getRarity())
         ) {
             controllerGarden.innaffia(now);
@@ -55,7 +55,8 @@ public final class ImplActionHandler implements ActionHandler {
     @Override
     public void handleAxe(final GardenController controllerGarden, final Player player) {
         final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
-        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null && soil.isPlanted()
+        if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
+            && soil.isPlanted()
             && player.getInventory().useItem(AXE, soil.getPlant().getRarity())
         ) {
             soil.removePlant();

@@ -3,7 +3,7 @@ package it.unibo.plantsfarm.model;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.plantsfarm.model.plant.Plant;
-import it.unibo.plantsfarm.model.plant.PlantType;
+import it.unibo.plantsfarm.model.plant.PlantRegistry;
 import it.unibo.plantsfarm.model.plant.Rarity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,17 +16,17 @@ final class PlantTest {
 
     @Test
     void testPlantCreation() {
-        final Plant plant = new Plant(PlantType.CARROT);
+        final Plant plant = new Plant(PlantRegistry.CARROT);
         assertTrue(plant.needsWater());
         assertEquals(plant.getName(), "Carrot");
         assertEquals(plant.getRarity(), Rarity.COMMON);
-        assertEquals(plant.getType(), PlantType.CARROT);
+        assertEquals(plant.getType(), PlantRegistry.CARROT);
         assertEquals(plant.getGrowthStage(), 0);
     }
 
     @Test
     void testPlantWatering() {
-        final Plant plant = new Plant(PlantType.CARROT);
+        final Plant plant = new Plant(PlantRegistry.CARROT);
         final long now = System.currentTimeMillis();
         plant.water(now);
         assertFalse(plant.needsWater());
@@ -36,7 +36,7 @@ final class PlantTest {
 
     @Test
     void testPlantGrowth() {
-        final Plant plant = new Plant(PlantType.CARROT);
+        final Plant plant = new Plant(PlantRegistry.CARROT);
         plant.setCurrentStageTime(plant.getCurrentStageTime() + ADDED_TIME);
         plant.increaseGrowthStage(System.currentTimeMillis());
         assertEquals(plant.getGrowthStage(), 0);
@@ -50,7 +50,7 @@ final class PlantTest {
 
     @Test
     void testPlantHoeing() {
-        final Plant plant = new Plant(PlantType.CARROT);
+        final Plant plant = new Plant(PlantRegistry.CARROT);
         plant.setGrowthStage(3);
         assertEquals(plant.getGrowthStage(), 3);
         assertTrue(plant.isMature());

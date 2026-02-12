@@ -2,6 +2,7 @@ package it.unibo.plantsfarm.controller.menu;
 
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.plant.PlantType;
+import it.unibo.plantsfarm.model.plant.PlantRegistry;
 import it.unibo.plantsfarm.view.menu.api.StorageScreen;
 import it.unibo.plantsfarm.view.menu.impl.StorageScreenImpl;
 
@@ -31,7 +32,7 @@ public final class StorageController {
      * @param storage The map of items to display.
      */
     private void setupView(final Map<PlantType, Integer> storage) {
-        for (final PlantType type : PlantType.values()) {
+        for (final PlantType type : PlantRegistry.getAll()) {
             if (type.isEdible()) {
                 this.view.createStorageSlot(type.getName());
             }

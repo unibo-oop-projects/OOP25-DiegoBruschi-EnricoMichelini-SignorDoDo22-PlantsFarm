@@ -24,6 +24,7 @@ import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantEffect;
+import it.unibo.plantsfarm.model.plant.OrnamentalBehavior;
 
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.music.api.MusicPlayer;
@@ -182,8 +183,9 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             if (plant.isEdible()) {
                 return PlantStatus.READY_TO_HARVEST;
             } else {
-                if (plant.getType().getEffectInfo() != null) {
-                    final PlantEffect effectType = plant.getType().getEffectInfo().getType();
+                if (plant.getType().getBehavior() instanceof OrnamentalBehavior) {
+                    final OrnamentalBehavior behavior = (OrnamentalBehavior) plant.getType().getBehavior();
+                    final PlantEffect effectType = behavior.getEffect();
                     if (effectType == PlantEffect.GROWTH_SPEED) {
                         return PlantStatus.EFFECT_SPEED;
                     } else if (effectType == PlantEffect.BIG_HARVEST) {
