@@ -5,6 +5,7 @@ package it.unibo.plantsfarm.model.plant;
  */
 public final class OrnamentalBehavior implements PlantBehavior {
 
+    private static final long serialVersionUID = 1L;
     private final PlantEffect effect;
     private final double value;
 
