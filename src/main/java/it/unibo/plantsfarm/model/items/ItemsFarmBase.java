@@ -125,8 +125,8 @@ public final class ItemsFarmBase implements ItemsFarm {
     }
 
     @Override
-    public boolean canBeUsed(final Rarity plantrarity) {
-        return level < StatsItemBase.MAP_RARITY.get(plantrarity);
+    public int getLevelBaseOnRarity(final Rarity plantrarity) {
+        return StatsItemBase.MAP_RARITY.get(plantrarity);
 
     }
 

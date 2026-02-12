@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.view.animation.api;
+package it.unibo.plantsfarm.controller.animation.api;
 
 import java.awt.Graphics2D;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;

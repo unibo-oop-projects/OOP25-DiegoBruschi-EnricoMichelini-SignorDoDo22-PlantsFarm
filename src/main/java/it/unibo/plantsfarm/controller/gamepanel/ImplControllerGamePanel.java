@@ -12,6 +12,7 @@ import it.unibo.plantsfarm.controller.player.api.ActionHandler;
 import it.unibo.plantsfarm.controller.inventario.ImplControllerInventario;
 import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
 import it.unibo.plantsfarm.controller.action.SeedController;
+import it.unibo.plantsfarm.controller.animation.ImplSelectorFrames;
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
 import it.unibo.plantsfarm.model.garden.CollisionDetector;
@@ -23,7 +24,7 @@ import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.plant.Plant;
 import it.unibo.plantsfarm.model.plant.PlantEffect;
-import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
+
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.music.api.MusicPlayer;
 import it.unibo.plantsfarm.view.music.impl.MusicPlayerImpl;
@@ -95,14 +96,12 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                     case ACTIONHOE -> {
                         musicPlayer.playEffect("music/gameSound/plant.wav");
                         actionHandler.handleActionHoe(gardenController, currentSelectedPlant, player);
-                        controllerInventario.updateInventory();
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
                     case ACTIONWATER -> {
                         musicPlayer.playEffect("music/gameSound/watering.wav");
                         actionHandler.handleWater(gardenController, now, currentSelectedPlant, player);
-                        controllerInventario.updateInventory();
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
@@ -173,6 +172,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         if (controllerInventario != null) {
             this.controllerInventario.updateInventory();
             this.controllerInventario.openViewInv();
+            managerSavingPlayer.saveManager(player.getInventory(), player);
         }
     }
 

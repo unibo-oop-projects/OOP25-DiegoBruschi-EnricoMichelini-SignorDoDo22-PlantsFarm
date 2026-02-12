@@ -1,13 +1,14 @@
-package it.unibo.plantsfarm.view.animation;
+package it.unibo.plantsfarm.controller.animation;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+
+import it.unibo.plantsfarm.controller.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
 import it.unibo.plantsfarm.model.animation.AnimationAzione;
 import it.unibo.plantsfarm.model.animation.AnimationCorsa;
 import it.unibo.plantsfarm.model.animation.api.Animation;
 import it.unibo.plantsfarm.model.animation.api.AnimationFrames;
-import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.utility.AnimationTime;
 

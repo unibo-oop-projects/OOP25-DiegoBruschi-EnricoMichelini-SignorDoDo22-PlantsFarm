@@ -25,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.plantsfarm.controller.animation.ImplSelectorFrames;
+import it.unibo.plantsfarm.controller.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel;
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInput;
@@ -33,8 +35,6 @@ import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.PlantSta
 import it.unibo.plantsfarm.model.garden.Buff; //REMOVE
 import it.unibo.plantsfarm.model.plant.Plant; //REMOVE
 import it.unibo.plantsfarm.model.tiles.Soil; //REMOVE
-import it.unibo.plantsfarm.view.animation.ImplSelectorFrames;
-import it.unibo.plantsfarm.view.animation.api.SelectorFrames;
 import it.unibo.plantsfarm.view.gamepanel.api.ViewGamePanel;
 import it.unibo.plantsfarm.view.map.TileManager;
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
@@ -117,9 +117,6 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         if (KEY_MAPPER.containsKey(e.getKeyCode())) {
             if (controller != null) {
                 controller.takeInput(KEY_MAPPER.get(e.getKeyCode()));
-            }
-            if (selector != null) {
-                selector.takeInput(KEY_MAPPER.get(e.getKeyCode()));
             }
         }
 
