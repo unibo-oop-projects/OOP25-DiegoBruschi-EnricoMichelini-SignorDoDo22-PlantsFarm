@@ -65,15 +65,24 @@ public class GardenController {
             final Plant pianta = new Plant(type);
 
             for (final Soil zolla : gardenModel.getSoils()) {
-                if (zolla.getCoordinate().contains(player.getHitBox())) {
-                    if (zolla.isPlanted() && zolla.getPlant().isMature()) {
-                        gameState.addHarvest(zolla.getPlant().getType(), zolla.getPlant().harvest());
-                    } else if (!zolla.isPlanted() && zolla.getTileId() == ORNAMENTAL_SOIL && !type.isEdible()
-                        || zolla.getTileId() != ORNAMENTAL_SOIL && type.isEdible()
-                    ) {
-                        zolla.setPlanted(pianta);
-                    }
+                if (zolla.getCoordinate().contains(player.getHitBox()) && !zolla.isPlanted()
+                    && zolla.getTileId() == ORNAMENTAL_SOIL && !type.isEdible()
+                    || zolla.getTileId() != ORNAMENTAL_SOIL && type.isEdible()
+                ) {
+                    zolla.setPlanted(pianta);
                 }
+            }
+        }
+    }
+
+    /**
+     * Harvest the plant if it's mature.
+     */
+    public final void harvest() {
+        for (final Soil zolla : gardenModel.getSoils()) {
+            if (zolla.getCoordinate().contains(player.getHitBox()) && zolla.isPlanted() && zolla.getPlant().isMature()) {
+                gameState.addHarvest(zolla.getPlant().getType(), zolla.getPlant().harvest());
+                break;
             }
         }
     }
