@@ -39,6 +39,8 @@ import it.unibo.plantsfarm.view.gamepanel.api.ViewGamePanel;
 import it.unibo.plantsfarm.view.map.TileManager;
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
 import it.unibo.plantsfarm.view.utility.Texture;
+import it.unibo.plantsfarm.view.music.api.MusicPlayer;
+import it.unibo.plantsfarm.view.music.impl.MusicPlayerImpl;
 
 /**
  * Implementation of the ViewGamePanel interface, responsible for rendering the game state,
@@ -80,6 +82,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
 
   private final transient Image buffImage = new SpriteLoader("/plantStatus/xp.png").getImage();
   private final transient TileManager tileM;
+  private final transient MusicPlayer musicPlayer = new MusicPlayerImpl();
   private int cameraX;
   private int cameraY;
   private double playerPosX;
@@ -131,6 +134,34 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
       }
     });
   }
+
+    /**
+     * Plays the sound effect for planting or removing a plant.
+     */
+    public void playPlant() {
+        this.musicPlayer.playEffect("music/gameSound/plant.wav");
+    }
+
+    /**
+     * Plays the sound effect for watering a plant.
+     */
+    public void playWater() {
+        this.musicPlayer.playEffect("music/gameSound/watering.wav");
+    }
+
+    /**
+     * Plays the sound effect for selecting a seed.
+     */
+    public void playSeed() {
+        this.musicPlayer.playEffect("music/gameSound/seedSelect.wav");
+    }
+
+    /**
+     * Plays the sound effect for collecting an experience point.
+     */
+    public void playExp() {
+        this.musicPlayer.playEffect("music/gameSound/exp.wav");
+    }
 
     @Override
     public void show(final double posX, final double posY,

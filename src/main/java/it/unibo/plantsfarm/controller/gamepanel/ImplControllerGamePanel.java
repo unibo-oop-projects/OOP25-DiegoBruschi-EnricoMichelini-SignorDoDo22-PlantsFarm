@@ -26,8 +26,6 @@ import it.unibo.plantsfarm.model.plant.PlantEffect;
 import it.unibo.plantsfarm.model.plant.OrnamentalBehavior;
 
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
-import it.unibo.plantsfarm.view.music.api.MusicPlayer;
-import it.unibo.plantsfarm.view.music.impl.MusicPlayerImpl;
 import it.unibo.plantsfarm.view.selectorplayer.SelectorPlayerView;
 
 /**
@@ -52,7 +50,6 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private final ManagerSavingPlayer managerSavingPlayer;
     private final SelectorPlayerView selectPlayer;
     private PlantType currentSelectedPlant;
-    private final MusicPlayer musicPlayer = new MusicPlayerImpl();
 
     /**
      * Creates a new ImplControllerGamePanel with the specified GameState.
@@ -91,24 +88,24 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                     case DOWN, UP, RIGHT, LEFT, FERMO -> actionHandler.updateDirection(input, player);
 
                     case SELECT_SEED -> {
-                        musicPlayer.playEffect("music/gameSound/seedSelect.wav");
+                        this.view.playSeed();
                         openSeedSelectionMenu();
                     }
 
                     case ACTIONHOE -> {
-                        musicPlayer.playEffect("music/gameSound/plant.wav");
+                        this.view.playPlant();
                         actionHandler.handleActionHoe(gardenController, currentSelectedPlant, player);
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
                     case ACTIONWATER -> {
-                        musicPlayer.playEffect("music/gameSound/watering.wav");
+                        this.view.playWater();
                         actionHandler.handleWater(gardenController, now, currentSelectedPlant, player);
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
                     case REMOVE_PLANT -> {
-                        musicPlayer.playEffect("music/gameSound/plant.wav");
+                        this.view.playPlant();
                         actionHandler.handleAxe(gardenController, player);
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
@@ -121,7 +118,9 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             }
 
             spawningBuffsController.updateUpGrade(now);
-            actionHandler.playerActionBuff(spawningBuffsController, player);
+            if (actionHandler.playerActionBuff(spawningBuffsController, player)) {
+                this.view.playExp();
+            }
             collisionDetector.collisionDetection();
             controllerAnimation.update(System.nanoTime());
             player.updatePlayer(delta);

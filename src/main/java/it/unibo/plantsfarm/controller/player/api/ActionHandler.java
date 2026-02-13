@@ -58,6 +58,8 @@ public interface ActionHandler {
      *
      * @param controllerbuff the controller buff verify if the player is near a upgrade.
      * @param player the player that perform the action.
+     * 
+     * @return true if the player collect a buff, false otherwise.
      */
-    void playerActionBuff(SpawningBuffsController controllerbuff, Player player);
+    boolean playerActionBuff(SpawningBuffsController controllerbuff, Player player);
 }
