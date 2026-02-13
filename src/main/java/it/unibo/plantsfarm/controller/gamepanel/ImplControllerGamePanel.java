@@ -118,7 +118,9 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             }
 
             spawningBuffsController.updateUpGrade(now);
-            actionHandler.playerActionBuff(spawningBuffsController, player);
+            if (actionHandler.playerActionBuff(spawningBuffsController, player)) {
+                this.view.playExp();
+            }
             collisionDetector.collisionDetection();
             controllerAnimation.update(System.nanoTime());
             player.updatePlayer(delta);

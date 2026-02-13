@@ -69,13 +69,15 @@ public final class ImplActionHandler implements ActionHandler {
     }
 
     @Override
-    public void playerActionBuff(final SpawningBuffsController controllerbuff, final Player player) {
+    public boolean playerActionBuff(final SpawningBuffsController controllerbuff, final Player player) {
+        boolean buffCollected = false;
         for (final Buff buff : controllerbuff.getBuffList()) {
             if (player.getHitBox().intersects(buff.getBuffPosition()) || buff.getBuffPosition().contains(player.getHitBox())) {
                 controllerbuff.removeBuffFromMap(buff);
                 player.getInventory().applyUpgrade();
+                buffCollected = true;
             }
         }
-
+        return buffCollected;
     }
 }

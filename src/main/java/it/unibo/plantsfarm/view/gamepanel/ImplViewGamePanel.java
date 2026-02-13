@@ -156,6 +156,13 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         this.musicPlayer.playEffect("music/gameSound/seedSelect.wav");
     }
 
+    /**
+     * Plays the sound effect for collecting an experience point.
+     */
+    public void playExp() {
+        this.musicPlayer.playEffect("music/gameSound/exp.wav");
+    }
+
     @Override
     public void show(final double posX, final double posY,
                     final int camX, final int camY,
