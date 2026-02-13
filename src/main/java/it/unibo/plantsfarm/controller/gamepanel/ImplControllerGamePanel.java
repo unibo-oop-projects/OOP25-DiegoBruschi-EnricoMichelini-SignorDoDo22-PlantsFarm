@@ -18,7 +18,6 @@ import it.unibo.plantsfarm.model.camera.ImplCamera;
 import it.unibo.plantsfarm.model.garden.CollisionDetector;
 import it.unibo.plantsfarm.model.garden.SoilSaving;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
-import it.unibo.plantsfarm.model.player.PlayersTypes;
 import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.model.plant.PlantType;
@@ -27,6 +26,7 @@ import it.unibo.plantsfarm.model.plant.PlantEffect;
 import it.unibo.plantsfarm.model.plant.OrnamentalBehavior;
 
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
+import it.unibo.plantsfarm.view.selectorplayer.SelectorPlayerView;
 
 /**
  * Implementation of the ControllerGamePanel interface, responsible for managing the game loop,
@@ -48,6 +48,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     private final SpawningBuffsController spawningBuffsController;
     private final ControllerInventario controllerInventario;
     private final ManagerSavingPlayer managerSavingPlayer;
+    private final SelectorPlayerView selectPlayer;
     private PlantType currentSelectedPlant;
 
     /**
@@ -58,10 +59,10 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     public ImplControllerGamePanel(final GameState gameState) {
         this.map = new TileMap();
         this.map.loadMap("/maps/map.txt");
+        selectPlayer = new SelectorPlayerView();
         setPlayer();
-        actionHandler = new ImplActionHandler();
+        this.actionHandler = new ImplActionHandler();
         this.controllerInventario = new ImplControllerInventario(this.player);
-
         this.gardenController = new GardenController(gameState, this.player);
         this.collisionDetector = new CollisionDetector(this.player);
         this.spawningBuffsController = new SpawningBuffsController(map);
@@ -162,7 +163,8 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
 
     @Override
     public void setPlayer() {
-        this.player = factoryPlayer.createPlayer(PlayersTypes.FARMER);
+        selectPlayer.setVisible(true);
+        this.player = factoryPlayer.createPlayer(selectPlayer.getSelectedType());
     }
 
     @Override
