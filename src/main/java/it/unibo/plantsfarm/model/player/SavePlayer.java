@@ -1,4 +1,4 @@
-package it.unibo.plantsfarm.controller.player;
+package it.unibo.plantsfarm.model.player;
 
 import java.io.File;
 import java.io.IOException;

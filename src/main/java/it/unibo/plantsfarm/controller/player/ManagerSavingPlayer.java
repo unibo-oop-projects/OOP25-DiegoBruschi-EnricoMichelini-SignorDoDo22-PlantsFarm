@@ -5,6 +5,7 @@ import static it.unibo.plantsfarm.model.player.PlayersTypes.FARMER;
 import java.nio.file.Path;
 
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
+import it.unibo.plantsfarm.model.player.SavePlayer;
 import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.view.utility.FileMemory;
 import it.unibo.plantsfarm.view.utility.Memory;
