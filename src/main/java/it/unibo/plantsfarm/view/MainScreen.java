@@ -27,9 +27,11 @@ public final class MainScreen {
     private static final String TITLE = "PlantsFarm";
     private static final String FONT_FAMILY = "SansSerif";
 
-    private static final double FONT_SCALE_RATIO = 0.025;
+    private static final double FONT_SCALE_RATIO = 0.04;
     private static final double GAP_RATIO = 0.015;
-    private static final int COIN_LABEL_RATIO = 6;
+    private static final int COIN_LABEL_RATIO = 5;
+
+    private static final Color GOLD = new Color(255, 252, 115);
 
     private final MenuPanel menuPanel;
     private ImplViewGamePanel gameViewPanel;
@@ -48,7 +50,7 @@ public final class MainScreen {
 
     /**
      * Creates and displays the main screen window.
-     * 
+     *
      * @param gameView The view component for the game panel to be displayed in the main screen.
      */
     public void createMainScreen(final ImplViewGamePanel gameView) {
@@ -83,8 +85,7 @@ public final class MainScreen {
         this.coinLabel = new JLabel(" 0 ");
         this.coinLabel.setIcon(Texture.COIN_ICON);
         this.coinLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, fontSize));
-        this.coinLabel.setForeground(Color.BLACK);
-
+        this.coinLabel.setForeground(GOLD);
         topPanel.add(this.coinLabel);
 
         layeredPane.add(topPanel, JLayeredPane.PALETTE_LAYER);
