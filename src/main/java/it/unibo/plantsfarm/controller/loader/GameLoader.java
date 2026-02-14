@@ -25,10 +25,7 @@ public class GameLoader {
         final ImplControllerGamePanel gamePanel = new ImplControllerGamePanel(gameState);
         gamePanel.addView();
         gamePanel.start();
-
-        //CONTROLLER
         new MainScreenController(gameState, gamePanel);
-
         return gameState;
     }
 }

@@ -61,7 +61,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
         this.map.loadMap("/maps/map.txt");
         selectPlayer = new SelectorPlayerView();
         setPlayer();
-        this.actionHandler = new ImplActionHandler();
+        this.actionHandler = new ImplActionHandler(this.player);
         this.controllerInventario = new ImplControllerInventario(this.player);
         this.gardenController = new GardenController(gameState, this.player);
         this.collisionDetector = new CollisionDetector(this.player);
@@ -85,7 +85,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
                 sleep(SLEEPING_PERIOD_IN_MILLISECONDS);
                 if (input != null) {
                     switch (input) {
-                    case DOWN, UP, RIGHT, LEFT, FERMO -> actionHandler.updateDirection(input, player);
+                    case DOWN, UP, RIGHT, LEFT, FERMO -> actionHandler.updateDirection(input);
 
                     case SELECT_SEED -> {
                         this.view.playSeed();
@@ -94,19 +94,19 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
 
                     case ACTIONHOE -> {
                         this.view.playPlant();
-                        actionHandler.handleActionHoe(gardenController, currentSelectedPlant, player);
+                        actionHandler.handleActionHoe(gardenController, currentSelectedPlant);
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
                     case ACTIONWATER -> {
                         this.view.playWater();
-                        actionHandler.handleWater(gardenController, now, currentSelectedPlant, player);
+                        actionHandler.handleWater(gardenController, now, currentSelectedPlant);
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
                     case REMOVE_PLANT -> {
                         this.view.playPlant();
-                        actionHandler.handleAxe(gardenController, player);
+                        actionHandler.handleAxe(gardenController);
                         saver.saveGame(gardenController.getSoilList());
                         managerSavingPlayer.saveManager(player.getInventory(), player);
                     }
@@ -118,13 +118,15 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             }
 
             spawningBuffsController.updateUpGrade(now);
-            if (actionHandler.playerActionBuff(spawningBuffsController, player)) {
+            if (actionHandler.playerActionBuff(spawningBuffsController)) {
                 this.view.playExp();
             }
             collisionDetector.collisionDetection();
             controllerAnimation.update(System.nanoTime());
             player.updatePlayer(delta);
-            gardenController.updateSoil(now);
+            if (gardenController.updateSoil(now)) {
+                this.view.playGrowth();
+            }
             camera.followPlayer((int) player.getPosx(), (int) player.getPosy());
         }
     }

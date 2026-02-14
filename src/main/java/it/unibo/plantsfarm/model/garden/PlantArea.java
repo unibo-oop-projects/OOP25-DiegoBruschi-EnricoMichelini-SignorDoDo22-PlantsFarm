@@ -52,14 +52,19 @@ public final class PlantArea {
      * Updates all plants in this area, applying bonuses if applicable.
      *
      * @param now Current time in milliseconds.
+     *
+     * @return true if at least one plant grew, false otherwise.
      */
-    public void updateArea(final long now) {
+    public boolean updateArea(final long now) {
+        boolean areaGrew = false;
         double growthMultiplier = 1.0;
         double harvestMultiplier = 1.0;
         if (centerSoil != null && centerSoil.isPlanted()) {
             final PlantImpl centerPlant = centerSoil.getPlant();
 
-            centerPlant.increaseGrowthStage(now);
+            if (centerPlant.increaseGrowthStage(now)) {
+                areaGrew = true;
+            }
             centerPlant.updateNeedsWater(now);
 
             if (centerPlant.isMature() && centerPlant.getType().getBehavior() instanceof OrnamentalBehavior) {
@@ -85,6 +90,8 @@ public final class PlantArea {
                 p.updateNeedsWater(now);
             }
         }
+
+        return areaGrew;
     }
 
     /**

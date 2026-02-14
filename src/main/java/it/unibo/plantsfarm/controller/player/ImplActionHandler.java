@@ -9,6 +9,7 @@ import it.unibo.plantsfarm.controller.garden.GardenController;
 import it.unibo.plantsfarm.controller.garden.SpawningBuffsController;
 import it.unibo.plantsfarm.controller.player.api.ActionHandler;
 import it.unibo.plantsfarm.model.garden.Buff;
+import it.unibo.plantsfarm.model.inventario.ModelInventario;
 import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.model.tiles.SoilImpl;
 import it.unibo.plantsfarm.model.tiles.api.Soil;
@@ -20,65 +21,83 @@ import it.unibo.plantsfarm.model.plant.PlantType;
  */
 public final class ImplActionHandler implements ActionHandler {
 
+    private Player player;
+
+    /**
+     * Setting the player.
+     *
+     * @param player set the player created
+     */
+    public ImplActionHandler(final Player player) {
+        setPlayer(player);
+    }
+
     @Override
-    public void handleActionHoe(final GardenController controllerGarden, final PlantType selectedPlant, final Player player) {
+    public void handleActionHoe(final GardenController controllerGarden, final PlantType selectedPlant) {
+        final ModelInventario inventory = player.getInventory();
 
         final SoilImpl soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
         if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
             && soil.isPlanted()
             && soil.getPlant().isMature()
-            && player.getInventory().useItem(HOE, soil.getPlant().getRarity())
+            && inventory.useItem(HOE, soil.getPlant().getRarity())
         ) {
             controllerGarden.harvest();
         } else if (selectedPlant != null
             && controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
             && !soil.isPlanted()
-            && player.getInventory().useItem(HOE, selectedPlant.getRarity())
+            && inventory.useItem(HOE, selectedPlant.getRarity())
         ) {
             controllerGarden.pianta(selectedPlant);
         }
     }
 
     @Override
-    public void handleWater(final GardenController controllerGarden, final Long now,
-        final PlantType selectedPlant, final Player player
-    ) {
-        final SoilImpl soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
+    public void handleWater(final GardenController controllerGarden, final Long now, final PlantType selectedPlant) {
+        final ModelInventario inventory = player.getInventory();
+        final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
         if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
             && soil.getPlant() != null
             && soil.getPlant().needsWater()
-            && player.getInventory().useItem(WATERCAN, soil.getPlant().getRarity())
+            && inventory.useItem(WATERCAN, soil.getPlant().getRarity())
         ) {
             controllerGarden.innaffia(now);
         }
     }
 
     @Override
-    public void handleAxe(final GardenController controllerGarden, final Player player) {
+    public void handleAxe(final GardenController controllerGarden) {
         final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
+        final ModelInventario inventory = player.getInventory();
         if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
             && soil.isPlanted()
-            && player.getInventory().useItem(AXE, soil.getPlant().getRarity())
+            && inventory.useItem(AXE, soil.getPlant().getRarity())
         ) {
             soil.removePlant();
         }
     }
 
     @Override
-    public void updateDirection(final UserInput input, final Player player) {
+    public void updateDirection(final UserInput input) {
         player.setDirection(input);
     }
 
     @Override
-    public boolean playerActionBuff(final SpawningBuffsController controllerbuff, final Player player) {
+    public boolean playerActionBuff(final SpawningBuffsController controllerbuff) {
         boolean buffCollected = false;
+        final ModelInventario inventory = player.getInventory();
         for (final Buff buff : controllerbuff.getBuffList()) {
             if (player.getHitBox().intersects(buff.getBuffPosition()) || buff.getBuffPosition().contains(player.getHitBox())) {
                 controllerbuff.removeBuffFromMap(buff);
-                player.getInventory().applyUpgrade();
+                inventory.applyUpgrade();
                 buffCollected = true;
             }
         }
         return buffCollected;
     }
+
+    private void setPlayer(final Player player) {
+        this.player = player;
+    }
+
 }

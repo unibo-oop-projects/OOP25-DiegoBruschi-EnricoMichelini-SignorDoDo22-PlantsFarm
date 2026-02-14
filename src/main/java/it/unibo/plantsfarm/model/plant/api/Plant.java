@@ -18,7 +18,7 @@ public interface Plant {
      * @param now The current time in milliseconds.
      * @param multiplier A multiplier to speed up growth.
      */
-    void increaseGrowthStage(long now, double multiplier);
+    boolean increaseGrowthStage(long now, double multiplier);
 
     /**
      * Waters the plant and changes plant's water status.

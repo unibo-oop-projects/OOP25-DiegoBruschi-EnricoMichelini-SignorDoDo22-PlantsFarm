@@ -43,9 +43,11 @@ public class PlantImpl implements Serializable, Plant {
      * Increases the growth stage of the plant based on time status.
      *
      * @param now The current time in milliseconds.
+     * 
+     * @return true if the plant grew to the next stage, false otherwise.
      */
-    public final void increaseGrowthStage(final long now) {
-        this.increaseGrowthStage(now, 1.0);
+    public final boolean increaseGrowthStage(final long now) {
+        return this.increaseGrowthStage(now, 1.0);
     }
 
     /**
@@ -53,11 +55,13 @@ public class PlantImpl implements Serializable, Plant {
      *
      * @param now The current time in milliseconds.
      * @param multiplier A multiplier to speed up growth.
+     * 
+     * @return true if the plant grew to the next stage, false otherwise.
      */
-    @Override
-    public final void increaseGrowthStage(final long now, final double multiplier) {
+    public final boolean increaseGrowthStage(final long now, final double multiplier) {
         final long growthTimeFromLastUpdate = now - lastUpdate;
         lastUpdate = now;
+        boolean hasGrown = false;
 
         if (!isMature() && watered && !needsWater) {
             currentStageTime += (long) (growthTimeFromLastUpdate * multiplier);
@@ -66,8 +70,10 @@ public class PlantImpl implements Serializable, Plant {
                 currentStageTime = 0;
                 watered = false;
                 growthStage++;
+                hasGrown = true; // Segnaliamo che è avvenuta la crescita
             }
         }
+        return hasGrown;
     }
 
     /**

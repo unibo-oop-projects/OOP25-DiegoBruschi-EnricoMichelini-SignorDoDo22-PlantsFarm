@@ -49,9 +49,11 @@ public class GardenController {
      * Update the garden model.
      *
      * @param now The current time in milliseconds.
+     * 
+     * @return true if at least one plant grew, false otherwise.
      */
-    public final void updateSoil(final Long now) {
-        this.gardenModel.updateGame(now);
+    public final boolean updateSoil(final Long now) {
+        return this.gardenModel.updateGame(now); 
     }
 
     /**
