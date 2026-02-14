@@ -3,7 +3,8 @@ package it.unibo.plantsfarm.controller.action;
 import it.unibo.plantsfarm.controller.action.api.SeedSelectionListener;
 import it.unibo.plantsfarm.model.plant.PlantRegistry;
 import it.unibo.plantsfarm.model.plant.PlantType;
-import it.unibo.plantsfarm.view.map.SeedView;
+import it.unibo.plantsfarm.view.map.api.SeedView;
+import it.unibo.plantsfarm.view.map.impl.SeedViewImpl;
 
 import java.awt.event.ActionListener;
 
@@ -32,7 +33,7 @@ public final class SeedController {
      * @param isEdible True for edible plants, false for ornamental.
      */
     private void createView(final boolean isEdible) {
-        this.view = new SeedView(isEdible);
+        this.view = new SeedViewImpl(isEdible);
 
         if (isEdible) {
             loadEdiblePlants();
