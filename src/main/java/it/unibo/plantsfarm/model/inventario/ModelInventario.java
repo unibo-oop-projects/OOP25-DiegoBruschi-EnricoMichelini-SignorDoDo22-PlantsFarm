@@ -112,16 +112,6 @@ public final class ModelInventario {
     }
 
     /**
-     * If the item have been used the right way.
-     * its experience grow.
-     *
-     * @param tool  tool action
-     */
-    public void useWater(final Tooltype tool) {
-        this.inventario.get(tool).useItem();
-    }
-
-    /**
      * Function for apply an upgrade to the player.
      *
      */
