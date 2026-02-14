@@ -4,8 +4,8 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unibo.plantsfarm.model.plant.Plant;
-import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
+import it.unibo.plantsfarm.model.tiles.SoilImpl;
 import it.unibo.plantsfarm.model.plant.PlantEffect;
 import it.unibo.plantsfarm.model.plant.OrnamentalBehavior;
 
@@ -17,8 +17,8 @@ import it.unibo.plantsfarm.model.plant.OrnamentalBehavior;
 public final class PlantArea {
 
     private final Rectangle bounds;
-    private final List<Soil> soils = new ArrayList<>();
-    private Soil centerSoil;
+    private final List<SoilImpl> soils = new ArrayList<>();
+    private SoilImpl centerSoil;
 
     /**
      * Creates a new PlantArea.
@@ -39,7 +39,7 @@ public final class PlantArea {
         value = "EI2",
         justification = "The PlantArea needs to hold the reference to the actual Soil object to update the game state."
     )
-    public void addSoil(final Soil soil) {
+    public void addSoil(final SoilImpl soil) {
         if (bounds.contains(soil.getCoordinate())) {
             soils.add(soil);
             if (soil.getCoordinate().contains(bounds.getCenterX(), bounds.getCenterY())) {
@@ -57,7 +57,7 @@ public final class PlantArea {
         double growthMultiplier = 1.0;
         double harvestMultiplier = 1.0;
         if (centerSoil != null && centerSoil.isPlanted()) {
-            final Plant centerPlant = centerSoil.getPlant();
+            final PlantImpl centerPlant = centerSoil.getPlant();
 
             centerPlant.increaseGrowthStage(now);
             centerPlant.updateNeedsWater(now);
@@ -73,13 +73,13 @@ public final class PlantArea {
             }
         }
 
-        for (final Soil soil : soils) {
+        for (final SoilImpl soil : soils) {
             if (soil.equals(centerSoil)) {
                 continue;
             }
 
             if (soil.isPlanted()) {
-                final Plant p = soil.getPlant();
+                final PlantImpl p = soil.getPlant();
                 p.increaseGrowthStage(now, growthMultiplier);
                 p.setHarvestMultiplier(harvestMultiplier);
                 p.updateNeedsWater(now);
@@ -94,7 +94,7 @@ public final class PlantArea {
      *
      * @return True if the soil is inside the area bounds, false otherwise.
      */
-    public boolean contains(final Soil soil) {
+    public boolean contains(final SoilImpl soil) {
         return bounds.contains(soil.getCoordinate());
     }
 }

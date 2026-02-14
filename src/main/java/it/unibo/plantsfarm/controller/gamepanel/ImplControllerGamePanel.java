@@ -21,7 +21,7 @@ import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.model.plant.PlantType;
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantEffect;
 import it.unibo.plantsfarm.model.plant.OrnamentalBehavior;
 
@@ -179,7 +179,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     }
 
     @Override
-    public PlantStatus getPlantStatus(final Plant plant) {
+    public PlantStatus getPlantStatus(final PlantImpl plant) {
         if (plant.isMature()) {
             if (plant.isEdible()) {
                 return PlantStatus.READY_TO_HARVEST;

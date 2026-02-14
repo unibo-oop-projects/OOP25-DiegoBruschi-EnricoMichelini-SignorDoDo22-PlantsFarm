@@ -1,7 +1,7 @@
 package it.unibo.plantsfarm.controller.menu;
 
 import it.unibo.plantsfarm.model.GameState;
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.view.menu.MysteryBox;
 import it.unibo.plantsfarm.view.menu.api.ShopScreen;
@@ -133,7 +133,7 @@ public final class ShopController {
             return;
         }
 
-        final List<Plant> candidates = gameState.getAllPlants().stream()
+        final List<PlantImpl> candidates = gameState.getAllPlants().stream()
                 .filter(p -> !p.isDiscovered())
                 .filter(p -> p.isEdible() == onlyEdible)
                 .collect(Collectors.toList());
@@ -144,7 +144,7 @@ public final class ShopController {
         }
 
         if (gameState.spendCoins(cost)) {
-            final Plant selectedPlant = candidates.get(random.nextInt(candidates.size()));
+            final PlantImpl selectedPlant = candidates.get(random.nextInt(candidates.size()));
 
             selectedPlant.getType().unlock();
             gameState.saveEncyclopedia();

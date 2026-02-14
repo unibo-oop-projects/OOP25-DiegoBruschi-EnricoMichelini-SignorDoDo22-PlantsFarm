@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.awt.Rectangle;
 
-import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.model.tiles.SoilImpl;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
@@ -16,7 +16,7 @@ public class GardenModel {
     private static final int ORNAMENTAL_SOIL = 2;
     private static final int GREENHOUSE_AREA = 40;
 
-    private final List<Soil> soils;
+    private final List<SoilImpl> soils;
     private final List<PlantArea> areas = new LinkedList<>();
     private final TileMap map = new TileMap();
 
@@ -49,7 +49,7 @@ public class GardenModel {
                 }
             }
         }
-        for (final Soil soil : soils) {
+        for (final SoilImpl soil : soils) {
             for (final PlantArea area : areas) {
                 if (area.contains(soil)) {
                     area.addSoil(soil);
@@ -76,7 +76,7 @@ public class GardenModel {
      *
      * @return The list of Soil objects.
      */
-    public final List<Soil> getSoils() {
+    public final List<SoilImpl> getSoils() {
         return List.copyOf(soils);
     }
 }

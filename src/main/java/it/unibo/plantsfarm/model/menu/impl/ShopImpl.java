@@ -2,7 +2,7 @@ package it.unibo.plantsfarm.model.menu.impl;
 
 import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.menu.api.Shop;
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.plant.PlantRegistry;
 
@@ -45,18 +45,18 @@ public final class ShopImpl implements Shop {
             return Collections.unmodifiableMap(this.activeRequests);
         }
 
-        final List<Plant> unlocked = gameState.getAllUnlockedEdiblePlants();
+        final List<PlantImpl> unlocked = gameState.getAllUnlockedEdiblePlants();
         final Map<PlantType, Integer> requests = new HashMap<>();
 
         if (unlocked.isEmpty()) {
             return requests;
         }
 
-        final List<Plant> shuffled = new ArrayList<>(unlocked);
+        final List<PlantImpl> shuffled = new ArrayList<>(unlocked);
         Collections.shuffle(shuffled);
-        final List<Plant> selected = shuffled.subList(0, Math.min(MAX_REQUESTS, shuffled.size()));
+        final List<PlantImpl> selected = shuffled.subList(0, Math.min(MAX_REQUESTS, shuffled.size()));
 
-        for (final Plant plant : selected) {
+        for (final PlantImpl plant : selected) {
             final int baseHarvest = plant.getType().generateHarvest();
             final int multiplier = MIN_MULTIPLIER + random.nextInt(MAX_MULTIPLIER - MIN_MULTIPLIER + 1);
             final int totalQuantity = baseHarvest * multiplier;

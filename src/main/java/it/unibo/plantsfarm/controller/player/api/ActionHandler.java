@@ -5,7 +5,7 @@ import it.unibo.plantsfarm.controller.garden.GardenController;
 import it.unibo.plantsfarm.controller.garden.SpawningBuffsController;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.player.api.Player;
-import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.model.tiles.SoilImpl;
 
 /**
  * this class is used for take input from {@param ImplControllerGamePanel } .
@@ -24,7 +24,7 @@ public interface ActionHandler {
     void handleActionHoe(GardenController controllerGarden, PlantType selectedPlant, Player player);
 
     /**
-     * The player can use the Water if the {@link Soil} have a plant and the
+     * The player can use the Water if the {@link SoilImpl} have a plant and the
      * plant is ready to be watered. I
      *
      * @param controllerGarden for check the soil state and presence of a plant.
@@ -35,7 +35,7 @@ public interface ActionHandler {
     void handleWater(GardenController controllerGarden, Long now, PlantType selectedPlant, Player player);
 
     /**
-     * The player can remove a plant if the {@link Soil} have a plant.
+     * The player can remove a plant if the {@link SoilImpl} have a plant.
      * The axe dose't has a level.
      *
      * @param controllerGarden for check the soil state and presence of a plant.

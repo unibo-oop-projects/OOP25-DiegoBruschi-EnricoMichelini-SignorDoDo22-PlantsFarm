@@ -10,7 +10,7 @@ import it.unibo.plantsfarm.model.menu.impl.CoinImpl;
 import it.unibo.plantsfarm.model.menu.impl.EncyclopediaImpl;
 import it.unibo.plantsfarm.model.menu.impl.ShopImpl;
 import it.unibo.plantsfarm.model.menu.impl.StorageImpl;
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +34,7 @@ public final class GameState {
      *
      * @param plants The list of plants to load into the internal encyclopedia.
      */
-    public GameState(final List<Plant> plants) {
+    public GameState(final List<PlantImpl> plants) {
         this.soils = new SoilSaving();
         this.managerSavingPlayer = new ManagerSavingPlayer();
         this.encyclopedia = new EncyclopediaImpl();
@@ -42,7 +42,7 @@ public final class GameState {
         this.shop = new ShopImpl();
         this.wallet = new CoinImpl(INITIAL_COINS);
 
-        for (final Plant p : plants) {
+        for (final PlantImpl p : plants) {
             this.encyclopedia.addPlant(p);
         }
     }
@@ -52,7 +52,7 @@ public final class GameState {
      *
      * @return The list of plants.
      */
-    public List<Plant> getAllPlants() {
+    public List<PlantImpl> getAllPlants() {
         return encyclopedia.getPlants();
     }
 
@@ -61,7 +61,7 @@ public final class GameState {
      *
      * @return The list of edible plants.
      */
-    public List<Plant> getAllUnlockedEdiblePlants() {
+    public List<PlantImpl> getAllUnlockedEdiblePlants() {
         return encyclopedia.getUnlockedEdiblePlants();
     }
 

@@ -10,7 +10,8 @@ import it.unibo.plantsfarm.controller.garden.SpawningBuffsController;
 import it.unibo.plantsfarm.controller.player.api.ActionHandler;
 import it.unibo.plantsfarm.model.garden.Buff;
 import it.unibo.plantsfarm.model.player.api.Player;
-import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.model.tiles.SoilImpl;
+import it.unibo.plantsfarm.model.tiles.api.Soil;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
 /**
@@ -22,7 +23,7 @@ public final class ImplActionHandler implements ActionHandler {
     @Override
     public void handleActionHoe(final GardenController controllerGarden, final PlantType selectedPlant, final Player player) {
 
-        final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
+        final SoilImpl soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
         if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
             && soil.isPlanted()
             && soil.getPlant().isMature()
@@ -42,7 +43,7 @@ public final class ImplActionHandler implements ActionHandler {
     public void handleWater(final GardenController controllerGarden, final Long now,
         final PlantType selectedPlant, final Player player
     ) {
-        final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
+        final SoilImpl soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
         if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
             && soil.getPlant() != null
             && soil.getPlant().needsWater()

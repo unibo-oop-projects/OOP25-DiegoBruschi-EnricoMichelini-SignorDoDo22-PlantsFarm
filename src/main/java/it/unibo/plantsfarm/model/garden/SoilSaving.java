@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.model.tiles.SoilImpl;
 
 /**
  * Handles the saving and loading of soil data for the game.
@@ -25,7 +25,7 @@ public final class SoilSaving {
      *
      * @param pod The list of Soil objects to be saved.
      */
-    public void saveGame(final List<Soil> pod) {
+    public void saveGame(final List<SoilImpl> pod) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(this.fileName))) {
             oos.writeObject(pod);
         } catch (final IOException e) {
@@ -38,7 +38,7 @@ public final class SoilSaving {
      *
      * @return A list of Soil objects loaded from the file, or an empty list if loading fails.
      */
-    public List<Soil> loadGame() {
+    public List<SoilImpl> loadGame() {
         final File file = new File(this.fileName);
 
         if (!file.exists()) {
@@ -50,10 +50,10 @@ public final class SoilSaving {
             final Object obj = ois.readObject();
 
             if (obj instanceof List<?>) {
-                final List<Soil> checkedList = new LinkedList<>();
+                final List<SoilImpl> checkedList = new LinkedList<>();
                 for (final Object item : (List<?>) obj) {
-                    if (item instanceof Soil) {
-                        checkedList.add((Soil) item);
+                    if (item instanceof SoilImpl) {
+                        checkedList.add((SoilImpl) item);
                     }
                 }
                 return checkedList;

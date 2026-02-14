@@ -3,7 +3,7 @@ package it.unibo.plantsfarm.controller.loader;
 import it.unibo.plantsfarm.controller.MainScreenController;
 import it.unibo.plantsfarm.controller.gamepanel.ImplControllerGamePanel;
 import it.unibo.plantsfarm.model.GameState;
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class GameLoader {
     public final GameState initializeGame() {
 
         final PlantLoader plantLoader = new PlantLoader();
-        final List<Plant> plants = plantLoader.loadPlants();
+        final List<PlantImpl> plants = plantLoader.loadPlants();
         final GameState gameState = new GameState(plants);
         final ImplControllerGamePanel gamePanel = new ImplControllerGamePanel(gameState);
         gamePanel.addView();

@@ -2,7 +2,7 @@ package it.unibo.plantsfarm.model.menu.api;
 
 import java.util.List;
 
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
 /**
@@ -25,14 +25,14 @@ public interface Encyclopedia {
      *
      * @return unmodifiable list of plants
      */
-    List<Plant> getPlants();
+    List<PlantImpl> getPlants();
 
     /**
      * Adds a plant to the encyclopedia if it's not already present.
      *
      * @param plant The plant to add.
      */
-    void addPlant(Plant plant);
+    void addPlant(PlantImpl plant);
 
     /**
      * Returns the total number of plants in the encyclopedia.
@@ -51,7 +51,7 @@ public interface Encyclopedia {
      *
      * @return A list of unlocked edible plants.
      */
-    List<Plant> getUnlockedEdiblePlants();
+    List<PlantImpl> getUnlockedEdiblePlants();
 
     /**
      * Counts the number of discovered edible plants.
