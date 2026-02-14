@@ -42,7 +42,7 @@ public final class ItemsViewImageItem extends JPanel implements UpdatablePanel {
         final var inv = controllerInventario.getInventoryClone();
         for (final Tooltype tool : Tooltype.values()) {
             final JButton jb = itemsDisplay.get(tool);
-            jb.setText(inv.get(tool).getRarityItem().toString());
+            jb.setText(inv.get(tool).getRarityItem().toString() + " Level " + inv.get(tool).getLevel());
         }
     }
 
