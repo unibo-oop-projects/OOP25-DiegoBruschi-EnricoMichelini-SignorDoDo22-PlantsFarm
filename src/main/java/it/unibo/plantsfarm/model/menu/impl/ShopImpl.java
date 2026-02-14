@@ -1,6 +1,5 @@
 package it.unibo.plantsfarm.model.menu.impl;
 
-import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.menu.api.Shop;
 import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantType;
@@ -40,7 +39,7 @@ public final class ShopImpl implements Shop {
      * @return A map of PlantType and the requested quantity.
      */
     @Override
-    public Map<PlantType, Integer> generateRequests(final GameState gameState) {
+    public Map<PlantType, Integer> generateRequests(final GameStateImpl gameState) {
         if (this.activeRequests != null && !this.activeRequests.isEmpty()) {
             return Collections.unmodifiableMap(this.activeRequests);
         }
@@ -76,7 +75,7 @@ public final class ShopImpl implements Shop {
      * @return The amount of coins earned, or 0 if the transaction failed.
      */
     @Override
-    public int sellProducts(final GameState gameState, final Map<PlantType, Integer> requests) {
+    public int sellProducts(final GameStateImpl gameState, final Map<PlantType, Integer> requests) {
         final Map<PlantType, Integer> storage = gameState.getStorageContents();
 
         for (final Map.Entry<PlantType, Integer> entry : requests.entrySet()) {
@@ -111,7 +110,7 @@ public final class ShopImpl implements Shop {
      * @return The unlocked PlantType, or null if transaction failed.
      */
     @Override
-    public PlantType buyMysteryBox(final GameState gameState, final int cost) {
+    public PlantType buyMysteryBox(final GameStateImpl gameState, final int cost) {
         final List<PlantType> lockedPlants = PlantRegistry.getAll().stream()
             .filter(p -> !p.isDiscovered())
             .collect(Collectors.toList());

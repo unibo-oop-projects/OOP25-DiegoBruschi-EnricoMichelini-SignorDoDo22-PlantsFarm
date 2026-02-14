@@ -11,6 +11,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.plantsfarm.model.menu.api.Shop;
+import it.unibo.plantsfarm.model.menu.impl.GameStateImpl;
 import it.unibo.plantsfarm.model.menu.impl.ShopImpl;
 import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantRegistry;
@@ -27,7 +28,7 @@ final class ShopTest {
 
     private final Shop shop = new ShopImpl();
     private final PlantImpl carrot = new PlantImpl(PlantRegistry.CARROT); 
-    private final GameState gameState = new GameState(List.of(carrot));
+    private final GameStateImpl gameState = new GameStateImpl(List.of(carrot));
 
     /**
      * Test that the shop generates valid sell requests based on unlocked plants.

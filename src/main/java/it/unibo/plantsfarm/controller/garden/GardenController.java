@@ -3,10 +3,10 @@ package it.unibo.plantsfarm.controller.garden;
 import java.awt.Rectangle;
 import java.util.List;
 
-import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.garden.GardenModel;
+import it.unibo.plantsfarm.model.menu.impl.GameStateImpl;
 import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.model.tiles.SoilImpl;
 import it.unibo.plantsfarm.model.tiles.api.Soil;
@@ -17,7 +17,7 @@ import it.unibo.plantsfarm.model.tiles.api.Soil;
 public class GardenController {
     private static final int ORNAMENTAL_SOIL = 2;
 
-    private GameState gameState;
+    private GameStateImpl gameState;
     private Player player;
     private GardenModel gardenModel;
 
@@ -27,7 +27,7 @@ public class GardenController {
      * @param gameState The game state.
      * @param player    The player.
      */
-    public GardenController(final GameState gameState, final Player player) {
+    public GardenController(final GameStateImpl gameState, final Player player) {
         setGameState(gameState);
         setPlayer(player);
         setGardenModel();
@@ -112,7 +112,7 @@ public class GardenController {
         return null;
     }
 
-    private void setGameState(final GameState givenGameState) {
+    private void setGameState(final GameStateImpl givenGameState) {
         this.gameState = givenGameState;
     }
 

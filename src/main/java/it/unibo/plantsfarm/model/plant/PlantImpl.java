@@ -71,7 +71,7 @@ public class PlantImpl implements Serializable, Plant {
                 currentStageTime = 0;
                 watered = false;
                 growthStage++;
-                hasGrown = true; // Segnaliamo che è avvenuta la crescita
+                hasGrown = true;
             }
         }
         return hasGrown;
