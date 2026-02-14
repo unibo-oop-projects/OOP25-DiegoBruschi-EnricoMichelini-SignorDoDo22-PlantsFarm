@@ -64,12 +64,12 @@ public class GardenModel {
      * Update each PlantArea.
      *
      * @param now The current time in milliseconds.
-     * 
+     *
      * @return true if at least one plant grew, false otherwise.
      */
     public boolean updateGame(final long now) {
         boolean somethingGrew = false;
-        
+
         for (final PlantArea area : areas) {
             if (area.updateArea(now)) {
                 somethingGrew = true;

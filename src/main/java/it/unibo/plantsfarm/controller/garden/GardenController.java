@@ -44,7 +44,7 @@ public class GardenController {
         }
     }
 
-/**
+    /**
      * Update the garden model.
      *
      * @param now The current time in milliseconds.

@@ -41,7 +41,7 @@ public class Plant implements Serializable {
         this.harvestMultiplier = 1.0;
     }
 
-/**
+    /**
      * Increases the growth stage of the plant based on time status.
      *
      * @param now The current time in milliseconds.

@@ -52,7 +52,7 @@ public final class PlantArea {
      * Updates all plants in this area, applying bonuses if applicable.
      *
      * @param now Current time in milliseconds.
-     * 
+     *
      * @return true if at least one plant grew, false otherwise.
      */
     public boolean updateArea(final long now) {
@@ -88,12 +88,12 @@ public final class PlantArea {
                 if (p.increaseGrowthStage(now, growthMultiplier)) {
                     areaGrew = true;
                 }
-                
+
                 p.setHarvestMultiplier(harvestMultiplier);
                 p.updateNeedsWater(now);
             }
         }
-        
+
         return areaGrew;
     }
 
