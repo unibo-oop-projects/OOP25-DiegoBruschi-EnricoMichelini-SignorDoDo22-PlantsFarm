@@ -16,35 +16,90 @@ class ItemsTest {
     @Test
     void testItemCreation() {
         final ItemsFarm hoe = new ItemsFarmBase(HOE);
-        final ItemsFarm fertilizer = new ItemsFarmBase(AXE);
+        final ItemsFarm axe = new ItemsFarmBase(AXE);
         final ItemsFarm watercan = new ItemsFarmBase(WATERCAN);
 
         assertEquals(HOE, hoe.getTooltype());
-        assertEquals(AXE, fertilizer.getTooltype());
+        assertEquals(AXE, axe.getTooltype());
         assertEquals(WATERCAN, watercan.getTooltype());
 
         assertEquals(Rarity.COMMON, hoe.getRarityItem());
-        assertEquals(Rarity.COMMON, fertilizer.getRarityItem());
+        assertEquals(Rarity.COMMON, axe.getRarityItem());
         assertEquals(Rarity.COMMON, watercan.getRarityItem());
     }
 
     @Test
     void testUseItemIncreaseExperience() {
         final ItemsFarm item = new ItemsFarmBase(WATERCAN);
-
         final int experienceBefore = item.getExperience();
         item.useItem();
         final int experienceAfter = item.getExperience();
-
         assertTrue(experienceAfter > experienceBefore);
     }
 
     @Test
     void testExpertItemIsLegendaryAndMaxLevel() {
-        final ItemsFarm expertItem = new ItemsExpert(HOE);
-        final int levelBefore = expertItem.getLevel();
-        assertEquals(Rarity.LEGENDARY, expertItem.getRarityItem());
-        expertItem.upgrade();
-        assertEquals(levelBefore, expertItem.getLevel());
+        final ItemsFarm hoe = new ItemsExpert(HOE);
+        final ItemsFarm axe = new ItemsExpert(AXE);
+        final ItemsFarm water = new ItemsExpert(WATERCAN);
+
+        assertEquals(HOE, hoe.getTooltype());
+        assertEquals(AXE, axe.getTooltype());
+        assertEquals(WATERCAN, water.getTooltype());
+
+        assertEquals(Rarity.LEGENDARY, hoe.getRarityItem());
+        assertEquals(Rarity.LEGENDARY, axe.getRarityItem());
+        assertEquals(Rarity.LEGENDARY, water.getRarityItem());
+
+        final int levelBefore = hoe.getLevel();
+        hoe.upgrade();
+        assertEquals(levelBefore, hoe.getLevel());
     }
+
+    @Test
+    void testUpgradeRare() {
+        final ItemsFarm axe = new ItemsFarmBase(AXE);
+        final int forRare = 27;
+        for (int i = 0; i < forRare; i++) {
+            axe.useItem();
+            axe.upgrade();
+        }
+
+        assertEquals(axe.getRarityItem(), Rarity.RARE);
+    }
+
+    @Test
+    void itemUpgradesWhenReachingUpgradeThreshold() {
+    final ItemsFarm item = new ItemsFarmBase(AXE);
+    final int forRare = 6;
+    for (int i = 0; i < forRare; i++) {
+        item.useItem();
+    }
+
+    item.upgrade();
+    assertEquals(1, item.getLevel());
+}
+
+    @Test
+    void testUpgradeEpic() {
+        final ItemsFarm axe = new ItemsFarmBase(AXE);
+        final int forEpic = 81;
+        for (int i = 0; i < forEpic; i++) {
+            axe.useItem();
+            axe.upgrade();
+        }
+        assertEquals(axe.getRarityItem(), Rarity.EPIC);
+    }
+
+    @Test
+    void testUpgradeLegendary() {
+        final int forLegendary = 195;
+        final ItemsFarm axe = new ItemsFarmBase(AXE);
+        for (int i = 0; i < forLegendary; i++) {
+            axe.useItem();
+            axe.upgrade();
+        }
+        assertEquals(axe.getRarityItem(), Rarity.LEGENDARY, "level:" + axe.getLevel());
+    }
+
 }
