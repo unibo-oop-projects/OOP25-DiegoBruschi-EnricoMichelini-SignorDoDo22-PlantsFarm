@@ -58,6 +58,7 @@ public class PlantImpl implements Serializable, Plant {
      * 
      * @return true if the plant grew to the next stage, false otherwise.
      */
+    @Override
     public final boolean increaseGrowthStage(final long now, final double multiplier) {
         final long growthTimeFromLastUpdate = now - lastUpdate;
         lastUpdate = now;

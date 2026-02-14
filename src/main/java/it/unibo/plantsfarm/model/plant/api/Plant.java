@@ -17,6 +17,8 @@ public interface Plant {
      *
      * @param now The current time in milliseconds.
      * @param multiplier A multiplier to speed up growth.
+     * 
+     * @return true if the plant grew to the next stage, false otherwise.
      */
     boolean increaseGrowthStage(long now, double multiplier);
 
