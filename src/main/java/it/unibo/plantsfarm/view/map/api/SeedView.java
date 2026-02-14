@@ -2,6 +2,10 @@ package it.unibo.plantsfarm.view.map.api;
 
 import java.awt.event.ActionListener;
 
+/**
+ * Represents the view for selecting seeds to plant.
+ * It adapts its size based on the screen resolution.
+ */
 public interface SeedView {
 
     /**

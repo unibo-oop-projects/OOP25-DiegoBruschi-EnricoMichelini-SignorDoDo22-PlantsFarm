@@ -85,7 +85,9 @@ public final class PlantArea {
 
             if (soil.isPlanted()) {
                 final PlantImpl p = soil.getPlant();
-                p.increaseGrowthStage(now, growthMultiplier);
+                if (p.increaseGrowthStage(now, growthMultiplier)) {
+                    areaGrew = true;
+                }
                 p.setHarvestMultiplier(harvestMultiplier);
                 p.updateNeedsWater(now);
             }
