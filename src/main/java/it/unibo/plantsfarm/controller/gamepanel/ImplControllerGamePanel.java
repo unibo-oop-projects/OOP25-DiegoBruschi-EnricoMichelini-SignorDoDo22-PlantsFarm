@@ -124,7 +124,9 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
             collisionDetector.collisionDetection();
             controllerAnimation.update(System.nanoTime());
             player.updatePlayer(delta);
-            gardenController.updateSoil(now);
+            if (gardenController.updateSoil(now)) {
+                this.view.playGrowth();
+            }
             camera.followPlayer((int) player.getPosx(), (int) player.getPosy());
         }
     }

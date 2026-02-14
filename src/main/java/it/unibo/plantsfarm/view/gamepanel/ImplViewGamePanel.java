@@ -157,6 +157,13 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
     }
 
     /**
+     * Plays the sound effect for plant growth.
+     */
+    public void playGrowth() {
+        this.musicPlayer.playEffect("music/gameSound/growth.wav");
+    }
+
+    /**
      * Plays the sound effect for collecting an experience point.
      */
     public void playExp() {

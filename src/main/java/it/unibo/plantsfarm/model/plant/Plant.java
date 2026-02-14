@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Plant implements Serializable {
 
     public static final long WATER_REDUCTION_TIME = 10_000L;
-    public static final long WATER_TIME_COOLDOWN = 15_000L;
+    public static final long WATER_TIME_COOLDOWN = 10_000L;
     public static final long GROWTH_TIME = 30_000L;
 
     private static final long serialVersionUID = 2L;
@@ -41,13 +41,15 @@ public class Plant implements Serializable {
         this.harvestMultiplier = 1.0;
     }
 
-    /**
+/**
      * Increases the growth stage of the plant based on time status.
      *
      * @param now The current time in milliseconds.
+     * 
+     * @return true if the plant grew to the next stage, false otherwise.
      */
-    public final void increaseGrowthStage(final long now) {
-        this.increaseGrowthStage(now, 1.0);
+    public final boolean increaseGrowthStage(final long now) {
+        return this.increaseGrowthStage(now, 1.0);
     }
 
     /**
@@ -55,10 +57,13 @@ public class Plant implements Serializable {
      *
      * @param now The current time in milliseconds.
      * @param multiplier A multiplier to speed up growth.
+     * 
+     * @return true if the plant grew to the next stage, false otherwise.
      */
-    public final void increaseGrowthStage(final long now, final double multiplier) {
+    public final boolean increaseGrowthStage(final long now, final double multiplier) {
         final long growthTimeFromLastUpdate = now - lastUpdate;
         lastUpdate = now;
+        boolean hasGrown = false;
 
         if (!isMature() && watered && !needsWater) {
             currentStageTime += (long) (growthTimeFromLastUpdate * multiplier);
@@ -67,8 +72,10 @@ public class Plant implements Serializable {
                 currentStageTime = 0;
                 watered = false;
                 growthStage++;
+                hasGrown = true; // Segnaliamo che è avvenuta la crescita
             }
         }
+        return hasGrown;
     }
 
     /**
