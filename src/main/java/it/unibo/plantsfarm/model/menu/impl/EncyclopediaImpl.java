@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import it.unibo.plantsfarm.controller.memory.api.DataMemory;
 import it.unibo.plantsfarm.controller.memory.impl.DataMemoryImpl;
 import it.unibo.plantsfarm.model.menu.api.Encyclopedia;
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.plant.PlantRegistry;
 
@@ -29,7 +29,7 @@ public final class EncyclopediaImpl implements Encyclopedia {
     private static final String SEPARATOR = ":";
     private static final Logger LOGGER = Logger.getLogger(EncyclopediaImpl.class.getName());
 
-    private final List<Plant> plants;
+    private final List<PlantImpl> plants;
     private final DataMemory memory;
 
     /**
@@ -76,7 +76,7 @@ public final class EncyclopediaImpl implements Encyclopedia {
      * @return unmodifiable list of plants
      */
     @Override
-    public List<Plant> getPlants() {
+    public List<PlantImpl> getPlants() {
         return Collections.unmodifiableList(plants);
     }
 
@@ -86,7 +86,7 @@ public final class EncyclopediaImpl implements Encyclopedia {
      * @param plant The plant to add.
      */
     @Override
-    public void addPlant(final Plant plant) {
+    public void addPlant(final PlantImpl plant) {
         if (!plants.contains(plant)) {
             plants.add(plant);
         }
@@ -119,9 +119,9 @@ public final class EncyclopediaImpl implements Encyclopedia {
      * @return A list of unlocked edible plants.
      */
     @Override
-    public List<Plant> getUnlockedEdiblePlants() {
-        final List<Plant> unlockedEdiblePlantsList = new ArrayList<>();
-        for (final Plant plant : plants) {
+    public List<PlantImpl> getUnlockedEdiblePlants() {
+        final List<PlantImpl> unlockedEdiblePlantsList = new ArrayList<>();
+        for (final PlantImpl plant : plants) {
             if (plant.isEdible() && plant.isDiscovered()) {
                 unlockedEdiblePlantsList.add(plant);
             }
@@ -137,7 +137,7 @@ public final class EncyclopediaImpl implements Encyclopedia {
     @Override
     public int getNumberUnlockedEdiblePlants() {
         int total = 0;
-        for (final Plant plant : plants) {
+        for (final PlantImpl plant : plants) {
             if (plant.isEdible() && plant.isDiscovered()) {
                 total++;
             }

@@ -2,7 +2,7 @@ package it.unibo.plantsfarm.view.gamepanel.api;
 
 import java.util.List;
 import it.unibo.plantsfarm.model.garden.Buff;
-import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.model.tiles.SoilImpl;
 
 /**
  * ViewGamePanel interface.
@@ -20,5 +20,5 @@ public interface ViewGamePanel {
      * @param listPod    List of Soil
      * @param listBuff   List of Buffs
      */
-    void show(double playerPosX, double playerPosY, int cameraX, int cameraY, List<Soil> listPod, List<Buff> listBuff);
+    void show(double playerPosX, double playerPosY, int cameraX, int cameraY, List<SoilImpl> listPod, List<Buff> listBuff);
 }

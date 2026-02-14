@@ -43,7 +43,7 @@ public final class TileMap {
 
     private static final Logger LOGGER = Logger.getLogger(TileMap.class.getName());
 
-    private final List<Soil> soilList = new LinkedList<>();
+    private final List<SoilImpl> soilList = new LinkedList<>();
     private final List<SolidBlock> solidBlocks = new LinkedList<>();
 
     private final int[][] logicMap1;
@@ -88,7 +88,7 @@ public final class TileMap {
                     final int size = ImplViewGamePanel.TILE_SIZE;
 
                     if (isSoil(num)) {
-                        this.soilList.add(new Soil(new Rectangle(worldX, worldY, size, size), num));
+                        this.soilList.add(new SoilImpl(new Rectangle(worldX, worldY, size, size), num));
                     }
 
                     if (isSolid(num)) {
@@ -107,14 +107,14 @@ public final class TileMap {
      * Applies the saved data to the current map, updating the soil list with the saved progress.
      */
     private void applySavedData() {
-        final List<Soil> savedProgress = saveController.loadGame();
+        final List<SoilImpl> savedProgress = saveController.loadGame();
         if (savedProgress == null) {
             return;
         }
 
-        for (final Soil saved : savedProgress) {
+        for (final SoilImpl saved : savedProgress) {
             for (int i = 0; i < soilList.size(); i++) {
-                final Soil current = soilList.get(i);
+                final SoilImpl current = soilList.get(i);
                 if (current.getCoordinate().x == saved.getCoordinate().x
                     && current.getCoordinate().y == saved.getCoordinate().y
                 ) {
@@ -158,7 +158,7 @@ public final class TileMap {
      * 
      * @return The list of soil tiles.
      */
-    public List<Soil> getSoilList() {
+    public List<SoilImpl> getSoilList() {
         return List.copyOf(this.soilList);
     }
 

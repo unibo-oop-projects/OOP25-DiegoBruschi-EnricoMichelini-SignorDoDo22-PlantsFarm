@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import it.unibo.plantsfarm.model.garden.Buff;
-import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.model.tiles.SoilImpl;
 import it.unibo.plantsfarm.model.tiles.SolidBlock;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
@@ -22,7 +22,7 @@ public final class SpawningBuffsController {
     private final List<Buff> activeBuffs = new LinkedList<>(List.of());
     private final TileMap mappa;
     private long lastPickUp = System.currentTimeMillis();
-    private final List<Soil> soilList;
+    private final List<SoilImpl> soilList;
     private final List<SolidBlock> solidBlocks;
 
     /**
@@ -86,7 +86,7 @@ public final class SpawningBuffsController {
     public boolean verifyPosUpgrade(final double posX, final double posY) {
         final Rectangle buffPosition = new Rectangle((int) posX, (int) posY, BUFF_SIZE, BUFF_SIZE);
 
-        for (final Soil soil : soilList) {
+        for (final SoilImpl soil : soilList) {
             if (buffPosition.intersects(soil.getCoordinate()) || soil.getCoordinate().contains(buffPosition)) {
                 return false;
             }

@@ -2,15 +2,13 @@ package it.unibo.plantsfarm.model.plant;
 
 import java.io.Serializable;
 
+import it.unibo.plantsfarm.model.plant.api.Plant;
+
 /**
  * Represents a plant in the game.
  * Holds the dynamic state and pick static info from PlantType.
  */
-public class Plant implements Serializable {
-
-    public static final long WATER_REDUCTION_TIME = 10_000L;
-    public static final long WATER_TIME_COOLDOWN = 10_000L;
-    public static final long GROWTH_TIME = 30_000L;
+public class PlantImpl implements Serializable, Plant {
 
     private static final long serialVersionUID = 2L;
 
@@ -31,7 +29,7 @@ public class Plant implements Serializable {
      *
      * @param type The type of plant.
      */
-    public Plant(final PlantType type) {
+    public PlantImpl(final PlantType type) {
         this.type = type;
         this.growthStage = 0;
         this.needsWater = true;
@@ -60,6 +58,7 @@ public class Plant implements Serializable {
      * 
      * @return true if the plant grew to the next stage, false otherwise.
      */
+    @Override
     public final boolean increaseGrowthStage(final long now, final double multiplier) {
         final long growthTimeFromLastUpdate = now - lastUpdate;
         lastUpdate = now;
@@ -72,7 +71,7 @@ public class Plant implements Serializable {
                 currentStageTime = 0;
                 watered = false;
                 growthStage++;
-                hasGrown = true; // Segnaliamo che è avvenuta la crescita
+                hasGrown = true;
             }
         }
         return hasGrown;
@@ -83,6 +82,7 @@ public class Plant implements Serializable {
      *
      * @param now The current time in milliseconds.
      */
+    @Override
     public final void water(final Long now) {
         if (growthStage < type.getMaxGrowthStage() && needsWater) {
             this.lastWateredTime = System.currentTimeMillis();
@@ -97,6 +97,7 @@ public class Plant implements Serializable {
      *
      * @param now The current time in milliseconds.
      */
+    @Override
     public final void updateNeedsWater(final Long now) {
         if (this.type.getMaxGrowthStage() > this.growthStage && now - this.lastWateredTime >= WATER_TIME_COOLDOWN) {
             this.needsWater = true;
@@ -109,6 +110,7 @@ public class Plant implements Serializable {
      *
      * @return true if harvestable, false otherwise.
      */
+    @Override
     public final boolean isHarvestable() {
         return isMature();
     }
@@ -118,6 +120,7 @@ public class Plant implements Serializable {
      *
      * @return true if mature, false otherwise.
      */
+    @Override
     public final boolean isMature() {
         return growthStage >= (type.getMaxGrowthStage() - 1);
     }
@@ -127,6 +130,7 @@ public class Plant implements Serializable {
      *
      * @return the value in coins, or 0 if ornamental.
      */
+    @Override
     public final int getSellValue() {
         return type.getSellPrice();
     }
@@ -136,6 +140,7 @@ public class Plant implements Serializable {
      *
      * @param multiplier The multiplier to set.
      */
+    @Override
     public final void setHarvestMultiplier(final double multiplier) {
         this.harvestMultiplier = multiplier;
     }
@@ -145,6 +150,7 @@ public class Plant implements Serializable {
      *
      * @return a random number between min and max yield, or 0 if ornamental.
      */
+    @Override
     public final int harvest() {
         if (!type.isEdible()) {
             return 0;
@@ -164,6 +170,7 @@ public class Plant implements Serializable {
      *
      * @return the harvested quantity.
      */
+    @Override
     public final int getHarvestedQuantity() {
         return this.harvestedQuantity;
     }
@@ -173,6 +180,7 @@ public class Plant implements Serializable {
      *
      * @return the current stage time in milliseconds.
      */
+    @Override
     public final long getCurrentStageTime() {
         return this.currentStageTime;
     }
@@ -182,6 +190,7 @@ public class Plant implements Serializable {
      *
      * @param newTime The new stage time in milliseconds.
      */
+    @Override
     public final void setCurrentStageTime(final long newTime) {
         this.currentStageTime = newTime;
     }
@@ -191,6 +200,7 @@ public class Plant implements Serializable {
      *
      * @return the last watered time in milliseconds.
      */
+    @Override
     public final long getLastWateredTime() {
         return this.lastWateredTime;
     }
@@ -200,6 +210,7 @@ public class Plant implements Serializable {
      *
      * @param newTime The new last watered time in milliseconds.
      */
+    @Override
     public final void setLastWateredTime(final long newTime) {
         this.lastWateredTime = newTime;
     }
@@ -209,6 +220,7 @@ public class Plant implements Serializable {
      *
      * @return The PlantType object.
      */
+    @Override
     public final PlantType getType() {
         return type;
     }
@@ -218,6 +230,7 @@ public class Plant implements Serializable {
      *
      * @return the growth stage.
      */
+    @Override
     public final int getGrowthStage() {
         return growthStage;
     }
@@ -227,6 +240,7 @@ public class Plant implements Serializable {
      *
      * @param stage The new growth stage to set.
      */
+    @Override
     public final void setGrowthStage(final int stage) {
         this.growthStage = stage;
     }
@@ -236,6 +250,7 @@ public class Plant implements Serializable {
      *
      * @return true if edible, false otherwise.
      */
+    @Override
     public final boolean isEdible() {
         return type.isEdible();
     }
@@ -245,6 +260,7 @@ public class Plant implements Serializable {
      *
      * @return true if the plant needs water, false otherwise.
      */
+    @Override
     public final boolean needsWater() {
         return needsWater;
     }
@@ -254,6 +270,7 @@ public class Plant implements Serializable {
      *
      * @return true if planted, false otherwise.
      */
+    @Override
     public final boolean isPlanted() {
         return isPlanted;
     }
@@ -263,6 +280,7 @@ public class Plant implements Serializable {
      *
      * @return true if discovered, false otherwise.
      */
+    @Override
     public final boolean isDiscovered() {
         return type.isDiscovered();
     }
@@ -272,6 +290,7 @@ public class Plant implements Serializable {
      *
      * @return the rarity Enum.
      */
+    @Override
     public final Rarity getRarity() {
         return type.getRarity();
     }
@@ -281,6 +300,7 @@ public class Plant implements Serializable {
      *
      * @return the max growth stage.
      */
+    @Override
     public final int getMaxGrowthStage() {
         return type.getMaxGrowthStage();
     }
@@ -290,20 +310,8 @@ public class Plant implements Serializable {
      *
      * @return the name.
      */
+    @Override
     public final String getName() {
         return type.getName();
-    }
-
-    /**
-     * Returns a string representation of the plant.
-     *
-     * @return a description of the plant.
-     */
-    @Override
-    public String toString() {
-        return "Plant: " + type.getName()
-             + ", Stage: " + growthStage + "/" + type.getMaxGrowthStage()
-             + ", Rarity: " + type.getRarity()
-             + ", Value: " + getSellValue();
     }
 }

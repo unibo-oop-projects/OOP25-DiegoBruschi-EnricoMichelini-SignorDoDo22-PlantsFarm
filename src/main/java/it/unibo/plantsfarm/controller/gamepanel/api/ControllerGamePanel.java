@@ -1,6 +1,6 @@
 package it.unibo.plantsfarm.controller.gamepanel.api;
 
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
 /**
@@ -68,5 +68,5 @@ public interface ControllerGamePanel {
      * @param plant the plant to check
      * @return the status of the plant
      */
-    PlantStatus getPlantStatus(Plant plant);
+    PlantStatus getPlantStatus(PlantImpl plant);
 }

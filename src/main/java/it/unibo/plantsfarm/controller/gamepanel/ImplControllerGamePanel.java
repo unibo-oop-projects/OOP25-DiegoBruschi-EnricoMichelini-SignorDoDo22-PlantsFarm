@@ -13,15 +13,15 @@ import it.unibo.plantsfarm.controller.inventario.ImplControllerInventario;
 import it.unibo.plantsfarm.controller.inventario.api.ControllerInventario;
 import it.unibo.plantsfarm.controller.action.SeedController;
 import it.unibo.plantsfarm.controller.animation.ImplSelectorFrames;
-import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.camera.ImplCamera;
 import it.unibo.plantsfarm.model.garden.CollisionDetector;
 import it.unibo.plantsfarm.model.garden.SoilSaving;
+import it.unibo.plantsfarm.model.menu.impl.GameStateImpl;
 import it.unibo.plantsfarm.model.player.ImplFactoryPlayer;
 import it.unibo.plantsfarm.model.player.api.Player;
 import it.unibo.plantsfarm.model.tiles.TileMap;
 import it.unibo.plantsfarm.model.plant.PlantType;
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantEffect;
 import it.unibo.plantsfarm.model.plant.OrnamentalBehavior;
 
@@ -56,7 +56,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
      *
      * @param gameState The initial state of the game.
      */
-    public ImplControllerGamePanel(final GameState gameState) {
+    public ImplControllerGamePanel(final GameStateImpl gameState) {
         this.map = new TileMap();
         this.map.loadMap("/maps/map.txt");
         selectPlayer = new SelectorPlayerView();
@@ -181,7 +181,7 @@ public final class ImplControllerGamePanel extends Thread implements ControllerG
     }
 
     @Override
-    public PlantStatus getPlantStatus(final Plant plant) {
+    public PlantStatus getPlantStatus(final PlantImpl plant) {
         if (plant.isMature()) {
             if (plant.isEdible()) {
                 return PlantStatus.READY_TO_HARVEST;

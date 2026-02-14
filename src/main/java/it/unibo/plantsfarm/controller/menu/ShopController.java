@@ -1,7 +1,7 @@
 package it.unibo.plantsfarm.controller.menu;
 
-import it.unibo.plantsfarm.model.GameState;
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.menu.impl.GameStateImpl;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.view.menu.MysteryBox;
 import it.unibo.plantsfarm.view.menu.api.ShopScreen;
@@ -38,19 +38,19 @@ public final class ShopController {
      * @param gameState             The current game state.
      * @param onTransactionListener The action to run when coins change.
      */
-    public ShopController(final GameState gameState, final Runnable onTransactionListener) {
+    public ShopController(final GameStateImpl gameState, final Runnable onTransactionListener) {
         this.view = new ShopScreenImpl();
         this.onTransactionListener = onTransactionListener;
         setupListeners(gameState);
         refreshRequests(gameState);
     }
 
-    private void setupListeners(final GameState gameState) {
+    private void setupListeners(final GameStateImpl gameState) {
         this.view.setSellButton(e -> performSellAction(gameState));
         this.view.setBuyButtons(e -> buyItem(gameState, e));
     }
 
-    private void refreshRequests(final GameState gameState) {
+    private void refreshRequests(final GameStateImpl gameState) {
         this.view.resetRequestsPanel();
 
         if (gameState.getShop().areAllPlantsUnlocked()) {
@@ -72,7 +72,7 @@ public final class ShopController {
         }
     }
 
-    private void performSellAction(final GameState gameState) {
+    private void performSellAction(final GameStateImpl gameState) {
 
         final Map<PlantType, Integer> requests = gameState.getRequests();
 
@@ -92,7 +92,7 @@ public final class ShopController {
         }
     }
 
-    private void buyItem(final GameState gameState, final ActionEvent e) {
+    private void buyItem(final GameStateImpl gameState, final ActionEvent e) {
         int cost = COST_STANDARD;
 
         if (e.getSource() instanceof JButton) {
@@ -122,18 +122,18 @@ public final class ShopController {
         }
     }
 
-    private void buyMysteryBoxStandard(final GameState gameState, final int cost) {
+    private void buyMysteryBoxStandard(final GameStateImpl gameState, final int cost) {
         final PlantType unlockedPlant = gameState.getShop().buyMysteryBox(gameState, cost);
         handlePurchaseResult(gameState, unlockedPlant, cost);
     }
 
-    private void buySpecificBox(final GameState gameState, final int cost, final boolean onlyEdible) {
+    private void buySpecificBox(final GameStateImpl gameState, final int cost, final boolean onlyEdible) {
         if (gameState.getWallet() < cost) {
             showMessage(INSUFFICIENT_FUNDS, YOU_NEED + cost + " coins to buy this!");
             return;
         }
 
-        final List<Plant> candidates = gameState.getAllPlants().stream()
+        final List<PlantImpl> candidates = gameState.getAllPlants().stream()
                 .filter(p -> !p.isDiscovered())
                 .filter(p -> p.isEdible() == onlyEdible)
                 .collect(Collectors.toList());
@@ -144,7 +144,7 @@ public final class ShopController {
         }
 
         if (gameState.spendCoins(cost)) {
-            final Plant selectedPlant = candidates.get(random.nextInt(candidates.size()));
+            final PlantImpl selectedPlant = candidates.get(random.nextInt(candidates.size()));
 
             selectedPlant.getType().unlock();
             gameState.saveEncyclopedia();
@@ -165,7 +165,7 @@ public final class ShopController {
      * @param gameState The current game state.
      * @param cost      The cost to refresh.
      */
-    private void performRefreshAction(final GameState gameState, final int cost) {
+    private void performRefreshAction(final GameStateImpl gameState, final int cost) {
         if (gameState.getWallet() < cost) {
             showMessage(INSUFFICIENT_FUNDS, YOU_NEED + cost + " coins to refresh!");
             return;
@@ -183,7 +183,7 @@ public final class ShopController {
         showMessage("Refreshed", "Merchant requests have been updated!");
     }
 
-    private void handlePurchaseResult(final GameState gameState, final PlantType unlockedPlant, final int cost) {
+    private void handlePurchaseResult(final GameStateImpl gameState, final PlantType unlockedPlant, final int cost) {
         if (unlockedPlant != null) {
             gameState.saveEncyclopedia();
             this.view.playMisteryBoxSound();

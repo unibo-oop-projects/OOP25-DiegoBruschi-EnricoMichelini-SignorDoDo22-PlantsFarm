@@ -1,5 +1,6 @@
-package it.unibo.plantsfarm.view.map;
+package it.unibo.plantsfarm.view.map.impl;
 
+import it.unibo.plantsfarm.view.map.api.SeedView;
 import it.unibo.plantsfarm.view.utility.Texture;
 import it.unibo.plantsfarm.view.utility.TextureUtils;
 
@@ -25,7 +26,7 @@ import java.awt.BorderLayout;
  * Represents the view for selecting seeds to plant.
  * It adapts its size based on the screen resolution.
  */
-public final class SeedView {
+public final class SeedViewImpl implements SeedView {
 
     private static final String TITLE_EDIBLE = "Edible Plants";
     private static final String TITLE_ORNAMENTAL = "Ornamental Plants";
@@ -50,7 +51,7 @@ public final class SeedView {
      *
      * @param isEdible True to show edible plants, false for ornamental ones.
      */
-    public SeedView(final boolean isEdible) {
+    public SeedViewImpl(final boolean isEdible) {
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         final int screenHeight = screenSize.height;
 
@@ -132,6 +133,7 @@ public final class SeedView {
      * @param isDiscovered  If false, the icon will be darkened.
      * @param listener      The action to perform on click.
      */
+    @Override
     public void addPlantButton(final String plantName, final boolean isDiscovered, final ActionListener listener) {
         ImageIcon icon = Texture.getPlantIcon(plantName);
 
@@ -154,6 +156,7 @@ public final class SeedView {
      *
      * @param listener The action to perform.
      */
+    @Override
     public void addSwitchModeListener(final ActionListener listener) {
 
         if (this.edibleButton.isEnabled()) {
@@ -173,6 +176,7 @@ public final class SeedView {
     /**
      * Shows the dialog.
      */
+    @Override
     public void show() {
         this.dialog.setVisible(true);
     }
@@ -180,6 +184,7 @@ public final class SeedView {
     /**
      * Closes the dialog.
      */
+    @Override
     public void close() {
         this.dialog.dispose();
     }

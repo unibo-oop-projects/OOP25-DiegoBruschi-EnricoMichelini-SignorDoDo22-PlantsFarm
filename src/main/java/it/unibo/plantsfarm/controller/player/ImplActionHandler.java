@@ -11,7 +11,8 @@ import it.unibo.plantsfarm.controller.player.api.ActionHandler;
 import it.unibo.plantsfarm.model.garden.Buff;
 import it.unibo.plantsfarm.model.inventario.ModelInventario;
 import it.unibo.plantsfarm.model.player.api.Player;
-import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.model.tiles.SoilImpl;
+import it.unibo.plantsfarm.model.tiles.api.Soil;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
 /**
@@ -35,7 +36,7 @@ public final class ImplActionHandler implements ActionHandler {
     public void handleActionHoe(final GardenController controllerGarden, final PlantType selectedPlant) {
         final ModelInventario inventory = player.getInventory();
 
-        final Soil soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
+        final SoilImpl soil = controllerGarden.whichSoilIsPlayerOn(player.getHitBox());
         if (controllerGarden.whichSoilIsPlayerOn(player.getHitBox()) != null
             && soil.isPlanted()
             && soil.getPlant().isMature()

@@ -3,12 +3,13 @@ package it.unibo.plantsfarm.controller.garden;
 import java.awt.Rectangle;
 import java.util.List;
 
-import it.unibo.plantsfarm.model.GameState;
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.garden.GardenModel;
+import it.unibo.plantsfarm.model.menu.impl.GameStateImpl;
 import it.unibo.plantsfarm.model.player.api.Player;
-import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.model.tiles.SoilImpl;
+import it.unibo.plantsfarm.model.tiles.api.Soil;
 
 /**
  * Controller for garden logic.
@@ -16,7 +17,7 @@ import it.unibo.plantsfarm.model.tiles.Soil;
 public class GardenController {
     private static final int ORNAMENTAL_SOIL = 2;
 
-    private GameState gameState;
+    private GameStateImpl gameState;
     private Player player;
     private GardenModel gardenModel;
 
@@ -26,7 +27,7 @@ public class GardenController {
      * @param gameState The game state.
      * @param player    The player.
      */
-    public GardenController(final GameState gameState, final Player player) {
+    public GardenController(final GameStateImpl gameState, final Player player) {
         setGameState(gameState);
         setPlayer(player);
         setGardenModel();
@@ -38,7 +39,7 @@ public class GardenController {
      * @param now The current time in milliseconds.
      */
     public final void innaffia(final long now) {
-        final Soil soil = whichSoilIsPlayerOn(player.getHitBox());
+        final SoilImpl soil = whichSoilIsPlayerOn(player.getHitBox());
         if (soil.isPlanted()) {
             soil.getPlant().water(now);
         }
@@ -62,8 +63,8 @@ public class GardenController {
      */
     public final void pianta(final PlantType type) {
         if (type != null) {
-            final Plant pianta = new Plant(type);
-            final Soil soil = whichSoilIsPlayerOn(player.getHitBox());
+            final PlantImpl pianta = new PlantImpl(type);
+            final SoilImpl soil = whichSoilIsPlayerOn(player.getHitBox());
             if (!soil.isPlanted()
                 && soil.getTileId() == ORNAMENTAL_SOIL
                 && !type.isEdible()
@@ -91,7 +92,7 @@ public class GardenController {
      *
      * @return The list of soil objects.
      */
-    public final List<Soil> getSoilList() {
+    public final List<SoilImpl> getSoilList() {
         return gardenModel.getSoils();
     }
 
@@ -102,8 +103,8 @@ public class GardenController {
      *
      * @return True if the player is on soil, false otherwise.
      */
-    public Soil whichSoilIsPlayerOn(final Rectangle hitbox) {
-        for (final Soil soilRect : gardenModel.getSoils()) {
+    public SoilImpl whichSoilIsPlayerOn(final Rectangle hitbox) {
+        for (final SoilImpl soilRect : gardenModel.getSoils()) {
             if (hitbox.intersects(soilRect.getCoordinate()) || soilRect.getCoordinate().contains(hitbox)) {
                 return soilRect;
             }
@@ -111,7 +112,7 @@ public class GardenController {
         return null;
     }
 
-    private void setGameState(final GameState givenGameState) {
+    private void setGameState(final GameStateImpl givenGameState) {
         this.gameState = givenGameState;
     }
 

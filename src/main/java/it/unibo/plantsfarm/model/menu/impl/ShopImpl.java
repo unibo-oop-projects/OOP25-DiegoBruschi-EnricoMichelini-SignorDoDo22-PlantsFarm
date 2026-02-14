@@ -1,8 +1,7 @@
 package it.unibo.plantsfarm.model.menu.impl;
 
-import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.model.menu.api.Shop;
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.plant.PlantRegistry;
 
@@ -40,23 +39,23 @@ public final class ShopImpl implements Shop {
      * @return A map of PlantType and the requested quantity.
      */
     @Override
-    public Map<PlantType, Integer> generateRequests(final GameState gameState) {
+    public Map<PlantType, Integer> generateRequests(final GameStateImpl gameState) {
         if (this.activeRequests != null && !this.activeRequests.isEmpty()) {
             return Collections.unmodifiableMap(this.activeRequests);
         }
 
-        final List<Plant> unlocked = gameState.getAllUnlockedEdiblePlants();
+        final List<PlantImpl> unlocked = gameState.getAllUnlockedEdiblePlants();
         final Map<PlantType, Integer> requests = new HashMap<>();
 
         if (unlocked.isEmpty()) {
             return requests;
         }
 
-        final List<Plant> shuffled = new ArrayList<>(unlocked);
+        final List<PlantImpl> shuffled = new ArrayList<>(unlocked);
         Collections.shuffle(shuffled);
-        final List<Plant> selected = shuffled.subList(0, Math.min(MAX_REQUESTS, shuffled.size()));
+        final List<PlantImpl> selected = shuffled.subList(0, Math.min(MAX_REQUESTS, shuffled.size()));
 
-        for (final Plant plant : selected) {
+        for (final PlantImpl plant : selected) {
             final int baseHarvest = plant.getType().generateHarvest();
             final int multiplier = MIN_MULTIPLIER + random.nextInt(MAX_MULTIPLIER - MIN_MULTIPLIER + 1);
             final int totalQuantity = baseHarvest * multiplier;
@@ -76,7 +75,7 @@ public final class ShopImpl implements Shop {
      * @return The amount of coins earned, or 0 if the transaction failed.
      */
     @Override
-    public int sellProducts(final GameState gameState, final Map<PlantType, Integer> requests) {
+    public int sellProducts(final GameStateImpl gameState, final Map<PlantType, Integer> requests) {
         final Map<PlantType, Integer> storage = gameState.getStorageContents();
 
         for (final Map.Entry<PlantType, Integer> entry : requests.entrySet()) {
@@ -111,7 +110,7 @@ public final class ShopImpl implements Shop {
      * @return The unlocked PlantType, or null if transaction failed.
      */
     @Override
-    public PlantType buyMysteryBox(final GameState gameState, final int cost) {
+    public PlantType buyMysteryBox(final GameStateImpl gameState, final int cost) {
         final List<PlantType> lockedPlants = PlantRegistry.getAll().stream()
             .filter(p -> !p.isDiscovered())
             .collect(Collectors.toList());

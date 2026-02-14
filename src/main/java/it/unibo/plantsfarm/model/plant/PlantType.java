@@ -123,4 +123,21 @@ public final class PlantType implements Serializable {
     public boolean isDiscovered() {
         return isDiscovered;
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final PlantType that = (PlantType) o;
+        return java.util.Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(name);
+    }
 }

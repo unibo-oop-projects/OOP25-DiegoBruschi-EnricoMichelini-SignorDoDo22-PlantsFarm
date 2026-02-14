@@ -33,8 +33,8 @@ import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.UserInpu
 import it.unibo.plantsfarm.controller.gamepanel.api.ControllerGamePanel.PlantStatus;
 
 import it.unibo.plantsfarm.model.garden.Buff;
-import it.unibo.plantsfarm.model.plant.Plant;
-import it.unibo.plantsfarm.model.tiles.Soil;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
+import it.unibo.plantsfarm.model.tiles.SoilImpl;
 import it.unibo.plantsfarm.view.gamepanel.api.ViewGamePanel;
 import it.unibo.plantsfarm.view.map.TileManager;
 import it.unibo.plantsfarm.view.utility.SpriteLoader;
@@ -89,7 +89,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
   private double playerPosY;
   private transient ControllerGamePanel controller;
   private transient SelectorFrames selector;
-  private List<Soil> soilList = List.of();
+  private List<SoilImpl> soilList = List.of();
   @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
         justification = "The list is transient because it is populated by the Controller "
                       + "via the show() method at every frame; it doesn't need to be persisted.")
@@ -173,7 +173,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
     @Override
     public void show(final double posX, final double posY,
                     final int camX, final int camY,
-                    final List<Soil> pods, final List<Buff> buffs
+                    final List<SoilImpl> pods, final List<Buff> buffs
                 ) {
         SwingUtilities.invokeLater(() -> {
             this.playerPosX = posX;
@@ -204,7 +204,7 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
            selector.render(g2D, playerPosX, playerPosY, cameraX, cameraY);
 
         if (soilList != null) {
-            for (final Soil pod : soilList) {
+            for (final SoilImpl pod : soilList) {
                 if (pod.isPlanted()) {
                     drawPlant(g2D, pod);
                 }
@@ -213,8 +213,8 @@ public final class ImplViewGamePanel extends JPanel implements ViewGamePanel {
         g2D.dispose();
     }
 
-    private void drawPlant(final Graphics2D g2D, final Soil pod) {
-        final Plant plant = pod.getPlant();
+    private void drawPlant(final Graphics2D g2D, final SoilImpl pod) {
+        final PlantImpl plant = pod.getPlant();
         final String plantName = plant.getName();
         final int stage = plant.getGrowthStage() + 1;
 

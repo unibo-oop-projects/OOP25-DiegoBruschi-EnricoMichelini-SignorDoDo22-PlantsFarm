@@ -2,7 +2,7 @@ package it.unibo.plantsfarm.model;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantRegistry;
 import it.unibo.plantsfarm.model.plant.Rarity;
 
@@ -16,7 +16,7 @@ final class PlantTest {
 
     @Test
     void testPlantCreation() {
-        final Plant plant = new Plant(PlantRegistry.CARROT);
+        final PlantImpl plant = new PlantImpl(PlantRegistry.CARROT);
         assertTrue(plant.needsWater());
         assertEquals(plant.getName(), "Carrot");
         assertEquals(plant.getRarity(), Rarity.COMMON);
@@ -26,17 +26,17 @@ final class PlantTest {
 
     @Test
     void testPlantWatering() {
-        final Plant plant = new Plant(PlantRegistry.CARROT);
+        final PlantImpl plant = new PlantImpl(PlantRegistry.CARROT);
         final long now = System.currentTimeMillis();
         plant.water(now);
         assertFalse(plant.needsWater());
-        plant.water(plant.getLastWateredTime() + Plant.WATER_TIME_COOLDOWN);
+        plant.water(plant.getLastWateredTime() + PlantImpl.WATER_TIME_COOLDOWN);
         assertFalse(plant.needsWater());
     }
 
     @Test
     void testPlantGrowth() {
-        final Plant plant = new Plant(PlantRegistry.CARROT);
+        final PlantImpl plant = new PlantImpl(PlantRegistry.CARROT);
         plant.setCurrentStageTime(plant.getCurrentStageTime() + ADDED_TIME);
         plant.increaseGrowthStage(System.currentTimeMillis());
         assertEquals(plant.getGrowthStage(), 0);
@@ -50,11 +50,11 @@ final class PlantTest {
 
     @Test
     void testPlantHoeing() {
-        final Plant plant = new Plant(PlantRegistry.CARROT);
+        final PlantImpl plant = new PlantImpl(PlantRegistry.CARROT);
         plant.setGrowthStage(3);
         assertEquals(plant.getGrowthStage(), 3);
         assertTrue(plant.isMature());
         plant.harvest();
-        assertTrue(plant.getHarvestedQuantity() >= 2 || plant.getHarvestedQuantity() <= 3);
+        assertTrue(plant.getHarvestedQuantity() >= 2 && plant.getHarvestedQuantity() <= 3);
     }
 }

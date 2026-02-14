@@ -5,7 +5,7 @@ import it.unibo.plantsfarm.controller.menu.EncyclopediaController;
 import it.unibo.plantsfarm.controller.menu.PauseMenuController;
 import it.unibo.plantsfarm.controller.menu.ShopController;
 import it.unibo.plantsfarm.controller.menu.StorageController;
-import it.unibo.plantsfarm.model.GameState;
+import it.unibo.plantsfarm.model.menu.impl.GameStateImpl;
 import it.unibo.plantsfarm.view.MainScreen;
 
 /**
@@ -22,7 +22,7 @@ public final class MainScreenController {
      * @param gameState         The current game state.
      * @param gamecontroller    The game panel controller.
      */
-    public MainScreenController(final GameState gameState, final ImplControllerGamePanel gamecontroller) {
+    public MainScreenController(final GameStateImpl gameState, final ImplControllerGamePanel gamecontroller) {
         //this.gamecontroller = gamecontroller;
         this.view = new MainScreen();
         this.view.createMainScreen(gamecontroller.getView());
@@ -30,7 +30,7 @@ public final class MainScreenController {
         updateView(gameState);
     }
 
-    private void setupListeners(final GameState gameState) {
+    private void setupListeners(final GameStateImpl gameState) {
 
         // Shop Button
         this.view.attachShopListener(e -> {
@@ -54,7 +54,7 @@ public final class MainScreenController {
         });
     }
 
-    private void updateView(final GameState gameState) {
+    private void updateView(final GameStateImpl gameState) {
         this.view.updateCoinLabel(gameState.getWallet());
     }
 }
