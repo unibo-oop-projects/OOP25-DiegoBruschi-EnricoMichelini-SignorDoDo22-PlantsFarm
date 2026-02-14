@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.model.camera;
 
+import it.unibo.plantsfarm.model.camera.api.Camera;
 import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 
 /**
@@ -8,33 +9,28 @@ import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
  * and follows the player within the world boundaries.
  *
  */
-public final class ImplCamera {
+public final class ImplCamera implements Camera {
 
     private int posX;
     private int posY;
     private final int screenWidth;
-
     private final int screenHeight;
 
     /**
-     * Creates a new camera with the given screen dimensions.
+     * Constructs a new Camera instance using the given screen dimensions.
+     * The screen width and height are used to calculate the visible
+     * area of the game world and to correctly center the camera
+     * on the player during the game loop.
      *
-     * @param screenWidth  the width of the visible screen
-     * @param screenHeight the height of the visible screen
+     * @param screenWidth  the width of the game screen in pixels
+     * @param screenHeight the height of the game screen in pixels
      */
     public ImplCamera(final int screenWidth, final int screenHeight) {
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
-    }
+}
 
-    /**
-     * Updates the camera position by centering it on the player.
-     * The camera position is clamped so that it does not move outside
-     * the world boundaries, ensuring the player remains visible.
-     *
-     * @param playerPosX the X coordinate of the player's position in world space
-     * @param playerPosY the Y coordinate of the player's position in world space
-     */
+    @Override
     public void followPlayer(final int playerPosX, final int playerPosY) {
 
         posX = playerPosX - ImplViewGamePanel.SCREEN_WIDTH / 2;
@@ -54,22 +50,13 @@ public final class ImplCamera {
         }
     }
 
-    /**
-     * Returns the X coordinate of the camera.
-     *
-     * @return the camera X position in world space
-     */
+    @Override
     public int getCameraPosX() {
         return this.posX;
     }
 
-    /**
-     * Returns the Y coordinate of the camera.
-     *
-     * @return the camera Y position in world space
-     */
+    @Override
     public int getCameraPosY() {
         return this.posY;
     }
-
 }
