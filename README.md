@@ -10,7 +10,7 @@ Progetto per il corso di Programmazione ad Oggetti A.A. 2025/26.
 
 •	francesco.fusillo3@studio.unibo.it
 
-Il gruppo si pone come obiettivo quello di realizzare un'applicazione che simula un gioco gestionale agricolo sulla coltivazione di piante edibili e ornamentali chiamata “plantsfarm”.
+Il gruppo si pone come obiettivo quello di realizzare un'applicazione che simula un gioco gestionale agricolo sulla coltivazione di piante edibili e ornamentali chiamata “PlantsFarm”.
 Il protagonista del gioco dovrà sbloccare nuove piante, consultabili nell’enciclopedia, per poter avanzare nel gioco ottenendo vantaggi economici e bonus nella crescita delle piante.
 Il mercato delle piante porta guadagni e spese, il giocatore dovrà gestire le risorse per comprare tutte le piante.
 
@@ -28,5 +28,6 @@ Il mercato delle piante porta guadagni e spese, il giocatore dovrà gestire le r
 •	Creazione di variabili nella coltivazione per rendere più interessante il gioco: infestazioni di funghi o insetti
 •	Simulazione visiva e strutturale della temperatura (esempio: con il freddo lo schermo ottiene tonalità più fredde e le piante crescono più lentamente)
 •	Implementazione della vita del personaggio e gestione di elementi nocivi che causano danno.
+
 
 
