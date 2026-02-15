@@ -42,7 +42,7 @@ public final class ItemsViewImageItem extends JPanel implements UpdatablePanel {
         final var inv = controllerInventario.getInventoryClone();
         for (final Tooltype tool : Tooltype.values()) {
             final JButton jb = itemsDisplay.get(tool);
-            jb.setText(inv.get(tool).getRarityItem().toString() + " Level " + inv.get(tool).getLevel());
+            jb.setText(" Level " + inv.get(tool).getLevel());
         }
     }
 
@@ -62,8 +62,7 @@ public final class ItemsViewImageItem extends JPanel implements UpdatablePanel {
                 button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel()));
             } else if (tool == Tooltype.AXE) {
                 button.setIcon(loadScaledIcon("/plantStatus/Axe.png"));
-                button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel())
-                + controllerInventario.getInventoryClone().get(tool).getRarityItem().toString());
+                button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel()));
             } else {
                 button.setIcon(loadScaledIcon("/plantStatus/Hoe.png"));
                 button.setText(Integer.toString(controllerInventario.getInventoryClone().get(tool).getLevel()));

@@ -66,7 +66,6 @@ public final class ItemsFarmBase implements ItemsFarm {
         }
         this.level++;
         this.experience -= StatsItemBase.EXPERIENCE_FOR_UPGRADE;
-        this.experienceForLevel += StatsItemBase.ADD_EXPERIENCE_FOR_UPGRADE;
         updateRarity();
     }
 
@@ -140,8 +139,7 @@ public final class ItemsFarmBase implements ItemsFarm {
      */
     private static final class StatsItemBase {
         private static final int EXPERIENCE_FOR_ACTION = 5;
-        private static final int EXPERIENCE_FOR_UPGRADE = 30;
-        private static final int ADD_EXPERIENCE_FOR_UPGRADE = 15;
+        private static final int EXPERIENCE_FOR_UPGRADE = 50;
 
         private static final int EXPERIENCE_BEGIN = 0;
         private static final int LEVEL_BEGIN = 0;
