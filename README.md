@@ -30,13 +30,14 @@ Il mercato delle piante porta guadagni e spese, il giocatore dovrà gestire le r
 •	stione della crescita e della raccolta dei vegetali.
 
 # **Funzionalità opzionali:**
-•	Creazione di vantaggi e bonus ricavati dalla coltivazione di piante ornamentali (altrimenti inutile allo scopo del gioco)
+•	Creazione di vantaggi e bonus ricavati dalla coltivazione di piante ornamentali (altrimenti inutile allo scopo del gioco).
 
-•	Creazione di variabili nella coltivazione per rendere più interessante il gioco: infestazioni di funghi o insetti
+•	Creazione di variabili nella coltivazione per rendere più interessante il gioco: infestazioni di funghi o insetti.
 
-•	Simulazione visiva e strutturale della temperatura (esempio: con il freddo lo schermo ottiene tonalità più fredde e le piante crescono più lentamente)
+•	Simulazione visiva e strutturale della temperatura (esempio: con il freddo lo schermo ottiene tonalità più fredde e le piante crescono più lentamente).
 
 •	Implementazione della vita del personaggio e gestione di elementi nocivi che causano danno.
+
 
 
 
