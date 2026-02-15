@@ -16,7 +16,8 @@ import java.util.stream.Collectors;
 import java.util.List;
 
 /**
- * Controller for the Shop feature.
+ * Manages the shop system, coordinating product sales, mystery box purchases, 
+ * and merchant request updates.
  */
 public final class ShopController {
 

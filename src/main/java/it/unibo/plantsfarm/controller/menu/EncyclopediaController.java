@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Controller for the Encyclopedia feature.
+ * Manages the logic for the Encyclopedia feature, showing plant selection, 
+ * description, and growth stages.
  */
 public final class EncyclopediaController {
 
@@ -57,6 +58,12 @@ public final class EncyclopediaController {
         this.view.show(names, unlockedStatus, listener, NEXT_STAGE_COMMAND);
     }
 
+    /**
+     * Manages the selection of a specific plant, updating the details and images in the view.
+     * 
+     * @param name The name of the selected plant.
+     * @param gameState The current state of the game, used to find the selected plant
+     */
     private void selection(final String name, final GameState gameState) {
         for (final Plant plant : gameState.getAllPlants()) {
             if (plant.getName().equals(name)) {
@@ -72,6 +79,9 @@ public final class EncyclopediaController {
         }
     }
 
+    /**
+     * Shows the next growth stage image for the current selected plant.
+     */
     private void nextStage() {
         if (this.selectedPlant != null) {
             this.currentStageIndex++;

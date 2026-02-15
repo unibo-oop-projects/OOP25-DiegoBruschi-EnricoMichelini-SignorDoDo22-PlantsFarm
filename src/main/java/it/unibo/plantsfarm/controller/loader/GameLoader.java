@@ -7,7 +7,7 @@ import it.unibo.plantsfarm.model.plant.Plant;
 import java.util.List;
 
 /**
- * Manage the initialization of all game data.
+ * Manages the initialization of all game data.
  */
 public class GameLoader {
 
@@ -18,12 +18,10 @@ public class GameLoader {
      */
     public final GameState initializeGame() {
 
-        //MODEL
         final PlantLoader plantLoader = new PlantLoader();
         final List<Plant> plants = plantLoader.loadPlants();
         final GameState gameState = new GameState(plants);
 
-        //CONTROLLER
         new MainScreenController(gameState);
 
         return gameState;

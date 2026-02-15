@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Loads the initial set of plants into the game.
+ * Manages the loading of the initial plant set from persistent data.
  */
 public class PlantLoader {
 
@@ -22,7 +22,7 @@ public class PlantLoader {
     private static final Logger LOGGER = Logger.getLogger(PlantLoader.class.getName());
 
     /**
-     * Loads plants directly from the PlantType enum.
+     * Loads all plants, restoring their discovery status from a save file if available.
      *
      * @return A list of initialized plants.
      */
@@ -51,6 +51,11 @@ public class PlantLoader {
         return plants;
     }
 
+/**
+ * Loads and unlocks plant types if discovered in previous sessions.
+ * 
+ * @param data The string data loaded from the save file, containing unlocked plant names separated by SEPARATOR.
+ */
 private void loadFromSave(final String data) {
         final String[] unlockedNames = data.split(SEPARATOR);
         for (final String name : unlockedNames) {
@@ -68,10 +73,18 @@ private void loadFromSave(final String data) {
         }
     }
 
+    /**
+     * Sets the initial discovery state.
+     */
     private void loadDefaults() {
         PlantRegistry.CARROT.unlock();
     }
 
+    /**
+     * Saves the current discovered status to the persistent file.
+     * 
+     * @param memory The DataMemory instance used to save the data.
+     */
     private void saveCurrentState(final DataMemory memory) {
         final StringBuilder sb = new StringBuilder();
         for (final PlantType type : PlantRegistry.getAll()) {

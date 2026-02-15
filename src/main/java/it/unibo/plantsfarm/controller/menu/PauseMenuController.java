@@ -14,7 +14,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Controller responsible for managing the Pause Menu interactions.
+ * Manages the logic and user interactions for the Pause Menu, including game reset, 
+ * command visualization, and exit procedures.
  */
 public final class PauseMenuController {
 

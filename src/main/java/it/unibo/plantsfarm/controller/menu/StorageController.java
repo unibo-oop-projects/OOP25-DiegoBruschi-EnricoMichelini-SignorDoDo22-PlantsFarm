@@ -9,7 +9,8 @@ import it.unibo.plantsfarm.view.menu.impl.StorageScreenImpl;
 import java.util.Map;
 
 /**
- * Controller for the Storage feature.
+ * Manages the logic and visualization for the storage system, coordinating 
+ * inventory updates and item slot initialization.
  */
 public final class StorageController {
 
