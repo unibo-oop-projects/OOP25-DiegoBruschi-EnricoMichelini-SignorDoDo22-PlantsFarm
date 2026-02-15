@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -154,8 +155,9 @@ public final class EncyclopediaImpl implements Encyclopedia {
      */
     @Override
     public String getPlantDescription(final PlantType type) {
-        final String path = "encyclopediaFiles/" + type.getName() + ".txt";
-        final InputStream inputStream = ClassLoader.getSystemResourceAsStream(path);
+        final String fileName = type.getName().toUpperCase(Locale.ROOT) + ".txt";
+        final String path = "encyclopediaFiles/" + fileName;
+        final InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
 
         if (inputStream == null) {
             return "Description not available for " + type.getName();
