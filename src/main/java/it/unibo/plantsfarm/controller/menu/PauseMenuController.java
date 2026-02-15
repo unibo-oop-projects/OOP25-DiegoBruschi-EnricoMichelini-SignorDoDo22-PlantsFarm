@@ -68,6 +68,7 @@ public final class PauseMenuController {
                     onCloseMainScreen.run();
                 }
             }
+            Runtime.getRuntime().exit(0);
         });
 
         this.view.setExtraButton(e -> {

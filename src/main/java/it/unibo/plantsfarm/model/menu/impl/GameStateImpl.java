@@ -166,6 +166,5 @@ public final class GameStateImpl implements GameState {
         this.encyclopedia.reset();
         this.soils.reset();
         this.managerSavingPlayer.resetSaving();
-        Runtime.getRuntime().exit(0);
     }
 }
