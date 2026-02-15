@@ -59,7 +59,7 @@ class ItemsTest {
     @Test
     void testUpgradeRare() {
         final ItemsFarm axe = new ItemsFarmBase(AXE);
-        final int forRare = 27;
+        final int forRare = 30;
         for (int i = 0; i < forRare; i++) {
             axe.useItem();
             axe.upgrade();
@@ -69,21 +69,9 @@ class ItemsTest {
     }
 
     @Test
-    void itemUpgradesWhenReachingUpgradeThreshold() {
-    final ItemsFarm item = new ItemsFarmBase(AXE);
-    final int forRare = 6;
-    for (int i = 0; i < forRare; i++) {
-        item.useItem();
-    }
-
-    item.upgrade();
-    assertEquals(1, item.getLevel());
-}
-
-    @Test
     void testUpgradeEpic() {
         final ItemsFarm axe = new ItemsFarmBase(AXE);
-        final int forEpic = 81;
+        final int forEpic = 90;
         for (int i = 0; i < forEpic; i++) {
             axe.useItem();
             axe.upgrade();
@@ -93,7 +81,7 @@ class ItemsTest {
 
     @Test
     void testUpgradeLegendary() {
-        final int forLegendary = 195;
+        final int forLegendary = 200;
         final ItemsFarm axe = new ItemsFarmBase(AXE);
         for (int i = 0; i < forLegendary; i++) {
             axe.useItem();

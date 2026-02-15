@@ -10,7 +10,6 @@ import it.unibo.plantsfarm.model.plant.Rarity;
 public final class ItemsExpert implements ItemsFarm {
 
     private int experience = StatsItemBase.EXPERIENCE_FOR_UPGRADE;
-    private int experienceForLevel = StatsItemBase.EXPERIENCE_FOR_UPGRADE;
     private int level = StatsItemBase.LEVEL_MAX;
     private final Tooltype type;
     private Rarity itemRarity = Rarity.LEGENDARY;
@@ -33,7 +32,7 @@ public final class ItemsExpert implements ItemsFarm {
 
     @Override
     public void upgrade() {
-        if (this.level >= StatsItemBase.LEVEL_MAX || this.experience < this.experienceForLevel) {
+        if (this.level >= StatsItemBase.LEVEL_MAX || this.experience < StatsItemBase.EXPERIENCE_FOR_UPGRADE) {
             return;
         }
         this.level++;

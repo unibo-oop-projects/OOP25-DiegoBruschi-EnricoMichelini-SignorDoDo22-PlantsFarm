@@ -20,11 +20,6 @@ public final class ItemsFarmBase implements ItemsFarm {
     private int experience = StatsItemBase.EXPERIENCE_BEGIN;
 
     /**
-     * Experience required to perform the next upgrade.
-     */
-    private int experienceForLevel = StatsItemBase.EXPERIENCE_FOR_UPGRADE;
-
-    /**
      * Current level of the item.
      */
     private int level = StatsItemBase.LEVEL_BEGIN;
@@ -61,7 +56,7 @@ public final class ItemsFarmBase implements ItemsFarm {
      */
     @Override
     public void upgrade() {
-        if (this.level >= StatsItemBase.LEVEL_MAX || this.experience < this.experienceForLevel) {
+        if (this.level >= StatsItemBase.LEVEL_MAX || this.experience < StatsItemBase.EXPERIENCE_FOR_UPGRADE) {
             return;
         }
         this.level++;
@@ -99,7 +94,7 @@ public final class ItemsFarmBase implements ItemsFarm {
 
     @Override
     public int getExperienceForLevel() {
-        return this.experienceForLevel;
+        return StatsItemBase.EXPERIENCE_FOR_UPGRADE;
     }
 
     /**
