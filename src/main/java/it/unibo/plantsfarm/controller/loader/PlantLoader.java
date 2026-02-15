@@ -2,7 +2,7 @@ package it.unibo.plantsfarm.controller.loader;
 
 import it.unibo.plantsfarm.controller.memory.api.DataMemory;
 import it.unibo.plantsfarm.controller.memory.impl.DataMemoryImpl;
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantType;
 import it.unibo.plantsfarm.model.plant.PlantRegistry;
 
@@ -26,7 +26,7 @@ public class PlantLoader {
      *
      * @return A list of initialized plants.
      */
-    public List<Plant> loadPlants() {
+    public List<PlantImpl> loadPlants() {
         final DataMemory memory = new DataMemoryImpl();
         String loadedData = null;
 
@@ -43,9 +43,9 @@ public class PlantLoader {
             saveCurrentState(memory);
         }
 
-        final List<Plant> plants = new ArrayList<>();
+        final List<PlantImpl> plants = new ArrayList<>();
         for (final PlantType type : PlantRegistry.getAll()) {
-            plants.add(new Plant(type));
+            plants.add(new PlantImpl(type));
         }
 
         return plants;

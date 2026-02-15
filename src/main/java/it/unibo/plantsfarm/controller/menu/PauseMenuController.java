@@ -85,14 +85,15 @@ public final class PauseMenuController {
             if (onCloseMainScreen != null) {
                 onCloseMainScreen.run();
             }
+            Runtime.getRuntime().exit(0);
         });
     }
 
     /**
      * Helper method to read text files from resources.
-     * 
+     *
      * @param fileName The name of the file inside resources/extraFiles/
-     * 
+     *
      * @return The content of the file or an error message.
      */
     private String readResourceText(final String fileName) {

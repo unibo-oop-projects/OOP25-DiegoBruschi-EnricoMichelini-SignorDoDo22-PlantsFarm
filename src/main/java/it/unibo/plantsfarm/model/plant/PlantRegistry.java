@@ -10,67 +10,67 @@ import java.util.Collections;
 public final class PlantRegistry {
 
     //EDIBLE PLANTS
-    public static final PlantType CARROT = new PlantType("Carrot", 3, 1, Rarity.COMMON,
+    public static final PlantType CARROT = new PlantType("Carrot", 3, 0, Rarity.COMMON,
             new EdibleBehavior(10, 2, 3));
 
-    public static final PlantType ONION = new PlantType("Onion", 3, 1, Rarity.COMMON,
+    public static final PlantType ONION = new PlantType("Onion", 3, 0, Rarity.COMMON,
             new EdibleBehavior(12, 2, 3));
 
-    public static final PlantType RADISH = new PlantType("Radish", 3, 1, Rarity.COMMON,
+    public static final PlantType RADISH = new PlantType("Radish", 3, 0, Rarity.COMMON,
             new EdibleBehavior(8, 4, 5));
 
-    public static final PlantType ZUCCHINI = new PlantType("Zucchini", 4, 2, Rarity.COMMON,
+    public static final PlantType ZUCCHINI = new PlantType("Zucchini", 4, 1, Rarity.COMMON,
             new EdibleBehavior(15, 1, 3));
 
     public static final PlantType TOMATO = new PlantType("Tomato", 5, 2, Rarity.COMMON,
             new EdibleBehavior(7, 3, 7));
 
-    public static final PlantType POTATO = new PlantType("Potato", 3, 1, Rarity.COMMON,
+    public static final PlantType POTATO = new PlantType("Potato", 3, 0, Rarity.COMMON,
             new EdibleBehavior(15, 2, 3));
 
     public static final PlantType PEPPER = new PlantType("Pepper", 5, 2, Rarity.COMMON,
             new EdibleBehavior(15, 2, 4));
 
-    public static final PlantType CORN = new PlantType("Corn", 5, 3, Rarity.COMMON,
+    public static final PlantType CORN = new PlantType("Corn", 5, 2, Rarity.COMMON,
             new EdibleBehavior(20, 1, 3));
 
-    public static final PlantType EGGPLANT = new PlantType("Eggplant", 4, 2, Rarity.RARE,
+    public static final PlantType EGGPLANT = new PlantType("Eggplant", 4, 1, Rarity.RARE,
             new EdibleBehavior(30, 1, 3));
 
-    public static final PlantType APPLE = new PlantType("Apple", 5, 3, Rarity.RARE,
+    public static final PlantType APPLE = new PlantType("Apple", 5, 2, Rarity.RARE,
             new EdibleBehavior(15, 5, 10));
 
-    public static final PlantType FIG = new PlantType("Fig", 6, 3, Rarity.RARE,
+    public static final PlantType FIG = new PlantType("Fig", 6, 2, Rarity.RARE,
             new EdibleBehavior(15, 3, 12));
 
-    public static final PlantType PUMPKIN = new PlantType("Pumpkin", 6, 3, Rarity.RARE,
+    public static final PlantType PUMPKIN = new PlantType("Pumpkin", 6, 2, Rarity.RARE,
             new EdibleBehavior(35, 1, 3));
 
-    public static final PlantType CHERRY = new PlantType("Cherry", 5, 3, Rarity.RARE,
+    public static final PlantType CHERRY = new PlantType("Cherry", 5, 2, Rarity.RARE,
             new EdibleBehavior(5, 10, 25));
 
-    public static final PlantType WATERMELON = new PlantType("Watermelon", 5, 2, Rarity.RARE,
+    public static final PlantType WATERMELON = new PlantType("Watermelon", 5, 1, Rarity.RARE,
             new EdibleBehavior(15, 6, 12));
 
-    public static final PlantType MANGO = new PlantType("Mango", 5, 3, Rarity.EPIC,
+    public static final PlantType MANGO = new PlantType("Mango", 5, 2, Rarity.EPIC,
             new EdibleBehavior(50, 5, 8));
 
-    public static final PlantType AVOCADO = new PlantType("Avocado", 5, 3, Rarity.EPIC,
+    public static final PlantType AVOCADO = new PlantType("Avocado", 5, 2, Rarity.EPIC,
             new EdibleBehavior(75, 3, 7));
 
-    public static final PlantType DRAGONFRUIT = new PlantType("DragonFruit", 5, 2, Rarity.EPIC,
+    public static final PlantType DRAGONFRUIT = new PlantType("DragonFruit", 5, 1, Rarity.EPIC,
             new EdibleBehavior(100, 2, 4));
 
-    public static final PlantType ANANAS = new PlantType("Ananas", 5, 2, Rarity.EPIC,
+    public static final PlantType ANANAS = new PlantType("Ananas", 3, 0, Rarity.EPIC,
             new EdibleBehavior(100, 1, 1));
 
-    public static final PlantType PAPAYA = new PlantType("Papaya", 6, 3, Rarity.EPIC,
+    public static final PlantType PAPAYA = new PlantType("Papaya", 6, 2, Rarity.EPIC,
             new EdibleBehavior(55, 2, 6));
 
-    public static final PlantType POMEGRANATE = new PlantType("Pomegranate", 7, 4, Rarity.LEGENDARY,
+    public static final PlantType POMEGRANATE = new PlantType("Pomegranate", 7, 3, Rarity.LEGENDARY,
             new EdibleBehavior(40, 7, 10));
 
-    public static final PlantType BUDDHAHAND = new PlantType("Buddha's Hand", 7, 4, Rarity.LEGENDARY,
+    public static final PlantType BUDDHAHAND = new PlantType("Buddha's Hand", 7, 3, Rarity.LEGENDARY,
             new EdibleBehavior(100, 3, 6));
 
     //ORNAMENTAL PLANTS

@@ -8,12 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 
 import it.unibo.plantsfarm.model.menu.api.Shop;
+import it.unibo.plantsfarm.model.menu.impl.GameStateImpl;
 import it.unibo.plantsfarm.model.menu.impl.ShopImpl;
-import it.unibo.plantsfarm.model.plant.Plant;
+import it.unibo.plantsfarm.model.plant.PlantImpl;
 import it.unibo.plantsfarm.model.plant.PlantRegistry;
 import it.unibo.plantsfarm.model.plant.PlantType;
 
@@ -27,8 +27,8 @@ final class ShopTest {
     private static final int BIG_QUANTITY = 5000;
 
     private final Shop shop = new ShopImpl();
-    private final Plant carrot = new Plant(PlantRegistry.CARROT); 
-    private final GameState gameState = new GameState(List.of(carrot));
+    private final PlantImpl carrot = new PlantImpl(PlantRegistry.CARROT); 
+    private final GameStateImpl gameState = new GameStateImpl(List.of(carrot));
 
     /**
      * Test that the shop generates valid sell requests based on unlocked plants.

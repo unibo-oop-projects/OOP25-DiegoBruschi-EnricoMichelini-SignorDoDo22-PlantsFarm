@@ -1,9 +1,11 @@
 package it.unibo.plantsfarm.model.plant;
 
+import java.io.Serializable;
+
 /**
  * Defines the behavior strategy for a specific plant type.
  */
-public interface PlantBehavior {
+public interface PlantBehavior extends Serializable {
 
     /**
      * Checks if the plant is edible or ornamental.

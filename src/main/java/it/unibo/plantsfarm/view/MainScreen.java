@@ -1,5 +1,6 @@
 package it.unibo.plantsfarm.view;
 
+import it.unibo.plantsfarm.view.gamepanel.ImplViewGamePanel;
 import it.unibo.plantsfarm.view.menu.MenuPanel;
 import it.unibo.plantsfarm.view.music.api.MusicPlayer;
 import it.unibo.plantsfarm.view.music.impl.MusicPlayerImpl;
@@ -14,6 +15,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
@@ -25,28 +27,35 @@ public final class MainScreen {
     private static final String TITLE = "PlantsFarm";
     private static final String FONT_FAMILY = "SansSerif";
 
-    private static final double FONT_SCALE_RATIO = 0.025;
+    private static final double FONT_SCALE_RATIO = 0.04;
     private static final double GAP_RATIO = 0.015;
+    private static final int COIN_LABEL_RATIO = 5;
+
+    private static final Color GOLD = new Color(255, 252, 115);
 
     private final MenuPanel menuPanel;
-    private final MusicPlayer musicPlayer;
+    private ImplViewGamePanel gameViewPanel;
     private JFrame frame;
     private JLabel coinLabel;
+    private final MusicPlayer musicPlayer;
 
     /**
      * Initializes the main screen components.
      */
     public MainScreen() {
         this.menuPanel = new MenuPanel();
+        this.menuPanel.setFocusable(false);
         this.musicPlayer = new MusicPlayerImpl();
     }
 
     /**
      * Creates and displays the main screen window.
+     *
+     * @param gameView The view component for the game panel to be displayed in the main screen.
      */
-    public void createMainScreen() {
+    public void createMainScreen(final ImplViewGamePanel gameView) {
         this.frame = new JFrame(TITLE);
-
+        setGameView(gameView);
         this.frame.setLayout(new BorderLayout());
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,25 +68,33 @@ public final class MainScreen {
 
         this.frame.add(this.menuPanel, BorderLayout.EAST);
 
-        final JPanel gameContainer = new JPanel(new BorderLayout());
-        gameContainer.setOpaque(false);
+        final JLayeredPane layeredPane = new JLayeredPane();
 
+        this.gameViewPanel.setBounds(0, 0, screenSize.width, screenSize.height);
         final int hGap = (int) (screenSize.width * GAP_RATIO);
         final int vGap = (int) (screenSize.height * GAP_RATIO);
         final int fontSize = (int) (screenSize.height * FONT_SCALE_RATIO);
 
-        final JPanel coinPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, hGap, vGap));
-        coinPanel.setOpaque(false);
+        layeredPane.add(this.gameViewPanel, JLayeredPane.DEFAULT_LAYER);
 
-        this.coinLabel = new JLabel(" 0");
+        final JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, hGap, vGap));
+        topPanel.setOpaque(false);
+        topPanel.setFocusable(false);
+        topPanel.setBounds(0, 0, screenSize.width, screenSize.height / COIN_LABEL_RATIO);
+
+        this.coinLabel = new JLabel(" 0 ");
         this.coinLabel.setIcon(Texture.COIN_ICON);
         this.coinLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, fontSize));
-        this.coinLabel.setForeground(Color.BLACK);
+        this.coinLabel.setForeground(GOLD);
+        topPanel.add(this.coinLabel);
 
-        coinPanel.add(this.coinLabel);
-        gameContainer.add(coinPanel, BorderLayout.NORTH);
+        layeredPane.add(topPanel, JLayeredPane.PALETTE_LAYER);
 
-        this.frame.add(gameContainer, BorderLayout.CENTER);
+        this.frame.add(layeredPane, BorderLayout.CENTER);
+
+        this.gameViewPanel.setFocusable(true);
+        this.gameViewPanel.requestFocusInWindow();
+
         this.frame.setVisible(true);
 
         this.musicPlayer.playLoop("music/GardenMusic.wav");
@@ -100,7 +117,10 @@ public final class MainScreen {
      * @param listener The action to perform.
      */
     public void attachExitListener(final ActionListener listener) {
-        this.menuPanel.addExitListener(listener);
+        this.menuPanel.addExitListener(e -> {
+            listener.actionPerformed(e);
+            this.gameViewPanel.requestFocusInWindow();
+        });
     }
 
     /**
@@ -109,7 +129,10 @@ public final class MainScreen {
      * @param listener The action to perform.
      */
     public void attachEncyclopediaListener(final ActionListener listener) {
-        this.menuPanel.addEncyclopediaListener(listener);
+        this.menuPanel.addEncyclopediaListener(e -> {
+            listener.actionPerformed(e);
+            this.gameViewPanel.requestFocusInWindow();
+        });
     }
 
     /**
@@ -118,7 +141,10 @@ public final class MainScreen {
      * @param listener The action to perform.
      */
     public void attachStorageListener(final ActionListener listener) {
-        this.menuPanel.addStorageListener(listener);
+        this.menuPanel.addStorageListener(e -> {
+            listener.actionPerformed(e);
+            this.gameViewPanel.requestFocusInWindow();
+        });
     }
 
     /**
@@ -127,7 +153,10 @@ public final class MainScreen {
      * @param listener The action to perform.
      */
     public void attachShopListener(final ActionListener listener) {
-        this.menuPanel.addShopListener(listener);
+        this.menuPanel.addShopListener(e -> {
+            listener.actionPerformed(e);
+            this.gameViewPanel.requestFocusInWindow();
+        });
     }
 
     /**
@@ -138,5 +167,9 @@ public final class MainScreen {
             this.frame.dispose();
         }
         this.musicPlayer.stop();
+    }
+
+    private void setGameView(final ImplViewGamePanel givenGameView) {
+        this.gameViewPanel = givenGameView;
     }
 }

@@ -7,6 +7,7 @@ import java.util.Random;
  */
 public final class EdibleBehavior implements PlantBehavior {
 
+    private static final long serialVersionUID = 1L;
     private final int sellPrice;
     private final int minItem;
     private final int maxItem;
@@ -14,7 +15,7 @@ public final class EdibleBehavior implements PlantBehavior {
 
     /**
      * Creates a new EdibleBehavior.
-     * 
+     *
      * @param sellPrice The value in coins of a single item of this plant.
      * @param minItem  The minimum quantity obtained when harvesting.
      * @param maxItem  The maximum quantity obtained when harvesting.

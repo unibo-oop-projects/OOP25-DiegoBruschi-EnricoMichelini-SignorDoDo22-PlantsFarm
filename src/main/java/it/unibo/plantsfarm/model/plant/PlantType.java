@@ -1,9 +1,13 @@
 package it.unibo.plantsfarm.model.plant;
 
+import java.io.Serializable;
+
 /**
  * Represents the type of a plant with game statistics.
  */
-public final class PlantType {
+public final class PlantType implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final String name;
     private final int maxGrowthStage;
@@ -14,7 +18,7 @@ public final class PlantType {
 
     /**
      * Creates a new PlantType.
-     * 
+     *
      * @param name            The display name.
      * @param maxGrowthStage  The maximum growth stage.
      * @param resetStage      The stage to reset to after harvest.
@@ -90,7 +94,7 @@ public final class PlantType {
 
     /**
      * Gets the behavior strategy of the plant.
-     * 
+     *
      * @return the behavior strategy.
      */
     public PlantBehavior getBehavior() {
@@ -118,5 +122,22 @@ public final class PlantType {
      */
     public boolean isDiscovered() {
         return isDiscovered;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final PlantType that = (PlantType) o;
+        return java.util.Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(name);
     }
 }
