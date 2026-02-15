@@ -1,4 +1,4 @@
-﻿# plantsfarm
+﻿# PlantsFarm
 
 Progetto per il corso di Programmazione ad Oggetti A.A. 2025/26.
 
@@ -28,4 +28,5 @@ Il mercato delle piante porta guadagni e spese, il giocatore dovrà gestire le r
 •	Creazione di variabili nella coltivazione per rendere più interessante il gioco: infestazioni di funghi o insetti
 •	Simulazione visiva e strutturale della temperatura (esempio: con il freddo lo schermo ottiene tonalità più fredde e le piante crescono più lentamente)
 •	Implementazione della vita del personaggio e gestione di elementi nocivi che causano danno.
+
 
