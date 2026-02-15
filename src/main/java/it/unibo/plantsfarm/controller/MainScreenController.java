@@ -8,14 +8,15 @@ import it.unibo.plantsfarm.model.GameState;
 import it.unibo.plantsfarm.view.MainScreen;
 
 /**
- * Controller responsible for managing the Main Screen interactions.
+ * Manages the interactions on the Main Screen, acting as a central navigation hub 
+ * for the Shop, Encyclopedia, Storage, and Pause menus.
  */
 public final class MainScreenController {
 
     private final MainScreen view;
 
     /**
-     * Creates the Main Screen Controller.
+     * Initializes the Main Screen Controller and synchronizes the view with the current game state.
      *
      * @param gameState The current game state.
      */
@@ -27,6 +28,12 @@ public final class MainScreenController {
         updateView(gameState);
     }
 
+    /**
+     * Configures action listeners for all navigation buttons, 
+     * delegating the menù logic to their respective controllers.
+     *
+     * @param gameState The game state to pass.
+     */
     private void setupListeners(final GameState gameState) {
 
         // Shop Button
