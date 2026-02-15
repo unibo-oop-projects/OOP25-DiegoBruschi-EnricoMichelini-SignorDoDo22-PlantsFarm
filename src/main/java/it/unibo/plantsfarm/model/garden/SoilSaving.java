@@ -18,7 +18,7 @@ import it.unibo.plantsfarm.model.tiles.SoilImpl;
 public final class SoilSaving {
 
     private static final Logger LOGGER = Logger.getLogger(SoilSaving.class.getName());
-    private final String fileName = System.getProperty("user.home") + File.separator + ".plantsfarm" + File.separator + "plants";
+    private final String filePath = System.getProperty("user.home") + File.separator + ".plantsfarm" + File.separator + "plants";
 
     /**
      * Saves the current state of the soil list to a file.
@@ -26,7 +26,7 @@ public final class SoilSaving {
      * @param pod The list of Soil objects to be saved.
      */
     public void saveGame(final List<SoilImpl> pod) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(this.fileName))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(this.filePath))) {
             oos.writeObject(pod);
         } catch (final IOException e) {
             LOGGER.log(Level.SEVERE, "Errore durante il salvataggio dei soils.", e);
@@ -39,7 +39,7 @@ public final class SoilSaving {
      * @return A list of Soil objects loaded from the file, or an empty list if loading fails.
      */
     public List<SoilImpl> loadGame() {
-        final File file = new File(this.fileName);
+        final File file = new File(this.filePath);
 
         if (!file.exists()) {
             LOGGER.log(Level.INFO, "Nessun salvataggio trovato.");
@@ -68,7 +68,7 @@ public final class SoilSaving {
      * Resets the saved game data by deleting the save file.
      */
     public void reset() {
-        final File file = new File(this.fileName);
+        final File file = new File(this.filePath);
         if (file.exists()) {
             if (file.delete()) {
                 LOGGER.log(Level.INFO, "Salvataggio eliminato con successo.");
